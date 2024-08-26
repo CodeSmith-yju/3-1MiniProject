@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
@@ -83,18 +84,18 @@ public class BattleManager : MonoBehaviour
 
     public IEnumerator BattleReady() // 전투 방일 시 실행되는 메서드
     {
-
+        //deploy_area = GameObject.FindGameObjectWithTag("Deploy");
+        unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
         ui.OpenPopup(ui.battle_Ready_Banner);
         yield return StartCoroutine(ui.StartBanner(ui.battle_Ready_Banner));
         yield return new WaitForSeconds(0.15f);
 
-        if (!ui.party_List.activeSelf)
-            ui.party_List.SetActive(true);
+        PlacementUnit(); // 파티 리스트에 있는 유닛 생성
 
         Enemy[] entity = FindObjectsOfType<Enemy>(); // 몬스터를 찾음
         battleEnded = false;
 
-        ui.party_List.SetActive(true);
+        //ui.party_List.SetActive(true);
         deploy_area.SetActive(true);
         unit_deploy_area.SetActive(true);
 
@@ -375,18 +376,96 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    private void PlacementUnit()
+    {
+        Debug.Log("작동하나 체크");
+
+        Tilemap deployTilemap = unit_deploy_area.GetComponent<Tilemap>();
+
+        BoundsInt bounds = deployTilemap.cellBounds;
+        int unit_Cnt = 0;
+
+        foreach (Vector3Int position in bounds.allPositionsWithin)
+        {
+            if (unit_Cnt >= party_List.Count)
+            {
+                break;
+            }
+
+            if (deployTilemap.HasTile(position) && CanPlace(position))
+            {
+                // 그 외 유닛들은 생성 하도록 함.
+                if (GameMgr.playerData[unit_Cnt].cur_Player_Hp > 0)
+                {
+                    Debug.Log("작동하나 체크 유닛 생성" + unit_Cnt);
+                    Vector3 worldPos = deployTilemap.GetCellCenterWorld(position);
+
+                    GameObject unit = Instantiate(party_List[unit_Cnt], worldPos, Quaternion.identity);
+                    unit.GetComponent<Ally>().InitStat(GameMgr.playerData[unit_Cnt].playerIndex);
+
+                    deploy_Player_List.Add(unit);
+
+                    unit_Cnt++; // 다음 유닛 배치하기 위한 인덱스 값
+                }
+            }
+        }
+    }
+
+    private bool CanPlace(Vector3Int position)
+    {
+        Collider2D[] colliders = Physics2D.OverlapPointAll(unit_deploy_area.GetComponent<Tilemap>().GetCellCenterWorld(position));
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.CompareTag("Player"))
+            {
+                return false; // 이미 해당 위치에 유닛이 있으면 배치할 수 없습니다.
+            }
+        }
+
+        return true;
+    }
+
+
+
     public void ReturnToTown()
     {
-        Debug.Log("마을로 이동");
+        /*Debug.Log("마을로 이동");
 
-        total_Gold = 0;
-        total_Exp = 0;
+    total_Gold = 0;
+    total_Exp = 0;
 
-        GameMgr.playerData[0].cur_Player_Sn -= 5;
+    GameMgr.playerData[0].cur_Player_Sn -= 5;
+    GameMgr.playerData[0].cur_Player_Hp = GameMgr.playerData[0].max_Player_Hp;
+
+    GameUiMgr.single.GameSave();
+
+    SceneManager.LoadScene("Town");*/
+
+        Debug.Log("Now_cur - exp" + GameMgr.playerData[0].player_cur_Exp);
+        Debug.Log("Now_max - exp" + GameMgr.playerData[0].player_max_Exp);
+
+        //GameMgr.playerData[0].GetPlayerExp(40);
+
+        Debug.Log("PlayerData - QID: " + GameUiMgr.single.questMgr.questId);
+        Debug.Log("PlayerData - AID: " + GameUiMgr.single.questMgr.questActionIndex);
+        Debug.Log("NowGold: " + GameMgr.playerData[0].player_Gold);
+        Debug.Log("Now_SN" + GameMgr.playerData[0].cur_Player_Sn);
+        Debug.Log("Now_HP" + GameMgr.playerData[0].cur_Player_Hp);
+
+        Debug.Log("Now_Lv" + GameMgr.playerData[0].player_level);
+        Debug.Log("Now_cur - exp" + GameMgr.playerData[0].player_cur_Exp);
+        Debug.Log("Now_max - exp" + GameMgr.playerData[0].player_max_Exp);
+
+        Debug.Log("Load Type: " + GameMgr.single.LoadChecker());
+
+        GameMgr.playerData[0].cur_Player_Sn -= 15;
+        //GameMgr.playerData[0].cur_Player_Hp -= 15;
         GameMgr.playerData[0].cur_Player_Hp = GameMgr.playerData[0].max_Player_Hp;
 
-        //GameMgr.single.IsGameLoad(true);
         GameUiMgr.single.GameSave();
+        GameMgr.single.IsGameLoad(true);
+        Debug.Log("Load Type: " + GameMgr.single.LoadChecker());
 
         StartCoroutine(ReturnToTownFadeOut());
     }

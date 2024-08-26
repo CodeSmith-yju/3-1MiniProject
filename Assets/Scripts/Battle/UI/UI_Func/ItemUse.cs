@@ -19,7 +19,7 @@ public class ItemUse : MonoBehaviour
         item_Cnt_Text.text = item_Cnt.ToString();
     }
 
-    public void ShowPostionUI ()
+    public void ShowPostionUI()
     {
         party_stat = GameObject.FindObjectsOfType(typeof(StatManager)) as StatManager[];
 
@@ -67,7 +67,7 @@ public class ItemUse : MonoBehaviour
                 {
                     if ((player.player.cur_Player_Hp + 5f) <= player.player.max_Player_Hp)
                     {
-                        if (player.isDeploy && BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy)
+                        if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy)
                         {
                             foreach (GameObject ally in BattleManager.Instance.deploy_Player_List)
                             {
@@ -80,7 +80,7 @@ public class ItemUse : MonoBehaviour
                                 }
                             }
                         }
-                        else if (player.isDeploy && player.isDeploy && BattleManager.Instance._curphase == BattleManager.BattlePhase.Rest)
+                        else if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Rest)
                         {
                             player_index.cur_Player_Hp += 5f;
                         }
@@ -94,7 +94,7 @@ public class ItemUse : MonoBehaviour
                     }
                     else
                     {
-                        if (player.isDeploy && BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy)
+                        if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy)
                         {
                             foreach (GameObject ally in BattleManager.Instance.deploy_Player_List)
                             {
@@ -107,7 +107,7 @@ public class ItemUse : MonoBehaviour
                                 }
                             }
                         }
-                        else if (player.isDeploy && player.isDeploy && BattleManager.Instance._curphase == BattleManager.BattlePhase.Rest)
+                        else if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Rest)
                         {
                             player_index.cur_Player_Hp = player_index.max_Player_Hp;
                         }

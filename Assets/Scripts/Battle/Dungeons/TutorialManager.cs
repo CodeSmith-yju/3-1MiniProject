@@ -122,10 +122,10 @@ public class TutorialManager : MonoBehaviour
                 Debug.Log("배치 단계 튜토리얼 시작");
                 BattleManager.Instance.ui.ui_Tutorial_Deploy.SetActive(true);
 
-                Canvas party_List = BattleManager.Instance.ui.party_List.AddComponent<Canvas>();
+                /*Canvas party_List = BattleManager.Instance.ui.party_List.AddComponent<Canvas>();
                 party_List.additionalShaderChannels = AdditionalCanvasShaderChannels.TexCoord1;
                 party_List.overrideSorting = true;
-                party_List.sortingOrder = 1;
+                party_List.sortingOrder = 1;*/
 
                 if (BattleManager.Instance.ui.ui_Tutorial_Deploy.activeSelf)
                 {
@@ -134,11 +134,11 @@ public class TutorialManager : MonoBehaviour
                 BattleManager.Instance.dialogue.NextDialogue();
                 break;
             case 9:
-                Debug.Log("파티 리스트 튜토리얼");
+                Debug.Log("유닛 생성 튜토리얼");
                 if (BattleManager.Instance.ui.ui_Tutorial_Deploy.activeSelf)
                 {
                     BattleManager.Instance.ui.ui_Tutorial_Deploy.transform.GetChild(quest_cnt - quest_cnt).gameObject.SetActive(false);
-                    BattleManager.Instance.ui.ui_Tutorial_Deploy.transform.GetChild((quest_cnt - quest_cnt) + 1).gameObject.SetActive(true);
+                    //BattleManager.Instance.ui.ui_Tutorial_Deploy.transform.GetChild((quest_cnt - quest_cnt) + 1).gameObject.SetActive(true);
                 }
                 BattleManager.Instance.dialogue.NextDialogue();
                 break;
@@ -176,6 +176,7 @@ public class TutorialManager : MonoBehaviour
                 BattleManager.Instance.dialogue.NextDialogue();
                 break;
             case 14:
+                // 사용하지 않는 튜토리얼 ( 파티 리스트에서 배치 )
                 Debug.Log("유닛 배치 튜토리얼");
                 isDeploy_Tutorial = true;
                 Canvas party_List_Deploy = BattleManager.Instance.ui.party_List.AddComponent<Canvas>();
@@ -298,8 +299,9 @@ public class TutorialManager : MonoBehaviour
                 BattleManager.Instance.dialogue.ONOFF(false);
                 break;
             case 9:
+                // 사용하지 않는 튜토리얼
                 Debug.Log("파티 리스트 UI 튜토리얼 끝");
-                Destroy(BattleManager.Instance.ui.party_List.GetComponent<Canvas>());
+                //Destroy(BattleManager.Instance.ui.party_List.GetComponent<Canvas>());
                 break;
             case 10:
                 Debug.Log("배치 영역 튜토리얼 끝");
@@ -313,6 +315,7 @@ public class TutorialManager : MonoBehaviour
                 BattleManager.Instance.ui.ui_Tutorial_Deploy.transform.GetChild((quest_cnt - quest_cnt) + 3).gameObject.SetActive(false);
                 break;
             case 14:
+                // 사용하지 않는 튜토리얼
                 Debug.Log("유닛 배치 튜토리얼 끝");
                 isDeploy_Tutorial = false;
                 Destroy(BattleManager.Instance.ui.party_List.GetComponent<GraphicRaycaster>());

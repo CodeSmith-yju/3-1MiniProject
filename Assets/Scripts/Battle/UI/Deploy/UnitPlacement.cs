@@ -67,6 +67,4 @@ public class UnitPlacement : MonoBehaviour
 
             return true;
         }
-
-
 }

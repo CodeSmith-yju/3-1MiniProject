@@ -25,8 +25,6 @@ public class StatManager : MonoBehaviour
     public GameObject dead_Check;
     public List<Sprite> portrait_List = new List<Sprite>();
 
-
-    public bool isDeploy;
     public bool isDead;
 
     public void InitStat(PlayerData player, Ally.JobClass type, int level, string name)
@@ -71,30 +69,9 @@ public class StatManager : MonoBehaviour
         }
     }
 
-    private void DeployUnitCheck()
-    {
-        isDeploy = false; // 초기화
-        foreach (GameObject deploy in BattleManager.Instance.deploy_Player_List)
-        {
-            Ally deploy_Ally = deploy.GetComponent<Ally>();
-            if (deploy_Ally.entity_index == player.playerIndex)
-            {
-                isDeploy = true;
-                break;
-            }
-        }
-    }
-
     private void Update()
     {
         UpdateStatus();
-        if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy)
-        {
-            DeployUnitCheck();
-        }
-
-        if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Rest)
-            isDeploy = true;
     }
 
     public void UpdateStatus()
@@ -115,12 +92,6 @@ public class StatManager : MonoBehaviour
                 dead_Check.SetActive(true);
                 isDead = true;
             }
-
-            // 배치 상태 업데이트
-            if (!isDead) 
-            {
-                deploy_Check.SetActive(!isDeploy);
-            }   
         }
     }
 }

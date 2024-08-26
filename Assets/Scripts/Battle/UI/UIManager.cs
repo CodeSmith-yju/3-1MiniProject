@@ -59,17 +59,19 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if (!mini_Map_Big.activeSelf)
+            if (!dialogue_Box.activeSelf)
             {
-                BattleManager.Instance.room.map_Big_Camera.gameObject.SetActive(true);
-                mini_Map_Big.SetActive(true);
+                if (!mini_Map_Big.activeSelf)
+                {
+                    BattleManager.Instance.room.map_Big_Camera.gameObject.SetActive(true);
+                    mini_Map_Big.SetActive(true);
+                }
+                else
+                {
+                    BattleManager.Instance.room.map_Big_Camera.gameObject.SetActive(false);
+                    mini_Map_Big.SetActive(false);
+                }
             }
-            else
-            {
-                BattleManager.Instance.room.map_Big_Camera.gameObject.SetActive(false);
-                mini_Map_Big.SetActive(false);
-            }
-            
         }
     }
 
