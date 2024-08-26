@@ -69,6 +69,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     [Header("Player Options")]
     public GameObject player;
+    public PlaceState nowPlayerPlace;
+    public Transform[] arySpawnPoint;
 
     [Header("Quest Manager")]
     public QuestMgr questMgr;//퀘스트 번호를 가져올 퀘스트 매니저 변수 생성
@@ -83,7 +85,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     [HideInInspector] public bool activeInventory = false;
     //03-31 variable Inventoty - try.4LocalDataStore
     public Slot[] slots;
-    public Transform slotHolder;
+    public Transform slotHolder;// 인벤토리의 아이템슬롯 오브젝트가 들어가는 부모 오브젝트 위치
     //04-21 Inventory Slot Drag items
     public Image dragIcon;
     public Slot nowSlot;
@@ -162,6 +164,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public bool uiEventCk = true;
 
+    // Item ShopUI
+    [SerializeField] ShopMgr shopMgr;
+
     private void Awake()
     {
         single = this;
@@ -169,9 +174,12 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     public void AddItemTest()
     {
         Debug.Log("AddItem");
-
-        Item newItem = ItemResources.instance.itemRS[UnityEngine.Random.Range(1,6)]; // 새로운 아이템 생성
+        //아 버그 왜 생기는거냐 진짜 소모아이템생성로직에 문제가있는데
+        Item newItem = ItemResources.instance.itemRS[Random.Range(0,2)]; // 새로운 아이템 생성
         inventory.AddItem(newItem); // 인벤토리에 아이템 추가,
+
+        Debug.Log("Make A NewItem Code: " + newItem.itemCode);
+
         RedrawSlotUI();
     }
     public void ValueUpdate()
@@ -207,7 +215,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     private void Start()
     {
         //03-31 Start Inventory - try.4
-        inventory = Inventory.single;
+        inventory = Inventory.Single;
         
         inventory_panel.SetActive(activeInventory);
         inventory.onSlotCountChange += SlotChange;
@@ -281,6 +289,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
         //Tooltip
         canvaseWidth = canvas_Tooltip.GetComponent<CanvasScaler>().referenceResolution.x * 0.5f;
+
+
     }
 
     //03-31 Method Inventory - try.4
@@ -301,22 +311,26 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     {
         inventory.SlotCnt += 5;
     }
-    public void RedrawSlotUI()
+    public void RedrawSlotUI()// 08-14 수정
     {
-        for(int i = 0; i< slots.Length;i++)
+        // 모든 슬롯 초기화
+        for (int i = 0; i < slots.Length; i++)
         {
             slots[i].RemoveSlot();
         }
-        for(int i = 0; i< inventory.items.Count; i++)
+
+        // 아이템 개수만큼만 슬롯 업데이트
+        int itemCount = Mathf.Min(inventory.items.Count, slots.Length);
+        for (int i = 0; i < itemCount; i++)
         {
             slots[i].item = inventory.items[i];
             slots[i].item.itemIndex = i;
-            //Debug.Log(slots[i].item.itemIndex);
 
-            if (slots[i].name == ItemResources.instance.itemRS[i].itemName)
+            if (i < ItemResources.instance.itemRS.Count && slots[i].name == ItemResources.instance.itemRS[i].itemName)
             {
                 slots[i].item.itemCode = ItemResources.instance.itemRS[i].itemCode;
             }
+
             slots[i].UpdateSloutUI();
         }
     }
@@ -958,15 +972,15 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             }
         }
         // 사용한 아이템 제거 
-        inventory.RemoveItem(slots[index].slotnum);
+        inventory.RemoveItem(slots[index].item);
         RedrawSlotUI();
 
         nowSlot = null;
 
         addEquipPanel.gameObject.SetActive(false);
     }
-    //06- 12
-    public void ApplyEquipPower(bool _onoff, Item _equip)
+
+    public void ApplyEquipPower(bool _onoff, Item _equip)//07-20 Fix
     {
         float equipPower;
 
@@ -982,39 +996,81 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
 
         Debug.Log("Now EquipItem Power: " + _equip.itemPower);
-        switch (_equip.itemType)
+
+        if (equipPower > 0)
         {
-            case Item.ItemType.Equipment_Helmet:
-                Debug.Log("장착전 HP: " + GameMgr.playerData[0].max_Player_Hp);
-                GameMgr.playerData[0].max_Player_Hp += equipPower;
+            switch (_equip.itemType)
+            {
+                case Item.ItemType.Equipment_Helmet:
+                    Debug.Log("장착전 HP: " + GameMgr.playerData[0].max_Player_Hp);
+                    GameMgr.playerData[0].max_Player_Hp += equipPower;
 
-                Debug.Log("장착후 HP: "+GameMgr.playerData[0].max_Player_Hp);
-                break;
-            case Item.ItemType.Equipment_Arrmor:
-                Debug.Log("장착전 Range: " + GameMgr.playerData[0].atk_Range);
-                GameMgr.playerData[0].atk_Range += equipPower;
+                    Debug.Log("장착후 HP: " + GameMgr.playerData[0].max_Player_Hp);
+                    break;
+                case Item.ItemType.Equipment_Arrmor:
+                    Debug.Log("장착전 Range: " + GameMgr.playerData[0].atk_Range);
+                    GameMgr.playerData[0].atk_Range += equipPower;
 
-                Debug.Log("장착후 Range: " + GameMgr.playerData[0].atk_Range);
-                break;
-            case Item.ItemType.Equipment_Weapon:
-                Debug.Log("장착전 Dmg: " + GameMgr.playerData[0].base_atk_Dmg);
-                GameMgr.playerData[0].base_atk_Dmg += equipPower;
+                    Debug.Log("장착후 Range: " + GameMgr.playerData[0].atk_Range);
+                    break;
+                case Item.ItemType.Equipment_Weapon:
+                    Debug.Log("장착전 Dmg: " + GameMgr.playerData[0].base_atk_Dmg);
+                    GameMgr.playerData[0].base_atk_Dmg += equipPower;
 
-                Debug.Log("장착후 Dmg: " + GameMgr.playerData[0].base_atk_Dmg);
-                break;
-            case Item.ItemType.Equipment_Boots:
-                Debug.Log("장착전 SPD: " + GameMgr.playerData[0].atk_Speed);
-                GameMgr.playerData[0].atk_Speed += equipPower;
+                    Debug.Log("장착후 Dmg: " + GameMgr.playerData[0].base_atk_Dmg);
+                    break;
+                case Item.ItemType.Equipment_Boots:
+                    Debug.Log("장착전 SPD: " + GameMgr.playerData[0].atk_Speed);
+                    GameMgr.playerData[0].atk_Speed += equipPower;
 
-                Debug.Log("장착후 SPD: " + GameMgr.playerData[0].atk_Speed);
-                break;
-            /*case Item.ItemType.Consumables:
-                break;
-            case Item.ItemType.Ect:
-                break;*/
-            default:
-                break;
+                    Debug.Log("장착후 SPD: " + GameMgr.playerData[0].atk_Speed);
+                    break;
+                /*case Item.ItemType.Consumables:
+                    break;
+                case Item.ItemType.Ect:
+                    break;*/
+                default:
+                    break;
+            }
         }
+        else
+        {
+            switch (_equip.itemType)
+            {
+                case Item.ItemType.Equipment_Helmet:
+                    Debug.Log("장비 해제 전 HP: " + GameMgr.playerData[0].max_Player_Hp);
+                    GameMgr.playerData[0].max_Player_Hp += equipPower;
+
+                    Debug.Log("장비 해제 후 HP: " + GameMgr.playerData[0].max_Player_Hp);
+                    break;
+                case Item.ItemType.Equipment_Arrmor:
+                    Debug.Log("장비 해제 전 Range: " + GameMgr.playerData[0].atk_Range);
+                    GameMgr.playerData[0].atk_Range += equipPower;
+
+                    Debug.Log("장비 해제 후 Range: " + GameMgr.playerData[0].atk_Range);
+                    break;
+                case Item.ItemType.Equipment_Weapon:
+                    Debug.Log("장비 해제 전 Dmg: " + GameMgr.playerData[0].base_atk_Dmg);
+                    GameMgr.playerData[0].base_atk_Dmg += equipPower;
+
+                    Debug.Log("장비 해제 후 Dmg: " + GameMgr.playerData[0].base_atk_Dmg);
+                    break;
+                case Item.ItemType.Equipment_Boots:
+                    Debug.Log("장비 해제 전 SPD: " + GameMgr.playerData[0].atk_Speed);
+                    GameMgr.playerData[0].atk_Speed += equipPower;
+
+                    Debug.Log("장비 해제 후 SPD: " + GameMgr.playerData[0].atk_Speed);
+                    break;
+                /*case Item.ItemType.Consumables:
+                    break;
+                case Item.ItemType.Ect:
+                    break;*/
+                default:
+                    break;
+            }
+        }
+
+
     }
 
     public bool AllEquipChek()
@@ -1468,8 +1524,22 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         poolMoveInSlot[0].btnMy.interactable = false;
         /*        PartySlot nSlot = new();
                 nSlot.Init(pd);*/
-
-        
     }
 
+    public void ChangePlayerPlace(PlaceState _playerState)// 플레이어 스폰 포인트(= arySpawnPoint) 값을 사전에 인스펙터창에서 등록하여 enum값과 통일시켜주어서 State값으로 이동하는기능 
+    {
+        player.transform.position = arySpawnPoint[((int)_playerState)].position;
+
+        MovePlayerPlace((int)_playerState);
+    }
+    public void MovePlayerPlace(int _stateIndex)
+    {
+        nowPlayerPlace = (PlaceState)_stateIndex;
+    }
+}
+public enum PlaceState
+{
+    Guild,
+    Town,
+    Act
 }

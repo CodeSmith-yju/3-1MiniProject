@@ -36,6 +36,7 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
     public int playerQuestID;
     public int playerQuestIndex;
 
+    public PlaceState PlaceState;
     //public PartyData partySlotData = null;// Hero.cs ... 에서 동일개체인지 확인하려고 추가한 변수..의미가없는거같기도하고
     public PlayerData(string name)
     {

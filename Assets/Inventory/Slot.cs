@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,17 +13,37 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public bool wearChek = false;
     public bool usability = false;
 
+    [Header("Display")]
+    public TextMeshProUGUI itemStack;// 소모품 개수 표시
+    public TextMeshProUGUI modifyStack;// 강화 수치 표시
     //private bool isDraging;
 
     public void UpdateSloutUI()
     {
         itemIcon.sprite = item.itemImage;
+        if (item.itemType == Item.ItemType.Consumables || item.itemType == Item.ItemType.Ect)
+        {
+            itemStack.text = item.itemStack.ToString();
+            itemStack.gameObject.SetActive(true);
+        }
+        else if (item.itemType == Item.ItemType.Equipment_Helmet || item.itemType == Item.ItemType.Equipment_Weapon || item.itemType == Item.ItemType.Equipment_Boots || item.itemType == Item.ItemType.Equipment_Arrmor)
+        {
+            if (item.modifyStack > 0)
+            {
+                modifyStack.text = item.modifyStack.ToString();
+                modifyStack.gameObject.SetActive(true);
+            }
+        }
+
         itemIcon.gameObject.SetActive(true);
     }
     public void RemoveSlot()
     {
         item = null;
         itemIcon.gameObject.SetActive(false);
+
+        itemStack.gameObject.SetActive(false);
+        modifyStack.gameObject.SetActive(false);
     }
     public void CallGUISlot()
     {
@@ -89,7 +110,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         AudioManager.single.PlaySfxClipChange(0);
         Debug.Log("Run SFX sound index: 0");
 
-        if (this.usability == true  && this.wearChek == false)//인벤토리 좌측의 장착아이템 목록이면서, 장비를 장착 중이 아닐때 상호작용불가능하게함.
+        if (this.usability == true  && this.wearChek == false)//인벤토리 좌측의 장착아이템 목록이면서, 장비를 장착 중이 아닐때 상호작용불가능하게함. = 장비칸에 장비없을때 건드려지면안된다고
         {
             return;
         }
@@ -129,7 +150,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                             GameUiMgr.single.questMgr.receptionist[0].SetActive(false);
                             GameUiMgr.single.questMgr.receptionist[1].SetActive(true);
                         }
-                        Inventory.single.RemoveItem(slotnum);
+                        Inventory.Single.RemoveItem(item);
+                        UpdateStack();
                         GameUiMgr.single.tooltip.SetActive(false);
                     }
                     break;
@@ -159,4 +181,19 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     }
 
+    public void UpdateStack()
+    {
+        if (item.itemStack == 0)
+        {
+            GameUiMgr.single.RedrawSlotUI();
+        }
+        if (itemStack.gameObject.activeSelf)
+        {
+            itemStack.text = item.itemStack.ToString();
+        }
+        if (modifyStack.gameObject.activeSelf)
+        {
+            modifyStack.text = item.modifyStack.ToString();
+        }
+    }
 }

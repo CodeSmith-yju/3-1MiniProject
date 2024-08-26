@@ -30,7 +30,6 @@ public class TalkMgr : MonoBehaviour // 대화 데이터를 관리할 매니저 
         dictTalkData.Add(7000, new string[] { "문"});
         dictTalkData.Add(8000, new string[] { "던전"});
 
-        //Quest talk
         //dictTalkData.Add(01 + 1000, new string[] { "안녕! :0", "이 곳에 처음 왔구나?:1", "나는 루나라고해!:2" });
         dictTalkData.Add(10 + 1000, new string[] {
             "견습 모험가님 안녕하세요. 9급 모험가 시험에 응시하러 오셨군요. :0",
