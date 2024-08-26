@@ -77,8 +77,8 @@ public class TalkMgr : MonoBehaviour // 대화 데이터를 관리할 매니저 
         });
         // QestRange-40, NPC-2000
         dictTalkData.Add(40 + 2000, new string[] {
-            "던전을 클리어하고 오셨군요! 이제부터 "+GameMgr.playerData[0].GetPlayerName()+" 모험가님은 정식으로 9급 모험가가 되셨습니다.:0",
-            "앞으로도 "+GameMgr.playerData[0].GetPlayerName()+" 9급 모험가님의 활약을 기대하겠습니다.:0"
+            "던전을 클리어하고 오셨군요! \n이제부터 "+GameMgr.playerData[0].GetPlayerName()+" 모험가님은 정식으로 9급 모험가가 되셨습니다.:0",
+            "앞으로도 "+GameMgr.playerData[0].GetPlayerName()+" 9급 모험가님의 \n활약을 기대하겠습니다.:0"
         });
 
 

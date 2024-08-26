@@ -158,6 +158,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public bool uiEventCk = true;
 
+
+    public static int livingQId;
+    public static int livingQAction;
     private void Awake()
     {
         single = this;
@@ -614,12 +617,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
             talkIndex = 0;
             questDesc.text = questMgr.CheckQuest(scanObj_ID);
-                /*if (questMgr.questId ==10 && questMgr.questActionIndex == 0)
-                {
-                    questMgr.receptionist[0].SetActive(false);
-                    questMgr.receptionist[1].SetActive(true);
-                }*/
-
+            /*if (questMgr.questId ==10 && questMgr.questActionIndex == 0)
+            {
+                questMgr.receptionist[0].SetActive(false);
+                questMgr.receptionist[1].SetActive(true);
+            }*/
                 return;
         }
 
@@ -676,7 +678,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             }
         }
 
-        SaveData gameSaveData = new SaveData(GameMgr.playerData[0].GetPlayerName(), playerLevel, playerGold, questMgr.questId, questMgr.questActionIndex, 
+        livingQId = questMgr.questId;
+        livingQAction = questMgr.questActionIndex;
+
+        SaveData gameSaveData = new SaveData(GameMgr.playerData[0].GetPlayerName(), playerLevel, playerGold, livingQId, livingQAction, 
             player_Max_HP, player_Cur_HP, player_Max_SN, player_Cur_SN, player_Max_MP, player_Cur_MP, 
             player_Atk_Speed, player_Atk_Range, player_Base_Atk_Dmg, 
             player_Max_EXP, player_Cur_EXP, 
@@ -1054,8 +1059,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public void TutorialDungeonClear()
     {
-
         Debug.Log("튜토리얼 던전 클리어");
+        tmp_PlayerRating.text = "9급 모험가";
         Receptionist_1();
         Debug.Log("Run Method: Recep_1");
     }
