@@ -7,10 +7,24 @@ public class BoxOpen : MonoBehaviour
     public Animator ani;
     public GameObject mimic;
     bool isSetTutorial;
+    int isMimic;
 
     private void Awake()
     {
         ani = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        if (!BattleManager.Instance.dialogue.isTutorial)
+        {
+            isMimic = Random.Range(0, 2);
+
+            if (isMimic == 1)
+            {
+                gameObject.tag = "Mimic";
+            }
+        }
     }
 
     private void OnMouseDown()

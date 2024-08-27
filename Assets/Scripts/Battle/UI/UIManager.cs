@@ -167,4 +167,12 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(aniInfo.length);
         CancelPopup(banner);
     }
+
+
+    public void ShowMoveToRoomUI()
+    {
+        // 방 이동 UI 띄우기
+    }
+
+
 }
