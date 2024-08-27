@@ -166,7 +166,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     // Item ShopUI
     [SerializeField] ShopMgr shopMgr;
-
+    public Transform trBasket;
+    public Basket goBasket;
+    public List<Basket> baskets;
     private void Awake()
     {
         single = this;

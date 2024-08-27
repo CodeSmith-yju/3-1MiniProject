@@ -690,7 +690,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2655993494726722555}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2911384830145528606}
+        m_TargetAssemblyTypeName: Basket, Assembly-CSharp
+        m_MethodName: ClickMinus
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3417799905787090880
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,7 +976,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1493498155402576855}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2911384830145528606}
+        m_TargetAssemblyTypeName: Basket, Assembly-CSharp
+        m_MethodName: ClickPlus
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4941612206949417452
 GameObject:
   m_ObjectHideFlags: 0
@@ -1148,6 +1172,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8180aa975cd154ca8d4fc41cffe360, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mySlot: {fileID: 0}
+  BasketStack: {fileID: 6519786507506312825}
+  BasketName: {fileID: 1695265632032872262}
+  stack: 0
+  Icon: {fileID: 3474975048575040742}
+  btnPlus: {fileID: 3138356467241937961}
+  btnMinus: {fileID: 5759156368792941066}
 --- !u!1 &5414256366391506444
 GameObject:
   m_ObjectHideFlags: 0

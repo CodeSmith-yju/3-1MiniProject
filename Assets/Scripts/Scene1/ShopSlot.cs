@@ -21,7 +21,8 @@ public class ShopSlot : MonoBehaviour
     public TextMeshProUGUI textItemStack;
     public TextMeshProUGUI textItemModifyStack;
     public Image imgSlodOut;
-    
+    public Image imgUse;
+
     public Image slotIcon;
     
     public void Init(Item _item, ShopState _state)
@@ -42,7 +43,7 @@ public class ShopSlot : MonoBehaviour
         DrawBuyShop(item);
     }
 
-    public void DrawBuyShop(Item _item)//상점 '구매'아이템 표시 초기화
+    public void DrawBuyShop(Item _item)//상점 아이템 표시 초기화
     {
         if (_item.itemType == Item.ItemType.Consumables || _item.itemType == Item.ItemType.Ect)
         {
@@ -75,8 +76,23 @@ public class ShopSlot : MonoBehaviour
                 textItemModifyStack.gameObject.SetActive(false);
         }
     }
-    void DrawSellShop()//상점 '판매'아이템 표시 초기화
+    public Item GetItem()//상점 '판매'아이템 표시 초기화
     {
+        return item;
+    }
 
+    public void InBasket()
+    {
+        // 프리팹을 인스턴스화하여 ShopSlot을 생성
+        Basket basket = Instantiate(GameUiMgr.single.goBasket, GameUiMgr.single.trBasket);
+
+        // 생성된 슬롯 초기화
+        basket.Init(this);
+
+        // 생성된 슬롯을 리스트에 추가
+        GameUiMgr.single.baskets.Add(basket);
+
+        imgUse.gameObject.SetActive(true);
+        this.GetComponent<Button>().interactable = false;
     }
 }

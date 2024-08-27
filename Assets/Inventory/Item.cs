@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 [System.Serializable]
@@ -48,5 +49,15 @@ public class Item
         return isUsed;
     }
     //뭔가 장비아이템을 사용할때 사용될 메서드를 여기다 만들어야하는듯..?
+    public Item ModifyPowerSet(Item _item)
+    {
+        if (_item.modifyStack > 0)
+        {
+            _item.itemPower *= 1.1f;
+            _item.itemPrice = _item.itemPrice + (int)(_item.itemPrice * 0.1f)* _item.modifyStack;
+        }
+
+        return _item;
+    }
 }
 
