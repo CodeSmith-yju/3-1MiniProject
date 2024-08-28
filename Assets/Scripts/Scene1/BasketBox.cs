@@ -8,7 +8,7 @@ public class BasketBox : MonoBehaviour
 {
     public ShopMgr shopMgr;
     [SerializeField] ShopSlot mySlot;
-    [SerializeField] Item myItem;
+    [SerializeField] Item myItem;//디버그용으로 넣어둔거임 이제 필요없긴한데 놔둬도 딱히 문제는 안될듯
 
     public TextMeshProUGUI BasketStack;
     public TextMeshProUGUI BasketName;
@@ -73,7 +73,7 @@ public class BasketBox : MonoBehaviour
         BasketStack.text = stack.ToString();
     }
 
-    bool StackCk(ShopSlot _shopSlot)
+    bool StackCk(ShopSlot _shopSlot)// +- 버튼클릭할때 스텍관리하기 위함
     {
         if (mySlot.GetItem().itemType == Item.ItemType.Consumables || mySlot.GetItem().itemType == Item.ItemType.Ect)
             return true;

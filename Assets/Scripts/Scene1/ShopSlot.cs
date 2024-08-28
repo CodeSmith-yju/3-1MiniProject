@@ -80,7 +80,7 @@ public class ShopSlot : MonoBehaviour
                 textItemModifyStack.gameObject.SetActive(false);
         }
     }
-    public Item GetItem()//상점 '판매'아이템 표시 초기화
+    public Item GetItem()
     {
         return item;
     }
@@ -133,6 +133,19 @@ public class ShopSlot : MonoBehaviour
         {
             slotMy.interactable = true;
             imgUse.gameObject.SetActive(false);
+        }
+    }
+    public void SoldOut(bool active)
+    {
+        if (active)
+        {
+            slotMy.interactable = false;
+            imgSlodOut.gameObject.SetActive(true);
+        }
+        else
+        {
+            slotMy.interactable = true;
+            imgSlodOut.gameObject.SetActive(false);
         }
     }
 }

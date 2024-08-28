@@ -97,7 +97,8 @@ public class Inventory : MonoBehaviour
                 modifyStack = _item.modifyStack,
                 itemName = _item.itemName,
                 itemImage = _item.itemImage,
-                efts = new List<ItemEffect>(_item.efts),
+                //efts = new List<ItemEffect>(_item.efts),
+                efts = _item.efts != null ? new List<ItemEffect>(_item.efts) : new List<ItemEffect>(),  // null 체크 추가
                 itemTitle = _item.itemTitle,
                 itemDesc = _item.itemDesc,
                 itemIndex = items.Count,
@@ -175,5 +176,48 @@ public class Inventory : MonoBehaviour
                 Debug.Log("Inventory Is Full");
             }
         }
+    }
+
+    public void SortingStackItems()
+    {
+        List<Item> soltingNow = new();// 일단 정렬용 스왑 배열 하나 만들고
+
+        //현재 인벤토리의 모든 아이템들을 체크해서 소모품아이템들 들어내고
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].itemType == Item.ItemType.Consumables || items[i].itemType == Item.ItemType.Ect)
+            {
+                Item originalItem = items[i];
+
+                Item item = new Item
+                {
+                    itemCode = originalItem.itemCode,
+                    itemName = originalItem.itemName,
+                    itemType = originalItem.itemType,
+                    itemImage = originalItem.itemImage,
+                    itemPrice = originalItem.itemPrice,
+                    itemPower = originalItem.itemPower,
+                    itemDesc = originalItem.itemDesc,
+                    itemStack = items[i].itemStack,
+                    modifyStack = items[i].modifyStack
+                };
+
+                soltingNow.Add(item);
+                items.Remove(item);
+            }
+        }
+
+        //들어낸 아이템들 갯수만큼 for문돌리는데
+        for (int i = 0; i < soltingNow.Count; i++)
+        {
+            //for문돌아가는동안 해당아이템의 stack만큼 소모품이면 Add해야하니까
+            for (int j = 0; j < soltingNow[i].itemStack; j++)
+            {
+                //해당 소모품과 동일한 아이템을 생성해서 기존의 아이템과 분리좀 해 주고
+                Item ni = ItemResources.instance.itemRS[soltingNow[i].itemCode];
+                AddItem(ni);
+            }
+        }
+
     }
 }

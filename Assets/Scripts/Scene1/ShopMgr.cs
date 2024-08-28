@@ -234,4 +234,48 @@ public class ShopMgr : MonoBehaviour
     // Tab Open
     public void ClickBuyTab() { OpenTap(ShopState.BUY); }
     public void ClickSellTab() { OpenTap(ShopState.SELL); }
+
+    public void OnClickPayBtn()
+    {
+        if (shopState == ShopState.BUY)// 구매
+        {
+            if (basketsPrice <= 1500)//basketsPrice <= GameMgr.playerData[0].player_Gold
+            {
+                //TODO: baskets 아이템들이 Inventory로 들어가고, 해당 shopSlots[i].soldOut.Active(true), shopSlots.Clear();
+                //shopSlots[baskets[i].BasketShopIndex()].GetItem().itemType == Item.ItemType.Consumables || shopSlots[baskets[i].BasketShopIndex()].GetItem().itemType == Item.ItemType.Ect
+                for (int i = 0; i < baskets.Count; i++)
+                {
+                    if (baskets[i].stack == 0)
+                    {
+                        continue;
+                    }
+
+                    //구매한 아이템의 구매가능갯수만큼 차감, 차감 후 개수가 0일경우 SoldOut
+                    int lastStack = shopSlots[baskets[i].BasketShopIndex()].GetItem().itemStack - baskets[i].stack;
+                    shopSlots[baskets[i].BasketShopIndex()].GetItem().itemStack = baskets[i].stack;
+
+                    Inventory.Single.AddItem(shopSlots[baskets[i].BasketShopIndex()].GetItem());//추가
+                    if (lastStack == 0)
+                    {
+                        shopSlots[baskets[i].BasketShopIndex()].SoldOut(true);
+                    }
+                    else
+                    {
+                        shopSlots[baskets[i].BasketShopIndex()].GetItem().itemStack = lastStack;
+                    }
+                }
+                //정렬
+                Inventory.Single.SortingStackItems();
+            }
+            else
+            {
+                //TODO: 구매실패 or 그냥 장바구니금액 > 보유골드 이면 버튼자체가 활성화 안되게 해야할듯.
+                Debug.Log("구매 실패");
+            }
+        }
+        else if (shopState == ShopState.SELL)// 판매
+        {
+            // 
+        }
+    }
 }

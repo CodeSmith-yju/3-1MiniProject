@@ -54,10 +54,11 @@ public class Item
         if (_item.modifyStack > 0)
         {
             _item.itemPower *= 1.1f;
-            _item.itemPrice = _item.itemPrice + (int)(_item.itemPrice * 0.1f)* _item.modifyStack;
+            _item.itemPrice = _item.itemPrice + (int)(_item.itemPrice * 0.1f) * _item.modifyStack;
         }
 
         return _item;
     }
+
 }
 
