@@ -164,11 +164,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public bool uiEventCk = true;
 
-    // Item ShopUI
+    [Header("Shop UI")]
     [SerializeField] ShopMgr shopMgr;
-    public Transform trBasket;
-    public Basket goBasket;
-    public List<Basket> baskets;
+
     private void Awake()
     {
         single = this;
@@ -293,6 +291,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         canvaseWidth = canvas_Tooltip.GetComponent<CanvasScaler>().referenceResolution.x * 0.5f;
 
 
+        shopMgr.RefreshShopItems();
     }
 
     //03-31 Method Inventory - try.4

@@ -4,8 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Basket : MonoBehaviour
+public class BasketBox : MonoBehaviour
 {
+    public ShopMgr shopMgr;
     [SerializeField] ShopSlot mySlot;
     [SerializeField] Item myItem;
 
@@ -36,7 +37,7 @@ public class Basket : MonoBehaviour
             if (stack < maxStack)
             {
                 stack++;
-
+                shopMgr.CalcPrice(mySlot.slotPirce);
                 if (stack == maxStack)
                 {
                     btnPlus.interactable = false;
@@ -57,6 +58,7 @@ public class Basket : MonoBehaviour
         if (0 < stack)
         {
             stack--;
+            shopMgr.CalcPrice(mySlot.slotPirce * -1);
             if (stack == 0)
             {
                 btnMinus.interactable = false;
@@ -76,5 +78,10 @@ public class Basket : MonoBehaviour
         if (mySlot.GetItem().itemType == Item.ItemType.Consumables || mySlot.GetItem().itemType == Item.ItemType.Ect)
             return true;
         return false;
+    }
+
+    public int BasketShopIndex()
+    {
+        return mySlot.shopIndex;
     }
 }

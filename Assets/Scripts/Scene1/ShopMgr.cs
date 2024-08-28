@@ -1,11 +1,8 @@
 using DarkPixelRPGUI.Scripts.UI.Equipment;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using Unity.VisualScripting.Antlr3.Runtime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class ShopMgr : MonoBehaviour
 {
@@ -26,17 +23,28 @@ public class ShopMgr : MonoBehaviour
     public Transform tfBuy;
     public Transform tfSell;
 
+    [Header("장바구니")]
+    public Transform trBasketBox;
+    public BasketBox prBasketBox;
+
+    public List<BasketBox> baskets;
+
+    public TextMeshProUGUI calcPrice;
+    public TextMeshProUGUI PayText;
+
+    public int basketsPrice;
     //[SerializeField] Button btnBuy;// TODO: Add SoundEv 
 
     private void Start()
     {
         shopState = ShopState.BUY;
         OpenTap(shopState);
-        RefreshiShopItems();
+        RefreshShopItems();
     }
 
-    public void RefreshiShopItems()
+    public void RefreshShopItems()
     {
+        Debug.Log("Make Shop Items");
         //이 아래의 for문 생성로직은 GameUIMgr로 빼내야할거같음 여기서관리하기엔조금? 연계된 기능이많은듯
         for (int i = 0; i < 12; i++)
         {
@@ -52,7 +60,9 @@ public class ShopMgr : MonoBehaviour
                 itemImage = originalItem.itemImage,
                 itemPrice = originalItem.itemPrice,
                 itemPower = originalItem.itemPower,
-                itemDesc = originalItem.itemDesc
+                itemDesc = originalItem.itemDesc,
+                itemStack = originalItem.itemStack,
+                modifyStack = originalItem.modifyStack
             };
 
             if (newItem.itemType == Item.ItemType.Consumables)
@@ -72,40 +82,58 @@ public class ShopMgr : MonoBehaviour
             slot.Init(newItem, ShopState.BUY);
 
             slot.shopIndex = i;
-
+            slot.ShopMgrSet(this);
             // 생성된 슬롯을 리스트에 추가
             shopSlots.Add(slot);
         }
     }
 
-    void SellItems()
+    void SetSellItems()
     {
         // 기존의 playerShopItems 슬롯을 모두 비활성화
         if (playerShopItems.Count > 0)
         {
-            foreach (ShopSlot _slot in playerShopItems)
+            for (int i = 0; i < playerShopItems.Count; i++)
             {
-                _slot.gameObject.SetActive(false);
+                playerShopItems[i].gameObject.SetActive(false);
             }
         }
+
+        List<ShopSlot> inactiveSlots = new List<ShopSlot>(playerShopItems);
+        playerShopItems.Clear();
 
         // 인벤토리의 모든 아이템을 가져와 슬롯에 추가
         for (int i = 0; i < Inventory.Single.items.Count; i++)
         {
-            Item _item = ItemResources.instance.itemRS[Inventory.Single.items[i].itemCode];
-            _item.itemStack = Inventory.Single.items[i].itemStack;
+            Item originalItem = ItemResources.instance.itemRS[Inventory.Single.items[i].itemCode];
+
+            Item _item = new Item
+            {
+                itemCode = originalItem.itemCode,
+                itemName = originalItem.itemName,
+                itemType = originalItem.itemType,
+                itemImage = originalItem.itemImage,
+                itemPrice = originalItem.itemPrice,
+                itemPower = originalItem.itemPower,
+                itemDesc = originalItem.itemDesc,
+                itemStack = Inventory.Single.items[i].itemStack,
+                modifyStack = Inventory.Single.items[i].modifyStack
+            };
 
             // 비활성화된 슬롯을 재사용하거나, 새로운 슬롯을 생성
-            ShopSlot sellSlot = PoolShopSlot(playerShopItems);
+            ShopSlot sellSlot = PoolShopSlot(inactiveSlots);
             if (sellSlot == null)
             {
                 sellSlot = Instantiate(slotPrefab, tfSell);
             }
             // 슬롯 초기화
             sellSlot.Init(_item, ShopState.SELL);
+            sellSlot.shopIndex = i;
+            sellSlot.ShopMgrSet(this);
 
             playerShopItems.Add(sellSlot);
         }
+        inactiveSlots.Clear();
     }
 
     ShopSlot PoolShopSlot(List<ShopSlot> _s)
@@ -123,6 +151,12 @@ public class ShopMgr : MonoBehaviour
 
     void OpenTap(ShopState _state)// isOpen == true '판매'탭 활성, isOpen == false '구매'탭 활성
     {
+        basketsPrice = 0;
+        for (int i = 0; i < baskets.Count; i++)
+        {
+            baskets[i].gameObject.SetActive(false);
+        }
+
         if (_state == ShopState.BUY)
         {
             buyTab.interactable = false;
@@ -131,6 +165,9 @@ public class ShopMgr : MonoBehaviour
             //TODO: Buy ImageObejct Active, Sell ImageObject unActive
             buyPannel.SetActive(true);
             sellPannel.SetActive(false);
+
+            PayText.text = "구매";
+            calcPrice.text = basketsPrice.ToString();
         }
         else if (_state == ShopState.SELL)
         {
@@ -140,8 +177,43 @@ public class ShopMgr : MonoBehaviour
             buyPannel.SetActive(false);
             sellPannel.SetActive(true);
 
-            SellItems();
+            SetSellItems();
+
+            PayText.text = "판매";
+            calcPrice.text = basketsPrice.ToString();
+
         }
+
+        /*if (baskets.Count > 0)
+        {
+            for (int i = 0; i < baskets.Count; i++)
+            {
+                if (_state == ShopState.BUY)
+                {
+                    shopSlots[baskets[i].BasketShopIndex()].UseImgSet(false);
+                }
+                else
+                {
+                    playerShopItems[baskets[i].BasketShopIndex()].UseImgSet(false);
+                }
+            }
+        }*/
+        if (baskets.Count > 0)
+        {
+            for (int i = 0; i < baskets.Count; i++)
+            {
+                int basketIndex = baskets[i].BasketShopIndex();
+                if (_state == ShopState.BUY && basketIndex < shopSlots.Count)
+                {
+                    shopSlots[basketIndex].UseImgSet(false);
+                }
+                else if (_state == ShopState.SELL && basketIndex < playerShopItems.Count)
+                {
+                    playerShopItems[basketIndex].UseImgSet(false);
+                }
+            }
+        }
+
     }
 
     public List<ShopSlot> GetShopSlots()
@@ -151,6 +223,12 @@ public class ShopMgr : MonoBehaviour
     public void SetShopSlots(ShopSlot _shopSlot)
     {
         shopSlots.Add(_shopSlot);
+    }
+
+    public void CalcPrice(int _price)
+    {
+        basketsPrice += _price;
+        calcPrice.text = basketsPrice.ToString();
     }
 
     // Tab Open

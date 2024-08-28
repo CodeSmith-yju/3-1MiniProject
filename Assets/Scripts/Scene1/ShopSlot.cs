@@ -14,6 +14,7 @@ public class ShopSlot : MonoBehaviour
 {
     [SerializeField] private Item item;
     [SerializeField] private ShopState state;
+    [SerializeField] private ShopMgr shopMgr;
     public int slotPirce = 0;
     public int shopIndex = 0;
 
@@ -24,7 +25,8 @@ public class ShopSlot : MonoBehaviour
     public Image imgUse;
 
     public Image slotIcon;
-    
+
+    private Button slotMy;
     public void Init(Item _item, ShopState _state)
     {
         item = _item;
@@ -41,6 +43,8 @@ public class ShopSlot : MonoBehaviour
         slotIcon.sprite = item.itemImage;
         textItemPrice.text = slotPirce.ToString();
         DrawBuyShop(item);
+
+        slotMy = GetComponent<Button>();
     }
 
     public void DrawBuyShop(Item _item)//상점 아이템 표시 초기화
@@ -84,15 +88,51 @@ public class ShopSlot : MonoBehaviour
     public void InBasket()
     {
         // 프리팹을 인스턴스화하여 ShopSlot을 생성
-        Basket basket = Instantiate(GameUiMgr.single.goBasket, GameUiMgr.single.trBasket);
-
+        BasketBox basket = PoolBasketBox(shopMgr.baskets);
+        if (basket == null)
+        {
+            basket = Instantiate(shopMgr.prBasketBox, shopMgr.trBasketBox);
+        }
         // 생성된 슬롯 초기화
         basket.Init(this);
-
+        basket.shopMgr = shopMgr;
         // 생성된 슬롯을 리스트에 추가
-        GameUiMgr.single.baskets.Add(basket);
+        shopMgr.baskets.Add(basket);
 
-        imgUse.gameObject.SetActive(true);
-        this.GetComponent<Button>().interactable = false;
+        UseImgSet(true);
+
+        //가격 계산
+        shopMgr.CalcPrice(slotPirce);
+    }
+    BasketBox PoolBasketBox(List<BasketBox> _b)
+    {
+        foreach (BasketBox _box in _b)
+        {
+            if (!_box.gameObject.activeSelf)
+            {
+                _box.gameObject.SetActive(true);
+                return _box;
+            }
+        }
+        return null;
+    }
+
+    public void ShopMgrSet(ShopMgr _shopMgr)
+    {
+        shopMgr = _shopMgr;
+    }
+
+    public void UseImgSet(bool active)
+    {
+        if (active)
+        {
+            slotMy.interactable = false;
+            imgUse.gameObject.SetActive(true);
+        }
+        else
+        {
+            slotMy.interactable = true;
+            imgUse.gameObject.SetActive(false);
+        }
     }
 }
