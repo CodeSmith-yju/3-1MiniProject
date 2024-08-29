@@ -251,18 +251,22 @@ public class ShopMgr : MonoBehaviour
                     }
 
                     //구매한 아이템의 구매가능갯수만큼 차감, 차감 후 개수가 0일경우 SoldOut
-                    int lastStack = shopSlots[baskets[i].BasketShopIndex()].GetItem().itemStack - baskets[i].stack;
+                    
+                    // 주석쳐놓은거 수정해야됨
+                    /*int lastStack = shopSlots[baskets[i].BasketShopIndex()].GetItem().itemStack - baskets[i].stack;
                     shopSlots[baskets[i].BasketShopIndex()].GetItem().itemStack = baskets[i].stack;
-
+                    shopSlots[baskets[i].BasketShopIndex()].textItemStack.text = lastStack.ToString();
                     Inventory.Single.AddItem(shopSlots[baskets[i].BasketShopIndex()].GetItem());//추가
                     if (lastStack == 0)
                     {
+                        shopSlots[baskets[i].BasketShopIndex()].UseImgSet(false);
                         shopSlots[baskets[i].BasketShopIndex()].SoldOut(true);
+                        RefeshBaskets();
                     }
                     else
                     {
                         shopSlots[baskets[i].BasketShopIndex()].GetItem().itemStack = lastStack;
-                    }
+                    }*/
                 }
                 //정렬
                 Inventory.Single.SortingStackItems();
@@ -276,6 +280,15 @@ public class ShopMgr : MonoBehaviour
         else if (shopState == ShopState.SELL)// 판매
         {
             // 
+        }
+    }
+
+    void RefeshBaskets()
+    {
+        for (int i = 0; i < baskets.Count; i++)
+        {
+            baskets[i].gameObject.SetActive(false);
+            calcPrice.text = basketsPrice.ToString();
         }
     }
 }
