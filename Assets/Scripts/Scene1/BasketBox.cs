@@ -84,4 +84,9 @@ public class BasketBox : MonoBehaviour
     {
         return mySlot.shopIndex;
     }
+    public ShopSlot GetBasketShopSlot()
+    {
+        return mySlot;
+    }
+
 }

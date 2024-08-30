@@ -49,13 +49,16 @@ public class ShopSlot : MonoBehaviour
 
     public void DrawBuyShop(Item _item)//상점 아이템 표시 초기화
     {
-        if (_item.itemType == Item.ItemType.Consumables || _item.itemType == Item.ItemType.Ect)
+        if (_item.itemType == Item.ItemType.Consumables || _item.itemType == Item.ItemType.Ect)// 소모품일 경우 표시
         {
-            // 소모품일 경우 표시
             if (_item.itemStack > 0)
             {
                 textItemStack.text = _item.itemStack.ToString();
                 textItemStack.gameObject.SetActive(true);
+                if (imgUse.gameObject.activeSelf)
+                {
+                    UseImgSet(false);
+                }
             }
             else
             {
@@ -63,14 +66,14 @@ public class ShopSlot : MonoBehaviour
                 if (state != ShopState.SOLDOUT)
                 {
                     state = ShopState.SOLDOUT;
-                    imgSlodOut.gameObject.SetActive(true);
+                    UseImgSet(false);
+                    SoldOut(true);
                 }
                 return;
             }
         }
-        else
+        else // 장비아이템일 경우 표시
         {
-            // 장비아이템일 경우 표시
             if (_item.modifyStack > 0)
             {
                 textItemModifyStack.text = "+"+_item.modifyStack.ToString();
@@ -78,6 +81,17 @@ public class ShopSlot : MonoBehaviour
             }
             else
                 textItemModifyStack.gameObject.SetActive(false);
+
+            if (_item.itemStack <= 0)
+            {
+                if (state != ShopState.SOLDOUT)
+                {
+                    state = ShopState.SOLDOUT;
+                    UseImgSet(false);
+                    SoldOut(true);
+                }
+            }
+
         }
     }
     public Item GetItem()
@@ -87,18 +101,20 @@ public class ShopSlot : MonoBehaviour
 
     public void InBasket()
     {
+        bool yesAdd = true;
         // 프리팹을 인스턴스화하여 ShopSlot을 생성
         BasketBox basket = PoolBasketBox(shopMgr.baskets);
         if (basket == null)
         {
             basket = Instantiate(shopMgr.prBasketBox, shopMgr.trBasketBox);
+            yesAdd = false;
         }
         // 생성된 슬롯 초기화
         basket.Init(this);
         basket.shopMgr = shopMgr;
         // 생성된 슬롯을 리스트에 추가
-        shopMgr.baskets.Add(basket);
-
+        if (!yesAdd)
+            shopMgr.baskets.Add(basket);
         UseImgSet(true);
 
         //가격 계산
@@ -147,5 +163,11 @@ public class ShopSlot : MonoBehaviour
             slotMy.interactable = true;
             imgSlodOut.gameObject.SetActive(false);
         }
+    }
+
+    public void SoldNow(int _cnt)
+    {
+        item.itemStack -= _cnt;
+        DrawBuyShop(item);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class ShopMgr : MonoBehaviour
 {
@@ -37,6 +38,9 @@ public class ShopMgr : MonoBehaviour
 
     private void Start()
     {
+        if (baskets == null)
+            baskets = new List<BasketBox>();
+
         shopState = ShopState.BUY;
         OpenTap(shopState);
         RefreshShopItems();
@@ -184,20 +188,6 @@ public class ShopMgr : MonoBehaviour
 
         }
 
-        /*if (baskets.Count > 0)
-        {
-            for (int i = 0; i < baskets.Count; i++)
-            {
-                if (_state == ShopState.BUY)
-                {
-                    shopSlots[baskets[i].BasketShopIndex()].UseImgSet(false);
-                }
-                else
-                {
-                    playerShopItems[baskets[i].BasketShopIndex()].UseImgSet(false);
-                }
-            }
-        }*/
         if (baskets.Count > 0)
         {
             for (int i = 0; i < baskets.Count; i++)
@@ -245,31 +235,27 @@ public class ShopMgr : MonoBehaviour
                 //shopSlots[baskets[i].BasketShopIndex()].GetItem().itemType == Item.ItemType.Consumables || shopSlots[baskets[i].BasketShopIndex()].GetItem().itemType == Item.ItemType.Ect
                 for (int i = 0; i < baskets.Count; i++)
                 {
-                    if (baskets[i].stack == 0)
+                    if (baskets[i].stack == 0 || !baskets[i].gameObject.activeSelf)
                     {
                         continue;
                     }
 
-                    //구매한 아이템의 구매가능갯수만큼 차감, 차감 후 개수가 0일경우 SoldOut
-                    
-                    // 주석쳐놓은거 수정해야됨
-                    /*int lastStack = shopSlots[baskets[i].BasketShopIndex()].GetItem().itemStack - baskets[i].stack;
-                    shopSlots[baskets[i].BasketShopIndex()].GetItem().itemStack = baskets[i].stack;
-                    shopSlots[baskets[i].BasketShopIndex()].textItemStack.text = lastStack.ToString();
-                    Inventory.Single.AddItem(shopSlots[baskets[i].BasketShopIndex()].GetItem());//추가
-                    if (lastStack == 0)
+                    if (baskets[i].GetBasketShopSlot().GetItem().itemType == Item.ItemType.Consumables || baskets[i].GetBasketShopSlot().GetItem().itemType == Item.ItemType.Ect)
                     {
-                        shopSlots[baskets[i].BasketShopIndex()].UseImgSet(false);
-                        shopSlots[baskets[i].BasketShopIndex()].SoldOut(true);
-                        RefeshBaskets();
+                        for (int j = 0; j < baskets[i].stack; j++)
+                        {
+                            Item item = ItemResources.instance.itemRS[baskets[i].GetBasketShopSlot().GetItem().itemCode];
+                            Inventory.Single.AddItem(item);
+                        }
                     }
                     else
                     {
-                        shopSlots[baskets[i].BasketShopIndex()].GetItem().itemStack = lastStack;
-                    }*/
+                        Inventory.Single.AddItem(baskets[i].GetBasketShopSlot().GetItem());
+                    }
+                    baskets[i].GetBasketShopSlot().SoldNow(baskets[i].stack); // 구매된만큼의 stack 차감
                 }
-                //정렬
-                Inventory.Single.SortingStackItems();
+                //구매가 성공적으로 종료된 상황.
+                RefeshBaskets();
             }
             else
             {
@@ -279,15 +265,19 @@ public class ShopMgr : MonoBehaviour
         }
         else if (shopState == ShopState.SELL)// 판매
         {
-            // 
+            //
+            Debug.Log("우오오오오오옹옹  씨이발이거 돌아가면안되는데 어케돌아감");
         }
+
     }
 
     void RefeshBaskets()
     {
+        basketsPrice = 0;
         for (int i = 0; i < baskets.Count; i++)
         {
             baskets[i].gameObject.SetActive(false);
+            baskets[i].GetBasketShopSlot().UseImgSet(false);
             calcPrice.text = basketsPrice.ToString();
         }
     }
