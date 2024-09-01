@@ -43,7 +43,7 @@ public class ShopMgr : MonoBehaviour
 
         shopState = ShopState.BUY;
         OpenTap(shopState);
-        RefreshShopItems();
+        //RefreshShopItems();
     }
 
     public void RefreshShopItems()
@@ -155,6 +155,8 @@ public class ShopMgr : MonoBehaviour
 
     void OpenTap(ShopState _state)// isOpen == true '판매'탭 활성, isOpen == false '구매'탭 활성
     {
+        shopState = _state;
+
         basketsPrice = 0;
         for (int i = 0; i < baskets.Count; i++)
         {
@@ -219,6 +221,25 @@ public class ShopMgr : MonoBehaviour
     {
         basketsPrice += _price;
         calcPrice.text = basketsPrice.ToString();
+
+        if (basketsPrice <= 1500)
+        {
+            PayText.GetComponentInParent<Button>().interactable = true;
+        }
+        else
+        {
+            PayText.GetComponentInParent<Button>().interactable = false;
+        }
+        /*
+         if(basketsPrice <= GameMgr.playerData[0].player_Gold)
+        {
+            PayText.GetComponentInParent<Button>().interactable = true;
+        }
+        else
+        {
+            PayText.GetComponentInParent<Button>().interactable = false;
+        }
+         */
     }
 
     // Tab Open
@@ -229,7 +250,7 @@ public class ShopMgr : MonoBehaviour
     {
         if (shopState == ShopState.BUY)// 구매
         {
-            if (basketsPrice <= 1500)//basketsPrice <= GameMgr.playerData[0].player_Gold
+            if (basketsPrice <= GameMgr.playerData[0].player_Gold)//basketsPrice <= GameMgr.playerData[0].player_Gold
             {
                 //TODO: baskets 아이템들이 Inventory로 들어가고, 해당 shopSlots[i].soldOut.Active(true), shopSlots.Clear();
                 //shopSlots[baskets[i].BasketShopIndex()].GetItem().itemType == Item.ItemType.Consumables || shopSlots[baskets[i].BasketShopIndex()].GetItem().itemType == Item.ItemType.Ect
@@ -255,6 +276,7 @@ public class ShopMgr : MonoBehaviour
                     baskets[i].GetBasketShopSlot().SoldNow(baskets[i].stack); // 구매된만큼의 stack 차감
                 }
                 //구매가 성공적으로 종료된 상황.
+                GameMgr.playerData[0].player_Gold -= basketsPrice;
                 RefeshBaskets();
             }
             else
@@ -265,9 +287,52 @@ public class ShopMgr : MonoBehaviour
         }
         else if (shopState == ShopState.SELL)// 판매
         {
-            //
-            Debug.Log("우오오오오오옹옹  씨이발이거 돌아가면안되는데 어케돌아감");
+            for (int i = 0; i < baskets.Count; i++)
+            {
+                if (baskets[i].stack == 0 || !baskets[i].gameObject.activeSelf)
+                {
+                    continue;
+                }
+
+                if (baskets[i].stack == playerShopItems[baskets[i].BasketShopIndex()].GetItem().itemStack)
+                {
+                    //인벤토리의 아이템이 제거되어야 하는 상황
+                    foreach (var _item in Inventory.Single.items)
+                    {
+                        if (_item == playerShopItems[baskets[i].BasketShopIndex()].GetItem())
+                        {
+                            baskets[i].GetBasketShopSlot().gameObject.SetActive(false);
+                            Inventory.Single.items.Remove(_item);
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    //인벤토리의 아이템의 stack이 변경되는 상황
+
+                    foreach (var _item in Inventory.Single.items)
+                    {
+                        if (_item == playerShopItems[baskets[i].BasketShopIndex()].GetItem())
+                        {
+                            _item.itemStack -= baskets[i].stack;
+                            return;
+                        }
+                    }
+                    baskets[i].GetBasketShopSlot().SoldNow(baskets[i].stack); // 구매된만큼의 stack 차감
+                }
+
+            }
+            //판매가 성공적으로 종료된 상황.
+            GameMgr.playerData[0].player_Gold += basketsPrice;
+
+            RefeshBaskets();
         }
+
+
+        //거래가 종료되면 결과가 반영되어야 함.
+        Debug.Log("거래 종료 후 골드: " + GameMgr.playerData[0].player_Gold);
+        GameUiMgr.single.SliderChange();
 
     }
 

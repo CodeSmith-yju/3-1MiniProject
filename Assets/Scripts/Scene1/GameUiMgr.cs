@@ -736,7 +736,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
         else
         {
-
+            Debug.Log("이거 왜 넣었더라");
         }
         questMgr.ControlQuestObejct();
         //GetNowPositon();
