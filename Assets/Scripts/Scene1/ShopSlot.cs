@@ -96,6 +96,10 @@ public class ShopSlot : MonoBehaviour
     }
     public Item GetItem()
     {
+        if (item.itemType != Item.ItemType.Consumables)
+        {
+            Debug.Log("시발왜 다른아이템이들어가냐고 이름: "+item.itemName + " 강화: "+item.modifyStack + " 성능: "+item.itemPower + " 가격: "+item.itemPrice);
+        }
         return item;
     }
 

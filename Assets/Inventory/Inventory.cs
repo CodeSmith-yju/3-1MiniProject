@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Item;
 
 public class Inventory : MonoBehaviour
 {
@@ -104,7 +105,9 @@ public class Inventory : MonoBehaviour
                 itemIndex = items.Count,
                 isDraggable = _item.isDraggable,
                 itemCode = _item.itemCode,
-                itemPower = _item.itemPower
+                itemPower = _item.itemPower,
+                itemPrice = _item.itemPrice,
+                PrimaryCode = _item.PrimaryCode,
             };
 
             // 추가될 아이템이 소모품이 아닐 경우.

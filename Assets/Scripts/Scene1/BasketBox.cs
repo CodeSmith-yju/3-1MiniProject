@@ -13,7 +13,7 @@ public class BasketBox : MonoBehaviour
     public TextMeshProUGUI BasketStack;
     public TextMeshProUGUI BasketName;
     public int stack;
-    private int maxStack;
+    [SerializeField]private int maxStack;
     public Image Icon;
 
     public Button btnPlus;
@@ -32,22 +32,11 @@ public class BasketBox : MonoBehaviour
     }
     public void ClickPlus()
     {
-        if (StackCk(mySlot))
+        if (stack < maxStack)
         {
-            if (stack < maxStack)
-            {
-                stack++;
-                shopMgr.CalcPrice(mySlot.slotPirce);
-                if (stack == maxStack)
-                {
-                    btnPlus.interactable = false;
-                    btnMinus.interactable = true;
-                }
-                else
-                {
-                    btnPlus.interactable = true;
-                }
-            }
+            stack++;
+            shopMgr.CalcPrice(mySlot.slotPirce);
+            UpdateButtonState();
         }
 
         BasketStack.text = stack.ToString();
@@ -59,25 +48,16 @@ public class BasketBox : MonoBehaviour
         {
             stack--;
             shopMgr.CalcPrice(mySlot.slotPirce * -1);
-            if (stack == 0)
-            {
-                btnMinus.interactable = false;
-                btnPlus.interactable = true;
-            }
-            else
-            {
-                btnMinus.interactable = true;
-            }
+            UpdateButtonState();
         }
 
         BasketStack.text = stack.ToString();
     }
 
-    bool StackCk(ShopSlot _shopSlot)// +- 버튼클릭할때 스텍관리하기 위함
+    private void UpdateButtonState()
     {
-        if (mySlot.GetItem().itemType == Item.ItemType.Consumables || mySlot.GetItem().itemType == Item.ItemType.Ect)
-            return true;
-        return false;
+        btnPlus.interactable = stack < maxStack;
+        btnMinus.interactable = stack > 0;
     }
 
     public int BasketShopIndex()

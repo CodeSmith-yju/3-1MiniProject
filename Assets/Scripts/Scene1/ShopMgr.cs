@@ -66,7 +66,7 @@ public class ShopMgr : MonoBehaviour
                 itemPower = originalItem.itemPower,
                 itemDesc = originalItem.itemDesc,
                 itemStack = originalItem.itemStack,
-                modifyStack = originalItem.modifyStack
+                modifyStack = originalItem.modifyStack,
             };
 
             if (newItem.itemType == Item.ItemType.Consumables)
@@ -76,7 +76,7 @@ public class ShopMgr : MonoBehaviour
             else
             {
                 newItem.modifyStack = Random.Range(1, 4);
-                newItem.ModifyPowerSet(newItem);
+                newItem.UpgradeModifyPowerSet(newItem);
             }
 
             // 프리팹을 인스턴스화하여 ShopSlot을 생성
@@ -117,11 +117,12 @@ public class ShopMgr : MonoBehaviour
                 itemName = originalItem.itemName,
                 itemType = originalItem.itemType,
                 itemImage = originalItem.itemImage,
-                itemPrice = originalItem.itemPrice,
-                itemPower = originalItem.itemPower,
                 itemDesc = originalItem.itemDesc,
+                itemPower = Inventory.Single.items[i].itemPower,
+                itemPrice = Inventory.Single.items[i].itemPrice,
                 itemStack = Inventory.Single.items[i].itemStack,
-                modifyStack = Inventory.Single.items[i].modifyStack
+                modifyStack = Inventory.Single.items[i].modifyStack,
+                PrimaryCode = Inventory.Single.items[i].PrimaryCode
             };
 
             // 비활성화된 슬롯을 재사용하거나, 새로운 슬롯을 생성
@@ -222,24 +223,18 @@ public class ShopMgr : MonoBehaviour
         basketsPrice += _price;
         calcPrice.text = basketsPrice.ToString();
 
-        if (basketsPrice <= 1500)
+        if (shopState == ShopState.BUY)
         {
-            PayText.GetComponentInParent<Button>().interactable = true;
+            if (basketsPrice <= GameMgr.playerData[0].player_Gold)
+            {
+                PayText.GetComponentInParent<Button>().interactable = true;
+            }
+            else
+            {
+                PayText.GetComponentInParent<Button>().interactable = false;
+            }
         }
-        else
-        {
-            PayText.GetComponentInParent<Button>().interactable = false;
-        }
-        /*
-         if(basketsPrice <= GameMgr.playerData[0].player_Gold)
-        {
-            PayText.GetComponentInParent<Button>().interactable = true;
-        }
-        else
-        {
-            PayText.GetComponentInParent<Button>().interactable = false;
-        }
-         */
+        
     }
 
     // Tab Open
@@ -265,7 +260,8 @@ public class ShopMgr : MonoBehaviour
                     {
                         for (int j = 0; j < baskets[i].stack; j++)
                         {
-                            Item item = ItemResources.instance.itemRS[baskets[i].GetBasketShopSlot().GetItem().itemCode];
+                            //Item item = ItemResources.instance.itemRS[baskets[i].GetBasketShopSlot().GetItem().itemCode];
+                            Item item = baskets[i].GetBasketShopSlot().GetItem();
                             Inventory.Single.AddItem(item);
                         }
                     }
@@ -287,6 +283,7 @@ public class ShopMgr : MonoBehaviour
         }
         else if (shopState == ShopState.SELL)// 판매
         {
+            List<Item> RemoveItems = new();
             for (int i = 0; i < baskets.Count; i++)
             {
                 if (baskets[i].stack == 0 || !baskets[i].gameObject.activeSelf)
@@ -299,12 +296,15 @@ public class ShopMgr : MonoBehaviour
                     //인벤토리의 아이템이 제거되어야 하는 상황
                     foreach (var _item in Inventory.Single.items)
                     {
-                        if (_item == playerShopItems[baskets[i].BasketShopIndex()].GetItem())
+                        if (_item.PrimaryCode == playerShopItems[baskets[i].BasketShopIndex()].GetItem().PrimaryCode)
                         {
                             baskets[i].GetBasketShopSlot().gameObject.SetActive(false);
-                            Inventory.Single.items.Remove(_item);
-                            return;
+                            //Inventory.Single.RemoveItem(_item);
+                            RemoveItems.Add(_item);
+                            Debug.Log("Remove Item :"+_item.itemName);
+                            continue;
                         }
+                        Debug.Log("not Remove Item :" + _item.itemName);
                     }
                 }
                 else
@@ -321,8 +321,12 @@ public class ShopMgr : MonoBehaviour
                     }
                     baskets[i].GetBasketShopSlot().SoldNow(baskets[i].stack); // 구매된만큼의 stack 차감
                 }
-
             }
+            for (int i = 0; i < RemoveItems.Count; i++)
+            {
+                Inventory.Single.RemoveItem(RemoveItems[i]);
+            }
+            RemoveItems.Clear();
             //판매가 성공적으로 종료된 상황.
             GameMgr.playerData[0].player_Gold += basketsPrice;
 
