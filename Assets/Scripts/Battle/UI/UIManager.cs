@@ -12,9 +12,9 @@ public class UIManager : MonoBehaviour
     public GameObject item_Bar;
     public GameObject party_List;
     public GameObject battleStart;
-    public GameObject in_Portal;
     public GameObject out_Portal;
     public GameObject next_Room_Popup;
+    public GameObject room_UI;
     public GameObject item_Use_UI;
     public GameObject fade_Bg;
 
@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        /*if (Input.GetKeyDown(KeyCode.Tab))
         {
             if (!dialogue_Box.activeSelf)
             {
@@ -72,7 +72,9 @@ public class UIManager : MonoBehaviour
                     mini_Map_Big.SetActive(false);
                 }
             }
-        }
+        }*/
+
+        // 추후 미니맵 수정 시 수정 예정
     }
 
     private void FixedUpdate()
@@ -110,22 +112,25 @@ public class UIManager : MonoBehaviour
 
     public void CancelPopup(GameObject popup)
     {
-        if (BattleManager.Instance.dialogue.isTutorial)
+        if (BattleManager.Instance.dialogue != null)
         {
-            if (popup.name == "Reward_Popup")
+            if (BattleManager.Instance.dialogue.isTutorial)
             {
-                if (popup.GetComponent<RewardPopupInit>().isBox)
+                if (popup.name == "Reward_Popup")
                 {
-                    BattleManager.Instance.tutorial.EndTutorial(17);
-                }
-                else
-                {
-                    BattleManager.Instance.dialogue.ONOFF(true);
-                    BattleManager.Instance.dialogue.NextDialogue();
+                    if (popup.GetComponent<RewardPopupInit>().isBox)
+                    {
+                        BattleManager.Instance.tutorial.EndTutorial(17);
+                    }
+                    else
+                    {
+                        BattleManager.Instance.dialogue.ONOFF(true);
+                        BattleManager.Instance.dialogue.NextDialogue();
+                    }
                 }
             }
         }
-
+        
         popup.SetActive(false);
         popup_Bg.SetActive(false);
     }

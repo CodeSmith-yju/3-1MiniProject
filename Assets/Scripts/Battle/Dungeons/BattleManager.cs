@@ -12,7 +12,7 @@ public class BattleManager : MonoBehaviour
 {
     private static BattleManager instance = null;
     public ObjectManager pool;
-    public RoomManager room;
+    public MapManager room;
     public UIManager ui;
     public Dialogue dialogue;
     public TutorialManager tutorial;
@@ -61,7 +61,7 @@ public class BattleManager : MonoBehaviour
             instance = this;
         }
 
-        room = FindObjectOfType<RoomManager>();
+        room = FindObjectOfType<MapManager>();
         isFirstEnter = true;
 
         for (int i = 0; i < GameUiMgr.single.lastDeparture.Count; i++)
@@ -84,7 +84,7 @@ public class BattleManager : MonoBehaviour
 
     public IEnumerator BattleReady() // 전투 방일 시 실행되는 메서드
     {
-        //deploy_area = GameObject.FindGameObjectWithTag("Deploy");
+        deploy_area = GameObject.FindGameObjectWithTag("Deploy");
         unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
         ui.OpenPopup(ui.battle_Ready_Banner);
         yield return StartCoroutine(ui.StartBanner(ui.battle_Ready_Banner));
@@ -132,12 +132,6 @@ public class BattleManager : MonoBehaviour
         switch (phase) // 각 상태에 진입 했을 때 실행되는 switch문
         {
             case BattlePhase.Start:
-                if (!ui.in_Portal.activeSelf)
-                {
-                    ui.in_Portal.SetActive(true);
-                    ui.in_Portal.GetComponent<FadeEffect>().fadeout = true;
-                }
-
                 if (room.isMoveDone || isFirstEnter)
                 {
                     CheckRoom();
@@ -158,8 +152,6 @@ public class BattleManager : MonoBehaviour
                 StartCoroutine(BattleReady());
                 break;
             case BattlePhase.Battle:
-                if (ui.in_Portal.activeSelf)
-                    ui.in_Portal.GetComponent<FadeEffect>().fadein = true;
                 break;
             case BattlePhase.End:
                 StartCoroutine(EndBattle());
@@ -248,11 +240,6 @@ public class BattleManager : MonoBehaviour
                 yield return StartCoroutine(ui.StartBanner(ui.vic_Banner));
                 yield return new WaitForSeconds(0.15f);
                
-                if (!ui.in_Portal.activeSelf)
-                {
-                    ui.in_Portal.SetActive(true);
-                    ui.in_Portal.GetComponent<FadeEffect>().fadeout = true;
-                }
                 if (!ui.out_Portal.activeSelf)
                 {
                     ui.out_Portal.SetActive(true);
@@ -280,12 +267,8 @@ public class BattleManager : MonoBehaviour
             }
 
 
-            if (deploy_Enemy_List.Count == 0 && (room.rooms.Length - 1 == room.room_Count))
+            if (deploy_Enemy_List.Count == 0 && room.FindRoom(room.cur_Room.gameObject).isBoss)
             {
-                if (ui.in_Portal.activeSelf)
-                {
-                    ui.in_Portal.GetComponent<FadeEffect>().fadein = true;
-                }
                 if (!ui.out_Portal.activeSelf)
                 {
                     ui.out_Portal.SetActive(true);
@@ -329,7 +312,7 @@ public class BattleManager : MonoBehaviour
         if (_curphase == BattlePhase.End)
         {
             Debug.Log("실행됨");
-            if (deploy_Enemy_List.Count == 0 && (room.rooms.Length - 1 == room.room_Count))
+            if (deploy_Enemy_List.Count == 0 && room.FindRoom(room.cur_Room.gameObject).isBoss)
             {
                 if (!ui.out_Portal.activeSelf)
                 {
@@ -357,12 +340,12 @@ public class BattleManager : MonoBehaviour
 
     public void CheckRoom()
     {
-        if (room.currentRoom.tag == "Battle")
+        if (room.cur_Room.tag == "Battle")
         {
 
             Debug.Log("전투 방입니다.");
 
-            if ( (room.rooms.Length-1) == room.room_Count )
+            if (room.FindRoom(room.cur_Room.gameObject).isBoss)
             {
                 AudioManager.single.PlayBgmClipChange(3);
             }

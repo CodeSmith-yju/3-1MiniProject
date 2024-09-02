@@ -14,7 +14,7 @@ public class TutorialManager : MonoBehaviour
         Debug.Log(quest_cnt);
         switch (quest_cnt)
         {
-            case 0:
+            /*case 0: // 현재 사용하지 않는 튜토리얼
                 Debug.Log("들어온 포탈 UI");
                 BattleManager.Instance.ui.ui_Tutorial_Rest.SetActive(true);
 
@@ -28,7 +28,7 @@ public class TutorialManager : MonoBehaviour
                     BattleManager.Instance.ui.ui_Tutorial_Rest.transform.GetChild(quest_cnt).gameObject.SetActive(true);
                 }
                 BattleManager.Instance.dialogue.NextDialogue();
-                break;
+                break;*/
             case 1:
                 Debug.Log("다음 방으로 가는 포탈 UI");
                 EndTutorial(quest_cnt - 1);
@@ -253,10 +253,10 @@ public class TutorialManager : MonoBehaviour
         Debug.Log(quest_cnt);
         switch (quest_cnt)
         {
-            case 0:
+            /*case 0: // 현재 사용하지 않는 튜토리얼
                 Debug.Log("In_Portal 튜토리얼 끝");
                 Destroy(BattleManager.Instance.ui.in_Portal.GetComponent<Canvas>());
-                break;
+                break;*/
             case 1:
                 Debug.Log("out_Portal 튜토리얼 끝");
                 Destroy(BattleManager.Instance.ui.out_Portal.GetComponent<Canvas>());

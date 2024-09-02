@@ -83,7 +83,6 @@ public class RoomManager : MonoBehaviour
         {
             AudioManager.single.PlaySfxClipChange(4);
             isMoveDone = false;
-            BattleManager.Instance.ui.in_Portal.GetComponent<FadeEffect>().fadein = true;
             BattleManager.Instance.ui.out_Portal.GetComponent<FadeEffect>().fadein = true;
             previousRoom = currentRoom;
             currentRoom = rooms[++room_Count];

@@ -128,9 +128,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popup_Title: {fileID: 5867474052423483986}
-  popup_Inner_Title: {fileID: 272297471247842683}
-  inner_Main: {fileID: 6918008188266572401}
-  bnt_Text: {fileID: 7632338692396913683}
+  inner_Main: {fileID: 9081561479774996371}
+  isBox: 0
 --- !u!1 &3664679477823138318
 GameObject:
   m_ObjectHideFlags: 0
