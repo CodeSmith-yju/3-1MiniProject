@@ -1,6 +1,7 @@
 using DarkPixelRPGUI.Scripts.UI.Equipment;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
@@ -36,6 +37,10 @@ public class ShopMgr : MonoBehaviour
     public int basketsPrice;
     //[SerializeField] Button btnBuy;// TODO: Add SoundEv 
 
+    private void Awake()
+    {
+        shopSlots = new();
+    }
     private void Start()
     {
         if (baskets == null)
@@ -45,7 +50,6 @@ public class ShopMgr : MonoBehaviour
         OpenTap(shopState);
         //RefreshShopItems();
     }
-
     public void RefreshShopItems()
     {
         Debug.Log("Make Shop Items");
@@ -92,6 +96,25 @@ public class ShopMgr : MonoBehaviour
         }
     }
 
+    public void ReLoadShopItems(List<Item> _loadShopitem)
+    {
+        if (shopSlots.Count > 0)
+            Debug.Log("아니 만들어둔게 남아있다고?");
+        Debug.Log("Run ReLoad shopItem");
+        for (int i = 0; i < _loadShopitem.Count; i++)
+        {
+            ShopSlot slot = Instantiate(slotPrefab, tfBuy);
+            Debug.Log("슬롯 프리펩을 생성하여 배치");
+            // 생성된 슬롯 초기화
+            slot.ShopMgrSet(this);
+            slot.Init(_loadShopitem[i], ShopState.BUY);
+            slot.shopIndex = i;
+
+            // 생성된 슬롯을 리스트에 추가
+            shopSlots.Add(slot);
+
+        }
+    }
     void SetSellItems()
     {
         // 기존의 playerShopItems 슬롯을 모두 비활성화
@@ -154,7 +177,7 @@ public class ShopMgr : MonoBehaviour
         return null;
     }
 
-    void OpenTap(ShopState _state)// isOpen == true '판매'탭 활성, isOpen == false '구매'탭 활성
+    public void OpenTap(ShopState _state)// isOpen == true '판매'탭 활성, isOpen == false '구매'탭 활성
     {
         shopState = _state;
 

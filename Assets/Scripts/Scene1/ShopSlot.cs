@@ -26,9 +26,12 @@ public class ShopSlot : MonoBehaviour
 
     public Image slotIcon;
 
-    private Button slotMy;
+    [Header("Debug")]
+    [SerializeField]private Button slotMy;
     public void Init(Item _item, ShopState _state)
     {
+        slotMy = gameObject.GetComponent<Button>();
+
         item = _item;
         state = _state;
 
@@ -43,8 +46,6 @@ public class ShopSlot : MonoBehaviour
         slotIcon.sprite = item.itemImage;
         textItemPrice.text = slotPirce.ToString();
         DrawBuyShop(item);
-
-        slotMy = GetComponent<Button>();
     }
 
     public void DrawBuyShop(Item _item)//상점 아이템 표시 초기화
@@ -96,10 +97,10 @@ public class ShopSlot : MonoBehaviour
     }
     public Item GetItem()
     {
-        if (item.itemType != Item.ItemType.Consumables)
+        /*if (item.itemType != Item.ItemType.Consumables)
         {
-            Debug.Log("시발왜 다른아이템이들어가냐고 이름: "+item.itemName + " 강화: "+item.modifyStack + " 성능: "+item.itemPower + " 가격: "+item.itemPrice);
-        }
+            Debug.Log("시발왜 다른아이템이들어가냐고 이름: "+item.itemName + " 강화: "+item.modifyStack + " 성능: "+item.itemPower + " 강화: "+item.itemPrice);
+        }*/
         return item;
     }
 

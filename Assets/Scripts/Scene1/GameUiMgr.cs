@@ -216,7 +216,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     {
         //03-31 Start Inventory - try.4
         inventory = Inventory.Single;
-        
+
         inventory_panel.SetActive(activeInventory);
         inventory.onSlotCountChange += SlotChange;
         slots = slotHolder.GetComponentsInChildren<Slot>();
@@ -243,6 +243,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
         else
         {
+            shopMgr.RefreshShopItems();
             Debug.Log("지금은 게임 로드중이 아닙니다.");
         }
         
@@ -291,7 +292,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         canvaseWidth = canvas_Tooltip.GetComponent<CanvasScaler>().referenceResolution.x * 0.5f;
 
 
-        shopMgr.RefreshShopItems();
     }
 
     //03-31 Method Inventory - try.4
@@ -359,9 +359,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             }
 
         }
-        
+
         // Sub Menu Set
-        if (Input.GetButtonDown("Cancel") )
+        if (Input.GetButtonDown("Cancel"))
         {
             /*if (menuSet.activeSelf)
             {
@@ -372,29 +372,37 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             {*/
             ToggleSubButtons();
 
-                if (inventory_panel.activeSelf)
+            if (inventory_panel.activeSelf)
+            {
+                ActiveInventory();
+                tooltip.SetActive(false);
+                if (objSubButtonFrame.activeSelf)
                 {
-                    ActiveInventory();
-                    tooltip.SetActive(false);
-                    if (objSubButtonFrame.activeSelf)
-                    {
-                        ToggleSubButtons();
-                    }
-                }else if (panelPartyBoard.activeSelf)
-                {
-                    ActiveParty();
-                    if(objSubButtonFrame.activeSelf)
-                    {
-                        ToggleSubButtons();
-                    }
-            }
-/*                else
-                {
-                    menuSet.SetActive(true);
-                    uiEventCk = false;
+                    ToggleSubButtons();
                 }
+            }
+            else if (panelPartyBoard.activeSelf)
+            {
+                ActiveParty();
+                if (objSubButtonFrame.activeSelf)
+                {
+                    ToggleSubButtons();
+                }
+            }
+            else if (shopMgr.gameObject.activeSelf)
+            {
+                ActiveShop();
+                if (objSubButtonFrame.activeSelf)
+                {
+                    ToggleSubButtons();
+                }
+            }
+            /*else
+            {
+                menuSet.SetActive(true);
+                uiEventCk = false;
             }*/
-        }
+    }
 
         //Inventory
         if (Input.GetKeyDown(KeyCode.I))
@@ -679,11 +687,17 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             }
         }
 
+        List<Item> saveShopItems = new();
+        foreach (var _item in GameUiMgr.single.shopMgr.GetShopSlots())
+        {
+            saveShopItems.Add(_item.GetItem());
+        }
+
         SaveData gameSaveData = new SaveData(GameMgr.playerData[0].GetPlayerName(), GameMgr.playerData[0].player_level, GameMgr.playerData[0].player_Gold, GameUiMgr.single.questMgr.questId, GameUiMgr.single.questMgr.questActionIndex,
             GameMgr.playerData[0].max_Player_Hp, GameMgr.playerData[0].cur_Player_Hp, GameMgr.playerData[0].max_Player_Sn, GameMgr.playerData[0].cur_Player_Sn, GameMgr.playerData[0].max_Player_Mp, GameMgr.playerData[0].cur_Player_Mp ,
             GameMgr.playerData[0].atk_Speed, GameMgr.playerData[0].atk_Range, GameMgr.playerData[0].base_atk_Dmg ,
             GameMgr.playerData[0].player_max_Exp, GameMgr.playerData[0].player_cur_Exp , 
-            saveInventoryItem, saveWearItem);
+            saveInventoryItem, saveWearItem, saveShopItems);
         SaveSystem.Save(gameSaveData, "save");
 
         //  Player DayCount, Player Inventory, Player Desc (Stat, Name, Job, Gold ... ect)
@@ -741,6 +755,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         questMgr.ControlQuestObejct();
         //GetNowPositon();
 
+        GameUiMgr.single.shopMgr.ReLoadShopItems(loadData.shops);
     }
     #region PlayerPosition
     public void SetNowPosition(float x, float y)
@@ -773,7 +788,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     }
     public void ActiveInventory()
     {
-        if (questMgr.questId >= 20)
+        if (questMgr.questId >= 20 && !shopMgr.gameObject.activeSelf)
         {
             activeInventory = !activeInventory;
             if (activeInventory)
@@ -1215,6 +1230,18 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         else
         {
             panelPartyBoard.SetActive(false);
+        }
+    }
+    public void ActiveShop()
+    {
+        if (shopMgr.gameObject.activeSelf == false && !activeInventory)
+        {
+            shopMgr.gameObject.SetActive(true);
+            shopMgr.OpenTap(ShopState.BUY);
+        }
+        else
+        {
+            shopMgr.gameObject.SetActive(false);
         }
     }
 
