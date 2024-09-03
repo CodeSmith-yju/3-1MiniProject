@@ -31,8 +31,8 @@ public class TutorialManager : MonoBehaviour
                 break;*/
             case 1:
                 Debug.Log("다음 방으로 가는 포탈 UI");
-                EndTutorial(quest_cnt - 1);
-
+                //EndTutorial(quest_cnt - 1);
+                BattleManager.Instance.ui.ui_Tutorial_Rest.SetActive(true);
                 Canvas out_Portal = BattleManager.Instance.ui.out_Portal.AddComponent<Canvas>();
                 out_Portal.additionalShaderChannels = AdditionalCanvasShaderChannels.TexCoord1;
                 out_Portal.overrideSorting = true;

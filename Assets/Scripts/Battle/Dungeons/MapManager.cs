@@ -274,7 +274,7 @@ public class MapManager : MonoBehaviour
         }
         
 
-        if (mapRows[player_Pos.x].cells[player_Pos.y].isClear)
+        if (mapRows[player_Pos.y].cells[player_Pos.x].isClear)
         {
             BattleManager.Instance._curphase = BattleManager.BattlePhase.Rest;
         }
