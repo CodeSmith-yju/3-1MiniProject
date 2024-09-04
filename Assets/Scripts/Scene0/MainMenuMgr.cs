@@ -60,7 +60,8 @@ public class MainMenuMgr : MonoBehaviour
     public void OnClickedReLoadGame()
     {
         GameMgr.single.IsGameLoad(true);
-        SceneManager.LoadScene("Town");
+        //SceneManager.LoadScene("Town");
+        LoadingSceneController.LoadScene("Town");
     }
 
 

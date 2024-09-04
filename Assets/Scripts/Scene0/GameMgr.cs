@@ -40,7 +40,8 @@ public class GameMgr : MonoBehaviour
 
         if (loadChecker == false)
         {
-            SceneManager.LoadScene("Town");
+            //SceneManager.LoadScene("Town");
+            LoadingSceneController.LoadScene("Town");
         }
 
         return true;
