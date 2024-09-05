@@ -66,6 +66,7 @@ public class LoadingSceneController : MonoBehaviour
 */
 
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -73,6 +74,7 @@ using UnityEngine.UI;
 public class LoadingSceneController : MonoBehaviour
 {
     [SerializeField] Image progressBar;
+    [SerializeField] TextMeshProUGUI loadingText;
     public static string nextScene;
 
     public static void LoadScene(string _sceneName)
@@ -84,12 +86,6 @@ public class LoadingSceneController : MonoBehaviour
 
     void Start()
     {
-        Debug.Log($"LoadingScene Start. NextScene: {nextScene}");
-        if (string.IsNullOrEmpty(nextScene))
-        {
-            Debug.LogError("NextScene is null or empty. Setting default to 'Town'");
-            nextScene = "Town";
-        }
         StartCoroutine(LoadSceneProcess());
     }
 
@@ -101,27 +97,65 @@ public class LoadingSceneController : MonoBehaviour
         AsyncOperation op = SceneManager.LoadSceneAsync(nextScene);
         op.allowSceneActivation = false;
 
-        float timer = 0f;
-        while (!op.isDone) // isDone이 true가 될 때까지 반복
+        float progress = 0f;
+        float targetProgress = 0f;
+        float progressSpeed = 1f; // 프로그레스 바가 매끄럽게 차오르는 속도
+        int i = 0;
+        while (!op.isDone)
         {
             yield return null;
-            if (op.progress < 0.9f)
+            i++;
+            // 비동기 로딩 진행 상황을 0~0.99 범위로 조정
+            progress = op.progress * 1.1f; // 0~0.99 범위로 조정
+            targetProgress = Mathf.Clamp01(progress); // 0~1 범위로 제한
+
+            // 프로그레스 바의 fillAmount를 목표 값으로 매끄럽게 조정
+            progressBar.fillAmount = Mathf.MoveTowards(progressBar.fillAmount, targetProgress, progressSpeed * Time.deltaTime);
+
+            if (i%200 == 0)
             {
-                progressBar.fillAmount = op.progress;
-                Debug.Log($"Loading progress: {op.progress:P2}");
+                TextUpdate(loadingText);
             }
-            else
+
+            Debug.Log($"Loading progress: {progressBar.fillAmount:P2}");
+
+            // 로딩이 완료되면 씬 전환 허용
+            if (progressBar.fillAmount >= 0.99f)
             {
-                timer += Time.deltaTime;
-                progressBar.fillAmount = Mathf.Lerp(0.9f, 1f, timer);
-                Debug.Log($"Simulating final loading: {progressBar.fillAmount:P2}");
-                if (progressBar.fillAmount >= 1f)
-                {
-                    op.allowSceneActivation = true;
-                    Debug.Log("Load Progress Complete!");
-                    yield break;
-                }
+                loadingText.text = "Loading Now...";
+                progressBar.fillAmount = 1f; // 최종적으로 100%로 설정
+                op.allowSceneActivation = true;
+                Debug.Log("Load Progress Complete!");
+                yield break;
             }
         }
     }
+
+
+    void TextUpdate(TextMeshProUGUI _tmp)
+    {
+        string s = "";
+        if (_tmp.text == null)
+        {
+            s = "Loading Now";
+        }
+        else if (_tmp.text == "Loading Now...")
+        {
+            s = "Loading Now";
+        }
+        else if (_tmp.text == "Loading Now..")
+        {
+            s = "Loading Now...";
+        }
+        else if (_tmp.text == "Loading Now.")
+        {
+            s = "Loading Now..";
+        }
+        else if (_tmp.text == "Loading Now")
+        {
+            s = "Loading Now.";
+        }
+        loadingText.text = s;
+    }
+
 }

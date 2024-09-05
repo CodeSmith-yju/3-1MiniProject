@@ -1,8 +1,6 @@
 ﻿//using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -297,15 +295,19 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     //03-31 Method Inventory - try.4
     public void SlotChange(int val)// slotChange 에서 slot의 slotNum을 차례대로 부여함
     {
-        for (int i = 0; i < slots.Length; i++)
+        if (inventory.items.Count != 0)
         {
-            slots[i].slotnum = i;
+            for (int i = 0; i < slots.Length; i++)
+            {
+                slots[i].slotnum = i;
 
-            if (i < inventory.items.Count) // 인벤토리에 아이템이 있을 때만 버튼을 활성화
-                slots[i].GetComponent<Button>().interactable = true;
-            else
-                slots[i].GetComponent<Button>().interactable = false;
+                if (i < inventory.items.Count) // 인벤토리에 아이템이 있을 때만 버튼을 활성화
+                    slots[i].GetComponent<Button>().interactable = true;
+                else
+                    slots[i].GetComponent<Button>().interactable = false;
+            }
         }
+        
     }
 
     public void AddSlot()
@@ -878,7 +880,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             AudioManager.single.PlaySfxClipChange(4);
             Debug.Log("던전 입장");
             GameSave();
-            SceneManager.LoadScene("Battle");//아니면여기에 던전에입장하시겠습니까? 예, 아니오, Wall, 값을 넣고 던져서 예누르면 wall로 텔포,아니오누르면 그냥 retrun하게하는식으로하면~ 야매 맵이동구현 뚝딲
+            //SceneManager.LoadScene("Battle");//아니면여기에 던전에입장하시겠습니까? 예, 아니오, Wall, 값을 넣고 던져서 예누르면 wall로 텔포,아니오누르면 그냥 retrun하게하는식으로하면~ 야매 맵이동구현 뚝딲
+            LoadingSceneController.LoadScene("Battle");
             isDungeon = false;
             return;
         }

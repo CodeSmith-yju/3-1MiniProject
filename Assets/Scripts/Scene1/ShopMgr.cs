@@ -1,10 +1,7 @@
-using DarkPixelRPGUI.Scripts.UI.Equipment;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class ShopMgr : MonoBehaviour
 {
