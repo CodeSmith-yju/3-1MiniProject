@@ -9,10 +9,15 @@ using UnityEngine.UI;
 [System.Serializable]
 public class Cell
 {
+    [Header("Room")]
     public GameObject cellObject;  // 셀에 해당하는 오브젝트 (방 오브젝트)
-    public bool isClear;
+    public bool isClear;           // 방 클리어 여부
     public bool isBlocked;         // 이 셀이 막혀 있는지 여부
-    public bool isBoss;
+    public bool isBoss;            // 방이 보스방인지 여부
+
+    [Header("Minimap")]
+    public GameObject minimap_Obj;
+    public bool isVisit;
 }
 
 
@@ -29,10 +34,20 @@ public class MapManager : MonoBehaviour
     private Vector2Int player_Pos;
     private Vector2Int select_Direction;
     public Transform cur_Room;
+    public Camera map_Camera;
+    public Camera map_Camera_Big;
     public bool isMoveDone = false;
     public List<GameObject> map_Icon; // 0 : 위, 1 : 아래, 2 : 왼쪽, 3 : 오른쪽
 
-    
+    Vector2Int[] directions = new Vector2Int[] // 방향 배열
+    {
+            new Vector2Int(0, -1),  // 위
+            new Vector2Int(0, 1), // 아래
+            new Vector2Int(-1, 0), // 왼쪽
+            new Vector2Int(1, 0)   // 오른쪽
+    };
+
+
 
     private Vector3 velocity = Vector3.zero;
 
@@ -40,6 +55,7 @@ public class MapManager : MonoBehaviour
     {
         player_Pos = new Vector2Int(0, 0);
         SetRoom(player_Pos);
+        MiniMapUpdate(player_Pos);
     }
 
     public void ShowMoveToRoomUI() // 포탈에 쓸 메서드
@@ -55,17 +71,88 @@ public class MapManager : MonoBehaviour
         BattleManager.Instance.ui.room_UI.SetActive(false);
     }
 
+    private void MiniMapUpdate(Vector2Int cur_Room) // 이동 할 때 마다 인접한 방 표시 미니맵 업데이트
+    {
+        mapRows[cur_Room.y].cells[cur_Room.x].minimap_Obj.SetActive(true);
+        mapRows[cur_Room.y].cells[cur_Room.x].isVisit = true; // 현재방 방문
+        mapRows[cur_Room.y].cells[cur_Room.x].minimap_Obj.GetComponent<SpriteRenderer>().color = Color.white; // 현재방 색깔은 하얀색으로 변경
+
+        for (int i = 0; i < directions.Length; i++) 
+        {
+            Vector2Int direction = directions[i];
+            Vector2Int newPos = cur_Room + direction;
+
+            
+            if (IsValid(newPos) && !IsBlock(newPos))
+            {
+                mapRows[newPos.y].cells[newPos.x].minimap_Obj.SetActive(true); // 상하좌우로 인접한 방
+                mapRows[newPos.y].cells[newPos.x].minimap_Obj.GetComponent<SpriteRenderer>().color = Color.gray; // 상하좌우로 인접한 방은 회색으로 변경
+            }
+        }
+    }
+
+    public void OpenMap(bool isOpen)
+    {
+
+        map_Camera_Big.gameObject.SetActive(isOpen);
+        BattleManager.Instance.ui.mini_Map_Big.SetActive(isOpen);
+        BattleManager.Instance.ui.mini_Map.SetActive(!isOpen);
+        map_Camera.gameObject.SetActive(!isOpen);
+
+        OpenMapUpdate(isOpen);
+    }
+
+    private void OpenMapUpdate(bool updateMap)
+    {
+        if (updateMap)
+        {
+            foreach (Row row in mapRows)
+            {
+                foreach (Cell cell in row.cells)
+                {
+                    if (cell.isVisit)
+                    {
+                        cell.minimap_Obj.SetActive(true);
+
+                        if (cell.cellObject == cur_Room.gameObject)
+                        {
+                            cell.minimap_Obj.GetComponent<SpriteRenderer>().color = Color.white;
+                        }
+                        else
+                        {
+                            cell.minimap_Obj.GetComponent<SpriteRenderer>().color = Color.gray;
+                        }
+                    }
+                    else
+                    {
+                        cell.minimap_Obj.SetActive(false);
+                    }
+                }
+            }
+        }
+        else
+        {
+
+            // 끄면 미니맵 전부 비활성화 후 다시 계산해서 미니맵 활성화
+            foreach (Row row in mapRows)
+            {
+                foreach (Cell cell in row.cells)
+                {
+                    cell.minimap_Obj.SetActive(false);
+                }
+            }
+
+            MiniMapUpdate(player_Pos);
+        }
+        
+    }
+
+    // 큰 미니맵은 어떤식으로 하지?
+
+
     private void UpdateRoomUI() // 현재 방에 따라 버튼 활성화 비 활성화 할지
     {
         // 네 방향을 배열로 정의
-        Vector2Int[] directions = new Vector2Int[]
-        {
-            new Vector2Int(0, -1),  // 위
-            new Vector2Int(0, 1), // 아래
-            new Vector2Int(-1, 0), // 왼쪽
-            new Vector2Int(1, 0)   // 오른쪽
-        };
-
         // 각 방향에 따라 map_Icon을 설정
         for (int i = 0; i < directions.Length; i++)
         {
@@ -75,12 +162,10 @@ public class MapManager : MonoBehaviour
             if (IsValid(newPos) && !IsBlock(newPos))
             {
                 map_Icon[i].SetActive(true);
-                Debug.Log("작동됨?" + i);
             }
             else
             {
                 map_Icon[i].SetActive(false); // 이동 불가능한 경우 비활성화
-                Debug.Log("작동됨? 비활성화" + i);
             }
         }
     }
@@ -108,6 +193,7 @@ public class MapManager : MonoBehaviour
                 if (mapRows[cur_Pos.y].cells[cur_Pos.x] != cell)
                 {
                     cell.cellObject.SetActive(false);
+                    cell.minimap_Obj.SetActive(false);
                 }
                 else
                 {
@@ -116,8 +202,6 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
-
-        // 미니맵 관련 코드 넣어야되나?
     }
 
 
@@ -210,6 +294,8 @@ public class MapManager : MonoBehaviour
     private IEnumerator MoveToCamera(Transform targetRoom)
     {
         Vector3 cam_Target_Pos = new Vector3(targetRoom.position.x, targetRoom.position.y, Camera.main.transform.position.z);
+        Vector3 targetMap = new Vector3(GetRoom(player_Pos).minimap_Obj.transform.position.x, GetRoom(player_Pos).minimap_Obj.transform.position.y, map_Camera.transform.position.z);
+
         cur_Room = targetRoom;
 
         foreach (Row row in mapRows)
@@ -219,32 +305,39 @@ public class MapManager : MonoBehaviour
                 if (targetRoom.gameObject == cell.cellObject)
                 {
                     cell.cellObject.SetActive(true);
+                    cell.minimap_Obj.SetActive(true);
                 }
                 else
                 {
                     cell.cellObject.SetActive(false);
+                    cell.minimap_Obj.SetActive(false);
                 }
             }
         }
 
+        
 
-        while (Vector3.Distance(Camera.main.transform.position, cam_Target_Pos) > 0.1f)
+        while (Vector3.Distance(Camera.main.transform.position, cam_Target_Pos) > 0.1f && Vector3.Distance(map_Camera.transform.position, targetMap) > 0.1f)
         {
             if (Vector3.Distance(Camera.main.transform.position, cam_Target_Pos) > 0.1f)
             {
                 Camera.main.transform.position = Vector3.SmoothDamp(Camera.main.transform.position, cam_Target_Pos, ref velocity, 0.2f);
             }
 
-            /*if (Vector3.Distance(map_Camera.transform.position, targetMap) > 0.1f)
+            if (Vector3.Distance(map_Camera.transform.position, targetMap) > 0.1f)
             {
-                map_Camera.transform.position = Vector3.SmoothDamp(map_Camera.transform.position, targetMap, ref velocity, 1f);
-            }*/
+                //map_Camera.transform.position = Vector3.SmoothDamp(map_Camera.transform.position, targetMap, ref velocity, 1f);
+                map_Camera.transform.position = Vector3.Lerp(map_Camera.transform.position, targetMap, 1.5f * Time.deltaTime);
+            }
             yield return null; // 다음 프레임까지 대기
         }
 
         // 나중에 미니맵 관련 추가
 
         Camera.main.transform.position = cam_Target_Pos;
+        map_Camera.transform.position = targetMap;
+
+        MiniMapUpdate(player_Pos);
 
         foreach (Row row in mapRows)
         {

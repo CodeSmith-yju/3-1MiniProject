@@ -57,24 +57,17 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if (!dialogue_Box.activeSelf)
+            if (!mini_Map_Big.activeSelf)
             {
-                if (!mini_Map_Big.activeSelf)
-                {
-                    BattleManager.Instance.room.map_Big_Camera.gameObject.SetActive(true);
-                    mini_Map_Big.SetActive(true);
-                }
-                else
-                {
-                    BattleManager.Instance.room.map_Big_Camera.gameObject.SetActive(false);
-                    mini_Map_Big.SetActive(false);
-                }
+                BattleManager.Instance.room.OpenMap(true);
             }
-        }*/
-
-        // 추후 미니맵 수정 시 수정 예정
+            else
+            {
+                BattleManager.Instance.room.OpenMap(false);
+            }
+        }
     }
 
     private void FixedUpdate()

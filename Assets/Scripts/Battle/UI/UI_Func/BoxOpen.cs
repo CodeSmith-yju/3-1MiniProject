@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BoxOpen : MonoBehaviour
 {
@@ -16,9 +18,10 @@ public class BoxOpen : MonoBehaviour
 
     private void Start()
     {
-        if (!BattleManager.Instance.dialogue.isTutorial)
+        if (SceneManager.GetActiveScene().name != "Tutorial") 
         {
             isMimic = Random.Range(0, 2);
+            Debug.Log(isMimic + " = 1 : 미믹, 0 : 상자");
 
             if (isMimic == 1)
             {
@@ -40,11 +43,14 @@ public class BoxOpen : MonoBehaviour
     {
         if (gameObject.CompareTag("Mimic"))
         {
-            if (BattleManager.Instance.dialogue.isTutorial)
+            if (BattleManager.Instance.dialogue != null)
             {
-                BattleManager.Instance.tutorial.EndTutorial(18);
+                if (BattleManager.Instance.dialogue.isTutorial)
+                {
+                    BattleManager.Instance.tutorial.EndTutorial(18);
+                }
             }
-
+            
             GameObject mimics = Instantiate(mimic, gameObject.transform.parent);
             mimics.transform.position = gameObject.transform.position;
             gameObject.SetActive(false);
@@ -59,8 +65,12 @@ public class BoxOpen : MonoBehaviour
             BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.reward_Popup);
             RewardPopupInit reward = BattleManager.Instance.ui.reward_Popup.GetComponent<RewardPopupInit>();
             reward.Init("상자", true);
-            if (BattleManager.Instance.dialogue.isTutorial)
-                BattleManager.Instance.ui.ui_Tutorial_Box.SetActive(false);
+            if (BattleManager.Instance.dialogue != null)
+            {
+                if (BattleManager.Instance.dialogue.isTutorial)
+                    BattleManager.Instance.ui.ui_Tutorial_Box.SetActive(false);
+            }
+            
 
             int gold = Random.Range(10, 101);
 
