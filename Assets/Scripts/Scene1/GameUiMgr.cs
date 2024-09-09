@@ -1,4 +1,5 @@
 ﻿//using System;
+using DarkPixelRPGUI.Scripts.UI.Equipment;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -965,33 +966,55 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     }
     public void WearEquipment()
     {
-        int index = 0;
+        string pk = "";
         // 현재 선택된 슬롯의 아이템을 복제하여 대상 슬롯에 추가
         for (int i = 0; i < targetSlots.Length; i++)
         {
             if (targetSlots[i].item.itemType == nowSlot.item.itemType)
             {
                 Debug.Log("Success Equip Add: " + nowSlot.item.itemName);
-                index = nowSlot.slotnum;
+                pk = nowSlot.item.PrimaryCode;
                 // 아이템 복제
-                Item clonedItem = nowSlot.item;
-
-                // 아이템 인덱스 설정
-                clonedItem.itemIndex = nowSlot.slotnum;
+                //Item clonedItem = nowSlot.item;
+                Item clonedItem = new()
+                {
+                    itemCode = nowSlot.item.itemCode,
+                    itemName = nowSlot.item.itemName,
+                    itemType = nowSlot.item.itemType,
+                    itemImage = nowSlot.item.itemImage,
+                    itemPrice = nowSlot.item.itemPrice,
+                    itemPower = nowSlot.item.itemPower,
+                    itemDesc = nowSlot.item.itemDesc,
+                    itemStack = nowSlot.item.itemStack,
+                    modifyStack = nowSlot.item.modifyStack,
+                    PrimaryCode = nowSlot.item.PrimaryCode,
+                };
+                // 아이템 설정
+                targetSlots[i].item = clonedItem;
 
                 // 아이콘 설정
                 targetSlots[i].itemIcon.sprite = nowSlot.itemIcon.sprite;
                 targetSlots[i].itemIcon.gameObject.SetActive(true);
                 targetSlots[i].wearChek = true;
                 targetSlots[i].GetComponent<Button>().interactable = true;
-                // 아이템 설정
-                targetSlots[i].item = clonedItem;
+                
+                //UI 설정
+                targetSlots[i].UpdateSloutUI();
 
                 ApplyEquipPower(targetSlots[i].wearChek, nowSlot.item);// == ApplyEquipPower(targetSlots[i], clonedItem);
+                break;
             }
         }
         // 사용한 아이템 제거 
-        inventory.RemoveItem(slots[index].item);
+        for (int i = 0; i < inventory.items.Count; i++)
+        {
+            if (inventory.items[i].PrimaryCode.Equals(pk))
+            {
+                inventory.RemoveItem(inventory.items[i]);
+                break;
+            }
+        }
+        //inventory.RemoveItem(item);
         RedrawSlotUI();
 
         nowSlot = null;
@@ -1181,8 +1204,20 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     //06-09 InventoryAdd
     public void TakeOffItem(Slot _Slot)
     {
-        Item livingItem = _Slot.item;
-        livingItem = ItemResources.instance.itemRS[_Slot.item.itemCode];//매개변수로 넘겨받은 슬롯의 아이템 코드 값으로 새 아이템을 생성하여.
+        //매개변수로 넘겨받은 슬롯의 아이템으로 새 아이템을 생성하여.
+        Item livingItem = new()
+        {
+            itemCode = _Slot.item.itemCode,
+            itemName = _Slot.item.itemName,
+            itemType = _Slot.item.itemType,
+            itemImage = _Slot.item.itemImage,
+            itemPrice = _Slot.item.itemPrice,
+            itemPower = _Slot.item.itemPower,
+            itemDesc = _Slot.item.itemDesc,
+            itemStack = _Slot.item.itemStack,
+            modifyStack = _Slot.item.modifyStack,
+            PrimaryCode = _Slot.item.PrimaryCode,
+        };
 
         //일단 장착해제
         _Slot.wearChek = false;//슬롯의 장비가 빠졌으니 fasle로 바꿔줌
@@ -1214,6 +1249,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         //다시 장착할때 필요한 기본설정 초기화
         _Slot.item.itemType = livingItem.itemType;
         _Slot.GetComponent<Button>().interactable = false;
+        _Slot.WearSlotRefresh();
 
         //인벤토리에 장착 해제한 아이템 추가 후 인벤토리 새로그리기
         inventory.AddItem(livingItem);

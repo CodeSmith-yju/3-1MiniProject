@@ -874,6 +874,7 @@ MonoBehaviour:
     itemCode: 0
     itemPower: 0
     itemPrice: 0
+    PrimaryCode: lZKgPiWR2v15
   itemIcon: {fileID: 3075729782443131875}
   wearChek: 0
   usability: 0

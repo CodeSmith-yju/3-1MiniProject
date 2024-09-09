@@ -30,7 +30,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             if (item.modifyStack > 0)
             {
-                modifyStack.text = item.modifyStack.ToString();
+                modifyStack.text = "+"+item.modifyStack.ToString();
                 modifyStack.gameObject.SetActive(true);
             }
         }
@@ -193,7 +193,13 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
         if (modifyStack.gameObject.activeSelf)
         {
-            modifyStack.text = item.modifyStack.ToString();
+            modifyStack.text = "+"+item.modifyStack.ToString();
         }
+    }
+    public void WearSlotRefresh()
+    {
+        modifyStack.text = "0";
+        modifyStack.gameObject.SetActive(false);
+
     }
 }
