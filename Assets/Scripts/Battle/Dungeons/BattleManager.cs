@@ -377,6 +377,12 @@ public class BattleManager : MonoBehaviour
 
             if (deployTilemap.HasTile(position) && CanPlace(position))
             {
+                if (GameMgr.playerData[unit_Cnt].cur_Player_Hp <= 0)
+                {
+                    unit_Cnt++;
+                    continue;
+                }
+
                 // 그 외 유닛들은 생성 하도록 함.
                 if (GameMgr.playerData[unit_Cnt].cur_Player_Hp > 0)
                 {

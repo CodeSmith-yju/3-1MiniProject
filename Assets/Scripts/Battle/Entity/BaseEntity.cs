@@ -160,17 +160,18 @@ public class BaseEntity : MonoBehaviour
                 _curstate = State.Death;
             }
 
-            if (able_Skill)
+            /*if (able_Skill)
             {
                 if (cur_Mp == max_Mp && cur_Mp != 0)
                 {
                     _curstate = State.Skill;
                 }
-            }
+            }*/
             
 
         }
-
+        
+        // 위치에 따른 바라보는 방향 조절
         if (gameObject != null)
         {
             Vector3 Direction = agent.velocity.normalized;
@@ -226,7 +227,7 @@ public class BaseEntity : MonoBehaviour
     }
 
 
-    // 1초마다 타겟을 업데이트 하는 메소드
+    // 0.5초마다 타겟을 업데이트 하는 메소드
     public IEnumerator UpdateTarget()
     {
         if (FindTarget() != null) 
@@ -241,7 +242,7 @@ public class BaseEntity : MonoBehaviour
                 }
 
 
-                yield return new WaitForSeconds(0.5f); // 1초 대기
+                yield return new WaitForSeconds(0.5f); // 대기
                 FindTarget();
             }
         }
@@ -374,13 +375,27 @@ public class BaseEntity : MonoBehaviour
                     {
                         cur_atk_CoolTime = 0;
 
-                        if (isMelee)
+                        if (able_Skill && cur_Mp == max_Mp)
                         {
-                            MeleeAttack(target);
+                            _curstate = State.Skill;
+                            break;
                         }
                         else
                         {
-                            RangeAttack(target);
+                            if (isMelee)
+                            {
+                                MeleeAttack(target);
+                                // 스킬을 사용할 수 있으면 공격 시 1Mp 회복
+                                if (able_Skill)
+                                    cur_Mp++;
+                            }
+                            else
+                            {
+                                RangeAttack(target);
+                                // 스킬을 사용할 수 있으면 공격 시 1Mp 회복
+                                if (able_Skill)
+                                    cur_Mp++;
+                            }
                         }
                     }
                     yield return null;
@@ -397,11 +412,6 @@ public class BaseEntity : MonoBehaviour
     {
         ani.SetTrigger("isAtk");
         Debug.Log("공격함 ( " + name + " -> " + target.name + " )");
-
-        if (able_Skill)
-        {
-            cur_Mp++;
-        }
 
         float getDmgHp = target.cur_Hp - atkDmg;
         target.cur_Hp = getDmgHp;
@@ -444,5 +454,4 @@ public class BaseEntity : MonoBehaviour
         Destroy(gameObject);
         isDieInProgress = false;
     }
-
 }

@@ -21,7 +21,6 @@ public class StatManager : MonoBehaviour
 
     [Header("Image")]
     public Image player_Icon;
-    public GameObject deploy_Check;
     public GameObject dead_Check;
     public List<Sprite> portrait_List = new List<Sprite>();
 
@@ -80,7 +79,7 @@ public class StatManager : MonoBehaviour
         {
             // 실시간으로 HP, MP 업데이트
             hp.value = player.cur_Player_Hp / player.max_Player_Hp;
-            mp.value = player.cur_Player_Mp / player.max_Player_Hp;
+            mp.value = player.cur_Player_Mp / player.max_Player_Mp;
 
             if (player.cur_Player_Hp > 0)
             {

@@ -4607,19 +4607,29 @@ MonoBehaviour:
       isClear: 0
       isBlocked: 0
       isBoss: 0
+      minimap_Obj: {fileID: 0}
+      isVisit: 0
     - cellObject: {fileID: 342305295}
       isClear: 0
       isBlocked: 0
       isBoss: 0
+      minimap_Obj: {fileID: 0}
+      isVisit: 0
     - cellObject: {fileID: 312438484}
       isClear: 0
       isBlocked: 0
       isBoss: 0
+      minimap_Obj: {fileID: 0}
+      isVisit: 0
     - cellObject: {fileID: 694421495}
       isClear: 0
       isBlocked: 0
       isBoss: 1
+      minimap_Obj: {fileID: 0}
+      isVisit: 0
   cur_Room: {fileID: 0}
+  map_Camera: {fileID: 0}
+  map_Camera_Big: {fileID: 0}
   isMoveDone: 0
   map_Icon:
   - {fileID: 238451453}
@@ -14563,7 +14573,7 @@ MonoBehaviour:
   m_VoxelSize: 0.06666667
   m_BuildHeightMesh: 0
   m_HideEditorLogs: 0
-  m_NavMeshData: {fileID: 23800000, guid: 44775baec76b64c40a3649a962d7d154, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: c2b9967808d0f274db0226ce38a1feb3, type: 2}
 --- !u!222 &3334448004310648517
 CanvasRenderer:
   m_ObjectHideFlags: 0

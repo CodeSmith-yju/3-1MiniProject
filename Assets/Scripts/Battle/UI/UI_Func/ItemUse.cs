@@ -129,12 +129,13 @@ public class ItemUse : MonoBehaviour
 
             HidePostionUI();
 
-
-            if (BattleManager.Instance.dialogue.isTutorial && BattleManager.Instance.tutorial.isItem_Tutorial)
+            if (BattleManager.Instance.tutorial != null && BattleManager.Instance.dialogue != null)
             {
-                BattleManager.Instance.tutorial.EndTutorial(6);
+                if (BattleManager.Instance.dialogue.isTutorial && BattleManager.Instance.tutorial.isItem_Tutorial)
+                {
+                    BattleManager.Instance.tutorial.EndTutorial(6);
+                }
             }
-
         }
         else
         {
