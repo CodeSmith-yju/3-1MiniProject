@@ -21,7 +21,8 @@ public class QuestMgr : MonoBehaviour
     public GameObject[] receptionist;// 모험가길드에서 튜토리얼을진행할 접수원을 분할하여 퀘스트기능을 구현하는데 용이하도록함
 
     //04-26 Quest Potion Ev
-    private bool oneTimeEv = true;
+    //private bool oneTimeEv = true;
+
     private void Awake()
     {
         dict_questList = new Dictionary<int, QuestData>();
@@ -164,12 +165,14 @@ public class QuestMgr : MonoBehaviour
                 }
                 else if (questActionIndex == 2)
                 {
+                    Debug.Log("Case 42");
+
                     GameMgr.single.IsGameLoad(true);
                     GameUiMgr.single.GameSave();
                     SceneManager.LoadScene("Title");
-                    
-                    receptionist[0].SetActive(true);
-                    receptionist[1].SetActive(false);
+
+                    /*receptionist[0].SetActive(true);
+                    receptionist[1].SetActive(false);*/
 
                 }
                 break;
@@ -219,16 +222,16 @@ public class QuestMgr : MonoBehaviour
         questIcons[0].GetComponent<SpriteRenderer>().sprite = spQuestIcons[1];
 
         questItem = ItemResources.instance.itemRS[2];
-        Inventory.single.AddItem(questItem);
+        Inventory.Single.AddItem(questItem);
 
         questItem = ItemResources.instance.itemRS[3];
-        Inventory.single.AddItem(questItem);
+        Inventory.Single.AddItem(questItem);
 
         questItem = ItemResources.instance.itemRS[4];
-        Inventory.single.AddItem(questItem);
+        Inventory.Single.AddItem(questItem);
 
         questItem = ItemResources.instance.itemRS[5];
-        Inventory.single.AddItem(questItem);
+        Inventory.Single.AddItem(questItem);
 
         GameUiMgr.single.RedrawSlotUI();
     }

@@ -27,6 +27,7 @@ public class GameMgr : MonoBehaviour
 
     public bool OnSelectPlayer(string name)
     {
+        playerData.Clear();
         playerData.Add(new PlayerData(name)); // 여기 수정함 06-04
 
         bool succ = playerData != null;
@@ -39,7 +40,8 @@ public class GameMgr : MonoBehaviour
 
         if (loadChecker == false)
         {
-            SceneManager.LoadScene("Town");
+            //SceneManager.LoadScene("Town");
+            LoadingSceneController.LoadScene("Town");
         }
 
         return true;

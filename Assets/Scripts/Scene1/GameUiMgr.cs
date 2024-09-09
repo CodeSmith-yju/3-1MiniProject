@@ -1,7 +1,6 @@
 ﻿//using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -68,10 +67,15 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     [Header("Player Options")]
     public GameObject player;
+    public PlaceState nowPlayerPlace;
+    public Transform[] arySpawnPoint;
 
     [Header("Quest Manager")]
     public QuestMgr questMgr;//퀘스트 번호를 가져올 퀘스트 매니저 변수 생성
     public TextMeshProUGUI questDesc;
+    //06-18 퀘스트 Id, Index가 정상저장이되지않는상태이기때문에 이를 해결하기위한 추가변수 도입
+    public static int quest_Id = 0;
+    public static int quest_Index = 0;
 
     [Header("Invnetory")]
     [SerializeField] private GameObject inventory_panel;
@@ -79,7 +83,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     [HideInInspector] public bool activeInventory = false;
     //03-31 variable Inventoty - try.4LocalDataStore
     public Slot[] slots;
-    public Transform slotHolder;
+    public Transform slotHolder;// 인벤토리의 아이템슬롯 오브젝트가 들어가는 부모 오브젝트 위치
     //04-21 Inventory Slot Drag items
     public Image dragIcon;
     public Slot nowSlot;
@@ -158,25 +162,22 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public bool uiEventCk = true;
 
+    [Header("Shop UI")]
+    [SerializeField] ShopMgr shopMgr;
 
-    public static int livingQId;
-    public static int livingQAction;
     private void Awake()
     {
         single = this;
-/*
-        if (firstLoad && GameMgr.single.LoadChecker() == true)
-        {
-            GameLoad();
-            firstLoad = false;
-        }*/
     }
     public void AddItemTest()
     {
         Debug.Log("AddItem");
-
-        Item newItem = ItemResources.instance.itemRS[UnityEngine.Random.Range(1,6)]; // 새로운 아이템 생성
+        //아 버그 왜 생기는거냐 진짜 소모아이템생성로직에 문제가있는데
+        Item newItem = ItemResources.instance.itemRS[Random.Range(0,2)]; // 새로운 아이템 생성
         inventory.AddItem(newItem); // 인벤토리에 아이템 추가,
+
+        Debug.Log("Make A NewItem Code: " + newItem.itemCode);
+
         RedrawSlotUI();
     }
     public void ValueUpdate()
@@ -205,15 +206,15 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             Debug.Log("player cur sn: " + player_Cur_SN);
         }
 
-        SliderChange();
+        //SliderChange();
     }
     
 
     private void Start()
     {
         //03-31 Start Inventory - try.4
-        inventory = Inventory.single;
-        
+        inventory = Inventory.Single;
+
         inventory_panel.SetActive(activeInventory);
         inventory.onSlotCountChange += SlotChange;
         slots = slotHolder.GetComponentsInChildren<Slot>();
@@ -222,6 +223,26 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         if (GameMgr.single.LoadChecker() == true)
         {
             GameLoad();
+            SetPlayerDatas();
+            Debug.Log("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+            Debug.Log("게임데이터를 불러온 다음입니다.");
+
+            Debug.Log("PlayerData - QID: " + GameUiMgr.single.questMgr.questId);
+            Debug.Log("PlayerData - AID: " + GameUiMgr.single.questMgr.questActionIndex);
+            Debug.Log("NowGold: " + GameMgr.playerData[0].player_Gold);
+            Debug.Log("Now_SN" + GameMgr.playerData[0].cur_Player_Sn);
+            Debug.Log("Now_HP" + GameMgr.playerData[0].cur_Player_Hp);
+
+            Debug.Log("Now_Lv" + GameMgr.playerData[0].player_level);
+            Debug.Log("Now_cur - exp" + GameMgr.playerData[0].player_cur_Exp);
+            Debug.Log("Now_max - exp" + GameMgr.playerData[0].player_max_Exp);
+
+            Debug.Log("Load Type: " + GameMgr.single.LoadChecker());
+        }
+        else
+        {
+            shopMgr.RefreshShopItems();
+            Debug.Log("지금은 게임 로드중이 아닙니다.");
         }
         
         //06-14 BGM
@@ -258,53 +279,61 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         questDesc.text = questMgr.CheckQuest();
 
-        SetPlayerDatas();
-
-        SliderChange();
-
-        //if dungeonClear Ck == true
+        SetPlayerDatas();//PlayerData[0]의 데이터를가져와서 데이터 저장하고 Dsce/각종 게이지 슬라이더/골드 변동사항 반영
+        
+        //if dungeonClear Ck == true 임시코드임
         if (questMgr.questId == 40 && questMgr.questActionIndex == 1)
         {
             TutorialDungeonClear();
         }
         //Tooltip
         canvaseWidth = canvas_Tooltip.GetComponent<CanvasScaler>().referenceResolution.x * 0.5f;
+
+
     }
 
     //03-31 Method Inventory - try.4
     public void SlotChange(int val)// slotChange 에서 slot의 slotNum을 차례대로 부여함
     {
-        for (int i = 0; i < slots.Length; i++)
+        if (inventory.items.Count != 0)
         {
-            slots[i].slotnum = i;
+            for (int i = 0; i < slots.Length; i++)
+            {
+                slots[i].slotnum = i;
 
-            if (i < inventory.items.Count) // 인벤토리에 아이템이 있을 때만 버튼을 활성화
-                slots[i].GetComponent<Button>().interactable = true;
-            else
-                slots[i].GetComponent<Button>().interactable = false;
+                if (i < inventory.items.Count) // 인벤토리에 아이템이 있을 때만 버튼을 활성화
+                    slots[i].GetComponent<Button>().interactable = true;
+                else
+                    slots[i].GetComponent<Button>().interactable = false;
+            }
         }
+        
     }
 
     public void AddSlot()
     {
         inventory.SlotCnt += 5;
     }
-    public void RedrawSlotUI()
+    public void RedrawSlotUI()// 08-14 수정
     {
-        for(int i = 0; i< slots.Length;i++)
+        // 모든 슬롯 초기화
+        for (int i = 0; i < slots.Length; i++)
         {
             slots[i].RemoveSlot();
         }
-        for(int i = 0; i< inventory.items.Count; i++)
+
+        // 아이템 개수만큼만 슬롯 업데이트
+        int itemCount = Mathf.Min(inventory.items.Count, slots.Length);
+        for (int i = 0; i < itemCount; i++)
         {
             slots[i].item = inventory.items[i];
             slots[i].item.itemIndex = i;
-            //Debug.Log(slots[i].item.itemIndex);
 
-            if (slots[i].name == ItemResources.instance.itemRS[i].itemName)
+            if (i < ItemResources.instance.itemRS.Count && slots[i].name == ItemResources.instance.itemRS[i].itemName)
             {
                 slots[i].item.itemCode = ItemResources.instance.itemRS[i].itemCode;
             }
+
             slots[i].UpdateSloutUI();
         }
     }
@@ -332,9 +361,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             }
 
         }
-        
+
         // Sub Menu Set
-        if (Input.GetButtonDown("Cancel") )
+        if (Input.GetButtonDown("Cancel"))
         {
             /*if (menuSet.activeSelf)
             {
@@ -345,29 +374,37 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             {*/
             ToggleSubButtons();
 
-                if (inventory_panel.activeSelf)
+            if (inventory_panel.activeSelf)
+            {
+                ActiveInventory();
+                tooltip.SetActive(false);
+                if (objSubButtonFrame.activeSelf)
                 {
-                    ActiveInventory();
-                    tooltip.SetActive(false);
-                    if (objSubButtonFrame.activeSelf)
-                    {
-                        ToggleSubButtons();
-                    }
-                }else if (panelPartyBoard.activeSelf)
-                {
-                    ActiveParty();
-                    if(objSubButtonFrame.activeSelf)
-                    {
-                        ToggleSubButtons();
-                    }
-            }
-/*                else
-                {
-                    menuSet.SetActive(true);
-                    uiEventCk = false;
+                    ToggleSubButtons();
                 }
+            }
+            else if (panelPartyBoard.activeSelf)
+            {
+                ActiveParty();
+                if (objSubButtonFrame.activeSelf)
+                {
+                    ToggleSubButtons();
+                }
+            }
+            else if (shopMgr.gameObject.activeSelf)
+            {
+                ActiveShop();
+                if (objSubButtonFrame.activeSelf)
+                {
+                    ToggleSubButtons();
+                }
+            }
+            /*else
+            {
+                menuSet.SetActive(true);
+                uiEventCk = false;
             }*/
-        }
+    }
 
         //Inventory
         if (Input.GetKeyDown(KeyCode.I))
@@ -516,38 +553,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         s_SN.value = this.player_Cur_SN / this.player_Max_SN;
         s_EXP.value = this.player_Cur_EXP / this.player_Max_EXP;
 
+        SliderChange();
     }
-    /*private void LoadGameValues()//06-16 Add
-    {
-        questMgr.questId = GameMgr.playerData[0].playerQuestID;
-        questMgr.questActionIndex = GameMgr.playerData[0].playerQuestIndex;
-
-        Debug.Log(questMgr.questId);
-        Debug.Log(questMgr.questActionIndex);
-
-        LoadInventory(GameMgr.playerData[0].listInventory);
-        LoadEquipment(GameMgr.playerData[0].listEquipment);
-
-    }*/
-
-    /*public void GameSave()
-    {
-        GameMgr.playerData[0].listInventory.Clear();
-        GameMgr.playerData[0].listInventory = inventory.items;
-        
-        GameMgr.playerData[0].listEquipment.Clear();
-        foreach (Slot _slot in targetSlots)
-        {
-            if (_slot.wearChek)
-            {
-                GameMgr.playerData[0].listEquipment.Add(_slot.item);
-            }
-        }
-        GameMgr.playerData[0].playerQuestID = questMgr.questId;
-        GameMgr.playerData[0].playerQuestIndex = questMgr.questActionIndex;
-
-    }*/
-
     public void SliderChange()
     {
         s_HP.value = this.player_Cur_HP / this.player_Max_HP;
@@ -605,6 +612,13 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         //End Talk
         if (talkData == null)
         {
+            //is Tutorol Event
+            if (questMgr.receptionist[1].activeSelf && questMgr.questId == 40)
+            {
+                //튜토리얼던전을 클리어했고, 튜토리얼던전 클리어시 활성화되는 접수원1이 활성화 상태이면서, 모의던전클리어 퀘스트(Qid 40)를 진행중일때.
+                tmp_PlayerRating.text = "견습 모험가";
+            }
+
             //Debug.Log("NulltalkData // ToosTalkData: " + scanObj_ID); // 04 -23 Debug
             /*if (AllEquipChek())
             {
@@ -617,12 +631,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
             talkIndex = 0;
             questDesc.text = questMgr.CheckQuest(scanObj_ID);
-            /*if (questMgr.questId ==10 && questMgr.questActionIndex == 0)
-            {
-                questMgr.receptionist[0].SetActive(false);
-                questMgr.receptionist[1].SetActive(true);
-            }*/
-                return;
+
+            return;
         }
 
         //Continue Talk
@@ -657,6 +667,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public void GameSave()
     {
+        Debug.Log("Run SaveData");
         /*if (menuSet.activeSelf)
         {
             menuSet.SetActive(false);
@@ -672,20 +683,23 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         for (int i = 0; i < targetSlots.Length; i++)
         {
-            if (targetSlots[i].wearChek == true)
+            if (targetSlots[i].wearChek == true && targetSlots[i].item != null)
             {
                 saveWearItem.Add(targetSlots[i].item);
             }
         }
 
-        livingQId = questMgr.questId;
-        livingQAction = questMgr.questActionIndex;
+        List<Item> saveShopItems = new();
+        foreach (var _item in GameUiMgr.single.shopMgr.GetShopSlots())
+        {
+            saveShopItems.Add(_item.GetItem());
+        }
 
-        SaveData gameSaveData = new SaveData(GameMgr.playerData[0].GetPlayerName(), playerLevel, playerGold, livingQId, livingQAction, 
-            player_Max_HP, player_Cur_HP, player_Max_SN, player_Cur_SN, player_Max_MP, player_Cur_MP, 
-            player_Atk_Speed, player_Atk_Range, player_Base_Atk_Dmg, 
-            player_Max_EXP, player_Cur_EXP, 
-            saveInventoryItem, saveWearItem);
+        SaveData gameSaveData = new SaveData(GameMgr.playerData[0].GetPlayerName(), GameMgr.playerData[0].player_level, GameMgr.playerData[0].player_Gold, GameUiMgr.single.questMgr.questId, GameUiMgr.single.questMgr.questActionIndex,
+            GameMgr.playerData[0].max_Player_Hp, GameMgr.playerData[0].cur_Player_Hp, GameMgr.playerData[0].max_Player_Sn, GameMgr.playerData[0].cur_Player_Sn, GameMgr.playerData[0].max_Player_Mp, GameMgr.playerData[0].cur_Player_Mp ,
+            GameMgr.playerData[0].atk_Speed, GameMgr.playerData[0].atk_Range, GameMgr.playerData[0].base_atk_Dmg ,
+            GameMgr.playerData[0].player_max_Exp, GameMgr.playerData[0].player_cur_Exp , 
+            saveInventoryItem, saveWearItem, saveShopItems);
         SaveSystem.Save(gameSaveData, "save");
 
         //  Player DayCount, Player Inventory, Player Desc (Stat, Name, Job, Gold ... ect)
@@ -696,9 +710,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         //Load Player Data => save_001.x, save_001.y, save_001.questId, save_001.QuestActionIndex 
 
-        GameMgr.playerData.Clear();
         GameMgr.single.OnSelectPlayer(loadData.playerName);
 
+        Debug.Log("PlayerDatas: "+GameMgr.playerData.Count);
         /*Vector3 lodingPosition = new Vector3(loadData.playerX, loadData.playerY);
         player.transform.position = lodingPosition;*/
         //Debug.Log("load x, y: "+loadData.playerX +", "+ loadData.playerY);
@@ -731,11 +745,19 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         LoadInventory(loadData.listInven);
         LoadEquipment(loadData.listEquip);
 
-        questMgr.questId = loadData.questId;
-        questMgr.questActionIndex = loadData.questActionIndex;
+        if (this.questMgr.questId <= 40)
+        {
+            questMgr.questId = loadData.questId;
+            questMgr.questActionIndex = loadData.questActionIndex;
+        }
+        else
+        {
+            Debug.Log("이거 왜 넣었더라");
+        }
         questMgr.ControlQuestObejct();
         //GetNowPositon();
 
+        GameUiMgr.single.shopMgr.ReLoadShopItems(loadData.shops);
     }
     #region PlayerPosition
     public void SetNowPosition(float x, float y)
@@ -768,7 +790,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     }
     public void ActiveInventory()
     {
-        if (questMgr.questId >= 20)
+        if (questMgr.questId >= 20 && !shopMgr.gameObject.activeSelf)
         {
             activeInventory = !activeInventory;
             if (activeInventory)
@@ -858,7 +880,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             AudioManager.single.PlaySfxClipChange(4);
             Debug.Log("던전 입장");
             GameSave();
-            SceneManager.LoadScene("Battle2");//아니면여기에 던전에입장하시겠습니까? 예, 아니오, Wall, 값을 넣고 던져서 예누르면 wall로 텔포,아니오누르면 그냥 retrun하게하는식으로하면~ 야매 맵이동구현 뚝딲
+            //SceneManager.LoadScene("Battle");//아니면여기에 던전에입장하시겠습니까? 예, 아니오, Wall, 값을 넣고 던져서 예누르면 wall로 텔포,아니오누르면 그냥 retrun하게하는식으로하면~ 야매 맵이동구현 뚝딲
+            LoadingSceneController.LoadScene("Battle");
             isDungeon = false;
             return;
         }
@@ -968,15 +991,15 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             }
         }
         // 사용한 아이템 제거 
-        inventory.RemoveItem(slots[index].slotnum);
+        inventory.RemoveItem(slots[index].item);
         RedrawSlotUI();
 
         nowSlot = null;
 
         addEquipPanel.gameObject.SetActive(false);
     }
-    //06- 12
-    public void ApplyEquipPower(bool _onoff, Item _equip)
+
+    public void ApplyEquipPower(bool _onoff, Item _equip)//07-20 Fix
     {
         float equipPower;
 
@@ -992,39 +1015,81 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
 
         Debug.Log("Now EquipItem Power: " + _equip.itemPower);
-        switch (_equip.itemType)
+
+        if (equipPower > 0)
         {
-            case Item.ItemType.Equipment_Helmet:
-                Debug.Log("장착전 HP: " + GameMgr.playerData[0].max_Player_Hp);
-                GameMgr.playerData[0].max_Player_Hp += equipPower;
+            switch (_equip.itemType)
+            {
+                case Item.ItemType.Equipment_Helmet:
+                    Debug.Log("장착전 HP: " + GameMgr.playerData[0].max_Player_Hp);
+                    GameMgr.playerData[0].max_Player_Hp += equipPower;
 
-                Debug.Log("장착후 HP: "+GameMgr.playerData[0].max_Player_Hp);
-                break;
-            case Item.ItemType.Equipment_Arrmor:
-                Debug.Log("장착전 Range: " + GameMgr.playerData[0].atk_Range);
-                GameMgr.playerData[0].atk_Range += equipPower;
+                    Debug.Log("장착후 HP: " + GameMgr.playerData[0].max_Player_Hp);
+                    break;
+                case Item.ItemType.Equipment_Arrmor:
+                    Debug.Log("장착전 Range: " + GameMgr.playerData[0].atk_Range);
+                    GameMgr.playerData[0].atk_Range += equipPower;
 
-                Debug.Log("장착후 Range: " + GameMgr.playerData[0].atk_Range);
-                break;
-            case Item.ItemType.Equipment_Weapon:
-                Debug.Log("장착전 Dmg: " + GameMgr.playerData[0].base_atk_Dmg);
-                GameMgr.playerData[0].base_atk_Dmg += equipPower;
+                    Debug.Log("장착후 Range: " + GameMgr.playerData[0].atk_Range);
+                    break;
+                case Item.ItemType.Equipment_Weapon:
+                    Debug.Log("장착전 Dmg: " + GameMgr.playerData[0].base_atk_Dmg);
+                    GameMgr.playerData[0].base_atk_Dmg += equipPower;
 
-                Debug.Log("장착후 Dmg: " + GameMgr.playerData[0].base_atk_Dmg);
-                break;
-            case Item.ItemType.Equipment_Boots:
-                Debug.Log("장착전 SPD: " + GameMgr.playerData[0].atk_Speed);
-                GameMgr.playerData[0].atk_Speed += equipPower;
+                    Debug.Log("장착후 Dmg: " + GameMgr.playerData[0].base_atk_Dmg);
+                    break;
+                case Item.ItemType.Equipment_Boots:
+                    Debug.Log("장착전 SPD: " + GameMgr.playerData[0].atk_Speed);
+                    GameMgr.playerData[0].atk_Speed += equipPower;
 
-                Debug.Log("장착후 SPD: " + GameMgr.playerData[0].atk_Speed);
-                break;
-            /*case Item.ItemType.Consumables:
-                break;
-            case Item.ItemType.Ect:
-                break;*/
-            default:
-                break;
+                    Debug.Log("장착후 SPD: " + GameMgr.playerData[0].atk_Speed);
+                    break;
+                /*case Item.ItemType.Consumables:
+                    break;
+                case Item.ItemType.Ect:
+                    break;*/
+                default:
+                    break;
+            }
         }
+        else
+        {
+            switch (_equip.itemType)
+            {
+                case Item.ItemType.Equipment_Helmet:
+                    Debug.Log("장비 해제 전 HP: " + GameMgr.playerData[0].max_Player_Hp);
+                    GameMgr.playerData[0].max_Player_Hp += equipPower;
+
+                    Debug.Log("장비 해제 후 HP: " + GameMgr.playerData[0].max_Player_Hp);
+                    break;
+                case Item.ItemType.Equipment_Arrmor:
+                    Debug.Log("장비 해제 전 Range: " + GameMgr.playerData[0].atk_Range);
+                    GameMgr.playerData[0].atk_Range += equipPower;
+
+                    Debug.Log("장비 해제 후 Range: " + GameMgr.playerData[0].atk_Range);
+                    break;
+                case Item.ItemType.Equipment_Weapon:
+                    Debug.Log("장비 해제 전 Dmg: " + GameMgr.playerData[0].base_atk_Dmg);
+                    GameMgr.playerData[0].base_atk_Dmg += equipPower;
+
+                    Debug.Log("장비 해제 후 Dmg: " + GameMgr.playerData[0].base_atk_Dmg);
+                    break;
+                case Item.ItemType.Equipment_Boots:
+                    Debug.Log("장비 해제 전 SPD: " + GameMgr.playerData[0].atk_Speed);
+                    GameMgr.playerData[0].atk_Speed += equipPower;
+
+                    Debug.Log("장비 해제 후 SPD: " + GameMgr.playerData[0].atk_Speed);
+                    break;
+                /*case Item.ItemType.Consumables:
+                    break;
+                case Item.ItemType.Ect:
+                    break;*/
+                default:
+                    break;
+            }
+        }
+
+
     }
 
     public bool AllEquipChek()
@@ -1059,8 +1124,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public void TutorialDungeonClear()
     {
+
         Debug.Log("튜토리얼 던전 클리어");
-        tmp_PlayerRating.text = "9급 모험가";
         Receptionist_1();
         Debug.Log("Run Method: Recep_1");
     }
@@ -1168,6 +1233,18 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         else
         {
             panelPartyBoard.SetActive(false);
+        }
+    }
+    public void ActiveShop()
+    {
+        if (shopMgr.gameObject.activeSelf == false && !activeInventory)
+        {
+            shopMgr.gameObject.SetActive(true);
+            shopMgr.OpenTap(ShopState.BUY);
+        }
+        else
+        {
+            shopMgr.gameObject.SetActive(false);
         }
     }
 
@@ -1478,8 +1555,22 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         poolMoveInSlot[0].btnMy.interactable = false;
         /*        PartySlot nSlot = new();
                 nSlot.Init(pd);*/
-
-        
     }
 
+    public void ChangePlayerPlace(PlaceState _playerState)// 플레이어 스폰 포인트(= arySpawnPoint) 값을 사전에 인스펙터창에서 등록하여 enum값과 통일시켜주어서 State값으로 이동하는기능 
+    {
+        player.transform.position = arySpawnPoint[((int)_playerState)].position;
+
+        MovePlayerPlace((int)_playerState);
+    }
+    public void MovePlayerPlace(int _stateIndex)
+    {
+        nowPlayerPlace = (PlaceState)_stateIndex;
+    }
+}
+public enum PlaceState
+{
+    Guild,
+    Town,
+    Act
 }
