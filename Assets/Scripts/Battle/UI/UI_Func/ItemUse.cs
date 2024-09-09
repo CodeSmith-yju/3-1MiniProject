@@ -32,10 +32,12 @@ public class ItemUse : MonoBehaviour
             statbar.sortingOrder = 1;
             statbar.additionalShaderChannels = AdditionalCanvasShaderChannels.TexCoord1;
 
-
-            if (BattleManager.Instance.dialogue.isTutorial && BattleManager.Instance.tutorial.isItem_Tutorial)
+            if (BattleManager.Instance.dialogue != null && BattleManager.Instance.tutorial != null) 
             {
-                BattleManager.Instance.ui.item_Tutorial.SetActive(false);
+                if (BattleManager.Instance.dialogue.isTutorial && BattleManager.Instance.tutorial.isItem_Tutorial)
+                {
+                    BattleManager.Instance.ui.item_Tutorial.SetActive(false);
+                }
             }
             BattleManager.Instance.ui.item_Use_UI.SetActive(true);
 
