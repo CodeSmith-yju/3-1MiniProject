@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Blacksmith : MonoBehaviour
 {
-
+    //[SerializeField] private void;
 
     // Start is called before the first frame update
     void Start()
