@@ -39,6 +39,7 @@ public class MapManager : MonoBehaviour
     public bool isMoveDone = false;
     public List<GameObject> map_Icon; // 0 : 위, 1 : 아래, 2 : 왼쪽, 3 : 오른쪽
 
+
     Vector2Int[] directions = new Vector2Int[] // 방향 배열
     {
             new Vector2Int(0, -1),  // 위
@@ -361,8 +362,11 @@ public class MapManager : MonoBehaviour
         {
             if (BattleManager.Instance.dialogue.isTutorial)
             {
-                BattleManager.Instance.dialogue.ONOFF(true);
-                BattleManager.Instance.dialogue.NextDialogue();
+                if (FindRoom(cur_Room.gameObject).isClear == false)
+                {
+                    BattleManager.Instance.dialogue.ONOFF(true);
+                    BattleManager.Instance.dialogue.NextDialogue();
+                }
             }
         }
         

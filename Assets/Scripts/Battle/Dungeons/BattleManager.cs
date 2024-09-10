@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Experimental.Rendering;
@@ -23,6 +24,7 @@ public class BattleManager : MonoBehaviour
     public GameObject unit_deploy_area;
     public bool isFirstEnter;
     private bool battleEnded = false;
+    public float level_Scale = 1;
     public float exp_Cnt;
     public int total_Gold;
     public float total_Exp;
@@ -264,6 +266,11 @@ public class BattleManager : MonoBehaviour
 
                 GameMgr.playerData[0].player_Gold += ran_Gold;
                 GameMgr.playerData[0].GetPlayerExp(exp_Cnt);
+
+                if (!room.FindRoom(room.cur_Room.gameObject).isBoss)
+                {
+                    ChangePhase(BattlePhase.Rest);
+                }
             }
 
 

@@ -13,11 +13,22 @@ public class ItemUse : MonoBehaviour
     public TMP_Text item_Cnt_Text;
     [SerializeField] int item_Cnt;
 
+    [SerializeField] Item myItem;
+    [SerializeField] Image itemImg;
     void Start()
     {
         item_Cnt = 5;
         item_Cnt_Text.text = item_Cnt.ToString();
     }
+
+    public void Init(Item _item)
+    {
+        myItem = _item;
+        itemImg.sprite = myItem.itemImage;
+        /*item_Cnt = myItem.item
+        item_Cnt_Text = item_Cnt;*/
+    }
+
 
     public void ShowPostionUI()
     {
@@ -63,6 +74,18 @@ public class ItemUse : MonoBehaviour
     {
         if (!player.isDead)
         {
+            if (BattleManager.Instance.tutorial == null || BattleManager.Instance.dialogue == null)
+            {
+                if (player.player.cur_Player_Hp == player.player.max_Player_Hp)
+                {
+                    BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.alert_Popup);
+                    BattleManager.Instance.ui.alert_Popup.GetComponent<TitleInit>().Init("회복할 체력이 없습니다.");
+                    HidePostionUI();
+                    return;
+                }
+            }
+            
+
             foreach (PlayerData player_index in GameMgr.playerData)
             {
                 if (player.player.playerIndex == player_index.playerIndex)
@@ -86,15 +109,8 @@ public class ItemUse : MonoBehaviour
                         {
                             player_index.cur_Player_Hp += 5f;
                         }
-                        else
-                        {
-                            BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.alert_Popup);
-                            BattleManager.Instance.ui.alert_Popup.GetComponent<TitleInit>().Init("현재 방이 휴식방이 아니거나 배치되지 않은 파티원입니다.");
-                            HidePostionUI();
-                            return;
-                        }
                     }
-                    else
+                    else if ((player.player.cur_Player_Hp + 5f) > player.player.max_Player_Hp)
                     {
                         if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy)
                         {
@@ -112,13 +128,6 @@ public class ItemUse : MonoBehaviour
                         else if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Rest)
                         {
                             player_index.cur_Player_Hp = player_index.max_Player_Hp;
-                        }
-                        else
-                        {
-                            BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.alert_Popup);
-                            BattleManager.Instance.ui.alert_Popup.GetComponent<TitleInit>().Init("현재 방이 휴식방이 아니거나 \n배치되지 않은 파티원입니다.");
-                            HidePostionUI();
-                            return;
                         }
                     }
                 }
@@ -140,7 +149,7 @@ public class ItemUse : MonoBehaviour
         else
         {
             BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.alert_Popup);
-            BattleManager.Instance.ui.alert_Popup.GetComponent<TitleInit>().Init("죽은 파티원에게는 사용 할 수 없습니다.");
+            BattleManager.Instance.ui.alert_Popup.GetComponent<TitleInit>().Init("죽은 파티원에게는 \n사용 할 수 없습니다.");
             HidePostionUI();
             return;
         }

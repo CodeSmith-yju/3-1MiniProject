@@ -227,32 +227,50 @@ public class BaseEntity : MonoBehaviour
     }
 
 
-    // 0.5초마다 타겟을 업데이트 하는 메소드
+    // 0.3초마다 타겟을 업데이트 하는 메소드
+    /*    public IEnumerator UpdateTarget()
+        {
+            if (FindTarget() != null) 
+            {
+                while (true)
+                {
+                    if (FindTarget() == null)
+                    {
+                        Debug.Log("타겟이 없으므로 멈춤");
+                        StopMove();
+                        break;
+                    }
+
+                    FindTarget();
+                    yield return new WaitForSeconds(0.3f); // 대기
+
+                }
+            }
+            else
+            {
+                Debug.Log("타겟 없음");
+                ChangeState(State.Idle);
+                yield break;
+            }
+        }*/
+
+    // 
     public IEnumerator UpdateTarget()
     {
-        if (FindTarget() != null) 
+        while (true)
         {
-            while (true)
+            var target = FindTarget();
+            if (target == null || target.GetComponent<BaseEntity>()._curstate == State.Death)
             {
-                if (FindTarget() == null)
-                {
-                    Debug.Log("타겟이 없으므로 멈춤");
-                    StopMove();
-                    break;
-                }
-
-
-                yield return new WaitForSeconds(0.5f); // 대기
-                FindTarget();
+                Debug.Log("타겟이 없으므로 멈춤");
+                StopMove();
+                ChangeState(State.Idle);
+                yield break;
             }
+
+            // 타겟이 바뀌거나 죽었는지 계속 체크
+            yield return new WaitForSeconds(0.1f); // 타겟을 빠르게 찾음
         }
-        else
-        {
-            Debug.Log("타겟 없음");
-            ChangeState(State.Idle);
-            yield break;
-        }
-        
     }
 
     // Idle 상태이거나 Attack 상태일때 최대한 피할수 있게 우선순위 높히는 메서드 ( NavMeshPlus 에셋 관련 )

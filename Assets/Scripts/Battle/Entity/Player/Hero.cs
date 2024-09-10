@@ -22,14 +22,15 @@ public class Hero : Ally
     {
         base.Update();
 
-        if (_curstate == State.Skill && !using_Skill)
+        if (_curstate == State.Skill && using_Skill == false)
         {
-            StartCoroutine(Skill());
+            Skill();
         }
     }
 
 
-    private IEnumerator Skill()
+    // 나중에 코루틴으로 애니메이션을 체크하지 말고 애니메이션 클립 이벤트로 제작 예정 (애니메이션 재생이 다 완료되면 Idle 상태로 변경하도록)
+    private void Skill()
     {
         using_Skill = true;
         if (_curstate == State.Skill)
@@ -37,30 +38,33 @@ public class Hero : Ally
             StopCoroutine(SetAttack());
             if (isAttack)
             {
-                // 애니메이션 넣기
-                ani.SetTrigger("isAtk"); // 임시 애니메이션
-
                 BaseEntity target = FindTarget().GetComponent<BaseEntity>();
                 Debug.Log("타겟의 적에게 2배의 데미지로 한번 공격" + " " + (atkDmg * 2) + "데미지");
                 target.cur_Hp -= atkDmg * 2;
                 cur_Mp = 0;
                 Debug.Log("스킬 사용 ( " + name + " -> " + target.name + " )");
 
-                yield return new WaitForSeconds(ani.GetCurrentAnimatorStateInfo(0).length);
-                ChangeState(State.Idle);
-                using_Skill = false;
+                // 애니메이션 넣기
+                ani.SetBool("isSkill", true); // 임시 애니메이션
+                Debug.Log("스킬 애니메이션 끝");
+                
             }
             else
             {
-                yield break;
+                return;
             }
         }
         else
         {
-            yield break;
+            return;
         }
     }
 
-
+    public void SkillAnimationDone()
+    {
+        ani.SetBool("isSkill", false);
+        ChangeState(State.Idle);
+        using_Skill = false;
+    }
 
 }
