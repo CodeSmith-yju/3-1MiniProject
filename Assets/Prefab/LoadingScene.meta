@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefab/LoadingScene.meta
 guid: 5fd855c419e41ed4f89c9cbf2ab52920
+========
+guid: 562d88033558c8b4b8fd8cda3646d091
+>>>>>>>> Battle:Assets/Scenes/Tutorial.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
