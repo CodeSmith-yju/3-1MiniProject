@@ -3865,6 +3865,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item_Cnt_Text: {fileID: 240672792}
   item_Cnt: 0
+  myItem:
+    itemType: 5
+    itemStack: 0
+    modifyStack: 0
+    itemName: 
+    itemImage: {fileID: 0}
+    efts: []
+    itemTitle: 
+    itemDesc: 
+    itemIndex: 0
+    isDraggable: 0
+    itemCode: 0
+    itemPower: 0
+    itemPrice: 0
+    PrimaryCode: 1zBh7wy6xP2b
+  itemImg: {fileID: 0}
 --- !u!1 &263858575
 GameObject:
   m_ObjectHideFlags: 0
@@ -7113,6 +7129,7 @@ MonoBehaviour:
   deploy_area: {fileID: 0}
   unit_deploy_area: {fileID: 0}
   isFirstEnter: 0
+  level_Scale: 1
   exp_Cnt: 0
   total_Gold: 0
   total_Exp: 0
@@ -13731,13 +13748,51 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4358264985173675283, guid: 7e2aa6d1c20da4d469125c89cdc67dcb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1024720516}
   m_SourcePrefab: {fileID: 100100000, guid: 7e2aa6d1c20da4d469125c89cdc67dcb, type: 3}
 --- !u!224 &1024720514 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1629590581193339585, guid: 7e2aa6d1c20da4d469125c89cdc67dcb, type: 3}
   m_PrefabInstance: {fileID: 1024720513}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1024720515 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4358264985173675283, guid: 7e2aa6d1c20da4d469125c89cdc67dcb, type: 3}
+  m_PrefabInstance: {fileID: 1024720513}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1024720516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024720515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcaa406ceedb268408c126609a55ba65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item_Cnt_Text: {fileID: 0}
+  item_Cnt: 0
+  myItem:
+    itemType: 0
+    itemStack: 0
+    modifyStack: 0
+    itemName: 
+    itemImage: {fileID: 0}
+    efts: []
+    itemTitle: 
+    itemDesc: 
+    itemIndex: 0
+    isDraggable: 0
+    itemCode: 0
+    itemPower: 0
+    itemPrice: 0
+    PrimaryCode: lWXwDCJkbrQt
+  itemImg: {fileID: 0}
 --- !u!1 &1064527693
 GameObject:
   m_ObjectHideFlags: 0

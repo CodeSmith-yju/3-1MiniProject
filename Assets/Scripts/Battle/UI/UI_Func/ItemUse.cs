@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using TMPro;
 using Unity.Collections;
 using Unity.VisualScripting;
@@ -12,21 +13,35 @@ public class ItemUse : MonoBehaviour
     StatManager[] party_stat;
     public TMP_Text item_Cnt_Text;
     [SerializeField] int item_Cnt;
-
     [SerializeField] Item myItem;
     [SerializeField] Image itemImg;
-    void Start()
+
+
+    /*private void SetItem()
     {
-        item_Cnt = 5;
-        item_Cnt_Text.text = item_Cnt.ToString();
-    }
+        for (int i = 0; i < Inventory.Single.items.Count; i++)
+        {
+            if (Inventory.Single.items[i].itemType == Item.ItemType.Consumables)
+            {
+                ItemUse iia = Instantiate(Prefab, BattleManager.Instance.ui.item_Bar.transform.GetChild(0));
+
+                // 생성된 슬롯 초기화
+                iia.Init(Inventory.Single.items[i]);
+
+                // 생성된 슬롯을 리스트에 추가
+                Inner.IiaList.Add(iia);
+            }
+        }
+
+    }*/
+
 
     public void Init(Item _item)
     {
         myItem = _item;
         itemImg.sprite = myItem.itemImage;
-        /*item_Cnt = myItem.item
-        item_Cnt_Text = item_Cnt;*/
+        item_Cnt = myItem.itemStack;
+        item_Cnt_Text.text = item_Cnt.ToString();
     }
 
 
