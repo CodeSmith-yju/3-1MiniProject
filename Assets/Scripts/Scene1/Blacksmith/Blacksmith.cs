@@ -65,13 +65,17 @@ public class Blacksmith : MonoBehaviour
     {
         for (int i = 0; i < Inventory.Single.items.Count; i++)
         {
-            InSlot slot = Instantiate(Prefab, inventr);
+            //일단 장비만 출력되게 했는데 개조가능한아이템의 코드만된다던가 하는식으로 수정 필요
+            if (Inventory.Single.items[i].itemType != Item.ItemType.Consumables && Inventory.Single.items[i].itemType != Item.ItemType.Ect)
+            {
+                InSlot slot = Instantiate(Prefab, inventr);
 
-            // 생성된 슬롯 초기화
-            slot.Init(Inventory.Single.items[i]);
+                // 생성된 슬롯 초기화
+                slot.Init(Inventory.Single.items[i]);
 
-            // 생성된 슬롯을 리스트에 추가
-            invenItems.Add(slot);
+                // 생성된 슬롯을 리스트에 추가
+                invenItems.Add(slot);
+            }
         }
     }
     void Refresh()
