@@ -16,29 +16,22 @@ public class ItemUse : MonoBehaviour
     [SerializeField] Item myItem;
     [SerializeField] Image itemImg;
 
-
-    /*private void SetItem()
-    {
-        for (int i = 0; i < Inventory.Single.items.Count; i++)
-        {
-            if (Inventory.Single.items[i].itemType == Item.ItemType.Consumables)
-            {
-                ItemUse iia = Instantiate(Prefab, BattleManager.Instance.ui.item_Bar.transform.GetChild(0));
-
-                // 생성된 슬롯 초기화
-                iia.Init(Inventory.Single.items[i]);
-
-                // 생성된 슬롯을 리스트에 추가
-                Inner.IiaList.Add(iia);
-            }
-        }
-
-    }*/
-
-
     public void Init(Item _item)
     {
-        myItem = _item;
+        if (_item == null)
+        {
+            item_Cnt_Text.gameObject.SetActive(false);
+            itemImg.gameObject.SetActive(false);
+            return;
+        }
+        else
+        {
+            myItem = _item;
+            gameObject.GetComponent<Button>().onClick.AddListener(() => ShowPostionUI());
+        }
+
+        item_Cnt_Text.gameObject.SetActive(true);
+        itemImg.gameObject.SetActive(true);
         itemImg.sprite = myItem.itemImage;
         item_Cnt = myItem.itemStack;
         item_Cnt_Text.text = item_Cnt.ToString();

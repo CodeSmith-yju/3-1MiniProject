@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -76,6 +77,9 @@ public class BattleManager : MonoBehaviour
             Debug.Log("NOW QUESTID 40 GOLD: "+ GameMgr.playerData[0].player_Gold);
             GameMgr.playerData[0].player_Gold = 1500;
         }
+
+        // 소모품 아이템 체크 후 아이템 바에 생성
+        SetItem();
     }
 
     private void Start()
@@ -251,7 +255,7 @@ public class BattleManager : MonoBehaviour
                 ui.OpenPopup(ui.reward_Popup);
 
                 Debug.Log("얻은 경험치 : " + exp_Cnt);
-                int ran_Gold = Random.Range(50, 301);
+                int ran_Gold = UnityEngine.Random.Range(50, 301);
                 RewardPopupInit popup = ui.reward_Popup.GetComponent<RewardPopupInit>();
                 popup.Init("전투 승리", false);
 
@@ -344,7 +348,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-
+    // 방 종류 체크 메서드
     public void CheckRoom()
     {
         if (room.cur_Room.tag == "Battle")
@@ -366,6 +370,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    // 배치 단계일때 죽은 파티원을 제외한 나머지 파티원을 배치
     private void PlacementUnit()
     {
         Debug.Log("작동하나 체크");
@@ -407,6 +412,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    // 배치 가능한지 체크
     private bool CanPlace(Vector3Int position)
     {
         Collider2D[] colliders = Physics2D.OverlapPointAll(unit_deploy_area.GetComponent<Tilemap>().GetCellCenterWorld(position));
@@ -423,7 +429,7 @@ public class BattleManager : MonoBehaviour
     }
 
 
-
+    // 던전이 끝나면 마을로 돌아가는 메서드
     public void ReturnToTown()
     {
         /*Debug.Log("마을로 이동");
@@ -475,6 +481,7 @@ public class BattleManager : MonoBehaviour
         SceneManager.LoadScene("Town");
     }
 
+    // 보상 팝업 내용물 초기화
     public void DestroyRewardPopup()
     {
         RewardPopupInit popup = ui.reward_Popup.GetComponent<RewardPopupInit>();
@@ -484,6 +491,39 @@ public class BattleManager : MonoBehaviour
             Destroy(child.gameObject);
         }
         
+    }
+
+
+    // 인벤토리 아이템 불러오기
+    private void SetItem()
+    {
+        int index = 0;
+        for (int i = 0; i < 10; i++)
+        {
+            ItemUse iia = Instantiate(ui.item_Slot_Prefabs, ui.item_Bar.transform.GetChild(0));
+
+            // 생성된 슬롯 초기화
+            Item item = SetInnerItem(ref index);
+
+            iia.Init(item);
+
+            // 생성된 슬롯을 리스트에 추가
+            //Inner.IiaList.Add(iia);
+        }
+
+    }
+
+    Item SetInnerItem(ref int _index)
+    {
+        for (int i = _index; i < Inventory.Single.items.Count; i++)
+        {
+            if (Inventory.Single.items[i].itemType == Item.ItemType.Consumables)
+            {
+                _index = i + 1;
+                return Inventory.Single.items[i];
+            }
+        }
+        return null;
     }
 
 }
