@@ -16,7 +16,9 @@ public class Blacksmith : MonoBehaviour
 
     private void Start()
     {
+        //씬최초실행시 한번
         MakeRenovateItems();
+        //OpenBlacksmith();
     }
     void OpenBlacksmith()
     {
@@ -78,7 +80,7 @@ public class Blacksmith : MonoBehaviour
         invenItems.Clear();
     }
 
-    private void MakeInvenItems()
+    void MakeInvenItems()
     {
         for (int i = 0; i < Inventory.Single.items.Count; i++)
         {
@@ -89,7 +91,7 @@ public class Blacksmith : MonoBehaviour
                 InSlot slot = Instantiate(Prefab, inventr);
 
                 // 생성된 슬롯 초기화
-                slot.Init(Inventory.Single.items[i]);
+                slot.Init(this, Inventory.Single.items[i], true);
 
                 // 생성된 슬롯을 리스트에 추가
                 invenItems.Add(slot);
@@ -104,17 +106,11 @@ public class Blacksmith : MonoBehaviour
             InSlot slot = Instantiate(Prefab, renovatetr);
 
             // 생성된 슬롯 초기화
-            slot.Init(ItemResources.instance.itemRS[i + 4]);
+            slot.Init(this, ItemResources.instance.itemRS[i + 4], false);
 
             // 생성된 슬롯을 리스트에 추가
             invenItems.Add(slot);
         }
-    }
-
-    public void WeakUp()
-    {
-        OpenBlacksmith();
-        MakeRenovateItems();
     }
 
     //TODO: LeftTop Side one = Renovate
