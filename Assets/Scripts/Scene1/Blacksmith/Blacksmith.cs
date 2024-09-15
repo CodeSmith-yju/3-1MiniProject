@@ -14,14 +14,21 @@ public class Blacksmith : MonoBehaviour
     [SerializeField] private Transform inventr;
     bool samenessCk;
 
-    public void OpenBlacksmith()
+    private void Start()
+    {
+        MakeRenovateItems();
+    }
+    void OpenBlacksmith()
     {
         samenessCk = false;
         // TODO: invenList Add. (foreach Inventory.items[i].PK != BlackSmithSlot.item.PK) 문으로 기존invenList와비교하여 Destroy or As it is 
 
-        // 최초실행 = 리스트가 없다면 초기화
-        invenItems ??= new List<InSlot>();
-        
+        // 최초실행 = 리스트가 없다면 초기화 == invenItems ??= new List<InSlot>();
+        if (invenItems == null)
+        {
+            invenItems = new List<InSlot>();
+        }
+
         // 기존의 리스트가 존재한다면.
         if (invenItems.Count > 0)
         {
@@ -61,12 +68,23 @@ public class Blacksmith : MonoBehaviour
         // TODO: revnovateItems
     }
 
+    void Refresh()
+    {
+        int cnt = invenItems.Count;
+        for (int i = 0; i < cnt; i++)
+        {
+            Destroy(invenItems[i]);
+        }
+        invenItems.Clear();
+    }
+
     private void MakeInvenItems()
     {
         for (int i = 0; i < Inventory.Single.items.Count; i++)
         {
             //일단 장비만 출력되게 했는데 개조가능한아이템의 코드만된다던가 하는식으로 수정 필요
-            if (Inventory.Single.items[i].itemType != Item.ItemType.Consumables && Inventory.Single.items[i].itemType != Item.ItemType.Ect)
+            //if (Inventory.Single.items[i].itemType != Item.ItemType.Consumables && Inventory.Single.items[i].itemType != Item.ItemType.Ect)
+            if (Inventory.Single.items[i].itemCode > 7 && Inventory.Single.items[i].itemCode < 12)
             {
                 InSlot slot = Instantiate(Prefab, inventr);
 
@@ -78,13 +96,30 @@ public class Blacksmith : MonoBehaviour
             }
         }
     }
-    void Refresh()
+
+    void MakeRenovateItems()
     {
-        int cnt = invenItems.Count;
-        for (int i = 0; i < cnt; i++)
+        for (int i = 8; i < 12; i++)
         {
-            Destroy(invenItems[i]);
+            InSlot slot = Instantiate(Prefab, renovatetr);
+
+            // 생성된 슬롯 초기화
+            slot.Init(ItemResources.instance.itemRS[i + 4]);
+
+            // 생성된 슬롯을 리스트에 추가
+            invenItems.Add(slot);
         }
-        invenItems.Clear();
     }
+
+    public void WeakUp()
+    {
+        OpenBlacksmith();
+        MakeRenovateItems();
+    }
+
+    //TODO: LeftTop Side one = Renovate
+    //TODO: LeftTop Side two = Enhance
+    //TODO: Click(OneTab || Two Tab)
+    //TODO: LeftBottom Side View List
+
 }
