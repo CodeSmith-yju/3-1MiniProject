@@ -8,6 +8,7 @@ public class InSlot : MonoBehaviour
     [SerializeField] Blacksmith blacksmith;
     [SerializeField] Item myItem;
     bool isInventory;
+    public int renovateIndex;
 
     [Header("Show UI")]
     public Image imgIcon;
@@ -22,6 +23,8 @@ public class InSlot : MonoBehaviour
     
     public void Init(Blacksmith _blacksmith, Item _item, bool _isInventory)
     {
+        renovateIndex = -1;
+
         blacksmith = _blacksmith;
         isInventory = _isInventory;
         myItem = _item;
@@ -81,20 +84,47 @@ public class InSlot : MonoBehaviour
     {
         // 하이라이트 켜기/끄기
     }
+    public void SelectedOff()
+    {
+        if (isInventory)//Right Side
+        {
+            selectedPanel.SetActive(true);
 
+            ParentBtn.interactable = false;
+            ChildBtn.interactable = true;
+        }
+    }
     public void OnClickSelected()
     {
-        Debug.Log("Clicked Btn_InSlot");
+        Debug.Log("Clicked Btn of InSlot");
         //isInventory 일 경우, 그리고 LeftTopRenovate가 활성화중인지아닌지,
         if (isInventory)
         {
-            SelectedPanel();
             //blacksmith.RenovateList[i].items.itemCode-4 = myItem.itemcode 일때 재료로 추가.
+
+            if (blacksmith.selectedCk != -1 && blacksmith.NowSelectedRenovateItem(blacksmith.selectedCk).itemCode-4 == myItem.itemCode )//좌측목록에서 선택된 아이템이 있을 경우.
+            {
+                SelectedPanel();
+            }
             //selectedPanel.activeSelf == true 일때, 좌측하단 아이템목록에서 제거
         }
         else
         {
+            if (blacksmith.selectedCk != -1)
+            {
+                //먼저 선택된게 있으면, 기존의 선택된거 다 갈아치우고 
+                blacksmith.RefreshRenovate(renovateIndex);
 
+                //내가선택한걸 체크
+                blacksmith.selectedCk = renovateIndex;
+                blacksmith.ShowInspections(myItem);
+            }
+            else
+            {
+                //선택된게 없다? 즉시 실행
+                blacksmith.selectedCk = renovateIndex;
+                blacksmith.ShowInspections(myItem);
+            }
         }
         //invenItems
         //SelectedImg.SetActive(true);

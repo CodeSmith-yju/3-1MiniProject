@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
@@ -14,9 +15,13 @@ public class Blacksmith : MonoBehaviour
     [SerializeField] private Transform inventr;
     bool samenessCk;
 
+    public int selectedCk = -1;
+    public SacrificeList sacrificeList;// 좌측상단 목록클릭시 얘가 활성, 해당아이템정보로 덮어씀
+
     private void Start()
     {
         //씬최초실행시 한번
+        sacrificeList.gameObject.SetActive(false);
         MakeRenovateItems();
         //OpenBlacksmith();
     }
@@ -79,6 +84,20 @@ public class Blacksmith : MonoBehaviour
         }
         invenItems.Clear();
     }
+    public void RefreshRenovate(int _index)
+    {
+        if (selectedCk == _index)
+        {
+            //기존거 다시 선택한거면
+            sacrificeList.gameObject.SetActive(false);
+        }/*
+        else 곰곰히 생각해보니 이건 없어도 상관없는 구조인듯
+        {
+            //기존에 선택된거 있으면 그거 선택을 비활성화
+            //renovateItems[selectedCk];
+        }*/
+
+    }
 
     void MakeInvenItems()
     {
@@ -107,12 +126,28 @@ public class Blacksmith : MonoBehaviour
 
             // 생성된 슬롯 초기화
             slot.Init(this, ItemResources.instance.itemRS[i + 4], false);
-
+            
             // 생성된 슬롯을 리스트에 추가
-            invenItems.Add(slot);
+            renovateItems.Add(slot);
+
+            // 추가 정보 대입
+            slot.renovateIndex = renovateItems.Count - 1;
         }
     }
 
+    public void ShowInspections(Item _item)
+    {
+        sacrificeList.gameObject.SetActive(true);
+        for (int i = 0; i < sacrificeList.inspections.Length; i++)
+        {
+            sacrificeList.inspections[i].Init(_item);
+        }
+        sacrificeList.ChangeInspectionsVlue(null);
+    }
+    public Item NowSelectedRenovateItem(int _index)
+    {
+        return renovateItems[_index].GetItem();
+    }
     //TODO: LeftTop Side one = Renovate
     //TODO: LeftTop Side two = Enhance
     //TODO: Click(OneTab || Two Tab)
