@@ -39,6 +39,11 @@ public class InSlot : MonoBehaviour
         {
             SelectedPanel();
         }
+        if (!isInventory)
+        {
+            ParentBtn.interactable = true;
+            ChildBtn.interactable = false;
+        }
     }
 
     public Item GetItem()
@@ -55,41 +60,42 @@ public class InSlot : MonoBehaviour
     {
         if (isInventory)//Right Side
         {
-            blacksmith.sacrificeList.FirstItemMinus();
+            // 오른쪽 항목을 선택하면 왼쪽 항목의 선택을 모두 해제함
+            blacksmith.AllInvenUnSelect();
 
+            // 동일한 항목을 다시 선택한 경우 선택 해제하고 반환
             if (blacksmith.invenCk == invenItemIndex)
             {
-                blacksmith.AllInvenUnSelect();
+                UnSelect();
+                blacksmith.invenCk = -1;
                 return;
             }
 
-            if (selectedPanel.activeSelf == true)
-            {
-                selectedPanel.SetActive(false);
+            //현재 항목 선택
+            selectedPanel.SetActive(true);
+            ParentBtn.interactable = true;
+            ChildBtn.interactable = false;
 
-                ParentBtn.interactable = false;
-                ChildBtn.interactable = true;
-            }
-            else
-            {
-                selectedPanel.SetActive(true);
-                ParentBtn.interactable = true;
-                ChildBtn.interactable = false;
-
-                blacksmith.sacrificeList.ChangeInspectionsVlue(myItem);
-            }
-
+            // sacrificeList에 선택된 항목 업데이트
+            blacksmith.sacrificeList.ChangeInspectionsVlue(myItem);
             blacksmith.invenCk = invenItemIndex;
         }
         else//Left Side
         {
-            if (selectedPanel.activeSelf == true)
-            {
-                selectedPanel.SetActive(false); 
+            // 왼쪽 항목을 선택하면 오른쪽 항목의 선택을 모두 해제함
+            blacksmith.AllInvenUnSelect();
 
-                //만약 하이라이트기능이 켜지면 밑에 두개 false 되고, 꺼지면 다시 true
-                ParentBtn.interactable = true;
-                ChildBtn.interactable = true;
+            // 동일한 항목을 다시 선택한 경우 선택 해제하고 반환
+            if (blacksmith.selectedCk == renovateIndex)
+            {
+                selectedPanel.SetActive(false);
+                blacksmith.selectedCk = -1;
+                return;
+            }
+
+            if (selectedPanel.activeSelf)
+            {
+                selectedPanel.SetActive(true);
             }
         }
     }
@@ -97,16 +103,17 @@ public class InSlot : MonoBehaviour
     {
         // 하이라이트 켜기/끄기
     }
-    public void SelectedOff()
+    public void UnSelect()
     {
-        if (isInventory)//Right Side
+        if (selectedPanel.activeSelf)
         {
-            selectedPanel.SetActive(true);
+            selectedPanel.SetActive(false);
 
             ParentBtn.interactable = false;
             ChildBtn.interactable = true;
         }
     }
+
     public void OnClickSelected()
     {
         Debug.Log("Clicked Btn of InSlot");
@@ -147,11 +154,5 @@ public class InSlot : MonoBehaviour
         //renoItems
         //if for (int i =0; i<RenovateItems.count; i++) { inventory.items.itemcode == RenovateItems.item.itemcode - 4 }, HightLight.ActiveTrue
     }
-    public void UnSelect()
-    {
-        if (selectedPanel.activeSelf)
-        {
-            selectedPanel.SetActive(false);
-        }
-    }
+
 }
