@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
+using static Unity.VisualScripting.Metadata;
 
 public class Blacksmith : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class Blacksmith : MonoBehaviour
     bool samenessCk;
 
     public int selectedCk = -1;
+    public int invenCk = -1;
     public SacrificeList sacrificeList;// 좌측상단 목록클릭시 얘가 활성, 해당아이템정보로 덮어씀
 
     private void Start()
@@ -90,6 +92,7 @@ public class Blacksmith : MonoBehaviour
         {
             //기존거 다시 선택한거면
             sacrificeList.gameObject.SetActive(false);
+            AllInvenUnSelect();
         }/*
         else 곰곰히 생각해보니 이건 없어도 상관없는 구조인듯
         {
@@ -97,6 +100,17 @@ public class Blacksmith : MonoBehaviour
             //renovateItems[selectedCk];
         }*/
 
+    }
+    public void AllInvenUnSelect()
+    {
+        for (int i = 0; i < invenItems.Count; i++)
+        {
+            invenItems[i].UnSelect();
+            /*invenItems[i].selectedPanel.SetActive(false);
+
+            invenItems[i].ParentBtn.interactable = false;
+            invenItems[i].ChildBtn.interactable = true;*/
+        }
     }
 
     void MakeInvenItems()
@@ -114,6 +128,8 @@ public class Blacksmith : MonoBehaviour
 
                 // 생성된 슬롯을 리스트에 추가
                 invenItems.Add(slot);
+
+                slot.invenItemIndex = invenItems.Count - 1;
             }
         }
     }
@@ -142,6 +158,7 @@ public class Blacksmith : MonoBehaviour
         {
             sacrificeList.inspections[i].Init(_item);
         }
+
         sacrificeList.ChangeInspectionsVlue(null);
     }
     public Item NowSelectedRenovateItem(int _index)

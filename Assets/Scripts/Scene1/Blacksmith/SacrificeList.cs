@@ -14,11 +14,15 @@ public class SacrificeList : MonoBehaviour
             int countItem = 0;
             switch (inspections[i].cnt)
             {
+                case 0:
+                    Debug.Log("0");
+                    break;
                 case 1:
                     if (_item == null)
                     {
                         inspections[i].SetAlphaToPartial();
                         inspections[i].SetTextColor(Color.red);
+                        inspections[i].count.text = "0/1";
                     }
                     else if (_item.itemCode == inspections[i].GetItem().itemCode - 4)
                     {
@@ -67,8 +71,10 @@ public class SacrificeList : MonoBehaviour
             }
         }
     }
-    void Set()
+    public void FirstItemMinus()
     {
-
+        inspections[0].SetAlphaToPartial();
+        inspections[0].SetTextColor(Color.red);
+        inspections[0].count.text = "0/1";
     }
 }

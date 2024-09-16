@@ -9,6 +9,7 @@ public class InSlot : MonoBehaviour
     [SerializeField] Item myItem;
     bool isInventory;
     public int renovateIndex;
+    public int invenItemIndex;
 
     [Header("Show UI")]
     public Image imgIcon;
@@ -24,6 +25,7 @@ public class InSlot : MonoBehaviour
     public void Init(Blacksmith _blacksmith, Item _item, bool _isInventory)
     {
         renovateIndex = -1;
+        invenItemIndex = -1;
 
         blacksmith = _blacksmith;
         isInventory = _isInventory;
@@ -53,6 +55,14 @@ public class InSlot : MonoBehaviour
     {
         if (isInventory)//Right Side
         {
+            blacksmith.sacrificeList.FirstItemMinus();
+
+            if (blacksmith.invenCk == invenItemIndex)
+            {
+                blacksmith.AllInvenUnSelect();
+                return;
+            }
+
             if (selectedPanel.activeSelf == true)
             {
                 selectedPanel.SetActive(false);
@@ -63,10 +73,13 @@ public class InSlot : MonoBehaviour
             else
             {
                 selectedPanel.SetActive(true);
-
                 ParentBtn.interactable = true;
                 ChildBtn.interactable = false;
+
+                blacksmith.sacrificeList.ChangeInspectionsVlue(myItem);
             }
+
+            blacksmith.invenCk = invenItemIndex;
         }
         else//Left Side
         {
@@ -133,5 +146,12 @@ public class InSlot : MonoBehaviour
 
         //renoItems
         //if for (int i =0; i<RenovateItems.count; i++) { inventory.items.itemcode == RenovateItems.item.itemcode - 4 }, HightLight.ActiveTrue
+    }
+    public void UnSelect()
+    {
+        if (selectedPanel.activeSelf)
+        {
+            selectedPanel.SetActive(false);
+        }
     }
 }
