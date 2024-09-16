@@ -66,11 +66,13 @@ public class InSlot : MonoBehaviour
             // 동일한 항목을 다시 선택한 경우 선택 해제하고 반환
             if (blacksmith.invenCk == invenItemIndex)
             {
+                Debug.Log("InventCk");
                 UnSelect();
+                blacksmith.sacrificeList.FirstItemMinus();
                 blacksmith.invenCk = -1;
                 return;
             }
-
+            Debug.Log("Not InvenCk");
             //현재 항목 선택
             selectedPanel.SetActive(true);
             ParentBtn.interactable = true;
@@ -105,8 +107,10 @@ public class InSlot : MonoBehaviour
     }
     public void UnSelect()
     {
+        Debug.Log("Run UnSelect");
         if (selectedPanel.activeSelf)
         {
+            Debug.Log("active True ");
             selectedPanel.SetActive(false);
 
             ParentBtn.interactable = false;
@@ -124,12 +128,15 @@ public class InSlot : MonoBehaviour
 
             if (blacksmith.selectedCk != -1 && blacksmith.NowSelectedRenovateItem(blacksmith.selectedCk).itemCode-4 == myItem.itemCode )//좌측목록에서 선택된 아이템이 있을 경우.
             {
+                Debug.Log("Run Clicked Selected Panel");
                 SelectedPanel();
             }
             //selectedPanel.activeSelf == true 일때, 좌측하단 아이템목록에서 제거
         }
         else
         {
+            Debug.Log("Run Left Side: renovateItems");
+            blacksmith.AllInvenUnSelect();
             if (blacksmith.selectedCk != -1)
             {
                 //먼저 선택된게 있으면, 기존의 선택된거 다 갈아치우고 
