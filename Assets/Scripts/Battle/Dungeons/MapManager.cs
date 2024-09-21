@@ -294,6 +294,7 @@ public class MapManager : MonoBehaviour
 
     private IEnumerator MoveToCamera(Transform targetRoom)
     {
+
         Vector3 cam_Target_Pos = new Vector3(targetRoom.position.x, targetRoom.position.y, Camera.main.transform.position.z);
         Vector3 targetMap = new Vector3(GetRoom(player_Pos).minimap_Obj.transform.position.x, GetRoom(player_Pos).minimap_Obj.transform.position.y, map_Camera.transform.position.z);
 

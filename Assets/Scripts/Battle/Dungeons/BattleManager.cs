@@ -96,7 +96,7 @@ public class BattleManager : MonoBehaviour
         yield return StartCoroutine(ui.StartBanner(ui.battle_Ready_Banner));
         yield return new WaitForSeconds(0.15f);
 
-        PlacementUnit(); // 파티 리스트에 있는 유닛 생성
+        // PlacementUnit(); // 파티 리스트에 있는 유닛 생성
 
         Enemy[] entity = FindObjectsOfType<Enemy>(); // 몬스터를 찾음
         battleEnded = false;
@@ -104,6 +104,14 @@ public class BattleManager : MonoBehaviour
         //ui.party_List.SetActive(true);
         deploy_area.SetActive(true);
         unit_deploy_area.SetActive(true);
+
+        foreach (GameObject ally in deploy_Player_List)
+        {
+            EntityDrag drag = ally.GetComponent<EntityDrag>();
+
+            drag.enabled = true;
+        }
+
 
         foreach (Enemy obj in entity)
         {
@@ -151,6 +159,14 @@ public class BattleManager : MonoBehaviour
                     ui.out_Portal.SetActive(true);
                     ui.out_Portal.GetComponent<FadeEffect>().fadeout = true;
                 }
+
+                foreach (GameObject ally in deploy_Player_List)
+                {
+                    EntityDrag drag = ally.GetComponent<EntityDrag>();
+
+                    drag.enabled = false;
+                }
+
                 break;
             case BattlePhase.Deploy:
                 if (ui.out_Portal.activeSelf)
@@ -292,25 +308,33 @@ public class BattleManager : MonoBehaviour
                 ui.out_Portal.AddComponent<Button>().onClick.AddListener(() => TotalReward());
             }
 
-            BaseEntity[] unit = FindObjectsOfType<BaseEntity>();
-
-            foreach (BaseEntity obj in unit)
+            foreach (Transform arrow_Obj in pool.obj_Parent)
             {
-                Ally ally = obj as Ally;
-                if (ally != null)
-                    ally.UpdateCurrentHPToSingle();
-                Destroy(obj.gameObject);
-
-                foreach (Transform arrow_Obj in pool.obj_Parent)
-                {
-                    Destroy(arrow_Obj.gameObject);
-                }
-
-                pool.Poolclear();
+                Destroy(arrow_Obj.gameObject);
             }
 
-            deploy_Player_List.Clear();
-            deploy_Enemy_List.Clear();
+            pool.Poolclear();
+            /*
+                        BaseEntity[] unit = FindObjectsOfType<BaseEntity>();
+
+                        foreach (BaseEntity obj in unit)
+                        {
+                            Ally ally = obj as Ally;
+                            if (ally != null)
+                                ally.UpdateCurrentHPToSingle();
+                            Destroy(obj.gameObject);
+
+                            foreach (Transform arrow_Obj in pool.obj_Parent)
+                            {
+                                Destroy(arrow_Obj.gameObject);
+                            }
+
+                            pool.Poolclear();
+                        }
+
+                        deploy_Player_List.Clear();
+                        deploy_Enemy_List.Clear();*/
+
         }
 
         exp_Cnt = 0;
@@ -351,6 +375,35 @@ public class BattleManager : MonoBehaviour
     // 방 종류 체크 메서드
     public void CheckRoom()
     {
+
+        // 전 방에 배치된 유닛들 제거
+        Ally[] unit = FindObjectsOfType<Ally>();
+
+        if (unit != null)
+        {
+            foreach (Ally obj in unit)
+            {
+                if (obj != null)
+                    obj.UpdateCurrentHPToSingle();
+                Destroy(obj.gameObject);
+
+                foreach (Transform arrow_Obj in pool.obj_Parent)
+                {
+                    if (arrow_Obj != null)
+                        Destroy(arrow_Obj.gameObject);
+                }
+
+                pool.Poolclear();
+            }
+        }
+        
+
+        deploy_Player_List.Clear();
+        deploy_Enemy_List.Clear();
+
+        unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
+        PlacementUnit(); // 어떤 방이든 유닛을 소환 시키도록 함.
+
         if (room.cur_Room.tag == "Battle")
         {
 
