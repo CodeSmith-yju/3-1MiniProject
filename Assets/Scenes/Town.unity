@@ -17390,7 +17390,7 @@ Tilemap:
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: -2969016694365801900, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
-      m_AnimationSpeed: 2.0852396
+      m_AnimationSpeed: 2.2286503
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -17401,7 +17401,7 @@ Tilemap:
       - {fileID: 2752588384504392991, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: -3803466081661082397, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: 2752588384504392991, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
-      m_AnimationSpeed: 1.669635
+      m_AnimationSpeed: 2.6561031
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -17412,7 +17412,7 @@ Tilemap:
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: -2969016694365801900, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
-      m_AnimationSpeed: 1.0382686
+      m_AnimationSpeed: 2.0495546
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -17423,7 +17423,7 @@ Tilemap:
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: -2969016694365801900, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
-      m_AnimationSpeed: 2.8876653
+      m_AnimationSpeed: 1.5743734
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -17434,7 +17434,7 @@ Tilemap:
       - {fileID: 2752588384504392991, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: -3803466081661082397, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: 2752588384504392991, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
-      m_AnimationSpeed: 2.2159111
+      m_AnimationSpeed: 1.6333231
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -17790,195 +17790,183 @@ MonoBehaviour:
     itemPower: 0
     itemPrice: 0
     PrimaryCode: emsmkgqKo6iu
-  - itemType: 5
+  - itemType: 0
     itemStack: 1
     modifyStack: 0
-    itemName: "\uBAA8\uC758\uC804\uD22C \uC218\uB8CC\uC99D"
-    itemImage: {fileID: 21300000, guid: 394899dbf2938874ca7d1025f7598406, type: 3}
+    itemName: "\uC784\uC2DC\uC7A5\uBE441"
+    itemImage: {fileID: 21300000, guid: 567fdd2e557fefc478f8aaa7ae56fb11, type: 3}
     efts:
     - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
-    itemTitle: "\uBAA8\uC758\uC804\uD22C\uB97C \uC218\uB8CC\uD55C \uC99D\uAC70"
-    itemDesc: "\uBAA8\uC758\uC804\uD22C\uB97C \uC131\uACF5\uC801\uC73C\uB85C \uB9C8\uCE5C
-      \uC99D\uAC70"
+    itemTitle: "\uC77C\uBC18\uC7A5\uBE441"
+    itemDesc: "\uAC00\uC8FD \uC7A5\uBE44\uBCF4\uB2E4 \uAC15\uD558\uB2E4"
+    itemIndex: 0
+    isDraggable: 0
+    itemCode: 8
+    itemPower: 0
+    itemPrice: 0
+    PrimaryCode: emsmkgqKo6iu
+  - itemType: 1
+    itemStack: 1
+    modifyStack: 0
+    itemName: "\uC77C\uBC18\uC7A5\uBE442"
+    itemImage: {fileID: 21300000, guid: 5170e0068a8cf184fb119834fa7ba0f3, type: 3}
+    efts:
+    - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
+    itemTitle: "\uC77C\uBC18\uC7A5\uBE442"
+    itemDesc: "\uAC00\uC8FD \uC7A5\uBE44\uBCF4\uB2E4 \uAC15\uD558\uB2E4"
+    itemIndex: 0
+    isDraggable: 0
+    itemCode: 9
+    itemPower: 0
+    itemPrice: 0
+    PrimaryCode: emsmkgqKo6iu
+  - itemType: 2
+    itemStack: 1
+    modifyStack: 0
+    itemName: "\uC77C\uBC18\uC7A5\uBE443"
+    itemImage: {fileID: 21300000, guid: b227c6c1c35b36940b602110d9556b13, type: 3}
+    efts:
+    - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
+    itemTitle: "\uC77C\uBC18\uC801\uC778 \uC7A5\uBE44 3"
+    itemDesc: "\uAC00\uC8FD\uC7A5\uBE44\uBCF4\uB2E4 \uAC15\uD558\uB2E4"
+    itemIndex: 0
+    isDraggable: 0
+    itemCode: 10
+    itemPower: 0
+    itemPrice: 0
+    PrimaryCode: emsmkgqKo6iu
+  - itemType: 3
+    itemStack: 1
+    modifyStack: 0
+    itemName: "\uC77C\uBC18\uBB34\uAE30\uC7784"
+    itemImage: {fileID: 21300000, guid: 90e99a7fde056a4418b9fe16084adb5c, type: 3}
+    efts:
+    - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
+    itemTitle: "\uC77C\uBC18\uC801\uC778\uBB34\uAE304"
+    itemDesc: "\uBCF4\uAE09\uD488\uBCF4\uB2E4 \uAC15\uD558\uB2E4"
+    itemIndex: 0
+    isDraggable: 0
+    itemCode: 11
+    itemPower: 0
+    itemPrice: 0
+    PrimaryCode: emsmkgqKo6iu
+  - itemType: 0
+    itemStack: 1
+    modifyStack: 0
+    itemName: "\uAC15\uD654\uC7A5\uBE441"
+    itemImage: {fileID: 21300000, guid: e29f293938fc0494d87d11a7532e32ea, type: 3}
+    efts:
+    - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
+    itemTitle: "\uAC15\uD654\uD55C\uC7A5\uBE441"
+    itemDesc: "\uC384\uB2E4"
+    itemIndex: 0
+    isDraggable: 0
+    itemCode: 12
+    itemPower: 0
+    itemPrice: 0
+    PrimaryCode: emsmkgqKo6iu
+  - itemType: 1
+    itemStack: 1
+    modifyStack: 0
+    itemName: "\uAC15\uD654\uD55C\uC7A5\uBE442"
+    itemImage: {fileID: 21300000, guid: c65e285e2bfa766428d07aef51d7757d, type: 3}
+    efts:
+    - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
+    itemTitle: "\uAC15\uD654\uD55C\uC7A5\uBE442"
+    itemDesc: "\uBE60\uB974\uB2E4"
     itemIndex: 0
     isDraggable: 0
     itemCode: 7
     itemPower: 0
     itemPrice: 0
     PrimaryCode: emsmkgqKo6iu
-  - itemType: 5
+  - itemType: 2
     itemStack: 1
     modifyStack: 0
-    itemName: "\uBAA8\uC758\uC804\uD22C \uC218\uB8CC\uC99D"
-    itemImage: {fileID: 21300000, guid: 394899dbf2938874ca7d1025f7598406, type: 3}
+    itemName: "\uAC15\uD654\uBAA8\uC790"
+    itemImage: {fileID: 21300000, guid: 896dada9aa8b8444b8145f80381d5fda, type: 3}
     efts:
     - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
-    itemTitle: "\uBAA8\uC758\uC804\uD22C\uB97C \uC218\uB8CC\uD55C \uC99D\uAC70"
-    itemDesc: "\uBAA8\uC758\uC804\uD22C\uB97C \uC131\uACF5\uC801\uC73C\uB85C \uB9C8\uCE5C
-      \uC99D\uAC70"
+    itemTitle: "\uAC15\uD654\uD55C\uBAA8\uC790"
+    itemDesc: "\uD2BC\uD2BC\uD558\uB2E4"
     itemIndex: 0
     isDraggable: 0
-    itemCode: 7
+    itemCode: 14
+    itemPower: 0
+    itemPrice: 0
+    PrimaryCode: emsmkgqKo6iu
+  - itemType: 3
+    itemStack: 1
+    modifyStack: 0
+    itemName: "\uAC15\uD654\uBB34\uAE30"
+    itemImage: {fileID: 21300000, guid: c0ea4b6e528e7fe4aa6cdc94d38691a1, type: 3}
+    efts:
+    - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
+    itemTitle: "\uAC15\uD654\uB41C \uBB34\uAE30"
+    itemDesc: "\uC9C4\uC9DC\uC384\uB2E4"
+    itemIndex: 0
+    isDraggable: 0
+    itemCode: 15
     itemPower: 0
     itemPrice: 0
     PrimaryCode: emsmkgqKo6iu
   - itemType: 5
     itemStack: 1
     modifyStack: 0
-    itemName: "\uBAA8\uC758\uC804\uD22C \uC218\uB8CC\uC99D"
-    itemImage: {fileID: 21300000, guid: 394899dbf2938874ca7d1025f7598406, type: 3}
+    itemName: "\uAC15\uD6541\uC18C\uC7AC"
+    itemImage: {fileID: 21300000, guid: e76b30749d6bac4489c3ccf1ccb2c8fc, type: 3}
     efts:
     - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
-    itemTitle: "\uBAA8\uC758\uC804\uD22C\uB97C \uC218\uB8CC\uD55C \uC99D\uAC70"
-    itemDesc: "\uBAA8\uC758\uC804\uD22C\uB97C \uC131\uACF5\uC801\uC73C\uB85C \uB9C8\uCE5C
-      \uC99D\uAC70"
+    itemTitle: "\uAC15\uD6541\uC18C\uC7AC"
+    itemDesc: "1\uC7A5\uBE44 \uAC1C\uC870 \uAC00\uB2A5"
     itemIndex: 0
     isDraggable: 0
-    itemCode: 7
+    itemCode: 16
     itemPower: 0
     itemPrice: 0
     PrimaryCode: emsmkgqKo6iu
   - itemType: 5
     itemStack: 1
     modifyStack: 0
-    itemName: "\uBAA8\uC758\uC804\uD22C \uC218\uB8CC\uC99D"
-    itemImage: {fileID: 21300000, guid: 394899dbf2938874ca7d1025f7598406, type: 3}
+    itemName: "\uAC15\uD6542\uC18C\uC7AC"
+    itemImage: {fileID: 21300000, guid: 0f1303cfff6593747a97f9c964728649, type: 3}
     efts:
     - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
-    itemTitle: "\uBAA8\uC758\uC804\uD22C\uB97C \uC218\uB8CC\uD55C \uC99D\uAC70"
-    itemDesc: "\uBAA8\uC758\uC804\uD22C\uB97C \uC131\uACF5\uC801\uC73C\uB85C \uB9C8\uCE5C
-      \uC99D\uAC70"
+    itemTitle: "\uAC15\uD6542\uC18C\uC7AC\uB2E4"
+    itemDesc: "2\uC7A5\uBE44 \uAC1C\uC870 \uAC00\uB2A5"
     itemIndex: 0
     isDraggable: 0
-    itemCode: 7
+    itemCode: 17
     itemPower: 0
     itemPrice: 0
     PrimaryCode: emsmkgqKo6iu
   - itemType: 5
     itemStack: 1
     modifyStack: 0
-    itemName: "\uBAA8\uC758\uC804\uD22C \uC218\uB8CC\uC99D"
-    itemImage: {fileID: 21300000, guid: 394899dbf2938874ca7d1025f7598406, type: 3}
+    itemName: "\uAC15\uD6543\uC18C\uC7AC"
+    itemImage: {fileID: 21300000, guid: f66c057114b8725409847a8a8e83a75b, type: 3}
     efts:
     - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
-    itemTitle: "\uBAA8\uC758\uC804\uD22C\uB97C \uC218\uB8CC\uD55C \uC99D\uAC70"
-    itemDesc: "\uBAA8\uC758\uC804\uD22C\uB97C \uC131\uACF5\uC801\uC73C\uB85C \uB9C8\uCE5C
-      \uC99D\uAC70"
+    itemTitle: "\uAC15\uD6543\uC18C\uC7AC"
+    itemDesc: "\uC7A5\uBE443\uAC1C\uC870\uAC00\uB2A5"
     itemIndex: 0
     isDraggable: 0
-    itemCode: 7
+    itemCode: 18
     itemPower: 0
     itemPrice: 0
     PrimaryCode: emsmkgqKo6iu
   - itemType: 5
     itemStack: 1
     modifyStack: 0
-    itemName: "\uBAA8\uC758\uC804\uD22C \uC218\uB8CC\uC99D"
-    itemImage: {fileID: 21300000, guid: 394899dbf2938874ca7d1025f7598406, type: 3}
+    itemName: "\uAC15\uD6544\uC18C\uC7AC"
+    itemImage: {fileID: 21300000, guid: 8bcb07d9c2c4c484caf61c33f48e3dd8, type: 3}
     efts:
     - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
-    itemTitle: "\uBAA8\uC758\uC804\uD22C\uB97C \uC218\uB8CC\uD55C \uC99D\uAC70"
-    itemDesc: "\uBAA8\uC758\uC804\uD22C\uB97C \uC131\uACF5\uC801\uC73C\uB85C \uB9C8\uCE5C
-      \uC99D\uAC70"
+    itemTitle: "\uC2A4\uCF08\uB808\uD1A4\uAC80 \uC81C\uC791\uAC00\uB2A5"
+    itemDesc: "\uC798 \uC548\uB098\uC628\uB2E4"
     itemIndex: 0
     isDraggable: 0
-    itemCode: 7
-    itemPower: 0
-    itemPrice: 0
-    PrimaryCode: emsmkgqKo6iu
-  - itemType: 5
-    itemStack: 1
-    modifyStack: 0
-    itemName: "\uBAA8\uC758\uC804\uD22C \uC218\uB8CC\uC99D"
-    itemImage: {fileID: 21300000, guid: 394899dbf2938874ca7d1025f7598406, type: 3}
-    efts:
-    - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
-    itemTitle: "\uBAA8\uC758\uC804\uD22C\uB97C \uC218\uB8CC\uD55C \uC99D\uAC70"
-    itemDesc: "\uBAA8\uC758\uC804\uD22C\uB97C \uC131\uACF5\uC801\uC73C\uB85C \uB9C8\uCE5C
-      \uC99D\uAC70"
-    itemIndex: 0
-    isDraggable: 0
-    itemCode: 7
-    itemPower: 0
-    itemPrice: 0
-    PrimaryCode: emsmkgqKo6iu
-  - itemType: 5
-    itemStack: 1
-    modifyStack: 0
-    itemName: "\uBAA8\uC758\uC804\uD22C \uC218\uB8CC\uC99D"
-    itemImage: {fileID: 21300000, guid: 394899dbf2938874ca7d1025f7598406, type: 3}
-    efts:
-    - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
-    itemTitle: "\uBAA8\uC758\uC804\uD22C\uB97C \uC218\uB8CC\uD55C \uC99D\uAC70"
-    itemDesc: "\uBAA8\uC758\uC804\uD22C\uB97C \uC131\uACF5\uC801\uC73C\uB85C \uB9C8\uCE5C
-      \uC99D\uAC70"
-    itemIndex: 0
-    isDraggable: 0
-    itemCode: 7
-    itemPower: 0
-    itemPrice: 0
-    PrimaryCode: emsmkgqKo6iu
-  - itemType: 5
-    itemStack: 1
-    modifyStack: 0
-    itemName: "\uBAA8\uC758\uC804\uD22C \uC218\uB8CC\uC99D"
-    itemImage: {fileID: 21300000, guid: 394899dbf2938874ca7d1025f7598406, type: 3}
-    efts:
-    - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
-    itemTitle: "\uBAA8\uC758\uC804\uD22C\uB97C \uC218\uB8CC\uD55C \uC99D\uAC70"
-    itemDesc: "\uBAA8\uC758\uC804\uD22C\uB97C \uC131\uACF5\uC801\uC73C\uB85C \uB9C8\uCE5C
-      \uC99D\uAC70"
-    itemIndex: 0
-    isDraggable: 0
-    itemCode: 7
-    itemPower: 0
-    itemPrice: 0
-    PrimaryCode: emsmkgqKo6iu
-  - itemType: 5
-    itemStack: 1
-    modifyStack: 0
-    itemName: "\uBAA8\uC758\uC804\uD22C \uC218\uB8CC\uC99D"
-    itemImage: {fileID: 21300000, guid: 394899dbf2938874ca7d1025f7598406, type: 3}
-    efts:
-    - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
-    itemTitle: "\uBAA8\uC758\uC804\uD22C\uB97C \uC218\uB8CC\uD55C \uC99D\uAC70"
-    itemDesc: "\uBAA8\uC758\uC804\uD22C\uB97C \uC131\uACF5\uC801\uC73C\uB85C \uB9C8\uCE5C
-      \uC99D\uAC70"
-    itemIndex: 0
-    isDraggable: 0
-    itemCode: 7
-    itemPower: 0
-    itemPrice: 0
-    PrimaryCode: emsmkgqKo6iu
-  - itemType: 5
-    itemStack: 1
-    modifyStack: 0
-    itemName: "\uBAA8\uC758\uC804\uD22C \uC218\uB8CC\uC99D"
-    itemImage: {fileID: 21300000, guid: 394899dbf2938874ca7d1025f7598406, type: 3}
-    efts:
-    - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
-    itemTitle: "\uBAA8\uC758\uC804\uD22C\uB97C \uC218\uB8CC\uD55C \uC99D\uAC70"
-    itemDesc: "\uBAA8\uC758\uC804\uD22C\uB97C \uC131\uACF5\uC801\uC73C\uB85C \uB9C8\uCE5C
-      \uC99D\uAC70"
-    itemIndex: 0
-    isDraggable: 0
-    itemCode: 7
-    itemPower: 0
-    itemPrice: 0
-    PrimaryCode: emsmkgqKo6iu
-  - itemType: 5
-    itemStack: 1
-    modifyStack: 0
-    itemName: "\uBAA8\uC758\uC804\uD22C \uC218\uB8CC\uC99D"
-    itemImage: {fileID: 21300000, guid: 394899dbf2938874ca7d1025f7598406, type: 3}
-    efts:
-    - {fileID: 11400000, guid: e9307dfcde0ad1d42bada54b93aaa2fb, type: 2}
-    itemTitle: "\uBAA8\uC758\uC804\uD22C\uB97C \uC218\uB8CC\uD55C \uC99D\uAC70"
-    itemDesc: "\uBAA8\uC758\uC804\uD22C\uB97C \uC131\uACF5\uC801\uC73C\uB85C \uB9C8\uCE5C
-      \uC99D\uAC70"
-    itemIndex: 0
-    isDraggable: 0
-    itemCode: 7
+    itemCode: 19
     itemPower: 0
     itemPrice: 0
     PrimaryCode: emsmkgqKo6iu
@@ -43532,7 +43520,7 @@ Tilemap:
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: -2969016694365801900, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
-      m_AnimationSpeed: 2.2980683
+      m_AnimationSpeed: 1.6380037
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -43543,7 +43531,7 @@ Tilemap:
       - {fileID: 2752588384504392991, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: -3803466081661082397, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: 2752588384504392991, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
-      m_AnimationSpeed: 1.2661278
+      m_AnimationSpeed: 2.2944212
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -43554,7 +43542,7 @@ Tilemap:
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: -2969016694365801900, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
-      m_AnimationSpeed: 2.2386034
+      m_AnimationSpeed: 1.9289658
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -43565,7 +43553,7 @@ Tilemap:
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: -2969016694365801900, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
-      m_AnimationSpeed: 1.7460568
+      m_AnimationSpeed: 1.8967783
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -43576,7 +43564,7 @@ Tilemap:
       - {fileID: 2752588384504392991, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: -3803466081661082397, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: 2752588384504392991, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
-      m_AnimationSpeed: 2.4703507
+      m_AnimationSpeed: 2.3563619
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -50477,6 +50465,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1560980201}
     m_Modifications:
+    - target: {fileID: 1189736592088091271, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189736592088091271, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189736592088091271, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189736592088091271, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1516253236514926332, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -50581,12 +50585,44 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6114723807320338893, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114723807320338893, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114723807320338893, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114723807320338893, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6495725871773524634, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
       propertyPath: m_Name
       value: BlackSmith
       objectReference: {fileID: 0}
     - target: {fileID: 6495725871773524634, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8223797774017121549, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8223797774017121549, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8223797774017121549, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8223797774017121549, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -54521,7 +54557,7 @@ Tilemap:
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: -2969016694365801900, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
-      m_AnimationSpeed: 2.8625855
+      m_AnimationSpeed: 2.5571198
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -54532,7 +54568,7 @@ Tilemap:
       - {fileID: 2752588384504392991, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: -3803466081661082397, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: 2752588384504392991, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
-      m_AnimationSpeed: 2.0506542
+      m_AnimationSpeed: 1.8159778
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -54543,7 +54579,7 @@ Tilemap:
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: -2969016694365801900, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
-      m_AnimationSpeed: 2.617031
+      m_AnimationSpeed: 1.4806802
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -54554,7 +54590,7 @@ Tilemap:
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: -2969016694365801900, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: 1955328530927145255, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
-      m_AnimationSpeed: 1.6820028
+      m_AnimationSpeed: 1.4174852
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -54565,7 +54601,7 @@ Tilemap:
       - {fileID: 2752588384504392991, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: -3803466081661082397, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
       - {fileID: 2752588384504392991, guid: 20d6cce5c7ac33b4e97f0f98a09aa347, type: 3}
-      m_AnimationSpeed: 1.1816142
+      m_AnimationSpeed: 1.2827375
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
