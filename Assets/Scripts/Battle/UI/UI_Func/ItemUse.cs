@@ -84,22 +84,21 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if (!player.isDead)
         {
-            if (BattleManager.Instance.tutorial == null || BattleManager.Instance.dialogue == null)
-            {
-                if (player.player.cur_Player_Hp == player.player.max_Player_Hp)
-                {
-                    BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.alert_Popup);
-                    BattleManager.Instance.ui.alert_Popup.GetComponent<TitleInit>().Init("회복할 체력이 없습니다.");
-                    HidePostionUI();
-                    return;
-                }
-            }
-            
-
             foreach (PlayerData player_index in GameMgr.playerData)
             {
                 if (player.player.playerIndex == player_index.playerIndex)
                 {
+                    if (BattleManager.Instance.tutorial == null || BattleManager.Instance.dialogue == null)
+                    {
+                        if (player.player.cur_Player_Hp == player.player.max_Player_Hp)
+                        {
+                            BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.alert_Popup);
+                            BattleManager.Instance.ui.alert_Popup.GetComponent<TitleInit>().Init("회복할 체력이 없습니다.");
+                            HidePostionUI();
+                            return;
+                        }
+                    }
+
                     if ((player.player.cur_Player_Hp + 5f) <= player.player.max_Player_Hp)
                     {
                         if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy)
