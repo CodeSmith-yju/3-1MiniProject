@@ -62,12 +62,8 @@ public class Tooltip : MonoBehaviour
         canvaseWidth = _canvasWidth;
         tooltipRect = _tooltipRect;
     }
-    public void MoveTooltip()
-    {
-        MoveTooltip();
-    }
 
-    private void MoveTooltip()
+    public void MoveTooltip()
     {
         transform.position = Input.mousePosition;
         // 04-15 ToolTip
