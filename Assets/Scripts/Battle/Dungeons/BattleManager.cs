@@ -308,32 +308,25 @@ public class BattleManager : MonoBehaviour
                 ui.out_Portal.AddComponent<Button>().onClick.AddListener(() => TotalReward());
             }
 
-            foreach (Transform arrow_Obj in pool.obj_Parent)
+            BaseEntity[] unit = FindObjectsOfType<BaseEntity>();
+
+            foreach (BaseEntity obj in unit)
             {
-                Destroy(arrow_Obj.gameObject);
+                Ally ally = obj as Ally;
+                if (ally != null)
+                    ally.UpdateCurrentHPToSingle();
+                Destroy(obj.gameObject);
+
+                foreach (Transform arrow_Obj in pool.obj_Parent)
+                {
+                    Destroy(arrow_Obj.gameObject);
+                }
+
+                pool.Poolclear();
             }
 
-            pool.Poolclear();
-            /*
-                        BaseEntity[] unit = FindObjectsOfType<BaseEntity>();
-
-                        foreach (BaseEntity obj in unit)
-                        {
-                            Ally ally = obj as Ally;
-                            if (ally != null)
-                                ally.UpdateCurrentHPToSingle();
-                            Destroy(obj.gameObject);
-
-                            foreach (Transform arrow_Obj in pool.obj_Parent)
-                            {
-                                Destroy(arrow_Obj.gameObject);
-                            }
-
-                            pool.Poolclear();
-                        }
-
-                        deploy_Player_List.Clear();
-                        deploy_Enemy_List.Clear();*/
+            deploy_Player_List.Clear();
+            deploy_Enemy_List.Clear();
 
         }
 
@@ -377,27 +370,30 @@ public class BattleManager : MonoBehaviour
     {
 
         // 전 방에 배치된 유닛들 제거
-        Ally[] unit = FindObjectsOfType<Ally>();
 
-        if (unit != null)
+        if (deploy_Player_List != null)
         {
-            foreach (Ally obj in unit)
+            Ally[] unit = FindObjectsOfType<Ally>();
+
+            if (unit != null)
             {
-                if (obj != null)
-                    obj.UpdateCurrentHPToSingle();
-                Destroy(obj.gameObject);
-
-                foreach (Transform arrow_Obj in pool.obj_Parent)
+                foreach (Ally obj in unit)
                 {
-                    if (arrow_Obj != null)
-                        Destroy(arrow_Obj.gameObject);
-                }
+                    if (obj != null)
+                        obj.UpdateCurrentHPToSingle();
+                    Destroy(obj.gameObject);
 
-                pool.Poolclear();
+                    foreach (Transform arrow_Obj in pool.obj_Parent)
+                    {
+                        if (arrow_Obj != null)
+                            Destroy(arrow_Obj.gameObject);
+                    }
+
+                    pool.Poolclear();
+                }
             }
         }
         
-
         deploy_Player_List.Clear();
         deploy_Enemy_List.Clear();
 

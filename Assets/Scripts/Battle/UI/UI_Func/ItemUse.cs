@@ -39,7 +39,7 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         item_Cnt_Text.text = item_Cnt.ToString();
     }
 
-
+   
     public void ShowPostionUI()
     {
         party_stat = GameObject.FindObjectsOfType(typeof(StatManager)) as StatManager[];
@@ -73,7 +73,7 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         else
         {
             BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.alert_Popup);
-            BattleManager.Instance.ui.alert_Popup.GetComponent<TitleInit>().Init("사용 할 아이템의 갯수가 부족합니다.");
+            BattleManager.Instance.ui.alert_Popup.GetComponent<TitleInit>().Init("사용 할 아이템의 \n갯수가 부족합니다.");
             return;
         }
         
@@ -99,7 +99,7 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                         }
                     }
 
-                    if ((player.player.cur_Player_Hp + 5f) <= player.player.max_Player_Hp)
+                    if ((player.player.cur_Player_Hp + myItem.itemPower) <= player.player.max_Player_Hp)
                     {
                         if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy)
                         {
@@ -109,17 +109,17 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
                                 if (player_index.playerIndex == ally_player.entity_index)
                                 {
-                                    ally_player.cur_Hp += 5f;
+                                    ally_player.cur_Hp += myItem.itemPower;
                                     break;
                                 }
                             }
                         }
                         else if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Rest)
                         {
-                            player_index.cur_Player_Hp += 5f;
+                            player_index.cur_Player_Hp += myItem.itemPower;
                         }
                     }
-                    else if ((player.player.cur_Player_Hp + 5f) > player.player.max_Player_Hp)
+                    else if ((player.player.cur_Player_Hp + myItem.itemPower) > player.player.max_Player_Hp)
                     {
                         if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy)
                         {
@@ -143,6 +143,14 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             }
             
             item_Cnt -= 1;
+            myItem.itemStack = item_Cnt;
+
+            // 아이템 사용 후 아이템 스택이 0이 될 때 아이템을 삭제하도록 함.
+            if (myItem.itemStack <= 0)
+            {
+                Inventory.Single.RemoveItem(myItem);
+            }
+
             item_Cnt_Text.text = item_Cnt.ToString();
 
             HidePostionUI();
