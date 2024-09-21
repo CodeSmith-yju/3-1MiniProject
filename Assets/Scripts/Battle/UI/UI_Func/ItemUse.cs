@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
 using Unity.Collections;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemUse : MonoBehaviour
+public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     StatManager[] party_stat;
     public TMP_Text item_Cnt_Text;
@@ -174,4 +176,27 @@ public class ItemUse : MonoBehaviour
         }
         BattleManager.Instance.ui.item_Use_UI.SetActive(false);
     }
+
+    public void OnPointerEnter(PointerEventData eventData)//Move InnerItem
+    {
+        if (myItem.itemType == Item.ItemType.Consumables)
+        {
+            Debug.Log("ToolTip Active");
+            BattleManager.Instance.ui.NowUseItem(this);
+        }
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        BattleManager.Instance.ui.tooltip.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+    }
+    public Item UseItem()
+    {
+        if (myItem != null)
+        {
+            return myItem;
+        }
+        return null;
+    }
+
+    
 }
