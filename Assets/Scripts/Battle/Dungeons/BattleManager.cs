@@ -13,22 +13,35 @@ using UnityEngine.UI;
 public class BattleManager : MonoBehaviour
 {
     private static BattleManager instance = null;
+    [Header("Manager")]
     public ObjectManager pool;
     public MapManager room;
     public UIManager ui;
     public Dialogue dialogue;
     public TutorialManager tutorial;
+
+
+    [Header("Battle")]
     public List<GameObject> party_List = new List<GameObject>();
     public List<GameObject> deploy_Player_List = new List<GameObject>();
     public List<GameObject> deploy_Enemy_List = new List<GameObject>();
     public GameObject deploy_area;
     public GameObject unit_deploy_area;
-    public bool isFirstEnter;
+    private bool isFirstEnter;
     private bool battleEnded = false;
+
+    [Header("Stage")]
     public float level_Scale = 1;
+
+    [Header("Reward")]
     public float exp_Cnt;
+    public int gold_Cnt;
+    public List<Item> drop_Item = new List<Item>();
+
+    [Header("Total_Reward")]
     public int total_Gold;
     public float total_Exp;
+    public List<Item> total_Drop_Item = new List<Item>();
 
     public static BattleManager Instance
     {
@@ -235,9 +248,12 @@ public class BattleManager : MonoBehaviour
                 foreach (GameObject enemy in deploy_Enemy_List)
                 {
                     float enemy_Exp = enemy.GetComponent<Enemy>().exp_Cnt;
+                    int enemy_gold = enemy.GetComponent<Enemy>().gold_Cnt;
 
                     exp_Cnt += enemy_Exp;
+                    gold_Cnt += enemy_gold;
                     Debug.Log("얻을 수 있는 경험치 량 : " + exp_Cnt);
+                    Debug.Log("얻을 수 있는 골드 : " + gold_Cnt);
                 }
             }
         }
@@ -271,20 +287,19 @@ public class BattleManager : MonoBehaviour
                 ui.OpenPopup(ui.reward_Popup);
 
                 Debug.Log("얻은 경험치 : " + exp_Cnt);
-                int ran_Gold = UnityEngine.Random.Range(50, 301);
                 RewardPopupInit popup = ui.reward_Popup.GetComponent<RewardPopupInit>();
                 popup.Init("전투 승리", false);
 
 
-                GameObject gold_Obj = Instantiate(ui.reward_Prefab, popup.inner_Main);
-                gold_Obj.GetComponent<RewardInit>().Init(ui.reward_Icons[0], ran_Gold + " Gold");
-                total_Gold += ran_Gold;
+                GameObject gold_Obj = Instantiate(ui.reward_Prefab, popup.inner_Gold_Exp);
+                gold_Obj.GetComponent<RewardInit>().Init(ui.reward_Icons[0], gold_Cnt + " Gold");
+                total_Gold += gold_Cnt;
 
-                GameObject exp_Obj = Instantiate(ui.reward_Prefab, popup.inner_Main);
+                GameObject exp_Obj = Instantiate(ui.reward_Prefab, popup.inner_Gold_Exp);
                 exp_Obj.GetComponent<RewardInit>().Init(ui.reward_Icons[1], exp_Cnt + " Exp");
                 total_Exp += exp_Cnt;
 
-                GameMgr.playerData[0].player_Gold += ran_Gold;
+                GameMgr.playerData[0].player_Gold += gold_Cnt;
                 GameMgr.playerData[0].GetPlayerExp(exp_Cnt);
 
                 if (!room.FindRoom(room.cur_Room.gameObject).isBoss)
@@ -331,6 +346,7 @@ public class BattleManager : MonoBehaviour
         }
 
         exp_Cnt = 0;
+        gold_Cnt = 0;
         battleEnded = true;
     }
 
@@ -351,15 +367,12 @@ public class BattleManager : MonoBehaviour
                 ui.OpenPopup(ui.vic_Popup);
                 RewardPopupInit popup = ui.vic_Popup.GetComponent<RewardPopupInit>();
 
-                foreach (Transform child in popup.inner_Main.transform)
-                {
-                    Destroy(child.gameObject);
-                }
+                DestroyRewardPopup();
 
-                GameObject gold_Obj = Instantiate(ui.reward_Prefab, popup.inner_Main);
+                GameObject gold_Obj = Instantiate(ui.reward_Prefab, popup.inner_Gold_Exp);
                 gold_Obj.GetComponent<RewardInit>().Init(ui.reward_Icons[0], total_Gold + " Gold");
 
-                GameObject exp_Obj = Instantiate(ui.reward_Prefab, popup.inner_Main);
+                GameObject exp_Obj = Instantiate(ui.reward_Prefab, popup.inner_Gold_Exp);
                 exp_Obj.GetComponent<RewardInit>().Init(ui.reward_Icons[1], total_Exp + " Exp");
             }
         }
@@ -518,16 +531,7 @@ public class BattleManager : MonoBehaviour
         GameMgr.single.IsGameLoad(true);
         Debug.Log("Load Type: " + GameMgr.single.LoadChecker());
 
-        StartCoroutine(ReturnToTownFadeOut());
-    }
-
-    public IEnumerator ReturnToTownFadeOut()
-    {
-        FadeInEffect fade = ui.fade_Bg.GetComponent<FadeInEffect>();
-
-        yield return fade.StartCoroutine(fade.FadeOut());
-
-        SceneManager.LoadScene("Town");
+        LoadingSceneController.LoadScene("Town");
     }
 
     // 보상 팝업 내용물 초기화
@@ -535,7 +539,7 @@ public class BattleManager : MonoBehaviour
     {
         RewardPopupInit popup = ui.reward_Popup.GetComponent<RewardPopupInit>();
         
-        foreach (Transform child in popup.inner_Main.transform)
+        foreach (Transform child in popup.inner_Gold_Exp.transform)
         {
             Destroy(child.gameObject);
         }

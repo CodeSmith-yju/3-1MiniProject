@@ -8,7 +8,7 @@ public class Goblin : Enemy
     {
         base.Start();
         // 최대 체력, 최대 마나, 공격력, 공격속도, 사거리, 근접유무, 스킬유무
-        InitStat(15, 0, 1, 0.8f, 6f, false, false, 2);
+        InitStat(15, 0, 1, 0.8f, 6f, false, false, 2, 100);
 
         Debug.Log("경험치 설정 : " +  exp_Cnt);
     }

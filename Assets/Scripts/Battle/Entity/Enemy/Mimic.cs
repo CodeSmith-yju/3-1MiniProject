@@ -8,7 +8,7 @@ public class Mimic : Enemy
     {
         base.Start();
         // 최대 체력, 최대 마나, 공격력, 공격속도, 사거리, 근접유무, 스킬유무
-        InitStat(45, 0, 3, 0.75f, 1.5f, true, false, 5);
+        InitStat(45, 0, 3, 0.75f, 1.5f, true, false, 5, 175);
     }
 
     /*    protected override void Update()

@@ -72,9 +72,9 @@ public class BoxOpen : MonoBehaviour
             }
             
 
-            int gold = Random.Range(10, 101);
+            int gold = Random.Range(150, 250);
 
-            GameObject gold_Obj = Instantiate(BattleManager.Instance.ui.reward_Prefab, reward.inner_Main);
+            GameObject gold_Obj = Instantiate(BattleManager.Instance.ui.reward_Prefab, reward.inner_Gold_Exp);
             gold_Obj.GetComponent<RewardInit>().Init(BattleManager.Instance.ui.reward_Icons[0], gold + " Gold");
 
             BattleManager.Instance.total_Gold += gold;

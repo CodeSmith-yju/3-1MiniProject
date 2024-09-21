@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : BaseEntity
 {
     public float exp_Cnt;
+    public int gold_Cnt;
 
     protected override void Update()
     {
@@ -12,7 +13,7 @@ public class Enemy : BaseEntity
     }
 
     // 최대 체력, 최대 마나, 공격력, 공격속도, 사거리, 근접유무, 스킬유무
-    public void InitStat(float max_Hp, float max_Mp, float atkDmg, float atkSpd, float atkRange, bool isMelee, bool able_Skill, float exp)
+    public void InitStat(float max_Hp, float max_Mp, float atkDmg, float atkSpd, float atkRange, bool isMelee, bool able_Skill, float exp, int gold)
     {
         stat = new(
             max_Hp,
@@ -22,7 +23,8 @@ public class Enemy : BaseEntity
             atkRange,
             isMelee,
             able_Skill,
-            exp
+            exp,
+            gold
             );
 
         this.max_Hp = stat.max_Hp;
@@ -35,6 +37,7 @@ public class Enemy : BaseEntity
         this.isMelee = stat.isMelee;
         this.able_Skill = stat.able_Skill;
         exp_Cnt = stat.exp;
+        gold_Cnt = stat.gold;
     }
 
     // 사운드 수정 예정
