@@ -37,6 +37,7 @@ public class PlayerAction : MonoBehaviour
         // Scan Ray Object
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && scanRayObjcet != null || (GameUiMgr.single.isActionTalk && Input.GetMouseButtonDown(0)))
         {
+            GameUiMgr.single.HideSubButtons();
             //Debug.Log("This is : "+ scanRayObjcet.name);// 레이에 맞고 스페이스바를 통해 상호작용하여 Scan Object에 저장된 물체가 있을 시 오브젝트 이름 출력 
             //Debug.Log(scanRayObjcet.name); // 04- 23 Debug
 

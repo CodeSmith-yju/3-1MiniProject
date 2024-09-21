@@ -172,12 +172,16 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     }
     public void AddItemTest()
     {
-        Debug.Log("AddItem");
-        //아 버그 왜 생기는거냐 진짜 소모아이템생성로직에 문제가있는데
-        Item newItem = ItemResources.instance.itemRS[Random.Range(0,2)]; // 새로운 아이템 생성
-        inventory.AddItem(newItem); // 인벤토리에 아이템 추가,
+        for (int i = 0; i < 20; i++)
+        {
+            Debug.Log("AddItem");
+            //아 버그 왜 생기는거냐 진짜 소모아이템생성로직에 문제가있는데
+            //Item newItem = ItemResources.instance.itemRS[Random.Range(0,8)]; // 새로운 아이템 생성
+            Item newItem = ItemResources.instance.itemRS[Random.Range(0, 20)]; // 새로운 아이템 생성
+            inventory.AddItem(newItem); // 인벤토리에 아이템 추가,
 
-        Debug.Log("Make A NewItem Code: " + newItem.itemCode);
+            Debug.Log("Make A NewItem Code: " + newItem.itemCode);
+        }
 
         RedrawSlotUI();
     }
@@ -517,7 +521,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             subButton.gameObject.SetActive(true);
         }
     }
-    private void HideSubButtons()
+    public void HideSubButtons()
     {
         foreach (GameObject subButton in subButtons)
         {

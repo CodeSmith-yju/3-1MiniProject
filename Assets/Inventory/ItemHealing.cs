@@ -10,7 +10,7 @@ public class ItemHealing : ItemEffect
     {
         if ( GameUiMgr.single.player_Cur_HP <= GameUiMgr.single.player_Cur_HP - healPoint )
         {
-            GameUiMgr.single.player_Cur_HP += healPoint;
+            GameUiMgr.single.player_Cur_HP += GameUiMgr.single.player_Cur_HP*0.3f;
             GameUiMgr.single.SliderChange();
         }
         else

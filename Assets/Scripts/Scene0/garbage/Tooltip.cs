@@ -64,6 +64,11 @@ public class Tooltip : MonoBehaviour
     }
     public void MoveTooltip()
     {
+        MoveTooltip();
+    }
+
+    private void MoveTooltip()
+    {
         transform.position = Input.mousePosition;
         // 04-15 ToolTip
         tooltipRect = GetComponent<RectTransform>();
