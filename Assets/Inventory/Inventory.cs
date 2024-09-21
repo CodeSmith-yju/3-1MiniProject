@@ -132,19 +132,18 @@ public class Inventory : MonoBehaviour
                 if (_item.itemStack >= 1)
                 {
                     _item.itemStack--;
-                }
 
-                if (_item.itemStack <= 0)
-                {
-                    items.RemoveAt(_item.itemIndex);
-                    //GameUiMgr.single.RedrawSlotUI();
-                    //아이템이 제거될 때 남은 아이템들의 itemIndex 수정
-                    for (int i = _item.itemIndex; i < items.Count; i++)
+                    if (_item.itemStack <= 0)
                     {
-                        items[i].itemIndex = i;
+                        items.RemoveAt(_item.itemIndex);
+                        //GameUiMgr.single.RedrawSlotUI();
+                        //아이템이 제거될 때 남은 아이템들의 itemIndex 수정
+                        for (int i = _item.itemIndex; i < items.Count; i++)
+                        {
+                            items[i].itemIndex = i;
+                        }
                     }
                 }
-
             }
             else
             {

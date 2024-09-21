@@ -1,45 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using TMPro;
 using Unity.Collections;
-using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ItemUse : MonoBehaviour
 {
     StatManager[] party_stat;
     public TMP_Text item_Cnt_Text;
     [SerializeField] int item_Cnt;
-    [SerializeField] Item myItem;
-    [SerializeField] Image itemImg;
 
-    public void Init(Item _item)
+    void Start()
     {
-        if (_item == null)
-        {
-            item_Cnt_Text.gameObject.SetActive(false);
-            itemImg.gameObject.SetActive(false);
-            return;
-        }
-        else
-        {
-            myItem = _item;
-            gameObject.GetComponent<Button>().onClick.AddListener(() => ShowPostionUI());
-        }
-
-        item_Cnt_Text.gameObject.SetActive(true);
-        itemImg.gameObject.SetActive(true);
-        itemImg.sprite = myItem.itemImage;
-        item_Cnt = myItem.itemStack;
+        item_Cnt = 5;
         item_Cnt_Text.text = item_Cnt.ToString();
     }
 
-   
     public void ShowPostionUI()
     {
         party_stat = GameObject.FindObjectsOfType(typeof(StatManager)) as StatManager[];
@@ -73,7 +52,7 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         else
         {
             BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.alert_Popup);
-            BattleManager.Instance.ui.alert_Popup.GetComponent<TitleInit>().Init("사용 할 아이템의 \n갯수가 부족합니다.");
+            BattleManager.Instance.ui.alert_Popup.GetComponent<TitleInit>().Init("사용 할 아이템의 갯수가 부족합니다.");
             return;
         }
         
@@ -88,18 +67,7 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             {
                 if (player.player.playerIndex == player_index.playerIndex)
                 {
-                    if (BattleManager.Instance.tutorial == null || BattleManager.Instance.dialogue == null)
-                    {
-                        if (player.player.cur_Player_Hp == player.player.max_Player_Hp)
-                        {
-                            BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.alert_Popup);
-                            BattleManager.Instance.ui.alert_Popup.GetComponent<TitleInit>().Init("회복할 체력이 없습니다.");
-                            HidePostionUI();
-                            return;
-                        }
-                    }
-
-                    if ((player.player.cur_Player_Hp + myItem.itemPower) <= player.player.max_Player_Hp)
+                    if ((player.player.cur_Player_Hp + 5f) <= player.player.max_Player_Hp)
                     {
                         if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy)
                         {
@@ -109,17 +77,24 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
                                 if (player_index.playerIndex == ally_player.entity_index)
                                 {
-                                    ally_player.cur_Hp += myItem.itemPower;
+                                    ally_player.cur_Hp += 5f;
                                     break;
                                 }
                             }
                         }
                         else if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Rest)
                         {
-                            player_index.cur_Player_Hp += myItem.itemPower;
+                            player_index.cur_Player_Hp += 5f;
+                        }
+                        else
+                        {
+                            BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.alert_Popup);
+                            BattleManager.Instance.ui.alert_Popup.GetComponent<TitleInit>().Init("현재 방이 휴식방이 아니거나 배치되지 않은 파티원입니다.");
+                            HidePostionUI();
+                            return;
                         }
                     }
-                    else if ((player.player.cur_Player_Hp + myItem.itemPower) > player.player.max_Player_Hp)
+                    else
                     {
                         if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy)
                         {
@@ -138,35 +113,33 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                         {
                             player_index.cur_Player_Hp = player_index.max_Player_Hp;
                         }
+                        else
+                        {
+                            BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.alert_Popup);
+                            BattleManager.Instance.ui.alert_Popup.GetComponent<TitleInit>().Init("현재 방이 휴식방이 아니거나 \n배치되지 않은 파티원입니다.");
+                            HidePostionUI();
+                            return;
+                        }
                     }
                 }
             }
             
             item_Cnt -= 1;
-            myItem.itemStack = item_Cnt;
-
-            // 아이템 사용 후 아이템 스택이 0이 될 때 아이템을 삭제하도록 함.
-            if (myItem.itemStack <= 0)
-            {
-                Inventory.Single.RemoveItem(myItem);
-            }
-
             item_Cnt_Text.text = item_Cnt.ToString();
 
             HidePostionUI();
 
-            if (BattleManager.Instance.tutorial != null && BattleManager.Instance.dialogue != null)
+
+            if (BattleManager.Instance.dialogue.isTutorial && BattleManager.Instance.tutorial.isItem_Tutorial)
             {
-                if (BattleManager.Instance.dialogue.isTutorial && BattleManager.Instance.tutorial.isItem_Tutorial)
-                {
-                    BattleManager.Instance.tutorial.EndTutorial(6);
-                }
+                BattleManager.Instance.tutorial.EndTutorial(6);
             }
+
         }
         else
         {
             BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.alert_Popup);
-            BattleManager.Instance.ui.alert_Popup.GetComponent<TitleInit>().Init("죽은 파티원에게는 \n사용 할 수 없습니다.");
+            BattleManager.Instance.ui.alert_Popup.GetComponent<TitleInit>().Init("죽은 파티원에게는 사용 할 수 없습니다.");
             HidePostionUI();
             return;
         }
@@ -183,27 +156,4 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         BattleManager.Instance.ui.item_Use_UI.SetActive(false);
     }
-
-    public void OnPointerEnter(PointerEventData eventData)//Move InnerItem
-    {
-        if (myItem.itemType == Item.ItemType.Consumables)
-        {
-            Debug.Log("ToolTip Active");
-            BattleManager.Instance.ui.NowUseItem(this);
-        }
-    }
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        BattleManager.Instance.ui.tooltip.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-    }
-    public Item UseItem()
-    {
-        if (myItem != null)
-        {
-            return myItem;
-        }
-        return null;
-    }
-
-    
 }

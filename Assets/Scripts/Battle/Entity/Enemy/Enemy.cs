@@ -37,16 +37,15 @@ public class Enemy : BaseEntity
         exp_Cnt = stat.exp;
     }
 
-    // 사운드 수정 예정
     public void AttackSound(int index)
     {
-        // AudioManager.single.EnemySound(index, index, 1);
+        AudioManager.single.EnemySound(index, index, 1);
     }
 
 
     public void DieSound(int index)
     {
-        // AudioManager.single.EnemySound(index, index, 0);
+        AudioManager.single.EnemySound(index, index, 0);
     }
 
 }
