@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1282492283154275813
 RectTransform:
   m_ObjectHideFlags: 0
@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 582127503580086693}
   - component: {fileID: 2720147550485534277}
   - component: {fileID: 5719006761444597991}
+  - component: {fileID: -2348996490914120966}
   m_Layer: 5
   m_Name: Item_Icon_Array
   m_TagString: Item
@@ -197,6 +198,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-2348996490914120966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358264985173675283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcaa406ceedb268408c126609a55ba65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item_Cnt_Text: {fileID: 202121183368803791}
+  item_Cnt: 0
+  myItem:
+    itemType: 0
+    itemStack: 0
+    modifyStack: 0
+    itemName: 
+    itemImage: {fileID: 0}
+    efts: []
+    itemTitle: 
+    itemDesc: 
+    itemIndex: 0
+    isDraggable: 0
+    itemCode: 0
+    itemPower: 0
+    itemPrice: 0
+    PrimaryCode: 1kZN7oYK1hra
+  itemImg: {fileID: 4749513540777147531}
 --- !u!1 &4511379306761506212
 GameObject:
   m_ObjectHideFlags: 0
