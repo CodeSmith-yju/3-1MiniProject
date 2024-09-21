@@ -26,7 +26,7 @@ public class Tooltip : MonoBehaviour
         imgIcon.sprite = _img;
     }
 
-    /*public void SetupTooltip(string name, string desc1, string desc2, int power, Sprite img)
+    /*public void SetupTooltip2(string name, string desc1, string desc2, int power, Sprite img)
     {
         textName.text = name;
         textDesc1.text = desc1;
@@ -51,7 +51,14 @@ public class Tooltip : MonoBehaviour
     }
     private void Update()
     {
+        MoveTooltip();
+    }
+
+    private void MoveTooltip()
+    {
         transform.position = Input.mousePosition;
+        // 04-15 ToolTip
+        tooltipRect = GetComponent<RectTransform>();
 
         if (tooltipRect.anchoredPosition.x + tooltipRect.sizeDelta.x > canvaseWidth)
             tooltipRect.pivot = new Vector2(1, 0);
