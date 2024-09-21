@@ -39,6 +39,7 @@ public class MapManager : MonoBehaviour
     public bool isMoveDone = false;
     public List<GameObject> map_Icon; // 0 : 위, 1 : 아래, 2 : 왼쪽, 3 : 오른쪽
 
+
     Vector2Int[] directions = new Vector2Int[] // 방향 배열
     {
             new Vector2Int(0, -1),  // 위
@@ -293,6 +294,7 @@ public class MapManager : MonoBehaviour
 
     private IEnumerator MoveToCamera(Transform targetRoom)
     {
+
         Vector3 cam_Target_Pos = new Vector3(targetRoom.position.x, targetRoom.position.y, Camera.main.transform.position.z);
         Vector3 targetMap = new Vector3(GetRoom(player_Pos).minimap_Obj.transform.position.x, GetRoom(player_Pos).minimap_Obj.transform.position.y, map_Camera.transform.position.z);
 
@@ -361,8 +363,11 @@ public class MapManager : MonoBehaviour
         {
             if (BattleManager.Instance.dialogue.isTutorial)
             {
-                BattleManager.Instance.dialogue.ONOFF(true);
-                BattleManager.Instance.dialogue.NextDialogue();
+                if (FindRoom(cur_Room.gameObject).isClear == false)
+                {
+                    BattleManager.Instance.dialogue.ONOFF(true);
+                    BattleManager.Instance.dialogue.NextDialogue();
+                }
             }
         }
         

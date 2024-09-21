@@ -79,7 +79,7 @@ public class LoadingSceneController : MonoBehaviour
 
     public static void LoadScene(string _sceneName)
     {
-       // Debug.Log($"Run LoadScene: {_sceneName}");
+        //Debug.Log($"Run LoadScene: {_sceneName}");
         nextScene = _sceneName;
         SceneManager.LoadScene("LoadingScene"); // 로딩 씬으로 이동
     }

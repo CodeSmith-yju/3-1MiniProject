@@ -317,11 +317,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public void AddSlot()
     {
-        Debug.Log(GameMgr.single.LoadChecker());
-        if (GameMgr.single.LoadChecker() == false)
-        {
-            Inventory.Single.SlotCnt += 5;
-        }
+        inventory.SlotCnt += 5;
     }
     public void RedrawSlotUI()// 08-14 수정
     {
