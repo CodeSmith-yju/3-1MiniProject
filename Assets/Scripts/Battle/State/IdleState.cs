@@ -8,7 +8,7 @@ public class IdleState : BaseState
 
     public override void OnStateEnter()
     {
-        if (entity != null && entity.FindTarget() != null && entity.FindTarget().GetComponent<BaseEntity>()._curstate != BaseEntity.State.Death)
+        if (entity != null && entity.FindTarget() != null)
         {
             entity.StopMove();
             entity.ani.ResetTrigger("isAtk");

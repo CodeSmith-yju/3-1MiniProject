@@ -32,11 +32,6 @@ public class Ally : BaseEntity
         {
             UpdateCurrentHPToSingle();
         }
-
-        if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Battle)
-        {
-            UpdateCurrentMPToSingle();
-        }
     }
 
     public void UpdateCurrentHPToSingle()
@@ -44,12 +39,7 @@ public class Ally : BaseEntity
         GameMgr.playerData[entity_index].cur_Player_Hp = cur_Hp; 
     }
 
-    public void UpdateCurrentMPToSingle()
-    {
-        GameMgr.playerData[entity_index].cur_Player_Mp = cur_Mp;
-    }
 
-    // 안쓰는 코드
     /*public void Init(int index, PlayerData player)
     {
         entity_index = index;
@@ -97,15 +87,14 @@ public class Ally : BaseEntity
     }
 
 
-    // 사운드 수정 예정
     public void AttackSound(int index)
     {
-        // AudioManager.single.PlayerSound(index, index, 1);
+        AudioManager.single.PlayerSound(index, index, 1);
     }
 
     public void DieSound(int index)
     {
-       // AudioManager.single.EnemySound(index, index, 0);
+        AudioManager.single.EnemySound(index, index, 0);
     }
 
 

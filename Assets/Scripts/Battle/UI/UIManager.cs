@@ -10,7 +10,6 @@ public class UIManager : MonoBehaviour
     public GameObject mini_Map;
     public GameObject mini_Map_Big;
     public GameObject item_Bar;
-    public ItemUse item_Slot_Prefabs;
     public GameObject party_List;
     public GameObject battleStart;
     public GameObject out_Portal;

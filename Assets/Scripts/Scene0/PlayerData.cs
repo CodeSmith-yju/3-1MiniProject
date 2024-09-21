@@ -56,7 +56,7 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
         base_atk_Dmg = 3f;
         player_level = 1;
         
-        skill_Able = true;
+        skill_Able = false;
         isMelee = true;
 
         playerQuestID = 0;

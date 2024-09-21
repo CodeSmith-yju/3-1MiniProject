@@ -160,18 +160,17 @@ public class BaseEntity : MonoBehaviour
                 _curstate = State.Death;
             }
 
-            /*if (able_Skill)
+            if (able_Skill)
             {
                 if (cur_Mp == max_Mp && cur_Mp != 0)
                 {
                     _curstate = State.Skill;
                 }
-            }*/
+            }
             
 
         }
-        
-        // 위치에 따른 바라보는 방향 조절
+
         if (gameObject != null)
         {
             Vector3 Direction = agent.velocity.normalized;
@@ -227,50 +226,32 @@ public class BaseEntity : MonoBehaviour
     }
 
 
-    // 0.3초마다 타겟을 업데이트 하는 메소드
-    /*    public IEnumerator UpdateTarget()
-        {
-            if (FindTarget() != null) 
-            {
-                while (true)
-                {
-                    if (FindTarget() == null)
-                    {
-                        Debug.Log("타겟이 없으므로 멈춤");
-                        StopMove();
-                        break;
-                    }
-
-                    FindTarget();
-                    yield return new WaitForSeconds(0.3f); // 대기
-
-                }
-            }
-            else
-            {
-                Debug.Log("타겟 없음");
-                ChangeState(State.Idle);
-                yield break;
-            }
-        }*/
-
-    // 
+    // 1초마다 타겟을 업데이트 하는 메소드
     public IEnumerator UpdateTarget()
     {
-        while (true)
+        if (FindTarget() != null) 
         {
-            var target = FindTarget();
-            if (target == null || target.GetComponent<BaseEntity>()._curstate == State.Death)
+            while (true)
             {
-                Debug.Log("타겟이 없으므로 멈춤");
-                StopMove();
-                ChangeState(State.Idle);
-                yield break;
-            }
+                if (FindTarget() == null)
+                {
+                    Debug.Log("타겟이 없으므로 멈춤");
+                    StopMove();
+                    break;
+                }
 
-            // 타겟이 바뀌거나 죽었는지 계속 체크
-            yield return new WaitForSeconds(0.1f); // 타겟을 빠르게 찾음
+
+                yield return new WaitForSeconds(0.5f); // 1초 대기
+                FindTarget();
+            }
         }
+        else
+        {
+            Debug.Log("타겟 없음");
+            ChangeState(State.Idle);
+            yield break;
+        }
+        
     }
 
     // Idle 상태이거나 Attack 상태일때 최대한 피할수 있게 우선순위 높히는 메서드 ( NavMeshPlus 에셋 관련 )
@@ -393,27 +374,13 @@ public class BaseEntity : MonoBehaviour
                     {
                         cur_atk_CoolTime = 0;
 
-                        if (able_Skill && cur_Mp == max_Mp)
+                        if (isMelee)
                         {
-                            _curstate = State.Skill;
-                            break;
+                            MeleeAttack(target);
                         }
                         else
                         {
-                            if (isMelee)
-                            {
-                                MeleeAttack(target);
-                                // 스킬을 사용할 수 있으면 공격 시 1Mp 회복
-                                if (able_Skill)
-                                    cur_Mp++;
-                            }
-                            else
-                            {
-                                RangeAttack(target);
-                                // 스킬을 사용할 수 있으면 공격 시 1Mp 회복
-                                if (able_Skill)
-                                    cur_Mp++;
-                            }
+                            RangeAttack(target);
                         }
                     }
                     yield return null;
@@ -430,6 +397,11 @@ public class BaseEntity : MonoBehaviour
     {
         ani.SetTrigger("isAtk");
         Debug.Log("공격함 ( " + name + " -> " + target.name + " )");
+
+        if (able_Skill)
+        {
+            cur_Mp++;
+        }
 
         float getDmgHp = target.cur_Hp - atkDmg;
         target.cur_Hp = getDmgHp;
@@ -472,4 +444,5 @@ public class BaseEntity : MonoBehaviour
         Destroy(gameObject);
         isDieInProgress = false;
     }
+
 }
