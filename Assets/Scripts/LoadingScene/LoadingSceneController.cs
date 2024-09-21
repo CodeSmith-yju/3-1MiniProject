@@ -79,7 +79,7 @@ public class LoadingSceneController : MonoBehaviour
 
     public static void LoadScene(string _sceneName)
     {
-        Debug.Log($"Run LoadScene: {_sceneName}");
+       // Debug.Log($"Run LoadScene: {_sceneName}");
         nextScene = _sceneName;
         SceneManager.LoadScene("LoadingScene"); // 로딩 씬으로 이동
     }
@@ -117,7 +117,7 @@ public class LoadingSceneController : MonoBehaviour
                 TextUpdate(loadingText);
             }
 
-            Debug.Log($"Loading progress: {progressBar.fillAmount:P2}");
+            //Debug.Log($"Loading progress: {progressBar.fillAmount:P2}");
 
             // 로딩이 완료되면 씬 전환 허용
             if (progressBar.fillAmount >= 0.99f)
