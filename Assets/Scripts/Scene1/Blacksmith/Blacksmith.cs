@@ -119,6 +119,7 @@ public class Blacksmith : MonoBehaviour
         {
             //일단 장비만 출력되게 했는데 개조가능한아이템의 코드만된다던가 하는식으로 수정 필요
             //if (Inventory.Single.items[i].itemType != Item.ItemType.Consumables && Inventory.Single.items[i].itemType != Item.ItemType.Ect)
+            // RS[8 ~ 11] 까지 일반장비
             if (Inventory.Single.items[i].itemCode > 7 && Inventory.Single.items[i].itemCode < 12)
             {
                 InSlot slot = Instantiate(Prefab, inventr);
@@ -138,6 +139,8 @@ public class Blacksmith : MonoBehaviour
     {
         for (int i = 8; i < 12; i++)
         {
+            //12 ~ 15 = 강화장비
+            //16 ~ 19 = 강화장비재료
             InSlot slot = Instantiate(Prefab, renovatetr);
 
             // 생성된 슬롯 초기화

@@ -317,7 +317,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public void AddSlot()
     {
-        inventory.SlotCnt += 5;
+        if (GameMgr.single.LoadChecker() == false)
+            inventory.SlotCnt += 5;
     }
     public void RedrawSlotUI()// 08-14 수정
     {
@@ -1170,12 +1171,19 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     }
     public void LoadInventory(List<Item> _items)
     {
+        inventory.items.Clear();
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i].RemoveSlot();
+        }
+
         if (_items == null)
             return;
         for (int i = 0; i < _items.Count; i++)
         {
             inventory.items.Add(_items[i]);
         }
+
         RedrawSlotUI();
     }
     public void LoadEquipment(List<Item> _items)

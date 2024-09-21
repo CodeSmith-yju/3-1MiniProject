@@ -518,7 +518,9 @@ public class BattleManager : MonoBehaviour
         GameMgr.single.IsGameLoad(true);
         Debug.Log("Load Type: " + GameMgr.single.LoadChecker());
 
-        StartCoroutine(ReturnToTownFadeOut());
+        LoadingSceneController.LoadScene("Town");
+        //StartCoroutine(ReturnToTownFadeOut());
+
     }
 
     public IEnumerator ReturnToTownFadeOut()
