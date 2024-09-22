@@ -80,7 +80,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     [Header("Invnetory")]
     [SerializeField] private GameObject inventory_panel;
-    private Inventory inventory;
     [HideInInspector] public bool activeInventory = false;
     //03-31 variable Inventoty - try.4LocalDataStore
     public Slot[] slots;
@@ -178,7 +177,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             //아 버그 왜 생기는거냐 진짜 소모아이템생성로직에 문제가있는데
             //Item newItem = ItemResources.instance.itemRS[Random.Range(0,8)]; // 새로운 아이템 생성
             Item newItem = ItemResources.instance.itemRS[Random.Range(0, 20)]; // 새로운 아이템 생성
-            inventory.AddItem(newItem); // 인벤토리에 아이템 추가,
+            Inventory.Single.AddItem(newItem); // 인벤토리에 아이템 추가,
 
             Debug.Log("Make A NewItem Code: " + newItem.itemCode);
         }
@@ -218,12 +217,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     private void Start()
     {
         //03-31 Start Inventory - try.4
-        inventory = Inventory.Single;
-
         inventory_panel.SetActive(activeInventory);
-        inventory.onSlotCountChange += SlotChange;
+        Inventory.Single.onSlotCountChange += SlotChange;
         slots = slotHolder.GetComponentsInChildren<Slot>();
-        inventory.onChangeItem += RedrawSlotUI;
+        Inventory.Single.onChangeItem += RedrawSlotUI;
 
         if (GameMgr.single.LoadChecker() == true)
         {
@@ -300,13 +297,13 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     //03-31 Method Inventory - try.4
     public void SlotChange(int val)// slotChange 에서 slot의 slotNum을 차례대로 부여함
     {
-        if (inventory.items.Count != 0)
+        if (Inventory.Single.items.Count != 0)
         {
             for (int i = 0; i < slots.Length; i++)
             {
                 slots[i].slotnum = i;
 
-                if (i < inventory.items.Count) // 인벤토리에 아이템이 있을 때만 버튼을 활성화
+                if (i < Inventory.Single.items.Count) // 인벤토리에 아이템이 있을 때만 버튼을 활성화
                     slots[i].GetComponent<Button>().interactable = true;
                 else
                     slots[i].GetComponent<Button>().interactable = false;
@@ -318,13 +315,14 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     public void OneTimeRun()
     {
         if (GameMgr.single.LoadChecker() == false)
-        {AddSlot();
+        {
+            AddSlot();
         }
     }
     void AddSlot()
     {
         //인벤토리 칸 세팅할때 나는 설정 안 만져서 그런지 이걸로 인벤토리 한번 활성화 시켜주지않으면 이상하게 동작하는거 확인.
-        inventory.SlotCnt += 5;
+        Inventory.Single.SlotCnt += 5;
     }
 
     public void RedrawSlotUI()// 08-14 수정
@@ -336,10 +334,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
 
         // 아이템 개수만큼만 슬롯 업데이트
-        int itemCount = Mathf.Min(inventory.items.Count, slots.Length);
+        int itemCount = Mathf.Min(Inventory.Single.items.Count, slots.Length);
         for (int i = 0; i < itemCount; i++)
         {
-            slots[i].item = inventory.items[i];
+            slots[i].item = Inventory.Single.items[i];
             slots[i].item.itemIndex = i;
 
             if (i < ItemResources.instance.itemRS.Count && slots[i].name == ItemResources.instance.itemRS[i].itemName)
@@ -689,7 +687,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         List<Item> saveInventoryItem = new();
         List<Item> saveWearItem = new();
 
-        foreach (Item item in inventory.items)
+        foreach (Item item in Inventory.Single.items)
         {
             saveInventoryItem.Add(item);
         }
@@ -813,7 +811,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             inventory_panel.SetActive(activeInventory);
             if (activeInventory == false)
             {
-                for (int i = 0; i < inventory.items.Count; i++)
+                for (int i = 0; i < Inventory.Single.items.Count; i++)
                 {
                     tooltip.SetActive(false);
                 }
@@ -986,8 +984,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             {
                 if (targetSlots[i].item.itemName != string.Empty)
                 {
-                    //장착된 장비가 있을 경우, 장착해제하고, 인벤토리에 해당아이템 옮기는 조건문
-
+                    //장착된 장비가 있을 경우, 장착해제하고, 인벤토리에 해당아이템 옮기는 조건문 09-22 Add
                     ApplyEquipPower(false, targetSlots[i].item);
                     Inventory.Single.AddItem(targetSlots[i].item);
                 }
@@ -1025,11 +1022,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             }
         }
         // 사용한 아이템 제거 
-        for (int i = 0; i < inventory.items.Count; i++)
+        for (int i = 0; i < Inventory.Single.items.Count; i++)
         {
-            if (inventory.items[i].PrimaryCode.Equals(pk))
+            if (Inventory.Single.items[i].PrimaryCode.Equals(pk))
             {
-                inventory.RemoveItem(inventory.items[i]);
+                Inventory.Single.RemoveItem(Inventory.Single.items[i]);
                 break;
             }
         }
@@ -1185,7 +1182,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     }
     public void LoadInventory(List<Item> _items)
     {
-        inventory.items.Clear();
+        Inventory.Single.items.Clear();
         for (int i = 0; i < slots.Length; i++)
         {
             slots[i].RemoveSlot();
@@ -1195,7 +1192,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             return;
         for (int i = 0; i < _items.Count; i++)
         {
-            inventory.items.Add(_items[i]);
+            Inventory.Single.items.Add(_items[i]);
         }
 
         RedrawSlotUI();
@@ -1280,7 +1277,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         _Slot.WearSlotRefresh();
 
         //인벤토리에 장착 해제한 아이템 추가 후 인벤토리 새로그리기
-        inventory.AddItem(livingItem);
+        Inventory.Single.AddItem(livingItem);
         RedrawSlotUI();
 
         nowSlot = null;
