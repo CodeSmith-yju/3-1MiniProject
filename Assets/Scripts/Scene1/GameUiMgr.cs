@@ -327,25 +327,28 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public void RedrawSlotUI()// 08-14 수정
     {
-        // 모든 슬롯 초기화
-        for (int i = 0; i < slots.Length; i++)
+        if (SceneManager.GetActiveScene().name.Equals("Town"))
         {
-            slots[i].RemoveSlot();
-        }
-
-        // 아이템 개수만큼만 슬롯 업데이트
-        int itemCount = Mathf.Min(Inventory.Single.items.Count, slots.Length);
-        for (int i = 0; i < itemCount; i++)
-        {
-            slots[i].item = Inventory.Single.items[i];
-            slots[i].item.itemIndex = i;
-
-            if (i < ItemResources.instance.itemRS.Count && slots[i].name == ItemResources.instance.itemRS[i].itemName)
+            // 모든 슬롯 초기화
+            for (int i = 0; i < slots.Length; i++)
             {
-                slots[i].item.itemCode = ItemResources.instance.itemRS[i].itemCode;
+                slots[i].RemoveSlot();
             }
 
-            slots[i].UpdateSloutUI();
+            // 아이템 개수만큼만 슬롯 업데이트
+            int itemCount = Mathf.Min(Inventory.Single.items.Count, slots.Length);
+            for (int i = 0; i < itemCount; i++)
+            {
+                slots[i].item = Inventory.Single.items[i];
+                slots[i].item.itemIndex = i;
+
+                if (i < ItemResources.instance.itemRS.Count && slots[i].name == ItemResources.instance.itemRS[i].itemName)
+                {
+                    slots[i].item.itemCode = ItemResources.instance.itemRS[i].itemCode;
+                }
+
+                slots[i].UpdateSloutUI();
+            }
         }
     }
 
