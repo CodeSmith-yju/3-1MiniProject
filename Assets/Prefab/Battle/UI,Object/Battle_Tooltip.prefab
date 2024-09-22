@@ -90,10 +90,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ddf64922c42e3c4ab56c041f32b1f7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textName: {fileID: 0}
-  textTitle: {fileID: 0}
-  textDesc: {fileID: 0}
-  imgIcon: {fileID: 0}
+  textName: {fileID: 4630106305610811362}
+  textDesc: {fileID: 3354614756065001502}
+  textStat: {fileID: 3058196986772770224}
+  imgIcon: {fileID: 5303489146425408761}
+  powerIcon: {fileID: 7285961647423514514}
 --- !u!1 &443192346130316010
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,7 +107,7 @@ GameObject:
   - component: {fileID: 6245467033281915064}
   - component: {fileID: 7285961647423514514}
   m_Layer: 5
-  m_Name: Power_Icon
+  m_Name: Type_Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -199,8 +200,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8604882757059876997}
   - {fileID: 229766481945189478}
+  - {fileID: 8604882757059876997}
   m_Father: {fileID: 103256487871334234}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -318,7 +319,7 @@ GameObject:
   - component: {fileID: 4431059820897560721}
   - component: {fileID: 3058196986772770224}
   m_Layer: 5
-  m_Name: Item_Power
+  m_Name: Item_Stat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -524,7 +525,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3577443695011462790}
-  - component: {fileID: 4651427450097450856}
   m_Layer: 5
   m_Name: Battle_Tooltip
   m_TagString: Untagged
@@ -552,14 +552,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &4651427450097450856
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5879040323259902142}
-  m_CullTransparentMesh: 1
 --- !u!1 &7656378546436868939
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,7 +564,7 @@ GameObject:
   - component: {fileID: 7287783841884911606}
   - component: {fileID: 4630106305610811362}
   m_Layer: 5
-  m_Name: Item_Title
+  m_Name: Item_Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

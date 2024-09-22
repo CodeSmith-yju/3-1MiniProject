@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -65,10 +66,16 @@ public class UIManager : MonoBehaviour
 
     public void NowUseItem(ItemUse _item)
     {
+        if (_item == null)
+        {
+            nowUse = null;
+            return;
+        }
         nowUse = _item;
-        tooltip.SetupTooltip(_item.UseItem().itemName, _item.UseItem().itemTitle, _item.UseItem().itemDesc, _item.UseItem().itemImage);
-        tooltip.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        tooltip.SetupTooltip(nowUse.UseItem());
+        tooltip.gameObject.SetActive(true);
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))

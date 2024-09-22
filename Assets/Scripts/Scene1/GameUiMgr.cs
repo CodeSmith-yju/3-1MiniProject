@@ -267,7 +267,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         DescCheck = true;
 
 
-        AddSlot();//인벤토리 칸 세팅할때 나는 설정 안 만져서 그런지 이걸로 인벤토리 한번 활성화 시켜주지않으면 이상하게 동작하는거 확인.
+        OneTimeRun();
 
         EquipSlotSetting();// 씬 실행 시 각 장비 슬롯에 해당하는 아이템 타입을 직접 지정해줌
 
@@ -315,11 +315,18 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         
     }
 
-    public void AddSlot()
+    public void OneTimeRun()
     {
         if (GameMgr.single.LoadChecker() == false)
-            inventory.SlotCnt += 5;
+        {AddSlot();
+        }
     }
+    void AddSlot()
+    {
+        //인벤토리 칸 세팅할때 나는 설정 안 만져서 그런지 이걸로 인벤토리 한번 활성화 시켜주지않으면 이상하게 동작하는거 확인.
+        inventory.SlotCnt += 5;
+    }
+
     public void RedrawSlotUI()// 08-14 수정
     {
         // 모든 슬롯 초기화
@@ -977,6 +984,13 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             if (targetSlots[i].item.itemType == nowSlot.item.itemType)
             {
+                if (targetSlots[i].item.itemName != string.Empty)
+                {
+                    //장착된 장비가 있을 경우, 장착해제하고, 인벤토리에 해당아이템 옮기는 조건문
+
+                    ApplyEquipPower(false, targetSlots[i].item);
+                    Inventory.Single.AddItem(targetSlots[i].item);
+                }
                 Debug.Log("Success Equip Add: " + nowSlot.item.itemName);
                 pk = nowSlot.item.PrimaryCode;
                 // 아이템 복제

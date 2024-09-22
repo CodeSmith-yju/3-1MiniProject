@@ -186,15 +186,18 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)//Move InnerItem
     {
-        if (myItem.itemType == Item.ItemType.Consumables)
+        if (myItem.itemName != string.Empty)
         {
             Debug.Log("ToolTip Active");
             BattleManager.Instance.ui.NowUseItem(this);
+            //BattleManager.Instance.ui.tooltip.SetupTooltip(myItem);
+            //BattleManager.Instance.ui.tooltip.gameObject.SetActive(true);
         }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        BattleManager.Instance.ui.tooltip.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        BattleManager.Instance.ui.NowUseItem(null);
+        BattleManager.Instance.ui.tooltip.gameObject.SetActive(false);
     }
     public Item UseItem()
     {

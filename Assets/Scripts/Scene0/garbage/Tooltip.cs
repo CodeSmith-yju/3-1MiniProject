@@ -6,59 +6,30 @@ using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour
 {
+    [Header("Text")]
     public TextMeshProUGUI textName;
-    public TextMeshProUGUI textTitle;
     public TextMeshProUGUI textDesc;
+    public TextMeshProUGUI textStat;
     //public TextMeshProUGUI textPower;
+    [Header("Image")]
     public Image imgIcon;
+    public Image powerIcon;
 
     private float canvaseWidth;
     private RectTransform tooltipRect;
 
-    public void SetupTooltip(string _name, string _title, string _desc,Sprite _img)
+    public void SetupTooltip(Item _item)//(string _name, string _title, string _desc,Sprite _img)
     {
-        textName.text = _name;
+        textName.text = _item.itemName;
+        textDesc.text = _item.itemTitle;
+        textStat.text = _item.itemDesc;
 
-        textTitle.text = _title;
-
-        textDesc.text = _desc;
-
-        imgIcon.sprite = _img;
+        imgIcon.sprite = _item.itemImage;
+        powerIcon.sprite = _item.typeIcon;
     }
-
-    /*public void SetupTooltip2(string name, string desc1, string desc2, int power, Sprite img)
-    {
-        textName.text = name;
-        textDesc1.text = desc1;
-        textDesc2.text = desc2;
-
-        if (power == 0)
-        {
-            textPower.gameObject.SetActive(false);
-        }
-        else
-        {
-            textPower.text = power.ToString();
-            textPower.gameObject.SetActive(true);
-        }
-
-        imgIcon.sprite = img;
-    }*/
     public void TooltipSetting(float _canvasWidth, RectTransform _tooltipRect)
     {
-        Debug.Log("Run TolltipSetting");
-        if (_canvasWidth < 0)
-        {
-            Debug.Log("????");
-        }
-        if (_tooltipRect == null)
-        {
-            Debug.Log("Rect is null");
-        }
-        /*
-        canvaseWidth = GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f;
-        tooltipRect = GetComponent<RectTransform>();
-         */
+        //ItemResources.instance.AfterIconSet();
         canvaseWidth = _canvasWidth;
         tooltipRect = _tooltipRect;
     }
