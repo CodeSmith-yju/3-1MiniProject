@@ -60,11 +60,11 @@ public class BattleManager : MonoBehaviour
 
     public enum BattlePhase
     {
-        Start, // �� ���� ���� (���� ���� üũ)
-        Deploy, // ������ ���� �� ��ġ �ܰ� ����
-        Rest, // �������� �ƴ� �� 
-        Battle, // ��ġ �ܰ迡�� ��Ʋ ���� ��ư�� ���� ��Ʋ�� ���۵� ����
-        End // ���� �� �׾��ų�, �Ʊ��� �� ������� ��� <- ����� ��ġ�� ��Ƽ���� �� ������ ������ ����̶� ���� ��ġ�� ���� ���� ��Ƽ���� ������ �����? Ȥ�� �ƿ� �� ��ġ�ǵ��� �ؾ��� ��
+        Start, // 방 진입 상태 (방의 종류 체크)
+        Deploy, // 전투방 입장 후 배치 단계 상태
+        Rest, // 전투방이 아닐 때 
+        Battle, // 배치 단계에서 배틀 시작 버튼을 눌러 배틀이 시작된 상태
+        End // 적이 다 죽었거나, 아군이 다 사망했을 경우 <- 현재는 배치한 파티원이 다 죽으면 끝나는 방식이라 만약 배치를 하지 않은 파티원이 있으면 재시작? 혹은 아예 다 배치되도록 해야할 듯
     }
 
 
@@ -88,21 +88,21 @@ public class BattleManager : MonoBehaviour
 
         if (GameUiMgr.single.questMgr.questId == 40)
         {
-            Debug.Log("NOW QUESTID 40 GOLD: "+ GameMgr.playerData[0].player_Gold);
+            Debug.Log("NOW QUESTID 40 GOLD: " + GameMgr.playerData[0].player_Gold);
             GameMgr.playerData[0].player_Gold = 1500;
         }
 
-        // �Ҹ�ǰ ������ üũ �� ������ �ٿ� ����
+        // 소모품 아이템 체크 후 아이템 바에 생성
         SetItem();
     }
 
     private void Start()
     {
-        ChangePhase(BattlePhase.Start); // �� üũ
+        ChangePhase(BattlePhase.Start); // 방 체크
         AudioManager.single.PlayBgmClipChange(2);
     }
 
-    public IEnumerator BattleReady() // ���� ���� �� ����Ǵ� �޼���
+    public IEnumerator BattleReady() // 전투 방일 시 실행되는 메서드
     {
         deploy_area = GameObject.FindGameObjectWithTag("Deploy");
         unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
@@ -110,9 +110,9 @@ public class BattleManager : MonoBehaviour
         yield return StartCoroutine(ui.StartBanner(ui.battle_Ready_Banner));
         yield return new WaitForSeconds(0.15f);
 
-        // PlacementUnit(); // ��Ƽ ����Ʈ�� �ִ� ���� ����
+        // PlacementUnit(); // 파티 리스트에 있는 유닛 생성
 
-        Enemy[] entity = FindObjectsOfType<Enemy>(); // ���͸� ã��
+        Enemy[] entity = FindObjectsOfType<Enemy>(); // 몬스터를 찾음
         battleEnded = false;
 
         //ui.party_List.SetActive(true);
@@ -147,7 +147,7 @@ public class BattleManager : MonoBehaviour
     {
         if (_curphase == BattlePhase.Battle && (deploy_Player_List.Count == 0 || deploy_Enemy_List.Count == 0))
         {
-            Debug.Log("�� ����");
+            Debug.Log("다 죽음");
             ChangePhase(BattlePhase.End);
         }
     }
@@ -157,7 +157,7 @@ public class BattleManager : MonoBehaviour
     {
         _curphase = phase;
 
-        switch (phase) // �� ���¿� ���� ���� �� ����Ǵ� switch��
+        switch (phase) // 각 상태에 진입 했을 때 실행되는 switch문
         {
             case BattlePhase.Start:
                 if (room.isMoveDone || isFirstEnter)
@@ -165,7 +165,7 @@ public class BattleManager : MonoBehaviour
                     CheckRoom();
                     isFirstEnter = false;
                 }
-                
+
                 break;
             case BattlePhase.Rest:
                 if (!ui.out_Portal.activeSelf)
@@ -209,7 +209,7 @@ public class BattleManager : MonoBehaviour
         if (deploy_Player_List.Count == 0)
         {
             ui.OpenPopup(ui.alert_Popup);
-            ui.alert_Popup.GetComponent<TitleInit>().Init("�ּ� �Ѹ��� ��Ƽ���� ��ġ�� �ؾ� �մϴ�.");
+            ui.alert_Popup.GetComponent<TitleInit>().Init("최소 한명의 파티원을 배치를 해야 합니다.");
             yield break;
         }
         else
@@ -219,7 +219,7 @@ public class BattleManager : MonoBehaviour
             yield return StartCoroutine(ui.StartBanner(ui.battle_Start_Banner));
             yield return new WaitForSeconds(0.15f);
 
-            Debug.Log("��Ʋ ����");
+            Debug.Log("배틀 시작");
             ChangePhase(BattlePhase.Battle);
             deploy_area = GameObject.FindGameObjectWithTag("Deploy");
             unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
@@ -228,11 +228,11 @@ public class BattleManager : MonoBehaviour
 
             if (_curphase == BattlePhase.Battle)
             {
-                BaseEntity[] entity = FindObjectsOfType<BaseEntity>(); // Ȱ��ȭ �� �÷��̾ ���͸� ã�Ƽ� ����Ʈ�� ����
+                BaseEntity[] entity = FindObjectsOfType<BaseEntity>(); // 활성화 된 플레이어나 몬스터를 찾아서 리스트에 넣음
 
                 foreach (BaseEntity obj in entity)
                 {
-                    NavMeshAgent nav = obj.GetComponent<NavMeshAgent>(); 
+                    NavMeshAgent nav = obj.GetComponent<NavMeshAgent>();
                     EntityDrag drag = obj.GetComponent<EntityDrag>();
 
                     if (nav != null)
@@ -241,11 +241,11 @@ public class BattleManager : MonoBehaviour
                     }
                     if (drag != null)
                     {
-                        drag.enabled = false; // ��Ʋ ���� �ÿ��� �÷��̾���� �巡�װ� �ȵǵ��� ����.
+                        drag.enabled = false; // 배틀 시작 시에는 플레이어들이 드래그가 안되도록 방지.
                     }
                 }
 
-                // ��Ʋ ���� �� �� �ȿ� �ִ� ������ ������ ����ġ��, ���, ��� ������ ����ؼ� �ӽú����� ����;
+                // 배틀 시작 시 방 안에 있는 적들의 정보의 경험치량, 골드, 드랍 유무를 계산해서 임시변수에 넣음;
                 foreach (GameObject enemy in deploy_Enemy_List)
                 {
                     float enemy_Exp = enemy.GetComponent<Enemy>().exp_Cnt;
@@ -255,13 +255,13 @@ public class BattleManager : MonoBehaviour
                     exp_Cnt += enemy_Exp;
                     gold_Cnt += enemy_gold;
 
-                    if (enemy_Item_Drop) 
+                    if (enemy_Item_Drop)
                     {
                         drop_Item.Add(enemy.GetComponent<Enemy>().GetItemDropTable());
                     }
 
-                    Debug.Log("���� �� �ִ� ����ġ �� : " + exp_Cnt);
-                    Debug.Log("���� �� �ִ� ��� : " + gold_Cnt);
+                    Debug.Log("얻을 수 있는 경험치 량 : " + exp_Cnt);
+                    Debug.Log("얻을 수 있는 골드 : " + gold_Cnt);
                 }
             }
         }
@@ -285,7 +285,7 @@ public class BattleManager : MonoBehaviour
                 ui.OpenPopup(ui.vic_Banner);
                 yield return StartCoroutine(ui.StartBanner(ui.vic_Banner));
                 yield return new WaitForSeconds(0.15f);
-               
+
                 if (!ui.out_Portal.activeSelf)
                 {
                     ui.out_Portal.SetActive(true);
@@ -294,9 +294,9 @@ public class BattleManager : MonoBehaviour
 
                 ui.OpenPopup(ui.reward_Popup);
 
-                Debug.Log("���� ����ġ : " + exp_Cnt);
+                Debug.Log("얻은 경험치 : " + exp_Cnt);
                 RewardPopupInit popup = ui.reward_Popup.GetComponent<RewardPopupInit>();
-                popup.Init("���� �¸�", false);
+                popup.Init("전투 승리", false);
 
 
                 GameObject gold_Obj = Instantiate(ui.reward_Prefab, popup.inner_Gold_Exp);
@@ -308,15 +308,15 @@ public class BattleManager : MonoBehaviour
                 total_Exp += exp_Cnt;
 
 
-                // ������ �ڵ�� �ߺ� ����� ������ ã�� �׷�ȭ
+                // 아이템 코드로 중복 드랍된 아이템 찾고 그룹화
                 SetIconDropItem(popup, drop_Item);
 
                 foreach (Item item in drop_Item)
                 {
-                    // ����� �����۵��� �� ��� ������ ����Ʈ�� �ֱ�
+                    // 드랍된 아이템들을 총 드랍 아이템 리스트에 넣기
                     total_Drop_Item.Add(item);
                 }
-                
+
                 if (!room.FindRoom(room.cur_Room.gameObject).isBoss)
                 {
                     ChangePhase(BattlePhase.Rest);
@@ -332,18 +332,18 @@ public class BattleManager : MonoBehaviour
                     ui.out_Portal.GetComponent<FadeEffect>().fadeout = true;
                 }
 
-                // �� ���, ����ġ�� ����
+                // 총 골드, 경험치를 얻음
                 GameMgr.playerData[0].player_Gold += total_Gold;
                 GameMgr.playerData[0].GetPlayerExp(total_Exp);
 
-                // ���� �����۵��� �κ��丮�� �߰�
-                foreach (Item item in total_Drop_Item) 
+                // 얻은 아이템들을 인벤토리에 추가
+                foreach (Item item in total_Drop_Item)
                 {
                     Inventory.Single.AddItem(item);
                 }
 
 
-                Debug.Log("��ư ����");
+                Debug.Log("버튼 생성");
                 DestroyImmediate(ui.out_Portal.GetComponent<Button>());
                 ui.out_Portal.AddComponent<Button>().onClick.AddListener(() => TotalReward());
             }
@@ -381,7 +381,7 @@ public class BattleManager : MonoBehaviour
     {
         if (_curphase == BattlePhase.End)
         {
-            Debug.Log("�����");
+            Debug.Log("실행됨");
             if (deploy_Enemy_List.Count == 0 && room.FindRoom(room.cur_Room.gameObject).isBoss)
             {
                 if (!ui.out_Portal.activeSelf)
@@ -407,11 +407,11 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    // �� ���� üũ �޼���
+    // 방 종류 체크 메서드
     public void CheckRoom()
     {
 
-        // �� �濡 ��ġ�� ���ֵ� ����
+        // 전 방에 배치된 유닛들 제거
 
         if (deploy_Player_List != null)
         {
@@ -435,17 +435,17 @@ public class BattleManager : MonoBehaviour
                 }
             }
         }
-        
+
         deploy_Player_List.Clear();
         deploy_Enemy_List.Clear();
 
         unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
-        PlacementUnit(); // � ���̵� ������ ��ȯ ��Ű���� ��.
+        PlacementUnit(); // 어떤 방이든 유닛을 소환 시키도록 함.
 
         if (room.cur_Room.tag == "Battle")
         {
 
-            Debug.Log("���� ���Դϴ�.");
+            Debug.Log("전투 방입니다.");
 
             if (room.FindRoom(room.cur_Room.gameObject).isBoss)
             {
@@ -457,14 +457,14 @@ public class BattleManager : MonoBehaviour
         else
         {
             ChangePhase(BattlePhase.Rest);
-            Debug.Log("�޽�");
+            Debug.Log("휴식");
         }
     }
 
-    // ��ġ �ܰ��϶� ���� ��Ƽ���� ������ ������ ��Ƽ���� ��ġ
+    // 배치 단계일때 죽은 파티원을 제외한 나머지 파티원을 배치
     private void PlacementUnit()
     {
-        Debug.Log("�۵��ϳ� üũ");
+        Debug.Log("작동하나 체크");
 
         Tilemap deployTilemap = unit_deploy_area.GetComponent<Tilemap>();
 
@@ -486,10 +486,10 @@ public class BattleManager : MonoBehaviour
                     continue;
                 }
 
-                // �� �� ���ֵ��� ���� �ϵ��� ��.
+                // 그 외 유닛들은 생성 하도록 함.
                 if (GameMgr.playerData[unit_Cnt].cur_Player_Hp > 0)
                 {
-                    Debug.Log("�۵��ϳ� üũ ���� ����" + unit_Cnt);
+                    Debug.Log("작동하나 체크 유닛 생성" + unit_Cnt);
                     Vector3 worldPos = deployTilemap.GetCellCenterWorld(position);
 
                     GameObject unit = Instantiate(party_List[unit_Cnt], worldPos, Quaternion.identity);
@@ -497,13 +497,13 @@ public class BattleManager : MonoBehaviour
 
                     deploy_Player_List.Add(unit);
 
-                    unit_Cnt++; // ���� ���� ��ġ�ϱ� ���� �ε��� ��
+                    unit_Cnt++; // 다음 유닛 배치하기 위한 인덱스 값
                 }
             }
         }
     }
 
-    // ��ġ �������� üũ
+    // 배치 가능한지 체크
     private bool CanPlace(Vector3Int position)
     {
         Collider2D[] colliders = Physics2D.OverlapPointAll(unit_deploy_area.GetComponent<Tilemap>().GetCellCenterWorld(position));
@@ -512,7 +512,7 @@ public class BattleManager : MonoBehaviour
         {
             if (collider.CompareTag("Player"))
             {
-                return false; // �̹� �ش� ��ġ�� ������ ������ ��ġ�� �� �����ϴ�.
+                return false; // 이미 해당 위치에 유닛이 있으면 배치할 수 없습니다.
             }
         }
 
@@ -520,10 +520,10 @@ public class BattleManager : MonoBehaviour
     }
 
 
-    // ������ ������ ������ ���ư��� �޼���
+    // 던전이 끝나면 마을로 돌아가는 메서드
     public void ReturnToTown()
     {
-        /*Debug.Log("������ �̵�");
+        /*Debug.Log("마을로 이동");
 
     total_Gold = 0;
     total_Exp = 0;
@@ -563,11 +563,11 @@ public class BattleManager : MonoBehaviour
         LoadingSceneController.LoadScene("Town");
     }
 
-    // ���� �˾� ���빰 �ʱ�ȭ
+    // 보상 팝업 내용물 초기화
     public void DestroyRewardPopup()
     {
         RewardPopupInit popup = ui.reward_Popup.GetComponent<RewardPopupInit>();
-        
+
         foreach (Transform child in popup.inner_Gold_Exp.transform)
         {
             Destroy(child.gameObject);
@@ -577,11 +577,11 @@ public class BattleManager : MonoBehaviour
         {
             Destroy(item_Child.gameObject);
         }
-        
+
     }
 
 
-    // �κ��丮 ������ �ҷ�����
+    // 인벤토리 아이템 불러오기
     private void SetItem()
     {
         int index = 0;
@@ -589,12 +589,12 @@ public class BattleManager : MonoBehaviour
         {
             ItemUse iia = Instantiate(ui.item_Slot_Prefabs, ui.item_Bar.transform.GetChild(0));
 
-            // ������ ���� �ʱ�ȭ
+            // 생성된 슬롯 초기화
             Item item = SetInnerItem(ref index);
 
             iia.Init(item);
 
-            // ������ ������ ����Ʈ�� �߰�
+            // 생성된 슬롯을 리스트에 추가
             //Inner.IiaList.Add(iia);
         }
 
@@ -613,7 +613,7 @@ public class BattleManager : MonoBehaviour
         return null;
     }
 
-    // ��� �����۵��� ������ �ڵ�� �׷�ȭ �Ͽ� �������� �����ϴ� �޼��� (LinQ ���)
+    // 드랍 아이템들을 아이템 코드로 그룹화 하여 아이콘을 생성하는 메서드 (LinQ 사용)
     public void SetIconDropItem(RewardPopupInit popup, List<Item> drop_List)
     {
         var item_Cnt = drop_List
@@ -629,14 +629,14 @@ public class BattleManager : MonoBehaviour
         else
         {
             popup.null_Item_Text.gameObject.SetActive(false);
-            // �׷�ȭ �� �����۵��� ���������� ����
+            // 그룹화 된 아이템들을 아이콘으로 생성
             foreach (var drop in item_Cnt)
             {
                 if (drop != null)
                 {
                     GameObject item_Obj = Instantiate(ui.reward_Item_Prefab, popup.inner_Item);
                     item_Obj.GetComponent<SetDropItem>().Init(drop.item, drop.count);
-                    
+
                 }
             }
         }
