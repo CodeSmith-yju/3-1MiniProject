@@ -32,6 +32,7 @@ public class SetDropItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         //BattleManager.Instance.ui.tooltip.SetupTooltip(item.itemName, item.itemTitle, item.itemDesc, item.itemImage);
+        BattleManager.Instance.ui.tooltip.SetupTooltip(item);
         BattleManager.Instance.ui.tooltip.gameObject.SetActive(true);
     }
 
