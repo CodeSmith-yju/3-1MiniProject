@@ -12,6 +12,7 @@ public class Inventory : MonoBehaviour
     public OnChangeItem onChangeItem;
 
     public List<Item> items = new();
+    public List<Sprite> typeIconRS = new();
 
     private int slotCnt;
     public int SlotCnt
@@ -109,6 +110,7 @@ public class Inventory : MonoBehaviour
                 itemPrice = _item.itemPrice,
                 PrimaryCode = _item.PrimaryCode,
             };
+            newItem.IconSet(newItem);
 
             // 추가될 아이템이 소모품이 아닐 경우.
             items.Add(newItem);
@@ -205,7 +207,6 @@ public class Inventory : MonoBehaviour
                     itemStack = items[i].itemStack,
                     modifyStack = items[i].modifyStack
                 };
-
                 soltingNow.Add(item);
                 items.Remove(item);
             }

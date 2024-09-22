@@ -60,11 +60,11 @@ public class BattleManager : MonoBehaviour
 
     public enum BattlePhase
     {
-        Start, // ¹æ ÁøÀÔ »óÅÂ (¹æÀÇ Á¾·ù Ã¼Å©)
-        Deploy, // ÀüÅõ¹æ ÀÔÀå ÈÄ ¹èÄ¡ ´Ü°è »óÅÂ
-        Rest, // ÀüÅõ¹æÀÌ ¾Æ´Ò ¶§ 
-        Battle, // ¹èÄ¡ ´Ü°è¿¡¼­ ¹èÆ² ½ÃÀÛ ¹öÆ°À» ´­·¯ ¹èÆ²ÀÌ ½ÃÀÛµÈ »óÅÂ
-        End // ÀûÀÌ ´Ù Á×¾ú°Å³ª, ¾Æ±ºÀÌ ´Ù »ç¸ÁÇßÀ» °æ¿ì <- ÇöÀç´Â ¹èÄ¡ÇÑ ÆÄÆ¼¿øÀÌ ´Ù Á×À¸¸é ³¡³ª´Â ¹æ½ÄÀÌ¶ó ¸¸¾à ¹èÄ¡¸¦ ÇÏÁö ¾ÊÀº ÆÄÆ¼¿øÀÌ ÀÖÀ¸¸é Àç½ÃÀÛ? È¤Àº ¾Æ¿¹ ´Ù ¹èÄ¡µÇµµ·Ï ÇØ¾ßÇÒ µí
+        Start, // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼Å©)
+        Deploy, // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½Ü°ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Rest, // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ 
+        Battle, // ï¿½ï¿½Ä¡ ï¿½Ü°è¿¡ï¿½ï¿½ ï¿½ï¿½Æ² ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ²ï¿½ï¿½ ï¿½ï¿½ï¿½Ûµï¿½ ï¿½ï¿½ï¿½ï¿½
+        End // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½×¾ï¿½ï¿½Å³ï¿½, ï¿½Æ±ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ <- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ì¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½? È¤ï¿½ï¿½ ï¿½Æ¿ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Çµï¿½ï¿½ï¿½ ï¿½Ø¾ï¿½ï¿½ï¿½ ï¿½ï¿½
     }
 
 
@@ -92,17 +92,17 @@ public class BattleManager : MonoBehaviour
             GameMgr.playerData[0].player_Gold = 1500;
         }
 
-        // ¼Ò¸ðÇ° ¾ÆÀÌÅÛ Ã¼Å© ÈÄ ¾ÆÀÌÅÛ ¹Ù¿¡ »ý¼º
+        // ï¿½Ò¸ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å© ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½ ï¿½ï¿½ï¿½ï¿½
         SetItem();
     }
 
     private void Start()
     {
-        ChangePhase(BattlePhase.Start); // ¹æ Ã¼Å©
+        ChangePhase(BattlePhase.Start); // ï¿½ï¿½ Ã¼Å©
         AudioManager.single.PlayBgmClipChange(2);
     }
 
-    public IEnumerator BattleReady() // ÀüÅõ ¹æÀÏ ½Ã ½ÇÇàµÇ´Â ¸Þ¼­µå
+    public IEnumerator BattleReady() // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
     {
         deploy_area = GameObject.FindGameObjectWithTag("Deploy");
         unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
@@ -110,9 +110,9 @@ public class BattleManager : MonoBehaviour
         yield return StartCoroutine(ui.StartBanner(ui.battle_Ready_Banner));
         yield return new WaitForSeconds(0.15f);
 
-        // PlacementUnit(); // ÆÄÆ¼ ¸®½ºÆ®¿¡ ÀÖ´Â À¯´Ö »ý¼º
+        // PlacementUnit(); // ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        Enemy[] entity = FindObjectsOfType<Enemy>(); // ¸ó½ºÅÍ¸¦ Ã£À½
+        Enemy[] entity = FindObjectsOfType<Enemy>(); // ï¿½ï¿½ï¿½Í¸ï¿½ Ã£ï¿½ï¿½
         battleEnded = false;
 
         //ui.party_List.SetActive(true);
@@ -147,7 +147,7 @@ public class BattleManager : MonoBehaviour
     {
         if (_curphase == BattlePhase.Battle && (deploy_Player_List.Count == 0 || deploy_Enemy_List.Count == 0))
         {
-            Debug.Log("´Ù Á×À½");
+            Debug.Log("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
             ChangePhase(BattlePhase.End);
         }
     }
@@ -157,7 +157,7 @@ public class BattleManager : MonoBehaviour
     {
         _curphase = phase;
 
-        switch (phase) // °¢ »óÅÂ¿¡ ÁøÀÔ ÇßÀ» ¶§ ½ÇÇàµÇ´Â switch¹®
+        switch (phase) // ï¿½ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ switchï¿½ï¿½
         {
             case BattlePhase.Start:
                 if (room.isMoveDone || isFirstEnter)
@@ -209,7 +209,7 @@ public class BattleManager : MonoBehaviour
         if (deploy_Player_List.Count == 0)
         {
             ui.OpenPopup(ui.alert_Popup);
-            ui.alert_Popup.GetComponent<TitleInit>().Init("ÃÖ¼Ò ÇÑ¸íÀÇ ÆÄÆ¼¿øÀ» ¹èÄ¡¸¦ ÇØ¾ß ÇÕ´Ï´Ù.");
+            ui.alert_Popup.GetComponent<TitleInit>().Init("ï¿½Ö¼ï¿½ ï¿½Ñ¸ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ø¾ï¿½ ï¿½Õ´Ï´ï¿½.");
             yield break;
         }
         else
@@ -219,7 +219,7 @@ public class BattleManager : MonoBehaviour
             yield return StartCoroutine(ui.StartBanner(ui.battle_Start_Banner));
             yield return new WaitForSeconds(0.15f);
 
-            Debug.Log("¹èÆ² ½ÃÀÛ");
+            Debug.Log("ï¿½ï¿½Æ² ï¿½ï¿½ï¿½ï¿½");
             ChangePhase(BattlePhase.Battle);
             deploy_area = GameObject.FindGameObjectWithTag("Deploy");
             unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
@@ -228,7 +228,7 @@ public class BattleManager : MonoBehaviour
 
             if (_curphase == BattlePhase.Battle)
             {
-                BaseEntity[] entity = FindObjectsOfType<BaseEntity>(); // È°¼ºÈ­ µÈ ÇÃ·¹ÀÌ¾î³ª ¸ó½ºÅÍ¸¦ Ã£¾Æ¼­ ¸®½ºÆ®¿¡ ³ÖÀ½
+                BaseEntity[] entity = FindObjectsOfType<BaseEntity>(); // È°ï¿½ï¿½È­ ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î³ª ï¿½ï¿½ï¿½Í¸ï¿½ Ã£ï¿½Æ¼ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
                 foreach (BaseEntity obj in entity)
                 {
@@ -241,11 +241,11 @@ public class BattleManager : MonoBehaviour
                     }
                     if (drag != null)
                     {
-                        drag.enabled = false; // ¹èÆ² ½ÃÀÛ ½Ã¿¡´Â ÇÃ·¹ÀÌ¾îµéÀÌ µå·¡±×°¡ ¾ÈµÇµµ·Ï ¹æÁö.
+                        drag.enabled = false; // ï¿½ï¿½Æ² ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¿ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ ï¿½å·¡ï¿½×°ï¿½ ï¿½ÈµÇµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
                     }
                 }
 
-                // ¹èÆ² ½ÃÀÛ ½Ã ¹æ ¾È¿¡ ÀÖ´Â ÀûµéÀÇ Á¤º¸ÀÇ °æÇèÄ¡·®, °ñµå, µå¶ø À¯¹«¸¦ °è»êÇØ¼­ ÀÓ½Ãº¯¼ö¿¡ ³ÖÀ½;
+                // ï¿½ï¿½Æ² ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½È¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½, ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Ó½Ãºï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½;
                 foreach (GameObject enemy in deploy_Enemy_List)
                 {
                     float enemy_Exp = enemy.GetComponent<Enemy>().exp_Cnt;
@@ -260,8 +260,8 @@ public class BattleManager : MonoBehaviour
                         drop_Item.Add(enemy.GetComponent<Enemy>().GetItemDropTable());
                     }
 
-                    Debug.Log("¾òÀ» ¼ö ÀÖ´Â °æÇèÄ¡ ·® : " + exp_Cnt);
-                    Debug.Log("¾òÀ» ¼ö ÀÖ´Â °ñµå : " + gold_Cnt);
+                    Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ ï¿½ï¿½ : " + exp_Cnt);
+                    Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ : " + gold_Cnt);
                 }
             }
         }
@@ -294,9 +294,9 @@ public class BattleManager : MonoBehaviour
 
                 ui.OpenPopup(ui.reward_Popup);
 
-                Debug.Log("¾òÀº °æÇèÄ¡ : " + exp_Cnt);
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ : " + exp_Cnt);
                 RewardPopupInit popup = ui.reward_Popup.GetComponent<RewardPopupInit>();
-                popup.Init("ÀüÅõ ½Â¸®", false);
+                popup.Init("ï¿½ï¿½ï¿½ï¿½ ï¿½Â¸ï¿½", false);
 
 
                 GameObject gold_Obj = Instantiate(ui.reward_Prefab, popup.inner_Gold_Exp);
@@ -308,12 +308,12 @@ public class BattleManager : MonoBehaviour
                 total_Exp += exp_Cnt;
 
 
-                // ¾ÆÀÌÅÛ ÄÚµå·Î Áßº¹ µå¶øµÈ ¾ÆÀÌÅÛ Ã£°í ±×·ìÈ­
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ ï¿½ßºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½×·ï¿½È­
                 SetIconDropItem(popup, drop_Item);
 
                 foreach (Item item in drop_Item)
                 {
-                    // µå¶øµÈ ¾ÆÀÌÅÛµéÀ» ÃÑ µå¶ø ¾ÆÀÌÅÛ ¸®½ºÆ®¿¡ ³Ö±â
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ûµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ö±ï¿½
                     total_Drop_Item.Add(item);
                 }
                 
@@ -332,18 +332,18 @@ public class BattleManager : MonoBehaviour
                     ui.out_Portal.GetComponent<FadeEffect>().fadeout = true;
                 }
 
-                // ÃÑ °ñµå, °æÇèÄ¡¸¦ ¾òÀ½
+                // ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 GameMgr.playerData[0].player_Gold += total_Gold;
                 GameMgr.playerData[0].GetPlayerExp(total_Exp);
 
-                // ¾òÀº ¾ÆÀÌÅÛµéÀ» ÀÎº¥Åä¸®¿¡ Ãß°¡
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ûµï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ß°ï¿½
                 foreach (Item item in total_Drop_Item) 
                 {
                     Inventory.Single.AddItem(item);
                 }
 
 
-                Debug.Log("¹öÆ° »ý¼º");
+                Debug.Log("ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½");
                 DestroyImmediate(ui.out_Portal.GetComponent<Button>());
                 ui.out_Portal.AddComponent<Button>().onClick.AddListener(() => TotalReward());
             }
@@ -381,7 +381,7 @@ public class BattleManager : MonoBehaviour
     {
         if (_curphase == BattlePhase.End)
         {
-            Debug.Log("½ÇÇàµÊ");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½");
             if (deploy_Enemy_List.Count == 0 && room.FindRoom(room.cur_Room.gameObject).isBoss)
             {
                 if (!ui.out_Portal.activeSelf)
@@ -407,11 +407,11 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    // ¹æ Á¾·ù Ã¼Å© ¸Þ¼­µå
+    // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼Å© ï¿½Þ¼ï¿½ï¿½ï¿½
     public void CheckRoom()
     {
 
-        // Àü ¹æ¿¡ ¹èÄ¡µÈ À¯´Öµé Á¦°Å
+        // ï¿½ï¿½ ï¿½æ¿¡ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½ï¿½
 
         if (deploy_Player_List != null)
         {
@@ -440,12 +440,12 @@ public class BattleManager : MonoBehaviour
         deploy_Enemy_List.Clear();
 
         unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
-        PlacementUnit(); // ¾î¶² ¹æÀÌµç À¯´ÖÀ» ¼ÒÈ¯ ½ÃÅ°µµ·Ï ÇÔ.
+        PlacementUnit(); // ï¿½î¶² ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
 
         if (room.cur_Room.tag == "Battle")
         {
 
-            Debug.Log("ÀüÅõ ¹æÀÔ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
 
             if (room.FindRoom(room.cur_Room.gameObject).isBoss)
             {
@@ -457,14 +457,14 @@ public class BattleManager : MonoBehaviour
         else
         {
             ChangePhase(BattlePhase.Rest);
-            Debug.Log("ÈÞ½Ä");
+            Debug.Log("ï¿½Þ½ï¿½");
         }
     }
 
-    // ¹èÄ¡ ´Ü°èÀÏ¶§ Á×Àº ÆÄÆ¼¿øÀ» Á¦¿ÜÇÑ ³ª¸ÓÁö ÆÄÆ¼¿øÀ» ¹èÄ¡
+    // ï¿½ï¿½Ä¡ ï¿½Ü°ï¿½ï¿½Ï¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
     private void PlacementUnit()
     {
-        Debug.Log("ÀÛµ¿ÇÏ³ª Ã¼Å©");
+        Debug.Log("ï¿½Ûµï¿½ï¿½Ï³ï¿½ Ã¼Å©");
 
         Tilemap deployTilemap = unit_deploy_area.GetComponent<Tilemap>();
 
@@ -486,10 +486,10 @@ public class BattleManager : MonoBehaviour
                     continue;
                 }
 
-                // ±× ¿Ü À¯´ÖµéÀº »ý¼º ÇÏµµ·Ï ÇÔ.
+                // ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½.
                 if (GameMgr.playerData[unit_Cnt].cur_Player_Hp > 0)
                 {
-                    Debug.Log("ÀÛµ¿ÇÏ³ª Ã¼Å© À¯´Ö »ý¼º" + unit_Cnt);
+                    Debug.Log("ï¿½Ûµï¿½ï¿½Ï³ï¿½ Ã¼Å© ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½" + unit_Cnt);
                     Vector3 worldPos = deployTilemap.GetCellCenterWorld(position);
 
                     GameObject unit = Instantiate(party_List[unit_Cnt], worldPos, Quaternion.identity);
@@ -497,13 +497,13 @@ public class BattleManager : MonoBehaviour
 
                     deploy_Player_List.Add(unit);
 
-                    unit_Cnt++; // ´ÙÀ½ À¯´Ö ¹èÄ¡ÇÏ±â À§ÇÑ ÀÎµ¦½º °ª
+                    unit_Cnt++; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½
                 }
             }
         }
     }
 
-    // ¹èÄ¡ °¡´ÉÇÑÁö Ã¼Å©
+    // ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
     private bool CanPlace(Vector3Int position)
     {
         Collider2D[] colliders = Physics2D.OverlapPointAll(unit_deploy_area.GetComponent<Tilemap>().GetCellCenterWorld(position));
@@ -512,7 +512,7 @@ public class BattleManager : MonoBehaviour
         {
             if (collider.CompareTag("Player"))
             {
-                return false; // ÀÌ¹Ì ÇØ´ç À§Ä¡¿¡ À¯´ÖÀÌ ÀÖÀ¸¸é ¹èÄ¡ÇÒ ¼ö ¾ø½À´Ï´Ù.
+                return false; // ï¿½Ì¹ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.
             }
         }
 
@@ -520,10 +520,10 @@ public class BattleManager : MonoBehaviour
     }
 
 
-    // ´øÀüÀÌ ³¡³ª¸é ¸¶À»·Î µ¹¾Æ°¡´Â ¸Þ¼­µå
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
     public void ReturnToTown()
     {
-        /*Debug.Log("¸¶À»·Î ÀÌµ¿");
+        /*Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½");
 
     total_Gold = 0;
     total_Exp = 0;
@@ -563,7 +563,7 @@ public class BattleManager : MonoBehaviour
         LoadingSceneController.LoadScene("Town");
     }
 
-    // º¸»ó ÆË¾÷ ³»¿ë¹° ÃÊ±âÈ­
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¾ï¿½ ï¿½ï¿½ï¿½ë¹° ï¿½Ê±ï¿½È­
     public void DestroyRewardPopup()
     {
         RewardPopupInit popup = ui.reward_Popup.GetComponent<RewardPopupInit>();
@@ -581,7 +581,7 @@ public class BattleManager : MonoBehaviour
     }
 
 
-    // ÀÎº¥Åä¸® ¾ÆÀÌÅÛ ºÒ·¯¿À±â
+    // ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
     private void SetItem()
     {
         int index = 0;
@@ -589,12 +589,12 @@ public class BattleManager : MonoBehaviour
         {
             ItemUse iia = Instantiate(ui.item_Slot_Prefabs, ui.item_Bar.transform.GetChild(0));
 
-            // »ý¼ºµÈ ½½·Ô ÃÊ±âÈ­
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
             Item item = SetInnerItem(ref index);
 
             iia.Init(item);
 
-            // »ý¼ºµÈ ½½·ÔÀ» ¸®½ºÆ®¿¡ Ãß°¡
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½
             //Inner.IiaList.Add(iia);
         }
 
@@ -613,7 +613,7 @@ public class BattleManager : MonoBehaviour
         return null;
     }
 
-    // µå¶ø ¾ÆÀÌÅÛµéÀ» ¾ÆÀÌÅÛ ÄÚµå·Î ±×·ìÈ­ ÇÏ¿© ¾ÆÀÌÄÜÀ» »ý¼ºÇÏ´Â ¸Þ¼­µå (LinQ »ç¿ë)
+    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ûµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ ï¿½×·ï¿½È­ ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ (LinQ ï¿½ï¿½ï¿½)
     public void SetIconDropItem(RewardPopupInit popup, List<Item> drop_List)
     {
         var item_Cnt = drop_List
@@ -629,7 +629,7 @@ public class BattleManager : MonoBehaviour
         else
         {
             popup.null_Item_Text.gameObject.SetActive(false);
-            // ±×·ìÈ­ µÈ ¾ÆÀÌÅÛµéÀ» ¾ÆÀÌÄÜÀ¸·Î »ý¼º
+            // ï¿½×·ï¿½È­ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ûµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             foreach (var drop in item_Cnt)
             {
                 if (drop != null)

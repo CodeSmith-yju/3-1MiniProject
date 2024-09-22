@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -54,7 +55,6 @@ public class UIManager : MonoBehaviour
     [Header("Tooltip")]
     public Tooltip tooltip;
     public Canvas cv;
-    public ItemUse nowUse;
 
     private void Start()
     {
@@ -62,15 +62,6 @@ public class UIManager : MonoBehaviour
         item_Bar.SetActive(true);
         tooltip.TooltipSetting(cv.GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f, tooltip.GetComponent<RectTransform>());
     }
-
-    public void NowUseItem(ItemUse _item)
-    {
-        nowUse = _item;
-        tooltip.SetupTooltip(_item.UseItem().itemName, _item.UseItem().itemTitle, _item.UseItem().itemDesc, _item.UseItem().itemImage);
-        tooltip.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-    }
-
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))

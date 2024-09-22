@@ -25,6 +25,7 @@ public class Item
     
     public string itemName;
     public Sprite itemImage;
+    public Sprite typeIcon;
     public List<ItemEffect> efts;
     //04-01 Add
     public string itemTitle;
@@ -41,6 +42,28 @@ public class Item
     public int itemPrice;// 아이템가격
     //09
     public string PrimaryCode;
+
+    /*public Item(string name, ItemType type, int stack, int modify, float power, int price, string title, string desc)
+    {
+        Init(name, type, stack, modify, power, price, title, desc);
+    }
+
+    // Init 메서드
+    public void Init(string name, ItemType type, int stack, int modify, float power, int price, string title, string desc)
+    {
+        itemName = name;
+        itemType = type;
+        itemStack = stack;
+        modifyStack = modify;
+        itemPower = power;
+        itemPrice = price;
+        itemTitle = title;
+        itemDesc = desc;
+
+        // 고유 코드 생성
+        PrimaryCode = GenerateUniqueCode(12);
+    }*/
+
     public Item()//생성자를 통해 아이템 생성 시 고유한 PrimaryCode 생성
     {
         PrimaryCode = GenerateUniqueCode(12);
@@ -87,6 +110,31 @@ public class Item
         }
         return _item;
     }
-
+    public void IconSet(Item _item)
+    {
+        switch (_item.itemType)
+        {
+            case ItemType.Equipment_Arrmor://Range 40
+                _item.typeIcon = Inventory.Single.typeIconRS[0];
+                break;
+            case ItemType.Equipment_Boots://Atk spd 07
+                _item.typeIcon = Inventory.Single.typeIconRS[1];
+                break;
+            case ItemType.Equipment_Helmet://HP 43
+                _item.typeIcon = Inventory.Single.typeIconRS[2];
+                break;
+            case ItemType.Equipment_Weapon://Atk 72
+                _item.typeIcon = Inventory.Single.typeIconRS[3];
+                break;
+            case ItemType.Consumables:// + 11
+                _item.typeIcon = Inventory.Single.typeIconRS[4];
+                break;
+            case ItemType.Ect:// 29
+                _item.typeIcon = Inventory.Single.typeIconRS[5];
+                break;
+            default:
+                break;
+        }
+    }
 }
 
