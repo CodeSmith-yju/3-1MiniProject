@@ -6802,9 +6802,8 @@ MonoBehaviour:
   reward_Icons:
   - {fileID: 21300000, guid: a06a1561cf0f7a54386a58a724397049, type: 3}
   - {fileID: 21300000, guid: 1b377990f17040948b6450eb367704af, type: 3}
-  tooltip: {fileID: 1933478024}
+  tooltip: {fileID: 6729008593979109197}
   cv: {fileID: 1390437426}
-  nowUse: {fileID: 0}
 --- !u!114 &379160250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19196,7 +19195,7 @@ RectTransform:
   - {fileID: 1141525197}
   - {fileID: 1563201017}
   - {fileID: 605354334}
-  - {fileID: 1933478023}
+  - {fileID: 3577443695833708032}
   - {fileID: 2810237505391350807}
   - {fileID: 216788133}
   - {fileID: 155361233}
@@ -25868,22 +25867,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7dcb3e64ce43864a9ad49f6e8922ab4, type: 3}
---- !u!224 &1933478023 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3577443695011462790, guid: c7dcb3e64ce43864a9ad49f6e8922ab4, type: 3}
-  m_PrefabInstance: {fileID: 1933478022}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1933478024 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6729008595302770635, guid: c7dcb3e64ce43864a9ad49f6e8922ab4, type: 3}
-  m_PrefabInstance: {fileID: 1933478022}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ddf64922c42e3c4ab56c041f32b1f7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1978634959
 GameObject:
   m_ObjectHideFlags: 0
@@ -28660,6 +28643,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -18.301697}
   m_SizeDelta: {x: 273.8665, y: 148}
   m_Pivot: {x: 0, y: 0}
+--- !u!224 &3577443695833708032 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3577443695011462790, guid: c7dcb3e64ce43864a9ad49f6e8922ab4, type: 3}
+  m_PrefabInstance: {fileID: 1933478022}
+  m_PrefabAsset: {fileID: 0}
 --- !u!222 &3588644654239452336
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30064,6 +30052,17 @@ RectTransform:
   m_AnchoredPosition: {x: 10, y: -143}
   m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &6729008593979109197 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6729008595302770635, guid: c7dcb3e64ce43864a9ad49f6e8922ab4, type: 3}
+  m_PrefabInstance: {fileID: 1933478022}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ddf64922c42e3c4ab56c041f32b1f7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6781320902701908315
 GameObject:
   m_ObjectHideFlags: 0
