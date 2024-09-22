@@ -24790,9 +24790,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1390437427}
     m_Modifications:
+    - target: {fileID: 1677702293770183551, guid: 88383d6125d45c544b627869867a36b3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4853855108700221225, guid: 88383d6125d45c544b627869867a36b3, type: 3}
       propertyPath: m_Name
       value: Fix_Battle_Tooltip
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853855108700221225, guid: 88383d6125d45c544b627869867a36b3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6878935369416024151, guid: 88383d6125d45c544b627869867a36b3, type: 3}
       propertyPath: m_Pivot.x
