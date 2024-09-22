@@ -11,6 +11,7 @@ public class AttackState : BaseState
         if (entity != null && entity.FindTarget() != null)
         {
             entity.StopMove();
+
             entity.StartCoroutine(entity.SetAttack());
         }
         

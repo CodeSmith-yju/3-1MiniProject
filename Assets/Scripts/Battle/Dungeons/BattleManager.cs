@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
@@ -244,14 +245,21 @@ public class BattleManager : MonoBehaviour
                     }
                 }
 
-                // 배틀 시작 시 방 안에 있는 적들의 정보의 경험치량을 계산해서 임시변수에 넣음;
+                // 배틀 시작 시 방 안에 있는 적들의 정보의 경험치량, 골드, 드랍 유무를 계산해서 임시변수에 넣음;
                 foreach (GameObject enemy in deploy_Enemy_List)
                 {
                     float enemy_Exp = enemy.GetComponent<Enemy>().exp_Cnt;
                     int enemy_gold = enemy.GetComponent<Enemy>().gold_Cnt;
+                    bool enemy_Item_Drop = enemy.GetComponent<Enemy>().item_Drop_Check;
 
                     exp_Cnt += enemy_Exp;
                     gold_Cnt += enemy_gold;
+
+                    if (enemy_Item_Drop) 
+                    {
+                        drop_Item.Add(enemy.GetComponent<Enemy>().GetItemDropTable());
+                    }
+
                     Debug.Log("얻을 수 있는 경험치 량 : " + exp_Cnt);
                     Debug.Log("얻을 수 있는 골드 : " + gold_Cnt);
                 }
@@ -299,9 +307,16 @@ public class BattleManager : MonoBehaviour
                 exp_Obj.GetComponent<RewardInit>().Init(ui.reward_Icons[1], exp_Cnt + " Exp");
                 total_Exp += exp_Cnt;
 
-                GameMgr.playerData[0].player_Gold += gold_Cnt;
-                GameMgr.playerData[0].GetPlayerExp(exp_Cnt);
 
+                // 아이템 코드로 중복 드랍된 아이템 찾고 그룹화
+                SetIconDropItem(popup, drop_Item);
+
+                foreach (Item item in drop_Item)
+                {
+                    // 드랍된 아이템들을 총 드랍 아이템 리스트에 넣기
+                    total_Drop_Item.Add(item);
+                }
+                
                 if (!room.FindRoom(room.cur_Room.gameObject).isBoss)
                 {
                     ChangePhase(BattlePhase.Rest);
@@ -315,6 +330,16 @@ public class BattleManager : MonoBehaviour
                 {
                     ui.out_Portal.SetActive(true);
                     ui.out_Portal.GetComponent<FadeEffect>().fadeout = true;
+                }
+
+                // 총 골드, 경험치를 얻음
+                GameMgr.playerData[0].player_Gold += total_Gold;
+                GameMgr.playerData[0].GetPlayerExp(total_Exp);
+
+                // 얻은 아이템들을 인벤토리에 추가
+                foreach (Item item in total_Drop_Item) 
+                {
+                    Inventory.Single.AddItem(item);
                 }
 
 
@@ -347,6 +372,7 @@ public class BattleManager : MonoBehaviour
 
         exp_Cnt = 0;
         gold_Cnt = 0;
+        drop_Item.Clear();
         battleEnded = true;
     }
 
@@ -374,6 +400,9 @@ public class BattleManager : MonoBehaviour
 
                 GameObject exp_Obj = Instantiate(ui.reward_Prefab, popup.inner_Gold_Exp);
                 exp_Obj.GetComponent<RewardInit>().Init(ui.reward_Icons[1], total_Exp + " Exp");
+
+                SetIconDropItem(popup, total_Drop_Item);
+
             }
         }
     }
@@ -543,6 +572,11 @@ public class BattleManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+
+        foreach (Transform item_Child in popup.inner_Item.transform)
+        {
+            Destroy(item_Child.gameObject);
+        }
         
     }
 
@@ -579,4 +613,32 @@ public class BattleManager : MonoBehaviour
         return null;
     }
 
+    // 드랍 아이템들을 아이템 코드로 그룹화 하여 아이콘을 생성하는 메서드 (LinQ 사용)
+    public void SetIconDropItem(RewardPopupInit popup, List<Item> drop_List)
+    {
+        var item_Cnt = drop_List
+                    .GroupBy(item => item.itemCode)
+                    .Select(group => new { item = group.First(), count = group.Count() })
+                    .ToList();
+
+        if (drop_List.Count == 0)
+        {
+            popup.null_Item_Text.gameObject.SetActive(true);
+            return;
+        }
+        else
+        {
+            popup.null_Item_Text.gameObject.SetActive(false);
+            // 그룹화 된 아이템들을 아이콘으로 생성
+            foreach (var drop in item_Cnt)
+            {
+                if (drop != null)
+                {
+                    GameObject item_Obj = Instantiate(ui.reward_Item_Prefab, popup.inner_Item);
+                    item_Obj.GetComponent<SetDropItem>().Init(drop.item, drop.count);
+                    
+                }
+            }
+        }
+    }
 }

@@ -78,7 +78,6 @@ public class BoxOpen : MonoBehaviour
             gold_Obj.GetComponent<RewardInit>().Init(BattleManager.Instance.ui.reward_Icons[0], gold + " Gold");
 
             BattleManager.Instance.total_Gold += gold;
-            GameMgr.playerData[0].player_Gold += gold;
 
             gameObject.SetActive(false);
             return;

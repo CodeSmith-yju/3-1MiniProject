@@ -18,7 +18,6 @@ public class UIManager : MonoBehaviour
     public GameObject next_Room_Popup;
     public GameObject room_UI;
     public GameObject item_Use_UI;
-    public GameObject fade_Bg;
 
     [Header("Banner")]
     public GameObject def_Banner;
@@ -29,8 +28,6 @@ public class UIManager : MonoBehaviour
 
     [Header("Battle_Popup")]
     public GameObject popup_Bg;
-    public GameObject reward_Popup;
-    public GameObject reward_Prefab;
     public GameObject vic_Popup;
     public GameObject def_Popup;
     public GameObject alert_Popup;
@@ -49,7 +46,10 @@ public class UIManager : MonoBehaviour
 
 
     [Header("Reward")]
+    public GameObject reward_Popup;
     public Sprite[] reward_Icons;
+    public GameObject reward_Prefab;
+    public GameObject reward_Item_Prefab;
 
     [Header("Tooltip")]
     public Tooltip tooltip;
@@ -69,6 +69,8 @@ public class UIManager : MonoBehaviour
         tooltip.SetupTooltip(_item.UseItem().itemName, _item.UseItem().itemTitle, _item.UseItem().itemDesc, _item.UseItem().itemImage);
         tooltip.gameObject.transform.GetChild(0).gameObject.SetActive(true);
     }
+
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))

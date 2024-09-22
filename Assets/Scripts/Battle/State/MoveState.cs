@@ -15,6 +15,7 @@ public class MoveState : BaseState
             Debug.Log("Move Enter ½ÇÇàµÊ");
             entity.ani.ResetTrigger("isAtk");
             entity.ani.SetBool("isMove", true);
+
             entity.MoveToTarget();
         }
     }

@@ -389,6 +389,11 @@ public class BaseEntity : MonoBehaviour
                         break;
                     }
 
+                    if (!isMelee)
+                    {
+                        target = FindTarget()?.GetComponent<BaseEntity>();
+                    }
+
                     if (cur_atk_CoolTime >= atk_CoolTime)
                     {
                         cur_atk_CoolTime = 0;

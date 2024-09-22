@@ -223,3 +223,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f3c9c8e3b436c34cae83e8c702ad1f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item:
+    itemType: 0
+    itemStack: 0
+    modifyStack: 0
+    itemName: 
+    itemImage: {fileID: 0}
+    efts: []
+    itemTitle: 
+    itemDesc: 
+    itemIndex: 0
+    isDraggable: 0
+    itemCode: 0
+    itemPower: 0
+    itemPrice: 0
+    PrimaryCode: SXNnYaChsU4x
+  item_Icon: {fileID: 4574322327341365790}
+  item_Stack: {fileID: 1628624538147126660}

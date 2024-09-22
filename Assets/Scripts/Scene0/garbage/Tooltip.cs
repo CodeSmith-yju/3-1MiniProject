@@ -6,16 +6,21 @@ using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour
 {
+
+    [Header("Text")]
     public TextMeshProUGUI textName;
     public TextMeshProUGUI textTitle;
     public TextMeshProUGUI textDesc;
-    //public TextMeshProUGUI textPower;
+    public TextMeshProUGUI textPower;
+
+    [Header("Image")]
     public Image imgIcon;
+    public Image power_Icon;
 
     private float canvaseWidth;
     private RectTransform tooltipRect;
 
-    public void SetupTooltip(string _name, string _title, string _desc,Sprite _img)
+    public void SetupTooltip(string _name, string _title, string _desc, Sprite _img)
     {
         textName.text = _name;
 
@@ -24,6 +29,20 @@ public class Tooltip : MonoBehaviour
         textDesc.text = _desc;
 
         imgIcon.sprite = _img;
+
+    }
+
+    public void SetupDropTooltip(string _name, string _desc, string _power, Sprite _img, Sprite _power_Img)
+    {
+        textName.text = _name;
+
+        textDesc.text = _desc;
+
+        textPower.text = _power;
+
+        imgIcon.sprite = _img;
+
+        power_Icon.sprite = _power_Img;
     }
 
     /*public void SetupTooltip2(string name, string desc1, string desc2, int power, Sprite img)
