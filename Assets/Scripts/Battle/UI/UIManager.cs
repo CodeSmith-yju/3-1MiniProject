@@ -55,7 +55,6 @@ public class UIManager : MonoBehaviour
     [Header("Tooltip")]
     public Tooltip tooltip;
     public Canvas cv;
-    public ItemUse nowUse;
 
     private void Start()
     {
@@ -63,19 +62,6 @@ public class UIManager : MonoBehaviour
         item_Bar.SetActive(true);
         tooltip.TooltipSetting(cv.GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f, tooltip.GetComponent<RectTransform>());
     }
-
-    public void NowUseItem(ItemUse _item)
-    {
-        if (_item == null)
-        {
-            nowUse = null;
-            return;
-        }
-        nowUse = _item;
-        tooltip.SetupTooltip(nowUse.UseItem());
-        tooltip.gameObject.SetActive(true);
-    }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))

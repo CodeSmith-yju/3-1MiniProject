@@ -189,14 +189,16 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (myItem.itemName != string.Empty)
         {
             Debug.Log("ToolTip Active");
-            BattleManager.Instance.ui.NowUseItem(this);
-            //BattleManager.Instance.ui.tooltip.SetupTooltip(myItem);
-            //BattleManager.Instance.ui.tooltip.gameObject.SetActive(true);
+            BattleManager.Instance.ui.tooltip.SetupTooltip(myItem);
+            BattleManager.Instance.ui.tooltip.gameObject.SetActive(true);
+        }
+        else
+        {
+            BattleManager.Instance.ui.tooltip.gameObject.SetActive(false);
         }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        BattleManager.Instance.ui.NowUseItem(null);
         BattleManager.Instance.ui.tooltip.gameObject.SetActive(false);
     }
     public Item UseItem()
