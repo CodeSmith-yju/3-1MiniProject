@@ -439,7 +439,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         //PartyPanel
         if (Input.GetKeyDown(KeyCode.P) && questMgr.questId >= 30)
         {
-            ActiveParty();
+            if (questMgr.questId > 30 || questMgr.questId == 30 && questMgr.questActionIndex >= 1 )
+            {
+
+                ActiveParty();
+            }
         }
 
         //Ui Event Action
