@@ -86,23 +86,23 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 //GameUiMgr.single.dragIndex = item.itemIndex;
                 if (item.itemImage != null)
                 {
-                    GameUiMgr.single.tooltip.SetActive(true);
-                    GameUiMgr.single.SetupTooltip(item.itemName, item.itemTitle, item.itemDesc, item.itemImage);
+                    GameUiMgr.single.tooltip.gameObject.SetActive(true);
+                    GameUiMgr.single.tooltip.SetupTooltip(item);
                 }
                 else
-                    GameUiMgr.single.tooltip.SetActive(false);
+                    GameUiMgr.single.tooltip.gameObject.SetActive(false);
             }
         }
         else
         {
-            GameUiMgr.single.tooltip.SetActive(false);
+            GameUiMgr.single.tooltip.gameObject.SetActive(false);
         }
         
 
     }
     public void OnPointerExit(PointerEventData eventData)//Move Out ItemSlot
     {
-        GameUiMgr.single.tooltip.SetActive(false);
+        GameUiMgr.single.tooltip.gameObject.SetActive(false);
     }
 
     public void OnPointerUp(PointerEventData eventData)//Click ItemSlot
@@ -152,7 +152,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                         }
                         Inventory.Single.RemoveItem(item);
                         UpdateStack();
-                        GameUiMgr.single.tooltip.SetActive(false);
+                        GameUiMgr.single.tooltip.gameObject.SetActive(false);
                     }
                     break;
                 default:
@@ -163,7 +163,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                     GameUiMgr.single.addEquipPanel.gameObject.SetActive(true);
                     //클릭하면 팝업창 출력되고. 팝업창에서 확인 클릭하면 실행되어야함
                     //isDraging = true;
-                    GameUiMgr.single.tooltip.SetActive(false);
+                    GameUiMgr.single.tooltip.gameObject.SetActive(false);
                     break;
             }
 

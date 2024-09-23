@@ -98,18 +98,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     public TextMeshProUGUI textEquipPanel;
 
     [Header("ToolTip")]
-    public GameObject tooltip;
-    public TextMeshProUGUI textName;
-    public TextMeshProUGUI textTitle;
-    public TextMeshProUGUI textDesc;
-    //public TextMeshProUGUI textPower;
-    public Image imgIcon;
-    public Canvas canvas_Tooltip;
-
-    private float canvaseWidth;
-    private RectTransform tooltipRect;
-
-
+    public Tooltip tooltip;
+    public Canvas cv;
     //Vector3 lodingPosition;// player Position
 
     [Header("player State")]
@@ -289,7 +279,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             TutorialDungeonClear();
         }
         //Tooltip
-        canvaseWidth = canvas_Tooltip.GetComponent<CanvasScaler>().referenceResolution.x * 0.5f;
+        SetTooltip();
 
 
     }
@@ -391,7 +381,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             if (inventory_panel.activeSelf)
             {
                 ActiveInventory();
-                tooltip.SetActive(false);
+                tooltip.gameObject.SetActive(false);
                 if (objSubButtonFrame.activeSelf)
                 {
                     ToggleSubButtons();
@@ -426,7 +416,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             ActiveInventory();
         }
         //Tooltip
-        MoveTooltip();
+        tooltip.MoveTooltip();
 
         /*Debug.Log("x:" + player.transform.position.x);시발시발시발
         Debug.Log("y:" + player.transform.position.y);*/
@@ -451,6 +441,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
 
 
+    }
+    void SetTooltip()
+    {
+        tooltip.TooltipSetting(cv.GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f, tooltip.GetComponent<RectTransform>());
     }
     #region MinimapMethod
     private void ChangeRanderTextur()
@@ -816,7 +810,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             {
                 for (int i = 0; i < Inventory.Single.items.Count; i++)
                 {
-                    tooltip.SetActive(false);
+                    tooltip.gameObject.SetActive(false);
                 }
             }
         }
@@ -824,28 +818,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             Debug.Log("퀘스트ID가 20미만");
         }
-        tooltip.SetActive(false);
-    }
-    public void SetupTooltip(string _name, string _title, string _desc, Sprite _img)
-    {
-        textName.text = _name;
-
-        textTitle.text = _title;
-
-        textDesc.text = _desc;
-
-        imgIcon.sprite = _img;
-    }
-    private void MoveTooltip()
-    {
-        tooltip.transform.position = Input.mousePosition;
-        // 04-15 ToolTip
-        tooltipRect = tooltip.GetComponent<RectTransform>();
-
-        if (tooltipRect.anchoredPosition.x + tooltipRect.sizeDelta.x > canvaseWidth)
-            tooltipRect.pivot = new Vector2(1, 0);
-        else
-            tooltipRect.pivot = new Vector2(0, 0);
+        tooltip.gameObject.SetActive(false);
     }
 
     public void OnClickedQuite()
@@ -1000,6 +973,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                     itemCode = nowSlot.item.itemCode,
                     itemName = nowSlot.item.itemName,
                     itemType = nowSlot.item.itemType,
+                    itemTitle = nowSlot.item.itemTitle,
                     itemImage = nowSlot.item.itemImage,
                     itemPrice = nowSlot.item.itemPrice,
                     itemPower = nowSlot.item.itemPower,
@@ -1007,6 +981,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                     itemStack = nowSlot.item.itemStack,
                     modifyStack = nowSlot.item.modifyStack,
                     PrimaryCode = nowSlot.item.PrimaryCode,
+                    typeIcon = nowSlot.item.typeIcon,
                 };
                 // 아이템 설정
                 targetSlots[i].item = clonedItem;
@@ -1245,6 +1220,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             itemStack = _Slot.item.itemStack,
             modifyStack = _Slot.item.modifyStack,
             PrimaryCode = _Slot.item.PrimaryCode,
+            typeIcon = _Slot.item.typeIcon,
         };
 
         //일단 장착해제

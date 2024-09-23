@@ -16,12 +16,15 @@ public class Inspection : MonoBehaviour
     public Image icon;
     public TextMeshProUGUI count;
     public int cnt;
+    public bool renovateOk;
     public void Init(Item _item)
     {
         myItem = _item;
         cnt = 0;
         Debug.Log("Init Pls");
         Setting();
+
+        renovateOk = false;
     }
 
     void Setting()

@@ -109,6 +109,7 @@ public class Inventory : MonoBehaviour
                 itemPower = _item.itemPower,
                 itemPrice = _item.itemPrice,
                 PrimaryCode = _item.PrimaryCode,
+                typeIcon = _item.typeIcon,
             };
             newItem.IconSet(newItem);
 
@@ -205,7 +206,8 @@ public class Inventory : MonoBehaviour
                     itemPower = originalItem.itemPower,
                     itemDesc = originalItem.itemDesc,
                     itemStack = items[i].itemStack,
-                    modifyStack = items[i].modifyStack
+                    modifyStack = items[i].modifyStack,
+                    typeIcon = originalItem.typeIcon,
                 };
                 soltingNow.Add(item);
                 items.Remove(item);

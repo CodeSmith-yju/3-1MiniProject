@@ -68,6 +68,7 @@ public class ShopMgr : MonoBehaviour
                 itemDesc = originalItem.itemDesc,
                 itemStack = originalItem.itemStack,
                 modifyStack = originalItem.modifyStack,
+                typeIcon = originalItem.typeIcon,
             };
 
             if (newItem.itemType == Item.ItemType.Consumables)
@@ -142,7 +143,8 @@ public class ShopMgr : MonoBehaviour
                 itemPrice = Inventory.Single.items[i].itemPrice,
                 itemStack = Inventory.Single.items[i].itemStack,
                 modifyStack = Inventory.Single.items[i].modifyStack,
-                PrimaryCode = Inventory.Single.items[i].PrimaryCode
+                PrimaryCode = Inventory.Single.items[i].PrimaryCode,
+                typeIcon = originalItem.typeIcon,
             };
 
             // 비활성화된 슬롯을 재사용하거나, 새로운 슬롯을 생성

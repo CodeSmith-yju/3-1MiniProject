@@ -82,6 +82,7 @@ public class Blacksmith : MonoBehaviour
         int cnt = invenItems.Count;
         for (int i = 0; i < cnt; i++)
         {
+            invenItems[i].gameObject.SetActive(false);
             Destroy(invenItems[i]);
         }
         invenItems.Clear();
