@@ -119,6 +119,8 @@ public class PlayerAction : MonoBehaviour
             h = -1; // 왼쪽 이동
             v = 0;  // 상하 이동 없음
             dirVec = Vector3.left;// RayCast Direction
+
+            gameObject.GetComponent<SpriteRenderer>().flipX = true;
         }
         else if (stateInfo.IsName("Player_Right_Walk"))
         {
@@ -126,6 +128,7 @@ public class PlayerAction : MonoBehaviour
             h = 1; // 오른쪽 이동
             v = 0;  // 상하 이동 없음
             dirVec = Vector3.right;
+            gameObject.GetComponent<SpriteRenderer>().flipX = false;
         }
         else if (stateInfo.IsName("Player_Up_Walk"))
         {
