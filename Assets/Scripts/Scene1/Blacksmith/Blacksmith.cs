@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
+using UnityEngine.UI;
 using static Unity.VisualScripting.Metadata;
 
 public class Blacksmith : MonoBehaviour
@@ -20,8 +21,11 @@ public class Blacksmith : MonoBehaviour
     public int invenCk = -1;
     public SacrificeList sacrificeList;// 좌측상단 목록클릭시 얘가 활성, 해당아이템정보로 덮어씀
 
+    public Button btn_Commit;
+
     private void Start()
     {
+        btn_Commit.interactable = false;
         //씬최초실행시 한번
         sacrificeList.gameObject.SetActive(false);
         MakeRenovateItems();

@@ -952,7 +952,7 @@ GameObject:
   - component: {fileID: 6953210347332823388}
   - component: {fileID: 112733282041276582}
   m_Layer: 5
-  m_Name: OK
+  m_Name: Commit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1213,8 +1213,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.55, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -32, y: -96}
-  m_SizeDelta: {x: -64, y: -320}
+  m_AnchoredPosition: {x: -32, y: -41}
+  m_SizeDelta: {x: -64, y: -430}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2901822678372483591
 CanvasRenderer:
@@ -1351,6 +1351,7 @@ MonoBehaviour:
   selectedCk: -1
   invenCk: -1
   sacrificeList: {fileID: 3157045501263414757}
+  btn_Commit: {fileID: 6953210347332823388}
 --- !u!1 &6570108491456693535
 GameObject:
   m_ObjectHideFlags: 0
@@ -1607,6 +1608,7 @@ MonoBehaviour:
   - {fileID: 2387901735151543824}
   - {fileID: 4864310190020665754}
   - {fileID: 565368463065651920}
+  inpectionRedy: 0
 --- !u!1 &7214643457971545199
 GameObject:
   m_ObjectHideFlags: 0
