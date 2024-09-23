@@ -10,6 +10,7 @@ public class SacrificeList : MonoBehaviour
 
     public void ChangeInspectionsVlue(Item _item)
     {
+        Debug.Log("Run ChangeValue");
         for (int i = 0; i < inspections.Length; i++)
         {
             int countItem = 0;
@@ -22,10 +23,14 @@ public class SacrificeList : MonoBehaviour
                 case 1:
                     if (_item == null)
                     {
+                        inspections[i].SetItemPK(string.Empty);
                         inspections[i].SetAlphaToPartial();
                         inspections[i].SetTextColor(Color.red);
                         inspections[i].count.text = "0/1";
                         inspections[i].renovateOk = false;
+
+                        Debug.Log("아이템이없어요");
+                        inspections[i].SetItemPK("");
                     }
                     else if (_item.itemCode == inspections[i].GetItem().itemCode - 4)
                     {
@@ -33,6 +38,9 @@ public class SacrificeList : MonoBehaviour
                         inspections[i].SetTextColor(Color.green);
                         inspections[i].count.text = _item.itemStack.ToString() + "/1";
                         inspections[i].renovateOk = true;
+
+                        Debug.Log("=============== 제 발 요 ===============");
+                        inspections[i].SetItemPK(_item.GetItemUniqueCode());
                     }
                     break;
                 case 3:

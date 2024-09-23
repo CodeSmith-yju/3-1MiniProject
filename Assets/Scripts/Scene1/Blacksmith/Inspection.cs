@@ -17,8 +17,12 @@ public class Inspection : MonoBehaviour
     public TextMeshProUGUI count;
     public int cnt;
     public bool renovateOk;
+
+    [Header("Item Key")]
+    public string ItemPK;
     public void Init(Item _item)
     {
+        ItemPK = "";
         myItem = _item;
         cnt = 0;
         Debug.Log("Init Pls");
@@ -87,6 +91,11 @@ public class Inspection : MonoBehaviour
     public Item GetItem()
     {
         return myItem;
+    }
+    public void SetItemPK(string _str)
+    {
+        ItemPK = _str;
+        Debug.Log("¿Ö¾È‰Î ¾¾¤Ó»¡"+_str);
     }
 }
 

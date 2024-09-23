@@ -10,6 +10,11 @@ public class ItemResources : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+        for (int i = 0; i < itemRS.Count; i++)
+        {
+            itemRS[i].PrimaryCode = itemRS[i].GetNewPK(12);
+        }
     }
 
 

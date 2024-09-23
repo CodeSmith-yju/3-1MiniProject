@@ -80,6 +80,14 @@ public class InSlot : MonoBehaviour
 
             // sacrificeList에 선택된 항목 업데이트
             blacksmith.sacrificeList.ChangeInspectionsVlue(myItem);
+            if (blacksmith.sacrificeList.inpectionRedy == true)
+            {
+                blacksmith.btn_Commit.interactable = true;
+            }
+            else
+            {
+                blacksmith.btn_Commit.interactable = false;
+            }
             blacksmith.invenCk = invenItemIndex;
         }
         else//Left Side
@@ -90,6 +98,7 @@ public class InSlot : MonoBehaviour
             // 동일한 항목을 다시 선택한 경우 선택 해제하고 반환
             if (blacksmith.selectedCk == renovateIndex)
             {
+                Debug.Log("More Click");
                 selectedPanel.SetActive(false);
                 blacksmith.selectedCk = -1;
                 return;
@@ -137,7 +146,11 @@ public class InSlot : MonoBehaviour
         {
             Debug.Log("Run Left Side: renovateItems");
             blacksmith.AllInvenUnSelect();
-            if (blacksmith.selectedCk != -1)
+            if (blacksmith.selectedCk == renovateIndex)
+            {
+                blacksmith.ReOrder();
+            }
+            else if (blacksmith.selectedCk != -1)
             {
                 //먼저 선택된게 있으면, 기존의 선택된거 다 갈아치우고 
                 blacksmith.RefreshRenovate(renovateIndex);
@@ -161,5 +174,5 @@ public class InSlot : MonoBehaviour
         //renoItems
         //if for (int i =0; i<RenovateItems.count; i++) { inventory.items.itemcode == RenovateItems.item.itemcode - 4 }, HightLight.ActiveTrue
     }
-
+    
 }

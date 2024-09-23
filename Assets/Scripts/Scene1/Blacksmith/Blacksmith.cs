@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,7 +23,7 @@ public class Blacksmith : MonoBehaviour
     public SacrificeList sacrificeList;// 좌측상단 목록클릭시 얘가 활성, 해당아이템정보로 덮어씀
 
     public Button btn_Commit;
-
+    public TextMeshProUGUI tmp_nowGold;
     private void Start()
     {
         btn_Commit.interactable = false;
@@ -31,8 +32,95 @@ public class Blacksmith : MonoBehaviour
         MakeRenovateItems();
         //OpenBlacksmith();
     }
+    public void OnClickCommit()
+    {
+        for (int i = 0; i < sacrificeList.inspections.Length; i++)
+        {
+            switch (i)
+            {
+                case 0:
+                    for (int j = 0; j < Inventory.Single.items.Count; j++)
+                    {                                                                       //inspection ItemCode가 문제인듯 확인필요
+                        if (Inventory.Single.items[j].PrimaryCode.Equals(sacrificeList.inspections[i].ItemPK))
+                        {
+                            Inventory.Single.RemoveItem(Inventory.Single.items[j]);
+                            break;
+                        }
+                    }
+                    break;
+                case 1:
+                    int stk = 3; // 제거할 아이템의 개수
+
+                    for (int j = 0; j < Inventory.Single.items.Count; j++)
+                    {
+                        // 아이템 코드가 동일할 경우
+                        if (Inventory.Single.items[j].itemCode == sacrificeList.inspections[i].GetItem().itemCode + 4)
+                        {
+                            // 현재 아이템의 stack이 제거할 개수보다 많거나 같을 경우
+                            if (Inventory.Single.items[j].itemStack >= stk)
+                            {
+                                // stk 수만큼 아이템 제거
+                                for (int k = 0; k < stk; k++)
+                                {
+                                    Inventory.Single.RemoveItem(Inventory.Single.items[j]);
+                                }
+                                break; // 아이템을 다 제거했으므로 루프를 종료
+                            }
+                            else
+                            {
+                                // 현재 stack이 부족할 경우 남은 stk에서 제거할 수 있는 만큼 제거
+                                stk -= Inventory.Single.items[j].itemStack;
+                                for (int k = 0; k < Inventory.Single.items[j].itemStack; k++)
+                                {
+                                    Inventory.Single.RemoveItem(Inventory.Single.items[j]);
+
+                                    // stk가 0이 되면 즉시 루프를 종료
+                                    if (--stk == 0)
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                // stk가 0이 되면 전체 루프를 종료
+                                if (stk == 0)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    break;
+                case 2:
+                    if (GameMgr.playerData[0].player_Gold >= 300)
+                    {
+                        GameMgr.playerData[0].player_Gold -= 300;
+                    }
+                    else
+                    {
+                        Debug.Log("골드부족한데스?");
+                    }
+                    break;
+
+                default:
+                    Debug.Log("버그인데스");
+                    break;
+            }
+        }
+
+        Inventory.Single.AddItem(ItemResources.instance.itemRS[
+            renovateItems[selectedCk].GetItem().itemCode
+            ]);
+
+        OpenBlacksmith();
+        AllInvenUnSelect();
+        ReOrder();
+
+        Refresh();
+    }
     void OpenBlacksmith()
     {
+        NowGold();
         samenessCk = false;
         // TODO: invenList Add. (foreach Inventory.items[i].PK != BlackSmithSlot.item.PK) 문으로 기존invenList와비교하여 Destroy or As it is 
 
@@ -83,6 +171,7 @@ public class Blacksmith : MonoBehaviour
 
     void Refresh()
     {
+        NowGold();
         int cnt = invenItems.Count;
         for (int i = 0; i < cnt; i++)
         {
@@ -129,13 +218,26 @@ public class Blacksmith : MonoBehaviour
             {
                 InSlot slot = Instantiate(Prefab, inventr);
 
-                // 생성된 슬롯 초기화
-                slot.Init(this, Inventory.Single.items[i], true);
+                Item _item = new()
+                {
+                    itemCode = Inventory.Single.items[i].itemCode,
+                    itemName = Inventory.Single.items[i].itemName,
+                    itemType = Inventory.Single.items[i].itemType,
+                    itemImage = Inventory.Single.items[i].itemImage,
+                    itemPrice = Inventory.Single.items[i].itemPrice,
+                    itemPower = Inventory.Single.items[i].itemPower,
+                    itemDesc = Inventory.Single.items[i].itemDesc,
+                    itemStack = Inventory.Single.items[i].itemStack,
+                    modifyStack = Inventory.Single.items[i].modifyStack,
+                    typeIcon = Inventory.Single.items[i].typeIcon,
+                    PrimaryCode = Inventory.Single.items[i].PrimaryCode,
+                };
 
+                // 생성된 슬롯 초기화
+                slot.Init(this, _item, true);
+                slot.invenItemIndex = invenItems.Count;
                 // 생성된 슬롯을 리스트에 추가
                 invenItems.Add(slot);
-
-                slot.invenItemIndex = invenItems.Count - 1;
             }
         }
     }
@@ -150,12 +252,11 @@ public class Blacksmith : MonoBehaviour
 
             // 생성된 슬롯 초기화
             slot.Init(this, ItemResources.instance.itemRS[i + 4], false);
+
+            slot.renovateIndex = renovateItems.Count;
             
             // 생성된 슬롯을 리스트에 추가
             renovateItems.Add(slot);
-
-            // 추가 정보 대입
-            slot.renovateIndex = renovateItems.Count - 1;
         }
     }
 
@@ -168,6 +269,11 @@ public class Blacksmith : MonoBehaviour
         }
 
         sacrificeList.ChangeInspectionsVlue(null);
+
+        if (sacrificeList.AllCk() == true)
+        {
+            btn_Commit.interactable = true;
+        }
     }
     public Item NowSelectedRenovateItem(int _index)
     {
@@ -177,5 +283,15 @@ public class Blacksmith : MonoBehaviour
     //TODO: LeftTop Side two = Enhance
     //TODO: Click(OneTab || Two Tab)
     //TODO: LeftBottom Side View List
+    public void ReOrder()
+    {
+        selectedCk = -1;
+        invenCk = -1;
 
+        sacrificeList.gameObject.SetActive(false);
+    }
+    void NowGold()
+    {
+        tmp_nowGold.text = GameMgr.playerData[0].player_Gold.ToString();
+    }
 }

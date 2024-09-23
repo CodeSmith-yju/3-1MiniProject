@@ -68,6 +68,10 @@ public class Item
     {
         PrimaryCode = GenerateUniqueCode(12);
     }
+    public string GetNewPK(int _12)
+    {
+        return GenerateUniqueCode(12);
+    }
     private string GenerateUniqueCode(int length) // 12글자 이상의 무작위 문자열을 생성하는 메서드
     {
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -80,6 +84,11 @@ public class Item
         }
 
         return code.ToString();
+    }
+    public string GetItemUniqueCode()
+    {
+        Debug.Log("누가 나를 불렀느뇨: "+PrimaryCode);
+        return PrimaryCode.ToString();
     }
     public bool Use()
     {
