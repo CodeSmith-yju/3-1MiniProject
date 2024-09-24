@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &34214474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,8 +164,8 @@ MonoBehaviour:
   gridSize: 4
   roomSpacing: 25
   maxBlockedRooms: 4
-  minChestRooms: 2
-  minRestRooms: 2
+  minChestRooms: 1
+  minRestRooms: 1
   minBattleRooms: 3
 --- !u!4 &34214475
 Transform:
@@ -176,7 +176,92 @@ Transform:
   m_GameObject: {fileID: 34214473}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &201789819
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 201789820}
+  m_Layer: 0
+  m_Name: minimap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &201789820
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201789819}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5000, y: 5000, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &229420792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 229420794}
+  - component: {fileID: 229420793}
+  m_Layer: 0
+  m_Name: test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &229420793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229420792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 127c659380423344c93c9334bdababe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapRows: []
+  startPrefab: {fileID: 6622256538106074226, guid: 54c1febbec3b07649ad797f22a9daa92, type: 3}
+  battleRoomPrefabs:
+  - {fileID: 8840138731166025433, guid: d67dbd5e560c30a4e88b853897bec3a9, type: 3}
+  chestRoomPrefab: {fileID: 5549726582459244979, guid: 88ddc6f93a85dd046b84b10280554256, type: 3}
+  restRoomPrefab: {fileID: 6622256538106074226, guid: 3d8d6d7c650c50e46a7aab8c76666599, type: 3}
+  blockedRoomPrefab: {fileID: 5217568088966437922, guid: 7253ef389431d90419b35dd60245f636, type: 3}
+  bossRoomPrefab: {fileID: 3867297895921809171, guid: 860f2032ccaf2314d8f5076d2b76bb67, type: 3}
+  map_Mark_Prefab: {fileID: 2842157926020722523, guid: 78cfd38566d38ca4881aad0180d4ff69, type: 3}
+  map_Tf: {fileID: 201789820}
+--- !u!4 &229420794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229420792}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -280,3 +365,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 648968174}
   - {fileID: 34214475}
+  - {fileID: 229420794}
+  - {fileID: 201789820}

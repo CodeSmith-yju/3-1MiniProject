@@ -15,7 +15,7 @@ public class Cell2
 [System.Serializable]
 public class Row2
 {
-    public List<Cell> cells = new List<Cell>();  // 한 행의 셀 리스트
+    public List<Cell2> cells = new List<Cell2>();  // 한 행의 셀 리스트
 }
 
 
@@ -72,7 +72,7 @@ public class TestMap : MonoBehaviour
             Row2 row = new Row2();
             for (int x = 0; x < gridSize; x++)
             {
-                Cell cell = new Cell();
+                Cell2 cell = new Cell2();
                 row.cells.Add(cell);
             }
             mapRows.Add(row);
@@ -110,19 +110,8 @@ public class TestMap : MonoBehaviour
             }
         }
 
-        // 최대, 최소 갯수를 충족하는 방 배치
+        // 경로를 제외한 방 생성
         PlaceMandatoryRooms(pathToBoss, bossPos);
-
-        List<Vector2Int> availablePositions = GetAvailablePositions(pathToBoss, bossPos);
-
-        // 나머지 남은 방들을 무작위 방으로 배치
-        while (availablePositions.Count > 0)
-        {
-            Vector2Int randomPos = GetRandomPosition(availablePositions);
-            GameObject randomRoom = GetRandomRoomPrefab();
-            PlaceRoom(randomPos, randomRoom);
-        }
-
 
     }
 
@@ -216,7 +205,6 @@ public class TestMap : MonoBehaviour
     private void PlaceMandatoryRooms(List<Vector2Int> pathToBoss, Vector2Int bossPos)
     {
         List<Vector2Int> availablePositions = GetAvailablePositions(pathToBoss, bossPos);
-        //HashSet<Vector2Int> connectedRooms = new HashSet<Vector2Int>(pathToBoss); // 이미 경로 상의 방들은 연결된 것으로 간주
 
         // 막힌 방 배치
         for (int i = 0; i < maxBlockedRooms; i++)
@@ -246,47 +234,14 @@ public class TestMap : MonoBehaviour
             PlaceRoom(randomPos, battleRoom);
         }
 
-       
-        // 모든 방이 연결되었는지 확인하고, 고립된 방이 있으면 연결되도록 수정
-        //EnsureAllRoomsConnected(connectedRooms);
-    }
 
-    // 고립된 방이 없도록 모든 방이 연결되었는지 확인하는 함수
-    void EnsureAllRoomsConnected(HashSet<Vector2Int> connectedRooms)
-    {
-        for (int y = 0; y < gridSize; y++)
+        while (availablePositions.Count > 0)
         {
-            for (int x = 0; x < gridSize; x++)
-            {
-                Vector2Int pos = new Vector2Int(x, y);
-
-                // 이미 연결된 방은 건너뜀
-                if (connectedRooms.Contains(pos))
-                    continue;
-
-                // 인접한 연결된 방이 있는지 확인
-                bool isConnected = false;
-                foreach (Vector2Int direction in directions)
-                {
-                    Vector2Int neighborPos = pos + direction;
-                    if (connectedRooms.Contains(neighborPos))
-                    {
-                        isConnected = true;
-                        break;
-                    }
-                }
-
-                // 연결되지 않은 방이 있다면, 전투 방이나 상자 방으로 수정하여 연결
-                if (!isConnected)
-                {
-                    GameObject randomRoom = GetRandomRoomPrefab(); // 막힌 방이 아닌 방으로 변경
-                    PlaceRoom(pos, randomRoom);
-                    connectedRooms.Add(pos); // 방을 연결된 방 목록에 추가
-                }
-            }
+            Vector2Int randomPos = GetRandomPosition(availablePositions);
+            GameObject randomRoom = GetRandomRoomPrefab();
+            PlaceRoom(randomPos, randomRoom);
         }
     }
-
 
 
     // 경로와 보스방이 차지하지 않는 빈 자리를 반환하는 함수
@@ -323,7 +278,7 @@ public class TestMap : MonoBehaviour
     // 
     private GameObject GetRandomRoomPrefab()
     {
-        int randomValue = Random.Range(0, 100); // 방의 종류가 4가지라고 가정
+        int randomValue = Random.Range(0, 100);
 
         if (randomValue < 70)
         {
@@ -342,7 +297,7 @@ public class TestMap : MonoBehaviour
     // 방을 특정 위치에 배치하고 막힌 방 플래그 설정하는 함수
     private void PlaceRoom(Vector2Int pos, GameObject roomPrefab, bool isBlocked = false, bool isBoss = false)
     {
-        Cell cell = mapRows[pos.y].cells[pos.x];
+        Cell2 cell = mapRows[pos.y].cells[pos.x];
         cell.cellObject = roomPrefab;
         cell.isBoss = isBoss;
         cell.isBlocked = isBlocked;  // 막힌 방이면 true, 아니면 false

@@ -162,10 +162,8 @@ public class BattleManager : MonoBehaviour
             case BattlePhase.Start:
                 if (room.isMoveDone || isFirstEnter)
                 {
-                    CheckRoom();
-                    isFirstEnter = false;
+                    StartCoroutine(CheckRoom());
                 }
-
                 break;
             case BattlePhase.Rest:
                 if (!ui.out_Portal.activeSelf)
@@ -408,11 +406,10 @@ public class BattleManager : MonoBehaviour
     }
 
     // 방 종류 체크 메서드
-    public void CheckRoom()
+    public IEnumerator CheckRoom()
     {
-
+        yield return null;
         // 전 방에 배치된 유닛들 제거
-
         if (deploy_Player_List != null)
         {
             Ally[] unit = FindObjectsOfType<Ally>();
@@ -439,8 +436,18 @@ public class BattleManager : MonoBehaviour
         deploy_Player_List.Clear();
         deploy_Enemy_List.Clear();
 
-        unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
-        PlacementUnit(); // 어떤 방이든 유닛을 소환 시키도록 함.
+        if (isFirstEnter)
+        {
+            isFirstEnter = false;
+            yield return null;
+            unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
+            PlacementUnit(); // 어떤 방이든 유닛을 소환 시키도록 함.
+        }
+        else
+        {
+            unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
+            PlacementUnit(); // 어떤 방이든 유닛을 소환 시키도록 함.
+        }
 
         if (room.cur_Room.tag == "Battle")
         {
@@ -453,11 +460,13 @@ public class BattleManager : MonoBehaviour
             }
 
             ChangePhase(BattlePhase.Deploy);
+            yield break;
         }
         else
         {
             ChangePhase(BattlePhase.Rest);
             Debug.Log("휴식");
+            yield break;
         }
     }
 
