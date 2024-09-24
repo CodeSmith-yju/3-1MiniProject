@@ -8,6 +8,8 @@ public class MainMenuMgr : MonoBehaviour
 {
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject OptionMenu;
+    [SerializeField] Login login;
+    // 회원가입페이지도 넣어야됨
     [SerializeField] AddUserName addUserName;
 
     //[SerializeField] Button btnLoadGame;
@@ -24,9 +26,7 @@ public class MainMenuMgr : MonoBehaviour
     {
         Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);// 게임 시작 시 1920*1080 창모드 실행
 
-        mainMenu.SetActive(true);
-        OptionMenu.SetActive(false);
-        addUserName.gameObject.SetActive(false);
+        RefreshiTitle();
 
         if (SaveSystem.DataCheck("save") == false)
         {
@@ -45,6 +45,13 @@ public class MainMenuMgr : MonoBehaviour
     {
         ChangeBG();
         //RefreshTitleBtns();
+    }
+    void RefreshiTitle()
+    {
+        mainMenu.SetActive(true);
+        OptionMenu.SetActive(false);
+        addUserName.gameObject.SetActive(false);
+        login.gameObject.SetActive(false);
     }
 
     public void OnClickedGameStart()

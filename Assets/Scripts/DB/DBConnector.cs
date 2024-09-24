@@ -177,6 +177,41 @@ public class DBConnector : MonoBehaviour
     {
         return m_OnChange($"DELETE FROM {tableName} WHERE {condition}");
     }
+
+    /// <summary>
+    /// userinfo 테이블에서 ID와 PW가 일치하는지 확인하는 메서드
+    /// </summary>
+    /// <param name="userID">사용자가 입력한 ID</param>
+    /// <param name="userPW">사용자가 입력한 PW</param>
+    /// <returns>로그인 성공 여부</returns>
+    public static bool SelectUser(string userID, string userPW)
+    {
+        string query = $"SELECT * FROM userinfo WHERE id = '{userID}' AND pw = '{userPW}'";
+        DataSet ds = m_OnLoad("userinfo", query);
+
+        // DataSet에 데이터가 있다면 로그인 성공
+        if (ds != null && ds.Tables["userinfo"].Rows.Count > 0)
+        {
+            return true;  // 로그인 성공
+        }
+
+        return false;  // 로그인 실패
+    }
+    public static bool InsertUser(string userID, string userPW)
+    {
+        // 먼저 동일한 ID가 있는지 확인 (중복 검사)
+        DataSet ds = m_OnLoad("userinfo", $"SELECT * FROM userinfo WHERE id = '{userID}'");
+
+        if (ds != null && ds.Tables["userinfo"].Rows.Count > 0)
+        {
+            Debug.LogError("이미 존재하는 ID입니다.");
+            return false;  // 중복 ID가 있을 경우 false 반환
+        }
+
+        // 중복되지 않는다면 회원가입 진행
+        string query = $"INSERT INTO userinfo (id, pw) VALUES ('{userID}', '{userPW}')";
+        return m_OnChange(query);  // 삽입 성공 여부 반환
+    }
 }
 
 public static class DBConnecter_Expand
