@@ -167,24 +167,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             //아 버그 왜 생기는거냐 진짜 소모아이템생성로직에 문제가있는데
             //기존 아이템생성방식의 한계점을발견하여 아래와 같이 수정함
             int r = Random.Range(0, 20);
-            Item _item = new()
-            {
-                itemCode = ItemResources.instance.itemRS[r].itemCode,
-                itemName = ItemResources.instance.itemRS[r].itemName,
-                itemType = ItemResources.instance.itemRS[r].itemType,
-                itemImage = ItemResources.instance.itemRS[r].itemImage,
-                itemPrice = ItemResources.instance.itemRS[r].itemPrice,
-                itemPower = ItemResources.instance.itemRS[r].itemPower,
-                itemDesc = ItemResources.instance.itemRS[r].itemDesc,
-                itemStack = ItemResources.instance.itemRS[r].itemStack,
-                modifyStack = ItemResources.instance.itemRS[r].modifyStack,
-                typeIcon = ItemResources.instance.itemRS[r].typeIcon,
-                //PK는 자동생성되게 ㄱㄱ
-            };
+            Item _item = new Item().GenerateRandomItem(r);
 
             Inventory.Single.AddItem(_item); // 인벤토리에 아이템 추가,
 
-            Debug.Log("Make A NewItem Code: " + _item.itemCode);
+            Debug.Log("Make A New Test Item Code: " + _item.itemCode);
         }
 
         RedrawSlotUI();

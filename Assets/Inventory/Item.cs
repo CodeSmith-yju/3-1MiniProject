@@ -145,5 +145,26 @@ public class Item
                 break;
         }
     }
+
+    public Item GenerateRandomItem(int r)
+    {
+        Item _item = new()
+        {
+            itemCode = ItemResources.instance.itemRS[r].itemCode,
+            itemName = ItemResources.instance.itemRS[r].itemName,
+            itemType = ItemResources.instance.itemRS[r].itemType,
+            itemTitle = ItemResources.instance.itemRS[r].itemTitle,
+            itemImage = ItemResources.instance.itemRS[r].itemImage,
+            itemPrice = ItemResources.instance.itemRS[r].itemPrice,
+            itemPower = ItemResources.instance.itemRS[r].itemPower,
+            itemDesc = ItemResources.instance.itemRS[r].itemDesc,
+            itemStack = ItemResources.instance.itemRS[r].itemStack,
+            modifyStack = ItemResources.instance.itemRS[r].modifyStack,
+            typeIcon = ItemResources.instance.itemRS[r].typeIcon,
+            //PK는 자동생성되게 ㄱㄱ
+        };
+
+        return _item;
+    }
 }
 
