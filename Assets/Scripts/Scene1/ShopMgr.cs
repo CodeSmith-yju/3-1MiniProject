@@ -30,6 +30,7 @@ public class ShopMgr : MonoBehaviour
 
     public TextMeshProUGUI calcPrice;
     public TextMeshProUGUI PayText;
+    public TextMeshProUGUI myGoldText;
 
     public int basketsPrice;
     //[SerializeField] Button btnBuy;// TODO: Add SoundEv 
@@ -228,7 +229,7 @@ public class ShopMgr : MonoBehaviour
                 }
             }
         }
-
+        GoldSet();
     }
 
     public List<ShopSlot> GetShopSlots()
@@ -359,7 +360,7 @@ public class ShopMgr : MonoBehaviour
         //거래가 종료되면 결과가 반영되어야 함.
         Debug.Log("거래 종료 후 골드: " + GameMgr.playerData[0].player_Gold);
         GameUiMgr.single.SliderChange();
-
+        GoldSet();
     }
 
     void RefeshBaskets()
@@ -371,5 +372,9 @@ public class ShopMgr : MonoBehaviour
             baskets[i].GetBasketShopSlot().UseImgSet(false);
             calcPrice.text = basketsPrice.ToString();
         }
+    }
+    void GoldSet()
+    {
+        myGoldText.text = GameMgr.playerData[0].player_Gold.ToString();
     }
 }

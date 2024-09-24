@@ -87,7 +87,7 @@ public class Item
     }
     public string GetItemUniqueCode()
     {
-        Debug.Log("´©°¡ ³ª¸¦ ºÒ·¶´À´¢: "+PrimaryCode);
+        //Debug.Log("´©°¡ ³ª¸¦ ºÒ·¶´À´¢: "+PrimaryCode);
         return PrimaryCode.ToString();
     }
     public bool Use()

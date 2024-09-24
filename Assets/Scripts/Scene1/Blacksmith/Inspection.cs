@@ -95,7 +95,7 @@ public class Inspection : MonoBehaviour
     public void SetItemPK(string _str)
     {
         ItemPK = _str;
-        Debug.Log("¿Ö¾È‰Î ¾¾¤Ó»¡"+_str);
+        //Debug.Log("¿Ö¾È‰Î ¾¾¤Ó»¡"+_str);
     }
 }
 
