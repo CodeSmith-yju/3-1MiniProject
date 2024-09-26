@@ -895,7 +895,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             Debug.Log("던전 입장");
             GameSave();
             //SceneManager.LoadScene("Battle");//아니면여기에 던전에입장하시겠습니까? 예, 아니오, Wall, 값을 넣고 던져서 예누르면 wall로 텔포,아니오누르면 그냥 retrun하게하는식으로하면~ 야매 맵이동구현 뚝딲
-            LoadingSceneController.LoadScene("Battle");
+            LoadingSceneController.LoadScene("Tutorial");
             isDungeon = false;
             return;
         }

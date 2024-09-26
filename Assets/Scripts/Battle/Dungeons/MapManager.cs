@@ -88,7 +88,17 @@ public class MapManager : MonoBehaviour
     {
         if (mapRows == null)
             mapRows = new();
-        StartCoroutine(GenerateDungeon());
+
+        if (BattleManager.Instance.dialogue != null && BattleManager.Instance.dialogue.isTutorial)
+        {
+            player_Pos = new Vector2Int(0, 0);
+            SetRoom(player_Pos);
+            MiniMapUpdate(player_Pos);
+        }
+        else
+        {
+            StartCoroutine(GenerateDungeon());
+        }    
     }
 
     // 던전 생성 함수

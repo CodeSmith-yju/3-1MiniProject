@@ -10,7 +10,8 @@ public class Goblin : Enemy
         // 최대 체력, 최대 마나, 공격력, 공격속도, 사거리, 근접유무, 스킬유무, 경험치, 골드, 아이템 드랍
         InitStat(15, 0, 1, 0.8f, 6f, false, false, 2, 100, ItemResources.instance.itemRS[1]);
 
-        item_Drop_Check = ShouldDropItem(30);
+        if (!BattleManager.Instance.dialogue.isTutorial)
+            item_Drop_Check = ShouldDropItem(30);
 
         Debug.Log("경험치 설정 : " +  exp_Cnt);
         Debug.Log("골드 설정 : " + gold_Cnt);
