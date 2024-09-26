@@ -217,7 +217,106 @@ public class DBConnector : MonoBehaviour
         return m_OnChange(query);  // 삽입 성공 여부 반환
     }
 
+    //
+    // Unity -> DB
+    // 아이템 정보를 DB에 저장하는 함수 (이미지 포함)
+    public static bool InsertItemToDB(Item item)
+    {
+        // 아이템 이미지와 타입 아이콘을 바이트 배열로 변환
+        byte[] itemImageBytes = ConvertSpriteToBytes(item.itemImage);
+        byte[] typeIconBytes = ConvertSpriteToBytes(item.typeIcon);
 
+        // SQL 쿼리
+        string query = "INSERT INTO item (itemCode, itemName, itemType, itemTitle, itemDesc, itemPrice, itemPower, itemStack, modifyStack, itemImg, typeIcon) " +
+                       "VALUES (@itemCode, @itemName, @itemType, @itemTitle, @itemDesc, @itemPrice, @itemPower, @itemStack, @modifyStack, @itemImg, @typeIcon)";
+
+        MySqlCommand cmd = new MySqlCommand(query, connection);
+
+        // 쿼리에 파라미터 추가
+        cmd.Parameters.AddWithValue("@itemCode", item.itemCode);
+        cmd.Parameters.AddWithValue("@itemName", item.itemName);
+        cmd.Parameters.AddWithValue("@itemType", item.itemType.ToString());  // Enum을 문자열로 저장
+        cmd.Parameters.AddWithValue("@itemTitle", item.itemTitle);
+        cmd.Parameters.AddWithValue("@itemDesc", item.itemDesc);
+        cmd.Parameters.AddWithValue("@itemPrice", item.itemPrice);
+        cmd.Parameters.AddWithValue("@itemPower", item.itemPower);
+        cmd.Parameters.AddWithValue("@itemStack", item.itemStack);
+        cmd.Parameters.AddWithValue("@modifyStack", item.modifyStack);
+        cmd.Parameters.AddWithValue("@itemImg", itemImageBytes);  // BLOB 데이터
+        cmd.Parameters.AddWithValue("@typeIcon", typeIconBytes);  // BLOB 데이터
+
+        try
+        {
+            connection.Open();
+            cmd.ExecuteNonQuery();
+            return true;  // 성공
+        }
+        catch (MySqlException ex)
+        {
+            Debug.LogError("DB Insert Error: " + ex.Message);
+            return false;  // 실패
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+
+    // Sprite를 byte 배열로 변환하는 함수
+    private static byte[] ConvertSpriteToBytes(Sprite sprite)
+    {
+        Texture2D texture = sprite.texture;
+        return texture.EncodeToPNG();  // PNG 형식으로 변환
+    }
+
+    //
+    // DB -> Unity
+    // BLOB 데이터를 Sprite로 변환하는 함수
+    public static Sprite ConvertBytesToSprite(byte[] imageBytes)
+    {
+        Texture2D texture = new Texture2D(2, 2);
+        texture.LoadImage(imageBytes);  // 이미지 데이터를 텍스처로 로드
+
+        // 텍스처를 Sprite로 변환
+        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+    }
+
+    // DB에서 아이템 데이터를 읽는 함수
+    public static Item LoadItemFromDB(int itemCode)
+    {
+        string query = $"SELECT * FROM item WHERE itemCode = {itemCode}";
+        MySqlCommand cmd = new MySqlCommand(query, connection);
+
+        connection.Open();
+        MySqlDataReader reader = cmd.ExecuteReader();
+
+        if (reader.Read())
+        {
+            Item item = new Item();
+            item.itemCode = reader.GetInt32("itemCode");
+            item.itemName = reader.GetString("itemName");
+            item.itemType = (Item.ItemType)Enum.Parse(typeof(Item.ItemType), reader.GetString("itemType"));
+            item.itemTitle = reader.GetString("itemTitle");
+            item.itemDesc = reader.GetString("itemDesc");
+            item.itemPrice = reader.GetInt32("itemPrice");
+            item.itemPower = reader.GetFloat("itemPower");
+            item.itemStack = reader.GetInt32("itemStack");
+            item.modifyStack = reader.GetInt32("modifyStack");
+
+            // 이미지 데이터를 BLOB에서 가져와 Sprite로 변환
+            byte[] itemImgBytes = (byte[])reader["itemImg"];
+            item.itemImage = ConvertBytesToSprite(itemImgBytes);
+
+            byte[] typeIconBytes = (byte[])reader["typeIcon"];
+            item.typeIcon = ConvertBytesToSprite(typeIconBytes);
+
+            connection.Close();
+            return item;
+        }
+
+        connection.Close();
+        return null;
+    }
 }
 
 public static class DBConnecter_Expand

@@ -33,8 +33,6 @@ public class Item
     public string itemDesc;
 
     public int itemIndex;
-    //04-22
-    public bool isDraggable;
     //05-08
     public int itemCode;
     //06
@@ -51,7 +49,7 @@ public class Item
 
 
     // Init 메서드
-    public void Init(string name, ItemType type, int stack, int modify, float power, int price, string title, string desc, int index, bool draggable, int code, string primaryCode)
+    /*public void Init(ItemType type, string name, int stack, int modify, float power, int price, string title, string desc, int index)
     {
         itemType = type;
         itemName = name;
@@ -66,10 +64,9 @@ public class Item
         itemDesc = desc;
 
         itemIndex = index;
-        isDraggable = draggable;
-        itemCode = code;
+        //itemCode = code; //이것도 자동으로 부여되어야하는데 십련이
         PrimaryCode = GenerateUniqueCode(12);
-    }
+    }*/
 
     public Item()//생성자를 통해 아이템 생성 시 고유한 PrimaryCode 생성
     {

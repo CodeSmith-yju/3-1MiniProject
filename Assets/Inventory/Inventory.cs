@@ -102,7 +102,6 @@ public class Inventory : MonoBehaviour
                 itemTitle = _item.itemTitle,
                 itemDesc = _item.itemDesc,
                 itemIndex = items.Count,
-                isDraggable = _item.isDraggable,
                 itemCode = _item.itemCode,
                 itemPower = _item.itemPower,
                 itemPrice = _item.itemPrice,
