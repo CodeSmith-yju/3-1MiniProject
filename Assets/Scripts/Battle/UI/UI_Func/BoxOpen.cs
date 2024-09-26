@@ -57,7 +57,7 @@ public class BoxOpen : MonoBehaviour
 
          
             BattleManager.Instance.room.cur_Room.gameObject.tag = "Battle";
-            BattleManager.Instance.CheckRoom();
+            BattleManager.Instance.ChangePhase(BattleManager.BattlePhase.Deploy);
 
         }
         else
