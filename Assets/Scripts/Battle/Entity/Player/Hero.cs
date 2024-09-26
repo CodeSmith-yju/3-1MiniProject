@@ -38,6 +38,9 @@ public class Hero : Ally
             StopCoroutine(SetAttack());
             if (isAttack)
             {
+
+                BattleManager.Instance.ui.GenerateLog(class_Portrait, "섬광 베기");
+
                 BaseEntity target = FindTarget().GetComponent<BaseEntity>();
                 Debug.Log("타겟의 적에게 2배의 데미지로 한번 공격" + " " + (atkDmg * 2) + "데미지");
                 target.cur_Hp -= atkDmg * 2;

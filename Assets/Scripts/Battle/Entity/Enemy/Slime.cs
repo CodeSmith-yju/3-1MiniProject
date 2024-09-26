@@ -10,7 +10,9 @@ public class Slime : Enemy
         // 최대 체력, 최대 마나, 공격력, 공격속도, 사거리, 근접유무, 스킬유무, 경험차, 골드, 아이템 드랍
         InitStat(12, 0, 1, 1, 1f, true, false, 1, 50, ItemResources.instance.itemRS[2]);
 
-        if (!BattleManager.Instance.dialogue.isTutorial)
+        if (BattleManager.Instance.dialogue != null && BattleManager.Instance.dialogue.isTutorial)
+            item_Drop_Check = false;
+        else
             item_Drop_Check = ShouldDropItem(40);
 
         Debug.Log("경험치 설정 : " + exp_Cnt);

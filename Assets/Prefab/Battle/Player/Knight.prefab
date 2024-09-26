@@ -84,7 +84,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.0625, y: 2.5625}
+  m_Size: {x: 2.25, y: 2.6875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -185,7 +185,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.85}
-  m_Size: {x: 0.6711134, y: 1.85}
+  m_Size: {x: 0.7, y: 1.85}
   m_Direction: 0
 --- !u!95 &8262451124436653978
 Animator:
@@ -239,4 +239,5 @@ MonoBehaviour:
   player_Name: 
   level: 0
   class_Icon: {fileID: 21300000, guid: 256205b9c6ca12c45ab7762da8a65631, type: 3}
+  class_Portrait: {fileID: 21300000, guid: 7905ad3e96c7eb346bf7a28851000745, type: 3}
   job: 1

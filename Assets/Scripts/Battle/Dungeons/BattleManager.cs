@@ -439,7 +439,7 @@ public class BattleManager : MonoBehaviour
         if (isFirstEnter)
         {
             isFirstEnter = false;
-            yield return null;
+            yield return new WaitForSeconds(0.3f);
             unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
             PlacementUnit(); // 어떤 방이든 유닛을 소환 시키도록 함.
         }
