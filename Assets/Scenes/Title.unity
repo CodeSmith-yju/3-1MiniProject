@@ -4820,14 +4820,54 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8052724017052257652, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8052724017052257652, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1638594990}
+    - target: {fileID: 8052724017052257652, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnClickedGameStart
+      objectReference: {fileID: 0}
+    - target: {fileID: 8052724017052257652, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: MainMenuMgr, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 8186545869766750469, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8186545869766750469, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8186545869766750469, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 5790450382032438066}
+    - target: {fileID: 8186545869766750469, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
       objectReference: {fileID: 1638594991}
+    - target: {fileID: 8186545869766750469, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddNewAccount
+      objectReference: {fileID: 0}
+    - target: {fileID: 8186545869766750469, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: FadeOFF
+      objectReference: {fileID: 0}
+    - target: {fileID: 8186545869766750469, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Login, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8186545869766750469, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: FadeInEffect, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 8212100351307564771, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
       propertyPath: m_IsActive
       value: 1

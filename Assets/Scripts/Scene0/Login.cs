@@ -21,6 +21,9 @@ public class Login : MonoBehaviour
     public BtnAddUserNameSoundEvent hoverbtnLoginSoundEv;
     public BtnAddUserNameSoundEvent hoverNewAccountSoundEv;
 
+    [Header("AddAccount")]
+    [SerializeField] AddAccount ac;
+
     /*private void Awake()//인스펙터창에서 할당함
     {
         input_ID.onValueChanged.AddListener(InputID);
@@ -78,25 +81,10 @@ public class Login : MonoBehaviour
 
     public void AddNewAccount()
     {
-        // AccountPage.SetActive(true);
+        Debug.Log("Run AddAcnt ");
+        OpenLoginPannel(false);
 
-        id = RemoveUnderLine(id);
-        pw = RemoveUnderLine(pw);
-
-        // 회원가입 로직 실행
-        bool registrationSuccess = DBConnector.InsertUser(id, pw);
-
-        if (registrationSuccess)
-        {
-            Debug.Log("회원가입 성공");
-            // 회원가입 성공 시 처리 (예: 로그인 화면으로 전환)
-        }
-        else
-        {
-            Debug.LogError("회원가입 실패: ID가 중복되었거나 다른 문제가 발생했습니다.");
-            // 회원가입 실패 시 처리 (예: 오류 메시지 출력)
-        }
-
+        ClearLoginPannel();
 
         hoverNewAccountSoundEv.ishover = false;
     }
@@ -107,5 +95,13 @@ public class Login : MonoBehaviour
         input_PW.text = "";
         id = input_ID.text;
         pw = input_PW.text;
+    }
+
+    public void OpenLoginPannel(bool onoff)
+    {
+        Debug.Log("Run Onoff : "+onoff);
+
+        gameObject.transform.GetChild(1).gameObject.SetActive(onoff);
+        ac.gameObject.SetActive(!onoff);
     }
 }

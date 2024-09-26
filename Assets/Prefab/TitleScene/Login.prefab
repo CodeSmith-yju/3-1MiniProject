@@ -788,7 +788,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB85C\uADF8\uC778"
+  m_text: "\uD68C\uC6D0\uAC00\uC785"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b1bafcd9c7a6b7247a63275da0ec75c1, type: 2}
   m_sharedMaterial: {fileID: 4824551100483818342, guid: b1bafcd9c7a6b7247a63275da0ec75c1, type: 2}
@@ -815,8 +815,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48
-  m_fontSizeBase: 48
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1069,8 +1069,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5614160232590510561}
-        m_TargetAssemblyTypeName: Login, Assembly-CSharp
+      - m_Target: {fileID: 9131289912464661679}
+        m_TargetAssemblyTypeName: AddAccount, Assembly-CSharp
         m_MethodName: InputID
         m_Mode: 0
         m_Arguments:
@@ -2007,9 +2007,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5614160232590510561}
-        m_TargetAssemblyTypeName: Login, Assembly-CSharp
-        m_MethodName: InputPW
+      - m_Target: {fileID: 9131289912464661679}
+        m_TargetAssemblyTypeName: AddAccount, Assembly-CSharp
+        m_MethodName: InputPW2
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3108,6 +3108,7 @@ MonoBehaviour:
   btnNewAccount: {fileID: 8186545869766750469}
   hoverbtnLoginSoundEv: {fileID: 583065737360261464}
   hoverNewAccountSoundEv: {fileID: 8052566624988317962}
+  ac: {fileID: 9131289912464661679}
 --- !u!1 &5219121440566666137
 GameObject:
   m_ObjectHideFlags: 0
@@ -3850,9 +3851,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5614160232590510561}
-        m_TargetAssemblyTypeName: Login, Assembly-CSharp
-        m_MethodName: Sign_In
+      - m_Target: {fileID: 9131289912464661679}
+        m_TargetAssemblyTypeName: AddAccount, Assembly-CSharp
+        m_MethodName: AddNewAccount
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4062,8 +4063,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5614160232590510561}
-        m_TargetAssemblyTypeName: Login, Assembly-CSharp
+      - m_Target: {fileID: 9131289912464661679}
+        m_TargetAssemblyTypeName: AddAccount, Assembly-CSharp
         m_MethodName: InputPW
         m_Mode: 0
         m_Arguments:
@@ -4283,7 +4284,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8422925879750312074
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4493,7 +4494,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3706727789904565889
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4506,12 +4507,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5316205751107894449}
   - {fileID: 4823305892390707701}
   - {fileID: 5290415619946922981}
   - {fileID: 3945501993681949274}
   - {fileID: 1610034620852081447}
   - {fileID: 3127181556359116375}
-  - {fileID: 5316205751107894449}
   m_Father: {fileID: 2800392594045272480}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4569,14 +4570,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f859d421a77ba246942cc63d6c05402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input_ID: {fileID: 0}
+  input_ID: {fileID: 890498864486428067}
   id: 
-  input_PW: {fileID: 0}
+  input_PW: {fileID: 2468199895870724534}
+  input_PW2: {fileID: 4653656278191396984}
   pw: 
-  btnLogin: {fileID: 0}
-  btnNewAccount: {fileID: 0}
-  hoverbtnLoginSoundEv: {fileID: 0}
-  hoverNewAccountSoundEv: {fileID: 0}
+  pw2: 
+  btnCommit: {fileID: 8052724017052257652}
+  hoverCommitSoundEv: {fileID: 5799002068336727422}
 --- !u!1 &8212100351307564771
 GameObject:
   m_ObjectHideFlags: 0
@@ -4594,7 +4595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3527514952997738819
 RectTransform:
   m_ObjectHideFlags: 0
