@@ -142,18 +142,16 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 case Item.ItemType.Ect:
                     break;
                 case Item.ItemType.Consumables:
-                    bool isUse = item.Use();
-                    if (isUse)
+
+                    if (item.itemName.Equals("새내기 포션") && wearChek == true)
                     {
-                        if (item.itemName.Equals("새내기 포션") && wearChek == true)
-                        {
-                            GameUiMgr.single.questMgr.receptionist[0].SetActive(false);
-                            GameUiMgr.single.questMgr.receptionist[1].SetActive(true);
-                        }
-                        Inventory.Single.RemoveItem(item);
-                        UpdateStack();
-                        GameUiMgr.single.tooltip.gameObject.SetActive(false);
+                        GameUiMgr.single.questMgr.receptionist[0].SetActive(false);
+                        GameUiMgr.single.questMgr.receptionist[1].SetActive(true);
                     }
+                    Inventory.Single.RemoveItem(item);
+                    UpdateStack();
+                    GameUiMgr.single.tooltip.gameObject.SetActive(false);
+
                     break;
                 default:
                     GameUiMgr.single.nowSlot = this;

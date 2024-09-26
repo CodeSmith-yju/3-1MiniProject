@@ -99,8 +99,6 @@ public class Inventory : MonoBehaviour
                 modifyStack = _item.modifyStack,
                 itemName = _item.itemName,
                 itemImage = _item.itemImage,
-                //efts = new List<ItemEffect>(_item.efts),
-                efts = _item.efts != null ? new List<ItemEffect>(_item.efts) : new List<ItemEffect>(),  // null 체크 추가
                 itemTitle = _item.itemTitle,
                 itemDesc = _item.itemDesc,
                 itemIndex = items.Count,

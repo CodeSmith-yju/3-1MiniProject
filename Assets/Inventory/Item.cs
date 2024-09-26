@@ -19,14 +19,15 @@ public class Item
     }
     public ItemType itemType;
 
+    public string itemName;
+
     // 아이탬 개수 & 강화수치 stack 변수 추가
     public int itemStack = 0;
     public int modifyStack = 0;
-    
-    public string itemName;
+
     public Sprite itemImage;
     public Sprite typeIcon;
-    public List<ItemEffect> efts;
+
     //04-01 Add
     public string itemTitle;
     public string itemDesc;
@@ -46,23 +47,29 @@ public class Item
     /*public Item(string name, ItemType type, int stack, int modify, float power, int price, string title, string desc)
     {
         Init(name, type, stack, modify, power, price, title, desc);
-    }
+    }*/
+
 
     // Init 메서드
-    public void Init(string name, ItemType type, int stack, int modify, float power, int price, string title, string desc)
+    public void Init(string name, ItemType type, int stack, int modify, float power, int price, string title, string desc, int index, bool draggable, int code, string primaryCode)
     {
-        itemName = name;
         itemType = type;
+        itemName = name;
+
         itemStack = stack;
         modifyStack = modify;
+
         itemPower = power;
         itemPrice = price;
+
         itemTitle = title;
         itemDesc = desc;
 
-        // 고유 코드 생성
+        itemIndex = index;
+        isDraggable = draggable;
+        itemCode = code;
         PrimaryCode = GenerateUniqueCode(12);
-    }*/
+    }
 
     public Item()//생성자를 통해 아이템 생성 시 고유한 PrimaryCode 생성
     {
@@ -90,17 +97,7 @@ public class Item
         //Debug.Log("누가 나를 불렀느뇨: "+PrimaryCode);
         return PrimaryCode.ToString();
     }
-    public bool Use()
-    {
-        bool isUsed = false;
-        
-        foreach (ItemEffect eft in efts)
-        {
-            isUsed = eft.ExcuteRole();
-        }
 
-        return isUsed;
-    }
     //뭔가 장비아이템을 사용할때 사용될 메서드를 여기다 만들어야하는듯..?
     public Item UpgradeModifyPowerSet(Item _item)
     {
@@ -112,8 +109,8 @@ public class Item
                     break;*/
                 default:
                     _item.modifyStack++;
-                    _item.itemPower = ItemResources.instance.itemRS[_item.itemCode].itemPower + (ItemResources.instance.itemRS[_item.itemCode].itemPower)*0.5f*_item.modifyStack;
-                    _item.itemPrice = ItemResources.instance.itemRS[_item.itemCode].itemPrice + (int)((ItemResources.instance.itemRS[_item.itemCode].itemPrice * 0.1)*_item.modifyStack);
+                    _item.itemPower = ItemResources.instance.itemRS[_item.itemCode].itemPower + (ItemResources.instance.itemRS[_item.itemCode].itemPower) * 0.5f * _item.modifyStack;
+                    _item.itemPrice = ItemResources.instance.itemRS[_item.itemCode].itemPrice + (int)((ItemResources.instance.itemRS[_item.itemCode].itemPrice * 0.1) * _item.modifyStack);
                     break;
             }
         }

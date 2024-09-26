@@ -162,7 +162,7 @@ public class PlayerAction : MonoBehaviour
     {
         // 다른 오브젝트와의 충돌을 체크하기위한 Ray
         Debug.DrawRay(rigid.position, dirVec * 0.8f, new Color(0, 1, 0));// DrawRay (Scene창에서만 보임)를 발사하는데, 현재 캐릭터의 위치값, 길이(float), 색갈(new Color)이 필요
-        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, dirVec, 0.8f, LayerMask.GetMask("Object"));// 마스크가 Object인 경우에만 충돌(이미 플레이어가 사용중인 콜라이더와의 충돌을 피하기 위함.)
+        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, dirVec, 1.3f, LayerMask.GetMask("Object"));// 마스크가 Object인 경우에만 충돌(이미 플레이어가 사용중인 콜라이더와의 충돌을 피하기 위함.)
 
         //레이가 오브젝트와 충돌할 시 ScanObject에 저장 
         if (rayHit.collider != null)

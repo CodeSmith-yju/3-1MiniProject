@@ -10,11 +10,15 @@ using UnityEngine;
 
 public class DBConnector : MonoBehaviour
 {
+    [Header("DBConnect")]
     [SerializeField] private string IP = "127.0.0.1";
     [SerializeField] private int PORT = 3308;
     [SerializeField] private string ID = string.Empty;
     [SerializeField] private string PW = string.Empty;
     [SerializeField] private string DB_NAME = string.Empty;
+
+    [Header("Data")]
+    [SerializeField] private string uid;
 
     private static DBConnector single;
 
@@ -212,6 +216,8 @@ public class DBConnector : MonoBehaviour
         string query = $"INSERT INTO userinfo (id, pw) VALUES ('{userID}', '{userPW}')";
         return m_OnChange(query);  // 삽입 성공 여부 반환
     }
+
+
 }
 
 public static class DBConnecter_Expand

@@ -48,7 +48,7 @@ public class AudioManager : MonoBehaviour
     {
         // sfx_Index : 0 Die, 1 Attack
 
-/*        if (sfx_Index != 0)
+        /*if (sfx_Index != 0)
         {
             PlaySfxVolumeChange(partyIndex, 0.2f);
         }
@@ -56,7 +56,6 @@ public class AudioManager : MonoBehaviour
         {
             PlaySfxVolumeChange(partyIndex, 0.5f);
         }*/
-        
 
         switch (_enemyIndex)
         {

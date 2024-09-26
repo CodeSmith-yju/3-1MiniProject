@@ -12,7 +12,6 @@ public class FieldItems : MonoBehaviour
         item.itemName = _item.itemName;
         item.itemImage = _item.itemImage;
         item.itemType = _item.itemType;
-        item.efts = _item.efts;
         //04-01 Add
         item.itemTitle = _item.itemTitle;
         item.itemDesc = _item.itemDesc;
