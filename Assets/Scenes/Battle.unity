@@ -6360,6 +6360,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skill_Log_View
       objectReference: {fileID: 0}
+    - target: {fileID: 3099426643035323027, guid: a3b1e2f99c4ae224380ad38b040613f6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4822259050240527463, guid: a3b1e2f99c4ae224380ad38b040613f6, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -260
+      objectReference: {fileID: 0}
+    - target: {fileID: 4822259050240527463, guid: a3b1e2f99c4ae224380ad38b040613f6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6584611103307790834, guid: a3b1e2f99c4ae224380ad38b040613f6, type: 3}
       propertyPath: m_Pivot.x
       value: 1
@@ -6390,7 +6402,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6584611103307790834, guid: a3b1e2f99c4ae224380ad38b040613f6, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 350
+      value: 280
       objectReference: {fileID: 0}
     - target: {fileID: 6584611103307790834, guid: a3b1e2f99c4ae224380ad38b040613f6, type: 3}
       propertyPath: m_LocalPosition.x

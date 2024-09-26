@@ -30,6 +30,7 @@ public class BattleManager : MonoBehaviour
     public GameObject unit_deploy_area;
     private bool isFirstEnter;
     private bool battleEnded = false;
+    //public bool isMapDone = false;
 
     [Header("Stage")]
     public float level_Scale = 1;
@@ -436,18 +437,21 @@ public class BattleManager : MonoBehaviour
         deploy_Player_List.Clear();
         deploy_Enemy_List.Clear();
 
+        unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
+
         if (isFirstEnter)
         {
             isFirstEnter = false;
+            Debug.Log("첫 방은 배치 하지 않음");
             yield return new WaitForSeconds(0.3f);
-            unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
-            PlacementUnit(); // 어떤 방이든 유닛을 소환 시키도록 함.
+            //PlacementUnit(); // 어떤 방이든 유닛을 소환 시키도록 함.
         }
         else
         {
-            unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
             PlacementUnit(); // 어떤 방이든 유닛을 소환 시키도록 함.
         }
+
+        
 
         if (room.cur_Room.tag == "Battle")
         {
