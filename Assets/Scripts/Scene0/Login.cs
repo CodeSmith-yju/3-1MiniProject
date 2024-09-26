@@ -68,6 +68,7 @@ public class Login : MonoBehaviour
         if (loginSuccess)
         {
             Debug.Log("로그인 성공");
+            gameObject.transform.parent.gameObject.GetComponent<MainMenuMgr>().LoginSuccess();
             // 로그인 성공 처리 (예: 다음 씬으로 이동)
         }
         else

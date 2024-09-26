@@ -48,10 +48,10 @@ public class MainMenuMgr : MonoBehaviour
     }
     void RefreshiTitle()
     {
-        mainMenu.SetActive(true);
+        login.gameObject.SetActive(true);
+        mainMenu.SetActive(false);
         OptionMenu.SetActive(false);
         addUserName.gameObject.SetActive(false);
-        login.gameObject.SetActive(false);
     }
 
     public void OnClickedGameStart()
@@ -69,6 +69,11 @@ public class MainMenuMgr : MonoBehaviour
         GameMgr.single.IsGameLoad(true);
         //SceneManager.LoadScene("Town");
         LoadingSceneController.LoadScene("Town");
+    }
+    public void LoginSuccess()
+    {
+        login.gameObject.SetActive(false);
+        mainMenu.SetActive(true);
     }
 
 
