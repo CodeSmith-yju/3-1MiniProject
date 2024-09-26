@@ -3185,7 +3185,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 5
-      m_TileSpriteIndex: 5
+      m_TileSpriteIndex: 8
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3692,14 +3692,14 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: 8ebb7ed97d89d9b47b864dbe8d1c28df, type: 3}
   - m_RefCount: 18
     m_Data: {fileID: 21300000, guid: b720ee838ec15a148b4d04b38ef613cb, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: f82b5cf566dd1874983b08734423dd29, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 8fd12cb23bb0c4749801b19ebfb2a159, type: 3}
   - m_RefCount: 1
@@ -3925,15 +3925,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6110102987110451852, guid: 9acc12db18ac13745a3652886906b50d, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6110102987110451852, guid: 9acc12db18ac13745a3652886906b50d, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6912212797854093243, guid: 9acc12db18ac13745a3652886906b50d, type: 3}
       propertyPath: m_Name
       value: Skeleton
+      objectReference: {fileID: 0}
+    - target: {fileID: 6912212797854093243, guid: 9acc12db18ac13745a3652886906b50d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6912212797854093243, guid: 9acc12db18ac13745a3652886906b50d, type: 3}
       propertyPath: m_TagString
