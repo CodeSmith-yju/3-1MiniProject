@@ -33,7 +33,7 @@ public class BattleManager : MonoBehaviour
     //public bool isMapDone = false;
 
     [Header("Stage")]
-    public float level_Scale = 1;
+    public float dungeon_Level_Scale;
 
     [Header("Reward")]
     public float exp_Cnt;
@@ -73,15 +73,15 @@ public class BattleManager : MonoBehaviour
 
     private void Awake()
     {
-
         if (instance == null)
         {
             instance = this;
         }
+        dungeon_Level_Scale = GameUiMgr.single.dungeon_Level_Scale;
 
         room = FindObjectOfType<MapManager>();
         isFirstEnter = true;
-
+        
         for (int i = 0; i < GameUiMgr.single.lastDeparture.Count; i++)
         {
             party_List.Add(GameUiMgr.single.lastDeparture[i].partyData.obj_Data);
@@ -654,4 +654,5 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+
 }
