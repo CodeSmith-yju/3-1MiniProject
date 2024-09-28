@@ -679,13 +679,14 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         talkName.text = talkMgr.dictTalkName[_sp];
     }
 
-    public void GameSave()
+    #region LocalSaveLoad
+    /*public void GameSave()
     {
         Debug.Log("Run SaveData");
-        /*if (menuSet.activeSelf)
+        *//*if (menuSet.activeSelf)
         {
             menuSet.SetActive(false);
-        }*/
+        }*//*
 
         List<Item> saveInventoryItem = new();
         List<Item> saveWearItem = new();
@@ -727,8 +728,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         GameMgr.single.OnSelectPlayer(loadData.playerName);
 
         Debug.Log("PlayerDatas: "+GameMgr.playerData.Count);
-        /*Vector3 lodingPosition = new Vector3(loadData.playerX, loadData.playerY);
-        player.transform.position = lodingPosition;*/
+        *//*Vector3 lodingPosition = new Vector3(loadData.playerX, loadData.playerY);
+        player.transform.position = lodingPosition;*//*
         //Debug.Log("load x, y: "+loadData.playerX +", "+ loadData.playerY);
         //SetNowPosition(loadData.playerX, loadData.playerY);
 
@@ -772,7 +773,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         //GetNowPositon();
 
         GameUiMgr.single.shopMgr.ReLoadShopItems(loadData.shops);
-    }
+    }*/
+    #endregion
     #region PlayerPosition
     public void SetNowPosition(float x, float y)
     {
@@ -787,6 +789,105 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         //Debug.Log("P x, y: " + player.transform.position.x + ", " + player.transform.position.y);
     }
     #endregion
+
+    public void GameSave()//SavePlayerDataToDB()
+    {
+        Debug.Log("Run SaveData (DB Save)");
+
+        // Inventory 및 Equipment 데이터를 리스트로 저장
+        List<Item> saveInventoryItem = new();
+        List<Item> saveWearItem = new();
+
+        foreach (Item item in Inventory.Single.items)
+        {
+            saveInventoryItem.Add(item);
+        }
+
+        for (int i = 0; i < targetSlots.Length; i++)
+        {
+            if (targetSlots[i].wearChek == true && targetSlots[i].item != null)
+            {
+                saveWearItem.Add(targetSlots[i].item);
+            }
+        }
+
+        // Shop에 있는 아이템들 저장
+        List<Item> saveShopItems = new();
+        foreach (var _item in GameUiMgr.single.shopMgr.GetShopSlots())
+        {
+            saveShopItems.Add(_item.GetItem());
+        }
+
+        // SaveData 객체 생성
+        SaveData gameSaveData = new SaveData(GameMgr.playerData[0].GetPlayerName(), GameMgr.playerData[0].player_level, GameMgr.playerData[0].player_Gold, GameUiMgr.single.questMgr.questId, GameUiMgr.single.questMgr.questActionIndex,
+            GameMgr.playerData[0].max_Player_Hp, GameMgr.playerData[0].cur_Player_Hp, GameMgr.playerData[0].max_Player_Sn, GameMgr.playerData[0].cur_Player_Sn, GameMgr.playerData[0].max_Player_Mp, GameMgr.playerData[0].cur_Player_Mp,
+            GameMgr.playerData[0].atk_Speed, GameMgr.playerData[0].atk_Range, GameMgr.playerData[0].base_atk_Dmg,
+            GameMgr.playerData[0].player_max_Exp, GameMgr.playerData[0].player_cur_Exp,
+            saveInventoryItem, saveWearItem, saveShopItems);
+
+        // SaveData를 DB에 저장
+        DBConnector.SaveToDB(gameSaveData, DBConnector.GetUID());
+        Debug.Log("Save Success: Data saved to DB.");
+    }
+    public void GameLoad() //LoadPlayerDataFromDB()
+    {
+        Debug.Log("Run LoadData (DB Load)");
+
+        // DB에서 SaveData 불러오기
+        SaveData loadData = DBConnector.LoadFromDB(DBConnector.GetUID());
+
+        if (loadData == null)
+        {
+            Debug.LogError("No saved data found in DB for userID: " + DBConnector.GetUID());
+            return;
+        }
+
+        // 불러온 데이터를 적용
+        GameMgr.single.OnSelectPlayer(loadData.playerName);
+
+        Debug.Log("PlayerDatas: " + GameMgr.playerData.Count);
+
+        GameMgr.playerData[0].max_Player_Hp = loadData.p_max_hp;
+        GameMgr.playerData[0].cur_Player_Hp = loadData.p_cur_hp;
+
+        GameMgr.playerData[0].max_Player_Sn = loadData.p_max_sn;
+        GameMgr.playerData[0].cur_Player_Sn = loadData.p_cur_sn;
+
+        GameMgr.playerData[0].max_Player_Mp = loadData.p_max_mp;
+        GameMgr.playerData[0].cur_Player_Mp = loadData.p_cur_mp;
+
+        GameMgr.playerData[0].player_max_Exp = loadData.p_max_Exp;
+        GameMgr.playerData[0].player_cur_Exp = loadData.p_cur_Exp;
+
+        GameMgr.playerData[0].player_Gold = loadData.p_gold;
+        GameMgr.playerData[0].player_level = loadData.p_level;
+
+        GameMgr.playerData[0].atk_Speed = loadData.p_atk_speed;
+        GameMgr.playerData[0].atk_Range = loadData.p_atk_range;
+        GameMgr.playerData[0].base_atk_Dmg = loadData.p_base_atk_Dmg;
+
+        GameMgr.playerData[0].listInventory = loadData.listInven;
+        GameMgr.playerData[0].listEquipment = loadData.listEquip;
+
+        // Load Inventory and Equipment
+        LoadInventory(loadData.listInven);
+        LoadEquipment(loadData.listEquip);
+
+        if (GameUiMgr.single.questMgr.questId <= 40)
+        {
+            GameUiMgr.single.questMgr.questId = loadData.questId;
+            GameUiMgr.single.questMgr.questActionIndex = loadData.questActionIndex;
+        }
+
+        GameUiMgr.single.questMgr.ControlQuestObejct();
+
+        // Shop 아이템 로드
+        GameUiMgr.single.shopMgr.ReLoadShopItems(loadData.shops);
+
+        Debug.Log("Load Success: Data loaded from DB.");
+    }
+
+
     public void OnVideoOption_S1()
     {
         if (videoOption_S1.gameObject.activeSelf)
@@ -1172,8 +1273,12 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             slots[i].RemoveSlot();
         }
 
-        if (_items == null)
+        if (_items == null || _items.Count == 0) // 예외 처리 추가
+        {
+            Debug.Log("No inventory items to load.");
             return;
+        }
+
         for (int i = 0; i < _items.Count; i++)
         {
             Inventory.Single.items.Add(_items[i]);
@@ -1182,6 +1287,56 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         RedrawSlotUI();
     }
     public void LoadEquipment(List<Item> _items)
+    {
+        if (_items == null || _items.Count == 0)
+        {
+            Debug.Log("No equipment items to load.");
+            return;
+        }
+
+        if (_items.Count != targetSlots.Length)
+        {
+            Debug.LogWarning("Loaded equipment items count does not match targetSlots length.");
+            return;
+        }
+
+        // 현재 선택된 슬롯의 아이템을 복제하여 대상 슬롯에 추가
+        for (int i = 0; i < targetSlots.Length; i++)
+        {
+            if (_items[i] != null && targetSlots[i].item != null && targetSlots[i].item.itemType == _items[i].itemType)
+            {
+                Debug.Log("Success Equip Add: " + _items[i].itemName);
+
+                // 아이콘 설정
+                targetSlots[i].itemIcon.sprite = _items[i].itemImage;
+                targetSlots[i].itemIcon.gameObject.SetActive(true);
+                targetSlots[i].wearChek = true;
+                // 아이템 설정
+                targetSlots[i].item = _items[i];
+            }
+        }
+
+        RedrawSlotUI();
+    }
+
+    /*public void LoadInventory(List<Item> _items)
+    {
+        Inventory.Single.items.Clear();
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i].RemoveSlot();
+        }
+
+        if (_items == null)
+            return;
+        for (int i = 0; i < _items.Count; i++)
+        {
+            Inventory.Single.items.Add(_items[i]);
+        }
+
+        RedrawSlotUI();
+    }*/
+    /*public void LoadEquipment(List<Item> _items)
     {
         //if (_items == null || _items.Count == 0 || _items.Count != targetSlots.Length)
         if (_items == null || _items.Count == 0)
@@ -1208,7 +1363,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
         // 사용한 아이템 제거 
         RedrawSlotUI();
-    }
+    }*/
 
     //06-09 InventoryAdd
     public void TakeOffItem(Slot _Slot)

@@ -167,9 +167,9 @@ public class QuestMgr : MonoBehaviour
                 {
                     Debug.Log("Case 42");
 
-                    GameMgr.single.IsGameLoad(true);
+                    /*GameMgr.single.IsGameLoad(true);
                     GameUiMgr.single.GameSave();
-                    SceneManager.LoadScene("Title");
+                    SceneManager.LoadScene("Title");*/
 
                     /*receptionist[0].SetActive(true);
                     receptionist[1].SetActive(false);*/
@@ -184,8 +184,6 @@ public class QuestMgr : MonoBehaviour
 
                 if (questActionIndex == 1)
                 {
-                    GameUiMgr.single.GameSave();
-                    SceneManager.LoadScene("Title");
                     Debug.Log("Case 51");
                 }
                 break;

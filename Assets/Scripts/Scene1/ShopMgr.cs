@@ -97,6 +97,38 @@ public class ShopMgr : MonoBehaviour
 
     public void ReLoadShopItems(List<Item> _loadShopitem)
     {
+        // 예외 처리 추가
+        if (_loadShopitem == null || _loadShopitem.Count == 0)
+        {
+            Debug.LogWarning("No shop items to load.");
+            return;
+        }
+
+        if (shopSlots.Count > 0)
+        {
+            Debug.Log("Existing shop slots found.");
+            // 여기에서 shopSlots을 초기화하거나 필요하다면 처리할 수 있음.
+        }
+
+        Debug.Log("Run ReLoad shopItem");
+
+        for (int i = 0; i < _loadShopitem.Count; i++)
+        {
+            ShopSlot slot = Instantiate(slotPrefab, tfBuy);
+            Debug.Log("슬롯 프리펩을 생성하여 배치");
+
+            // 생성된 슬롯 초기화
+            slot.ShopMgrSet(this);
+            slot.Init(_loadShopitem[i], ShopState.BUY);
+            slot.shopIndex = i;
+
+            // 생성된 슬롯을 리스트에 추가
+            shopSlots.Add(slot);
+        }
+    }
+
+    /*public void ReLoadShopItems(List<Item> _loadShopitem)
+    {
         if (shopSlots.Count > 0)
             Debug.Log("아니 만들어둔게 남아있다고?");
         Debug.Log("Run ReLoad shopItem");
@@ -113,7 +145,7 @@ public class ShopMgr : MonoBehaviour
             shopSlots.Add(slot);
 
         }
-    }
+    }*/
     void SetSellItems()
     {
         // 기존의 playerShopItems 슬롯을 모두 비활성화

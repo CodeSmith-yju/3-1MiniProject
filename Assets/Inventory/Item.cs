@@ -42,15 +42,16 @@ public class Item
     //09
     public string PrimaryCode;
 
-    /*public Item(string name, ItemType type, int stack, int modify, float power, int price, string title, string desc)
+    // Init 생성자
+    public Item(int code, ItemType type, string name, int stack, int modify, float power, int price, string title, string desc, int index) : this()
     {
-        Init(name, type, stack, modify, power, price, title, desc);
-    }*/
-
-
+        itemCode = code;
+        Init(code, type, name, stack, modify, power, price, title, desc, index);
+    }
     // Init 메서드
-    /*public void Init(ItemType type, string name, int stack, int modify, float power, int price, string title, string desc, int index)
+    void Init(int code, ItemType type, string name, int stack, int modify, float power, int price, string title, string desc, int index)
     {
+        itemCode = code;
         itemType = type;
         itemName = name;
 
@@ -64,9 +65,7 @@ public class Item
         itemDesc = desc;
 
         itemIndex = index;
-        //itemCode = code; //이것도 자동으로 부여되어야하는데 십련이
-        PrimaryCode = GenerateUniqueCode(12);
-    }*/
+    }
 
     public Item()//생성자를 통해 아이템 생성 시 고유한 PrimaryCode 생성
     {

@@ -18,7 +18,7 @@ public class DBConnector : MonoBehaviour
     [SerializeField] private string DB_NAME = string.Empty;
 
     [Header("Data")]
-    [SerializeField] private string uid;
+    [SerializeField] private int uid = 0;
 
     private static DBConnector single;
 
@@ -31,7 +31,8 @@ public class DBConnector : MonoBehaviour
             {
                 try
                 {
-                    string formatSql = $"Server={single.IP}; Port={single.PORT}; Database={single.DB_NAME}; UserId={single.ID}; Password={single.PW}";
+                    //string formatSql = $"Server={single.IP}; Port={single.PORT}; Database={single.DB_NAME}; UserId={single.ID}; Password={single.PW}";
+                    string formatSql = $"Server={single.IP}; Port={single.PORT}; Database={single.DB_NAME}; UserId={single.ID}; Password={single.PW}; Charset=utf8mb4";
                     _connection = new MySqlConnection(formatSql);
                 }catch(MySqlException e)
                 {
@@ -265,10 +266,21 @@ public class DBConnector : MonoBehaviour
     // Sprite를 byte 배열로 변환하는 함수
     private static byte[] ConvertSpriteToBytes(Sprite sprite)
     {
+        CheckTextureReadable(sprite);
         Texture2D texture = sprite.texture;
         return texture.EncodeToPNG();  // PNG 형식으로 변환
     }
-
+    static void CheckTextureReadable(Sprite sprite)
+    {
+        if (!sprite.texture.isReadable)
+        {
+            Debug.LogError($"Texture '{sprite.name}' is not readable.");
+        }
+        else
+        {
+            Debug.Log($"Texture '{sprite.name}' is readable.");
+        }
+    }
     //
     // DB -> Unity
     // BLOB 데이터를 Sprite로 변환하는 함수
@@ -279,6 +291,21 @@ public class DBConnector : MonoBehaviour
 
         // 텍스처를 Sprite로 변환
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+    }
+
+    public static int SelectUserAndGetUID(string userID, string userPW)
+    {
+        int uid = 0;
+        string query = $"SELECT uID FROM userinfo WHERE id = '{userID}' AND pw = '{userPW}'";
+        DataSet ds = m_OnLoad("userinfo", query);
+
+        // 데이터가 존재한다면 uID를 반환
+        if (ds != null && ds.Tables["userinfo"].Rows.Count > 0)
+        {
+            uid = Convert.ToInt32(ds.Tables["userinfo"].Rows[0]["uID"]);
+        }
+
+        return uid;  // 일치하는 사용자가 없으면 0 반환
     }
 
     // DB에서 아이템 데이터를 읽는 함수
@@ -317,6 +344,129 @@ public class DBConnector : MonoBehaviour
         connection.Close();
         return null;
     }
+
+    public static Item LoadRandomItemFromDB()
+    {
+        // SQL 쿼리: 아이템 테이블에서 랜덤하게 하나의 아이템 선택
+        string query = "SELECT * FROM item ORDER BY RAND() LIMIT 1";
+
+        MySqlCommand cmd = new MySqlCommand(query, DBConnector.connection);
+
+        try
+        {
+            DBConnector.connection.Open();
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                // 새로운 아이템 생성 및 데이터 할당
+                Item loadedItem = new Item
+                {
+                    itemCode = reader.GetInt32("itemCode"),
+                    itemName = reader.GetString("itemName"),
+                    itemType = (Item.ItemType)System.Enum.Parse(typeof(Item.ItemType), reader.GetString("itemType")),
+                    itemTitle = reader.GetString("itemTitle"),
+                    itemDesc = reader.GetString("itemDesc"),
+                    itemPrice = reader.GetInt32("itemPrice"),
+                    itemPower = reader.GetFloat("itemPower"),
+                    itemStack = reader.GetInt32("itemStack"),
+                    modifyStack = reader.GetInt32("modifyStack")
+                };
+
+                // 이미지 데이터 처리 (BLOB 데이터 -> Sprite 변환)
+                byte[] itemImgBytes = (byte[])reader["itemImg"];
+                loadedItem.itemImage = DBConnector.ConvertBytesToSprite(itemImgBytes);
+
+                byte[] typeIconBytes = (byte[])reader["typeIcon"];
+                loadedItem.typeIcon = DBConnector.ConvertBytesToSprite(typeIconBytes);
+
+                return loadedItem;  // 로드 성공 시 아이템 반환
+            }
+
+            reader.Close();
+        }
+        catch (MySqlException ex)
+        {
+            Debug.LogError("DB 에러: " + ex.Message);
+        }
+        finally
+        {
+            DBConnector.connection.Close();
+        }
+
+        return null;  // 로드 실패 시 null 반환
+    }
+
+    public static void SaveToDB(SaveData saveData, int userID)
+    {
+        // SaveData를 JSON 문자열로 변환
+        string saveJson = JsonUtility.ToJson(saveData);
+
+        // SaveTable에 JSON 데이터를 삽입 또는 업데이트
+        string query = $"INSERT INTO SaveTable (uID, saveData) VALUES (@userID, @saveData) " +
+                       "ON DUPLICATE KEY UPDATE saveData = @saveData";
+
+        MySqlCommand cmd = new MySqlCommand(query, connection);
+        cmd.Parameters.AddWithValue("@userID", userID);
+        cmd.Parameters.AddWithValue("@saveData", saveJson);
+
+        try
+        {
+            connection.Open();
+            cmd.ExecuteNonQuery();
+            Debug.Log("Save Success: Data saved to DB.");
+        }
+        catch (MySqlException ex)
+        {
+            Debug.LogError("DB Save Error: " + ex.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+    public static SaveData LoadFromDB(int userID)
+    {
+        string query = $"SELECT saveData FROM SaveTable WHERE uID = @userID";
+        MySqlCommand cmd = new MySqlCommand(query, connection);
+        cmd.Parameters.AddWithValue("@userID", userID);
+
+        try
+        {
+            connection.Open();
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                string saveJson = reader.GetString("saveData");
+                SaveData saveData = JsonUtility.FromJson<SaveData>(saveJson);
+                return saveData;
+            }
+            else
+            {
+                Debug.LogWarning("No save data found for userID: " + userID);
+            }
+        }
+        catch (MySqlException ex)
+        {
+            Debug.LogError("DB Load Error: " + ex.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
+
+        return null; // 데이터를 찾지 못했을 때
+    }
+
+    public static int GetUID()
+    {
+        return DBConnector.single.uid;
+    }
+    public static void SetUID(int _uid)
+{
+    single.uid = _uid;
+}
 }
 
 public static class DBConnecter_Expand

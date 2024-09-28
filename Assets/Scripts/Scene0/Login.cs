@@ -61,13 +61,18 @@ public class Login : MonoBehaviour
     {
         id = RemoveUnderLine(id);
         pw = RemoveUnderLine(pw);
+        Debug.Log("입력한 id : " + id);
+        Debug.Log("입력한 pw : " + pw);
 
-        // DB에서 ID와 PW가 일치하는지 확인
-        bool loginSuccess = DBConnector.SelectUser(id, pw);
+        // DB에서 ID와 PW가 일치하는지 확인하고 uID를 가져옴
+        int uid = DBConnector.SelectUserAndGetUID(id, pw);
 
-        if (loginSuccess)
+        if (uid > 0)
         {
-            Debug.Log("로그인 성공");
+            // uID 값을 DBConnector의 uid에 설정
+            DBConnector.SetUID(uid);
+
+            Debug.Log("로그인 성공, uid: " + uid);
             gameObject.transform.parent.gameObject.GetComponent<MainMenuMgr>().LoginSuccess();
             // 로그인 성공 처리 (예: 다음 씬으로 이동)
         }
@@ -79,6 +84,7 @@ public class Login : MonoBehaviour
 
         hoverbtnLoginSoundEv.ishover = false;
     }
+
 
     public void AddNewAccount()
     {

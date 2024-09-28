@@ -66,7 +66,7 @@ public class ItemResources : MonoBehaviour
     {
         for (int i = 0; i < itemRS.Count; i++)
         {
-            if (11 < i && i < 14 || 14 < i && i < 20 )
+            if (11 < i && i < 14 || 14 < i && i < 18 || i == 19)
             {
                 if (DBConnector.InsertItemToDB(itemRS[i]))
                 {
