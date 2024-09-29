@@ -12,6 +12,11 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class PartyData
 {
+    // 기사, 궁수, 마법사의 이름 리스트
+    private List<string> knightNames = new List<string> { "Alaric", "Gawain", "Roland", "Lancelot", "Arthas", "Tristan", "Bedivere", "Galahad", "Percival", "Kay" };
+    private List<string> archerNames = new List<string> { "Robin", "Elduin", "Faolan", "Nimue", "Ayla", "Vara", "Rylai", "Orin", "Shara", "Elandra" };
+    private List<string> mageNames = new List<string> { "Merlin", "Gandalf", "Morgana", "Zatanna", "Aegis", "Althas", "Luna", "Arcanis", "Solara", "Faye" };
+
     //Party Panel Act
     public string strPartyName;
     //public string strName;
@@ -70,7 +75,8 @@ public class PartyData
                 partyAtk = 2f + (_Lvel * 0.5f);
                 partyAtkSpd = 1.0f;
                 partyAtkRange = 7f +(_Lvel * 0.1f);
-                strPartyName = "Ranger";
+                //strPartyName = "Ranger";
+                strPartyName = GetRandomName(archerNames);
                 isMelee = false;//false 일때 원거리공격
                 able_Skill = true;
                 break;
@@ -81,7 +87,8 @@ public class PartyData
                 partyAtk = 3f + (_Lvel * 0.5f);
                 partyAtkSpd = 0.75f;
                 partyAtkRange = 7f + (_Lvel * 0.1f);
-                strPartyName = "Wizard";
+                //strPartyName = "Wizard";
+                strPartyName = GetRandomName(mageNames);
                 isMelee = false;
                 able_Skill = true;
                 break;
@@ -92,7 +99,8 @@ public class PartyData
                 partyAtk = 2f + (_Lvel * 0.3f);
                 partyAtkSpd = 1.0f;
                 partyAtkRange = 1.1f;
-                strPartyName = "Knight";
+                //strPartyName = "Knight";
+                strPartyName = GetRandomName(knightNames);
                 isMelee = true;
                 able_Skill = true;
                 break;
@@ -113,4 +121,10 @@ public class PartyData
         }
     }
 
+    // 이름 리스트에서 랜덤하게 하나 선택하는 함수
+    private string GetRandomName(List<string> nameList)
+    {
+        int randomIndex = Random.Range(0, nameList.Count);
+        return nameList[randomIndex];
+    }
 }
