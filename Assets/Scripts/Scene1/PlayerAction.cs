@@ -59,11 +59,17 @@ public class PlayerAction : MonoBehaviour
             else if (obj.id == 8000)
             {
                 Debug.Log("8000 실행");
-                if (GameUiMgr.single.questMgr.questId >= 40)
+                if (GameUiMgr.single.questMgr.questId >= 40 && GameUiMgr.single.questMgr.questId < 50)
                 {
                     GameUiMgr.single.isDungeon = true;
-                    GameUiMgr.single.textEquipPanel.text = "던전에 입장하시겠습니까?";//OK버튼 클릭했을때 다른효과가 나와야하는데 생각조금 더 해봐야함
-                    GameUiMgr.single.addEquipPanel.gameObject.SetActive(true);
+                    GameUiMgr.single.OpenDungeonUi();
+                    //GameUiMgr.single.textEquipPanel.text = "던전에 입장하시겠습니까?";//OK버튼 클릭했을때 다른효과가 나와야하는데 생각조금 더 해봐야함
+                    //GameUiMgr.single.addEquipPanel.gameObject.SetActive(true);
+                    return;
+                }
+                else if (GameUiMgr.single.questMgr.questId >= 50)
+                {
+                    GameUiMgr.single.OpenDungeonUi();
                     return;
                 }
                 else
