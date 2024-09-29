@@ -27,25 +27,27 @@ public class MainMenuMgr : MonoBehaviour
         Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);// 게임 시작 시 1920*1080 창모드 실행
 
         RefreshiTitle();
-
-        if (SaveSystem.DataCheck("save") == false)
-        {
-            TitleBtns[0].gameObject.SetActive(false);//btnLoadGame.gameObject.SetActive(false);
-        }
-        else 
-        {
-            TitleBtns[0].gameObject.SetActive(true);
-        }
-
-        string SavePath = Path.Combine(Application.persistentDataPath, "saves/");
-        Debug.Log(SavePath);
     }
-    
     private void Start()
     {
         ChangeBG();
         //RefreshTitleBtns();
     }
+    public void SaveDataCk()
+    {
+        // DB에서 uid와 일치하는 savetable의 saveData가 있는지 확인하여 버튼 활성화/비활성화
+        int uid = DBConnector.GetUID();  // 현재 로그인한 사용자의 uid 가져오기
+        if (DBConnector.SaveDataSearch(uid))  // DB에서 해당 uid와 일치하는 saveData가 있는지 확인
+        {
+            Debug.Log("Run UID Ck");
+            TitleBtns[0].gameObject.SetActive(true);  // saveData가 있으면 활성화
+        }
+        else
+        {
+            TitleBtns[0].gameObject.SetActive(false);  // 없으면 비활성화
+        }
+    }
+
     void RefreshiTitle()
     {
         login.gameObject.SetActive(true);
@@ -66,9 +68,12 @@ public class MainMenuMgr : MonoBehaviour
     }
     public void OnClickedReLoadGame()
     {
-        GameMgr.single.IsGameLoad(true);
-        //SceneManager.LoadScene("Town");
-        LoadingSceneController.LoadScene("Town");
+        GameMgr.single.popUp.SetPopUp("기존의 데이터가 있습니다 \n 이어하시겠습니까?", PopUpState.GameReLoad);
+        if (GameMgr.single.popUp.gameObject.activeSelf == false)
+        {
+            GameMgr.single.popUp.gameObject.SetActive(true);
+            Debug.Log("Run if");
+        }
     }
     public void LoginSuccess()
     {
@@ -129,7 +134,6 @@ public class MainMenuMgr : MonoBehaviour
         Debug.Log("현재는 오전 시간대입니다. 아침 작업을 수행합니다.");
         // 아침 작업 수행 코드 작성
     }
-
     private void DoEveningWork()
     {
         Debug.Log("현재는 오후 시간대입니다. 저녁 작업을 수행합니다.");
@@ -137,19 +141,31 @@ public class MainMenuMgr : MonoBehaviour
         imgMenuBG.sprite = imgListBG[0];
 
     }
-
     private void DoNightWork()
     {
         Debug.Log("현재는 밤 시간대입니다. 야간 작업을 수행합니다.");
         // 야간 작업 수행 코드 작성
     }
-
     /*public void RefreshTitleBtns()
     {
         foreach (var _btn in TitleBtns)
         {
             _btn.image.sprite = TitleBtnSprites[0];
         }
+    }*/
+    /*void LocalSaveDataCk()// 이제 안 써서 주석처리함
+    {
+        if (SaveSystem.DataCheck("save") == false)
+        {
+            TitleBtns[0].gameObject.SetActive(false);//btnLoadGame.gameObject.SetActive(false);
+        }
+        else
+        {
+            TitleBtns[0].gameObject.SetActive(true);
+        }
+
+        string SavePath = Path.Combine(Application.persistentDataPath, "saves/");
+        Debug.Log(SavePath);
     }*/
 
 }

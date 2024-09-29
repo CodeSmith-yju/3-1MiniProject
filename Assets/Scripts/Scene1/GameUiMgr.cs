@@ -147,13 +147,15 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public GameObject blockedPartyBord;
 
+    public PartyNameSetting partyNameSetting;
+
     //06-16 던전입장용변수
     public bool isDungeon = false;
-
     public bool uiEventCk = true;
 
     [Header("Shop UI")]
     [SerializeField] ShopMgr shopMgr;
+
     [Header("Dungeon_Level")]
     public GameObject dungeon_Level_Ui;
     public float dungeon_Level_Scale = 1;
@@ -288,7 +290,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         //SliderChange();
     }
-    
 
     private void Start()
     {
@@ -345,6 +346,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         EquipSlotSetting();// 씬 실행 시 각 장비 슬롯에 해당하는 아이템 타입을 직접 지정해줌
 
         //05-21 
+        partyNameSetting.RefreshiNameList();
         RefreshiPartyBord();
 
         //04-22
@@ -763,7 +765,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         talkName.text = talkMgr.dictTalkName[_sp];
     }
 
-    #region LocalSaveLoad
+    #region Local_Save_Load_Method
     /*public void GameSave()
     {
         Debug.Log("Run SaveData");
@@ -1014,46 +1016,17 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnClickedQuite()
     {
-#if UNITY_EDITOR
+        //경고 툴팁 먼저 출력하게하기
+    #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-#endif
+    #endif
         Application.Quit();
     }
-
-
-    /*public void GetMoseItem(Slot _slot)
-    {
-        this.nowSlot = _slot;
-        this.dragIcon = _slot.itemIcon;
-    }*/
-    /*public void OnBeginDrag(PointerEventData eventData)
-    {
-        Debug.Log("Drag Start");
-        nowSlot = slots[dragIndex];// 슬롯 등록
-
-        dragIcon.transform.position = eventData.position;
-        dragIcon = nowSlot.itemIcon;
-
-        dragIcon.gameObject.SetActive(true);
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        Debug.Log("Drag Now ing...");
-        dragIcon.transform.position = Input.mousePosition;
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        Debug.Log("Drag End");
-        dragIcon.gameObject.SetActive(false);
-    }*/
-
     public void OnYesButtonClick()
     {
         AudioManager.single.PlaySfxClipChange(0);
         Debug.Log("Run SFX sound index: 0");
-        if (isDungeon)
+        /*if (isDungeon)//이제사용안함
         {
             AudioManager.single.PlaySfxClipChange(4);
             Debug.Log("던전 입장");
@@ -1062,7 +1035,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             LoadingSceneController.LoadScene("Tutorial");
             isDungeon = false;
             return;
-        }
+        }*/
 
         if (nowSlot.wearChek && nowSlot.GetComponent<Button>().interactable == true)
         {
@@ -1097,26 +1070,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         equipmnet = false;
         addEquipPanel.gameObject.SetActive(false);
     }
-
-    /*public void WearEquipMent()
-    {
-        for (int i = 0; i < targetSlots.Length; i++)
-        {
-            if (targetSlots[i].item.itemType == nowSlot.item.itemType)
-            {
-                Debug.Log("Sucess Equip Add: "+ nowSlot.item.itemName);
-                
-                targetSlots[i].slotnum = nowSlot.slotnum;
-                targetSlots[i].item = nowSlot.item;
-                targetSlots[i].itemIcon = nowSlot.itemIcon;
-            }
-            else
-            {
-                continue;
-            }
-        }
-    }*/
-
     public void EquipSlotSetting()
     {
         for (int i = 0; i < targetSlots.Length; i++)
@@ -1206,7 +1159,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         addEquipPanel.gameObject.SetActive(false);
     }
-
     public void ApplyEquipPower(bool _onoff, Item _equip)//07-20 Fix
     {
         float equipPower;
@@ -1301,7 +1253,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
 
     }
-
     public bool AllEquipChek()
     {
         int sum = 0;
@@ -1331,7 +1282,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
         return false;
     }
-
     public void TutorialDungeonClear()
     {
 
@@ -1349,6 +1299,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         questMgr.receptionist[0].SetActive(true);
         questMgr.receptionist[1].SetActive(false);
     }
+    #region DBConnect_Load_Method
     public void LoadInventory(List<Item> _items)
     {
         Inventory.Single.items.Clear();
@@ -1402,7 +1353,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         RedrawSlotUI();
     }
-
+    #endregion
+    #region Local_Load_Methods
     /*public void LoadInventory(List<Item> _items)
     {
         Inventory.Single.items.Clear();
@@ -1448,7 +1400,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         // 사용한 아이템 제거 
         RedrawSlotUI();
     }*/
-
+    #endregion
     //06-09 InventoryAdd
     public void TakeOffItem(Slot _Slot)
     {

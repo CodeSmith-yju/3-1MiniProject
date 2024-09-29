@@ -261,7 +261,7 @@ MonoBehaviour:
     modifyStack: 0
     itemImage: {fileID: 21300000, guid: 1ab9d28df2e6ef340b7ebcc55f5740a4, type: 3}
     typeIcon: {fileID: 0}
-    itemTitle: "\uC2AC\uB77C\uC784\uC758 \uD575\uC774\uB2E4"
+    itemTitle: "\uC2AC\uB77C\uC784\uC758 \uD575"
     itemDesc: "\uAC11\uC637\uC744 \uAC1C\uC870\uD558\uB294\uB370 \uC0AC\uC6A9\uD55C\uB2E4"
     itemIndex: 0
     itemCode: 16
@@ -274,7 +274,7 @@ MonoBehaviour:
     modifyStack: 0
     itemImage: {fileID: 21300000, guid: d49446be3071a144581f73dd071393cd, type: 3}
     typeIcon: {fileID: 0}
-    itemTitle: "\uACE0\uBE14\uB9B0\uC5D0\uAC8C\uC11C \uC798\uB77C\uB0B8 \uADC0\uB2E4"
+    itemTitle: "\uACE0\uBE14\uB9B0\uC5D0\uAC8C\uC11C \uC798\uB77C\uB0B8 \uADC0"
     itemDesc: "\uC2E0\uBC1C\uC744 \uAC1C\uC870\uD558\uB294\uB370 \uC0AC\uC6A9\uD55C\uB2E4"
     itemIndex: 0
     itemCode: 17
@@ -282,12 +282,12 @@ MonoBehaviour:
     itemPrice: 30
     PrimaryCode: 
   - itemType: 5
-    itemName: "\uD06C"
+    itemName: "\uBBF8\uBBF9\uC758 \uD30C\uD3B8"
     itemStack: 1
     modifyStack: 0
-    itemImage: {fileID: 21300000, guid: f66c057114b8725409847a8a8e83a75b, type: 3}
+    itemImage: {fileID: 21300000, guid: e929b6ab54898ac44ad6c5f9d40916c0, type: 3}
     typeIcon: {fileID: 0}
-    itemTitle: "\uC544"
+    itemTitle: "\uBBF8\uBBF9\uC758 \uD30C\uD3B8"
     itemDesc: "\uD22C\uAD6C\uB97C \uAC1C\uC870\uD558\uB294\uB370 \uC0AC\uC6A9\uD55C\uB2E4"
     itemIndex: 0
     itemCode: 18
@@ -300,7 +300,7 @@ MonoBehaviour:
     modifyStack: 0
     itemImage: {fileID: 21300000, guid: d14c90bb28890244d80877c2f7e6bba5, type: 3}
     typeIcon: {fileID: 0}
-    itemTitle: "\uC2A4\uCF08\uB808\uD1A4\uC758 \uCF54\uC5B4\uC774\uB2E4"
+    itemTitle: "\uC2A4\uCF08\uB808\uD1A4\uC758 \uCF54\uC5B4"
     itemDesc: "\uAC80\uC744 \uAC1C\uC870\uD558\uB294\uB370 \uC0AC\uC6A9\uD55C\uB2E4"
     itemIndex: 0
     itemCode: 19
@@ -313,3 +313,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 36e0c9ff98ba06c498d5a7abcf685f2e, type: 3}
   - {fileID: 21300000, guid: a0c809700c6ecfe4ca3605ee89ec5b37, type: 3}
   - {fileID: 21300000, guid: 7cf9e38bcd0ec954d90223a95a3b6240, type: 3}
+  DBItems: []

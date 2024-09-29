@@ -125,6 +125,7 @@ public class AudioManager : MonoBehaviour
             single = this;
             DontDestroyOnLoad(gameObject);
             Init();
+            SetSfxVolumeForOtherChannels();
         }
         else
         {
@@ -178,6 +179,7 @@ public class AudioManager : MonoBehaviour
         {
             bgmPlayer.mute = false;
         }
+        SetSfxVolumeForOtherChannels();
     }
     
     public void PlaySfxClipChange(int _index)
@@ -222,4 +224,18 @@ public class AudioManager : MonoBehaviour
         bgmPlayer.Stop();
         sfxPlayers[0].Stop();
     }*/
+
+    public void SetSfxVolumeForOtherChannels()
+    {
+        float baseVolume = sfxPlayers[0].volume;  // sfxPlayers[0]의 볼륨을 기준으로
+        float newVolume = baseVolume * 0.3f;  // 30%로 설정
+
+        // sfxPlayers[1]부터 나머지 채널들의 볼륨을 30%로 설정
+        for (int i = 1; i < sfxPlayers.Length; i++)
+        {
+            sfxPlayers[i].volume = newVolume;
+        }
+
+        Debug.Log($"sfxPlayers[0]의 볼륨: {baseVolume}, 나머지 채널의 볼륨: {newVolume}");
+    }
 }

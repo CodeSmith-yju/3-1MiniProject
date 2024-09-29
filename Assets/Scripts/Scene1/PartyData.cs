@@ -9,14 +9,8 @@ using static UnityEngine.EventSystems.EventTrigger;
     Magician,
     Knight
 }*/
-
 public class PartyData
 {
-    // 기사, 궁수, 마법사의 이름 리스트
-    private List<string> knightNames = new List<string> { "Alaric", "Gawain", "Roland", "Lancelot", "Arthas", "Tristan", "Bedivere", "Galahad", "Percival", "Kay" };
-    private List<string> archerNames = new List<string> { "Robin", "Elduin", "Faolan", "Nimue", "Ayla", "Vara", "Rylai", "Orin", "Shara", "Elandra" };
-    private List<string> mageNames = new List<string> { "Merlin", "Gandalf", "Morgana", "Zatanna", "Aegis", "Althas", "Luna", "Arcanis", "Solara", "Faye" };
-
     //Party Panel Act
     public string strPartyName;
     //public string strName;
@@ -47,6 +41,7 @@ public class PartyData
 
     public Ally.JobClass jobType;
     public Sprite jobIcon;
+
     public PartyData(GameObject prefab, int _Lvel)
     {
         obj_Data = prefab;
@@ -56,7 +51,7 @@ public class PartyData
         //str name = RandomGenerateName();  
 
         type = prefab.name;// 프리펩오브젝트의 이름, JobClass enum값과 큰 차이는 없음.
-        cost = (50 + (_Lvel * 10)) + Random.Range(0, _Lvel * 5);
+        cost = (150 + (_Lvel * 20)) + Random.Range(0, _Lvel * 10);
         Debug.Log("cost: "+cost);
         spPartyIcon = player.GetComponent<SpriteRenderer>().sprite;
         jobIcon = player.class_Icon;
@@ -76,7 +71,7 @@ public class PartyData
                 partyAtkSpd = 1.0f;
                 partyAtkRange = 7f +(_Lvel * 0.1f);
                 //strPartyName = "Ranger";
-                strPartyName = GetRandomName(archerNames);
+                strPartyName = GameUiMgr.single.partyNameSetting.GetRandomName(GameUiMgr.single.partyNameSetting.archerNames);
                 isMelee = false;//false 일때 원거리공격
                 able_Skill = true;
                 break;
@@ -88,7 +83,7 @@ public class PartyData
                 partyAtkSpd = 0.75f;
                 partyAtkRange = 7f + (_Lvel * 0.1f);
                 //strPartyName = "Wizard";
-                strPartyName = GetRandomName(mageNames);
+                strPartyName = GameUiMgr.single.partyNameSetting.GetRandomName(GameUiMgr.single.partyNameSetting.mageNames);
                 isMelee = false;
                 able_Skill = true;
                 break;
@@ -100,7 +95,7 @@ public class PartyData
                 partyAtkSpd = 1.0f;
                 partyAtkRange = 1.1f;
                 //strPartyName = "Knight";
-                strPartyName = GetRandomName(knightNames);
+                strPartyName = GameUiMgr.single.partyNameSetting.GetRandomName(GameUiMgr.single.partyNameSetting.knightNames);
                 isMelee = true;
                 able_Skill = true;
                 break;
@@ -119,12 +114,6 @@ public class PartyData
                 isMelee = true;
                 break;
         }
-    }
-
-    // 이름 리스트에서 랜덤하게 하나 선택하는 함수
-    private string GetRandomName(List<string> nameList)
-    {
-        int randomIndex = Random.Range(0, nameList.Count);
-        return nameList[randomIndex];
+        Debug.Log("party Name: " + strPartyName);
     }
 }

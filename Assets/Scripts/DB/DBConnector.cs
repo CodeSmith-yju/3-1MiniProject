@@ -468,7 +468,7 @@ public class DBConnector : MonoBehaviour
         return null;  // 로드 실패 시 null 반환
     }
 
-    public static void SaveToDB(SaveData saveData, int userID)
+    /*public static void SaveToDB(SaveData saveData, int userID)
     {
         // SaveData를 JSON 문자열로 변환
         string saveJson = JsonUtility.ToJson(saveData);
@@ -495,7 +495,51 @@ public class DBConnector : MonoBehaviour
         {
             connection.Close();
         }
+    }*/
+    public static void SaveToDB(SaveData saveData, int userID)
+    {
+        // SaveData를 JSON 문자열로 변환
+        string saveJson = JsonUtility.ToJson(saveData);
+
+        // SaveTable에서 기존의 saveData 항목만 업데이트
+        string query = $"UPDATE SaveTable SET saveData = @saveData WHERE uID = @userID";
+
+        // 만약 해당 유저의 데이터가 없으면 INSERT로 데이터를 추가
+        string insertQuery = $"INSERT INTO SaveTable (uID, saveData) VALUES (@userID, @saveData) " +
+                             "ON DUPLICATE KEY UPDATE saveData = @saveData";
+
+        MySqlCommand cmd = new MySqlCommand(query, connection);
+        cmd.Parameters.AddWithValue("@userID", userID);
+        cmd.Parameters.AddWithValue("@saveData", saveJson);
+
+        try
+        {
+            connection.Open();
+
+            // 해당 유저의 데이터가 있는지 먼저 검사
+            int rowsAffected = cmd.ExecuteNonQuery();
+
+            // 업데이트된 행이 없다면(즉, 해당 유저 데이터가 없으면), INSERT로 추가
+            if (rowsAffected == 0)
+            {
+                MySqlCommand insertCmd = new MySqlCommand(insertQuery, connection);
+                insertCmd.Parameters.AddWithValue("@userID", userID);
+                insertCmd.Parameters.AddWithValue("@saveData", saveJson);
+                insertCmd.ExecuteNonQuery();
+            }
+
+            Debug.Log("Save Success: Data saved or updated in DB.");
+        }
+        catch (MySqlException ex)
+        {
+            Debug.LogError("DB Save Error: " + ex.Message);
+        }
+        finally
+        {
+            connection.Close();
+        }
     }
+
     public static SaveData LoadFromDB(int userID)
     {
         string query = $"SELECT saveData FROM SaveTable WHERE uID = @userID";
@@ -529,7 +573,29 @@ public class DBConnector : MonoBehaviour
 
         return null; // 데이터를 찾지 못했을 때
     }
+    public static bool SaveDataSearch(int uid)
+    {
+        string query = $"SELECT COUNT(*) FROM saveTable WHERE uID = {uid}";  // uid로 검색
 
+        // DB 연결 및 쿼리 실행 (예: MySQL을 사용한다고 가정)
+        MySqlCommand cmd = new MySqlCommand(query, DBConnector.connection);
+        DBConnector.connection.Open();
+
+        try
+        {
+            int count = Convert.ToInt32(cmd.ExecuteScalar());
+            return count > 0;  // 해당 uid로 저장된 데이터가 있으면 true, 없으면 false
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("DB 에러: " + ex.Message);
+            return false;
+        }
+        finally
+        {
+            DBConnector.connection.Close();
+        }
+    }
     public static int GetUID()
     {
         return DBConnector.single.uid;

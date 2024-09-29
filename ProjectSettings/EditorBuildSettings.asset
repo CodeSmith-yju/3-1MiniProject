@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: 218f6567937f34849bedccfbdbdb0e41
+  - enabled: 1
     path: Assets/Scenes/Title.unity
     guid: 7eebacad19e9fe54a89c21399cb3d8c9
-  - enabled: 1
-    path: Assets/Scenes/LoadingScene.unity
-    guid: 98a76718c261e6d4b815723b950b85a8
   - enabled: 1
     path: Assets/Scenes/Town.unity
     guid: c8d7ef34e583ddf44adc6937253c481b
@@ -19,5 +19,5 @@ EditorBuildSettings:
     guid: 05bdeab18e0d67a498d4081ec19fbee4
   - enabled: 1
     path: Assets/Scenes/Battle.unity
-    guid: 0b867fa3c2396fc40b84c2de2aff6c95
+    guid: 1d07f2c8cd0df574bb6a4976220c89d8
   m_configObjects: {}

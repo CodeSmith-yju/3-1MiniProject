@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemResources : MonoBehaviour
 {
     public static ItemResources instance;
-    public List<Item> itemRS = new();
+    public List<Item> itemRS = new();//LocalType
     public List<Sprite> iconRS = new();
 
 
@@ -17,12 +17,13 @@ public class ItemResources : MonoBehaviour
         DBItems = new();
         for (int i = 0; i < 20; i++)
         {
-            if (11 < i && i < 14 || 14 < i && i < 18 || i == 19)
-            {
-                DBItems.Add(DBConnector.LoadItemByCodeFromDB(i));
-            }
+            DBItems.Add(DBConnector.LoadItemByCodeFromDB(i));
         }
 
+        //setTypeIcons();
+    }
+    void setTypeIcons()//Local_Icon_Set
+    {
         for (int i = 0; i < itemRS.Count; i++)
         {
             itemRS[i].PrimaryCode = itemRS[i].GetNewPK(12);
@@ -30,7 +31,6 @@ public class ItemResources : MonoBehaviour
             IconSet(itemRS[i]);
         }
     }
-
 
     public void IconSet(Item _item)
     {
@@ -86,19 +86,6 @@ public class ItemResources : MonoBehaviour
             {
                 Debug.Log("False");
             }
-
-            /*if (11 < i && i < 14 || 14 < i && i < 18 || i == 19)
-            {
-                if (DBConnector.InsertItemToDB(itemRS[i]))
-                {
-                    Debug.Log("True");
-                }
-                else
-                {
-                    Debug.Log("False");
-                }
-            }*/
-
         }
     }
 }

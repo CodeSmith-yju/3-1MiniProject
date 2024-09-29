@@ -67,6 +67,7 @@ public class LoadingSceneController : MonoBehaviour
 
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -76,7 +77,7 @@ public class LoadingSceneController : MonoBehaviour
     [SerializeField] Image progressBar;
     [SerializeField] TextMeshProUGUI loadingText;
     public static string nextScene;
-
+    bool FirstGameStart = false;//빌드할때 true로 바꿔줘야함
     public static void LoadScene(string _sceneName)
     {
         //Debug.Log($"Run LoadScene: {_sceneName}");
@@ -86,11 +87,20 @@ public class LoadingSceneController : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(LoadSceneProcess());
+        if (FirstGameStart)
+        {
+            nextScene = "Title";
+            StartCoroutine(LoadSceneProcess());
+        }
+        else
+            StartCoroutine(LoadSceneProcess());
     }
 
     IEnumerator LoadSceneProcess()
     {
+        if (FirstGameStart)
+            FirstGameStart = false;
+
         Debug.Log($"LoadSceneProcess started. Loading scene: {nextScene}");
         yield return null; // 첫 프레임을 기다림
 

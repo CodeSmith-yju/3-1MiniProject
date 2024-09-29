@@ -74,11 +74,18 @@ public class Login : MonoBehaviour
 
             Debug.Log("로그인 성공, uid: " + uid);
             gameObject.transform.parent.gameObject.GetComponent<MainMenuMgr>().LoginSuccess();
+            gameObject.transform.parent.gameObject.GetComponent<MainMenuMgr>().SaveDataCk();
             // 로그인 성공 처리 (예: 다음 씬으로 이동)
         }
         else
         {
-            Debug.Log("로그인 실패: ID 또는 PW가 잘못되었습니다.");
+            //Debug.Log("로그인 실패: ID 또는 PW가 잘못되었습니다.");
+            GameMgr.single.popUp.SetPopUp("로그인 실패:\n ID 또는 PW가 잘못되었습니다", PopUpState.None);
+            if (GameMgr.single.popUp.gameObject.activeSelf == false)
+            {
+                GameMgr.single.popUp.gameObject.SetActive(true);
+                Debug.Log("Run if");
+            }
             // 로그인 실패 처리 (예: 오류 메시지 표시)
         }
 
@@ -110,5 +117,15 @@ public class Login : MonoBehaviour
 
         gameObject.transform.GetChild(1).gameObject.SetActive(onoff);
         ac.gameObject.SetActive(!onoff);
+    }
+
+    public void OnClickQuiteGame()
+    {
+        GameMgr.single.popUp.SetPopUp("게임을 종료 하시겠습니까?", PopUpState.Quite);
+        if (GameMgr.single.popUp.gameObject.activeSelf == false)
+        {
+            GameMgr.single.popUp.gameObject.SetActive(true);
+            Debug.Log("Run if");
+        }
     }
 }

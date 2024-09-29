@@ -14,7 +14,7 @@ public class PartySlot : MonoBehaviour
 
     public Image partyIcon;
 
-    public string strPartyName;
+    public string _strPartyName;
     public int intPartyCost;
 
     public TextMeshProUGUI text_Name;
@@ -38,8 +38,8 @@ public class PartySlot : MonoBehaviour
         player = _data.player;
         index = _data.partyJobIndex;
 
-        this.strPartyName = _data.type;
-        this.text_Name.text = strPartyName;
+        this._strPartyName = _data.strPartyName;
+        this.text_Name.text = _strPartyName;
 
         this.intPartyCost = _data.cost;
         this.text_Cost.text = intPartyCost.ToString();
