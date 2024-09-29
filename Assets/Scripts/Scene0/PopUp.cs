@@ -8,6 +8,7 @@ public enum PopUpState
     None,
     Quite,
     GameStart,
+    GameSave,
     GameReLoad,
     Abc,
     Bcd,
@@ -50,7 +51,11 @@ public class PopUp : MonoBehaviour
                     Debug.Log("Bug");
                 break;
             case PopUpState.GameStart:
-                //GameMgr.single.OnSelectPlayer(playerName);
+                Canvas canvas = FindObjectOfType<Canvas>();
+                canvas.GetComponent<FadeInEffect>().FadeOFFAndLoadScene();
+                break;
+            case PopUpState.GameSave:
+                //
                 break;
             case PopUpState.GameReLoad:
                 GameMgr.single.IsGameLoad(true);

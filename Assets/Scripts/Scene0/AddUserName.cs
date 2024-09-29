@@ -75,13 +75,24 @@ public class AddUserName : MonoBehaviour
         {
             // 10글자를 초과한 경우 처리
             GameMgr.single.popUp.SetPopUp("이름은 " + maxLength + "글자를 초과할 수 없습니다.", PopUpState.None);
-            GameMgr.single.popUp.gameObject.SetActive(true);
+            if (GameMgr.single.popUp.gameObject.activeSelf == false)
+            {
+                GameMgr.single.popUp.gameObject.SetActive(true);
+                Debug.Log("Run if");
+            }
         }
         else
         {
             Debug.Log("유효한 이름입니다.");
-            GameMgr.single.OnSelectPlayer(playerName);
+            GameMgr.single.input_Name = playerName;
+            GameMgr.single.popUp.SetPopUp(playerName + "로\n 게임을 시작하시겠습니까?", PopUpState.GameStart);
+            if (GameMgr.single.popUp.gameObject.activeSelf == false)
+            {
+                GameMgr.single.popUp.gameObject.SetActive(true);
+                Debug.Log("Run if");
+            }
         }
+
         hoverSoundEv.ishover = false;
     }
 

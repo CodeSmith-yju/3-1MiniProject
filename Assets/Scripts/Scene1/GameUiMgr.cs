@@ -1043,10 +1043,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             AudioManager.single.PlaySfxClipChange(2);
             Debug.Log("Run SoundEffect: Equip On/Off");
 
-            TakeOffItem(nowSlot);
+            TakeOffItem(ref nowSlot);
             addEquipPanel.gameObject.SetActive(false);
 
             AllEquipChek();
+            RedrawSlotUI();
             return;
         }
 
@@ -1093,7 +1094,88 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                     break;
             }
         }
+    } 
+    /*
+     public void WearEquipment()
+    {
+        string pk = "";
+        // 현재 선택된 슬롯의 아이템을 복제하여 대상 슬롯에 추가
+        for (int i = 0; i < targetSlots.Length; i++)
+        {
+            // 현재 슬롯의 아이템 타입이 일치하는지 확인
+            if (targetSlots[i].item.itemType == nowSlot.item.itemType)
+            {
+                // 장착된 아이템이 있는 경우
+                if (targetSlots[i].item.itemName != string.Empty)
+                {
+                    // 장착된 장비 해제 및 인벤토리에 추가
+                    ApplyEquipPower(false, targetSlots[i].item);
+
+                    // 이미 존재하는 아이템을 중복해서 추가하는 것을 방지
+                    if (!Inventory.Single.items.Contains(targetSlots[i].item))
+                    {
+                        Inventory.Single.AddItem(targetSlots[i].item);
+                    }
+                }
+
+                Debug.Log("Success Equip Add: " + nowSlot.item.itemName);
+
+                // 아이템 복제 및 설정
+                pk = nowSlot.item.PrimaryCode;
+                Item clonedItem = new Item
+                {
+                    itemCode = nowSlot.item.itemCode,
+                    itemName = nowSlot.item.itemName,
+                    itemType = nowSlot.item.itemType,
+                    itemTitle = nowSlot.item.itemTitle,
+                    itemImage = nowSlot.item.itemImage,
+                    itemPrice = nowSlot.item.itemPrice,
+                    itemPower = nowSlot.item.itemPower,
+                    itemDesc = nowSlot.item.itemDesc,
+                    itemStack = nowSlot.item.itemStack,
+                    modifyStack = nowSlot.item.modifyStack,
+                    PrimaryCode = nowSlot.item.PrimaryCode,
+                    typeIcon = nowSlot.item.typeIcon,
+                };
+
+                // 타겟 슬롯에 아이템 설정
+                targetSlots[i].item = clonedItem;
+                targetSlots[i].itemIcon.sprite = nowSlot.itemIcon.sprite;
+                targetSlots[i].itemIcon.gameObject.SetActive(true);
+                targetSlots[i].wearChek = true;
+                targetSlots[i].GetComponent<Button>().interactable = true;
+
+                // UI 업데이트
+                targetSlots[i].UpdateSloutUI();
+
+                // 장비 효과 적용
+                ApplyEquipPower(true, nowSlot.item);
+
+                break;
+            }
+        }
+
+        // 사용한 아이템 제거
+        for (int i = 0; i < Inventory.Single.items.Count; i++)
+        {
+            if (Inventory.Single.items[i].PrimaryCode.Equals(pk))
+            {
+                Inventory.Single.RemoveItem(Inventory.Single.items[i]);
+                break;
+            }
+        }
+
+        // 슬롯 UI 업데이트
+        RedrawSlotUI();
+
+        // 현재 슬롯 비우기
+        nowSlot = null;
+
+        // 장비 창 닫기
+        addEquipPanel.gameObject.SetActive(false);
     }
+
+     *///GPT가 작성해준 디버깅코드 적용은나중에해보겠음 개힘들다진짜...
     public void WearEquipment()
     {
         string pk = "";
@@ -1159,6 +1241,79 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         addEquipPanel.gameObject.SetActive(false);
     }
+    public void TakeOffItem(ref Slot _Slot)
+    {
+        //매개변수로 넘겨받은 슬롯의 아이템으로 새 아이템을 생성하여.
+        Item livingItem = new()
+        {
+            itemCode = _Slot.item.itemCode,
+            itemName = _Slot.item.itemName,
+            itemType = _Slot.item.itemType,
+            itemImage = _Slot.item.itemImage,
+            itemPrice = _Slot.item.itemPrice,
+            itemPower = _Slot.item.itemPower,
+            itemDesc = _Slot.item.itemDesc,
+            itemStack = _Slot.item.itemStack,
+            modifyStack = _Slot.item.modifyStack,
+            typeIcon = _Slot.item.typeIcon,
+            PrimaryCode = _Slot.item.PrimaryCode,
+        };
+
+        //일단 장착해제
+        _Slot.wearChek = false;//슬롯의 장비가 빠졌으니 fasle로 바꿔줌
+        ApplyEquipPower(_Slot.wearChek, nowSlot.item);
+
+        //현재 슬롯의 아이템 지우기
+        _Slot.item = new Item
+        {
+            itemType = livingItem.itemType
+        };
+
+        switch (_Slot.item.itemType)
+        {
+            case Item.ItemType.Equipment_Helmet:
+                _Slot.itemIcon.sprite = ItemResources.instance.iconRS[1];
+                break;
+            case Item.ItemType.Equipment_Arrmor:
+                _Slot.itemIcon.sprite = ItemResources.instance.iconRS[2];
+                break;
+            case Item.ItemType.Equipment_Weapon:
+                _Slot.itemIcon.sprite = ItemResources.instance.iconRS[3];
+                break;
+            case Item.ItemType.Equipment_Boots:
+                _Slot.itemIcon.sprite = ItemResources.instance.iconRS[4];
+                break;
+            default:
+                _Slot.itemIcon.sprite = ItemResources.instance.iconRS[0];
+                break;
+        }
+        //_Slot.usability = true;//까먹을까봐 넣어둠 내가 클릭한 슬롯의 주소값을 참조하고있을(확실하진 않은데 그간 경험상 맞을거임) _Slot의 item들과 wearChek만 수정해주면되서 얘는 시작할때 건드려둔거 안 건드려도됨.
+
+        //다시 장착할때 필요한 기본설정 초기화
+        //_Slot.item.itemType = livingItem.itemType;//이부분이제 초기화코드넣어서 필요없을거임
+        _Slot.GetComponent<Button>().interactable = false;
+        _Slot.WearSlotRefresh();
+
+        //인벤토리에 장착 해제한 아이템 추가 후 인벤토리 새로그리기
+
+        if (livingItem.itemName != string.Empty)
+        {
+            if (Inventory.Single.AddItem(livingItem))
+            {
+                Debug.Log("/??? : " + livingItem.itemName);
+                nowSlot = null;
+                return;
+            }
+            else
+            {
+                Debug.Log("버그발생?");
+            }
+        }
+        
+        Debug.Log("/??? : " + livingItem.itemName);
+        nowSlot = null;
+    }
+
     public void ApplyEquipPower(bool _onoff, Item _equip)//07-20 Fix
     {
         float equipPower;
@@ -1401,64 +1556,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         RedrawSlotUI();
     }*/
     #endregion
-    //06-09 InventoryAdd
-    public void TakeOffItem(Slot _Slot)
-    {
-        //매개변수로 넘겨받은 슬롯의 아이템으로 새 아이템을 생성하여.
-        Item livingItem = new()
-        {
-            itemCode = _Slot.item.itemCode,
-            itemName = _Slot.item.itemName,
-            itemType = _Slot.item.itemType,
-            itemImage = _Slot.item.itemImage,
-            itemPrice = _Slot.item.itemPrice,
-            itemPower = _Slot.item.itemPower,
-            itemDesc = _Slot.item.itemDesc,
-            itemStack = _Slot.item.itemStack,
-            modifyStack = _Slot.item.modifyStack,
-            PrimaryCode = _Slot.item.PrimaryCode,
-            typeIcon = _Slot.item.typeIcon,
-        };
-
-        //일단 장착해제
-        _Slot.wearChek = false;//슬롯의 장비가 빠졌으니 fasle로 바꿔줌
-        ApplyEquipPower(_Slot.wearChek, nowSlot.item);
-
-        //현재 슬롯의 아이템 지우기
-        _Slot.item = new();
-
-        switch (_Slot.item.itemType)
-        {
-            case Item.ItemType.Equipment_Helmet:
-                _Slot.itemIcon.sprite = ItemResources.instance.iconRS[1];
-                break;
-            case Item.ItemType.Equipment_Arrmor:
-                _Slot.itemIcon.sprite = ItemResources.instance.iconRS[2];
-                break;
-            case Item.ItemType.Equipment_Weapon:
-                _Slot.itemIcon.sprite = ItemResources.instance.iconRS[3];
-                break;
-            case Item.ItemType.Equipment_Boots:
-                _Slot.itemIcon.sprite = ItemResources.instance.iconRS[4];
-                break;
-            default:
-                _Slot.itemIcon.sprite = ItemResources.instance.iconRS[0];
-                break;
-        }
-        //_Slot.usability = true;//까먹을까봐 넣어둠 내가 클릭한 슬롯의 주소값을 참조하고있을(확실하진 않은데 그간 경험상 맞을거임) _Slot의 item들과 wearChek만 수정해주면되서 얘는 시작할때 건드려둔거 안 건드려도됨.
-
-        //다시 장착할때 필요한 기본설정 초기화
-        _Slot.item.itemType = livingItem.itemType;
-        _Slot.GetComponent<Button>().interactable = false;
-        _Slot.WearSlotRefresh();
-
-        //인벤토리에 장착 해제한 아이템 추가 후 인벤토리 새로그리기
-        Inventory.Single.AddItem(livingItem);
-        RedrawSlotUI();
-
-        nowSlot = null;
-    }
-
     //05-12 PartyPanel
     public void ActiveParty()
     {

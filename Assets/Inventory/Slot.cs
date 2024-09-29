@@ -107,15 +107,17 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerUp(PointerEventData eventData)//Click ItemSlot
     {
-        AudioManager.single.PlaySfxClipChange(0);
-        Debug.Log("Run SFX sound index: 0");
-
         if (this.usability == true  && this.wearChek == false)//인벤토리 좌측의 장착아이템 목록이면서, 장비를 장착 중이 아닐때 상호작용불가능하게함. = 장비칸에 장비없을때 건드려지면안된다고
         {
             return;
         }
 
-        Debug.Log("Run Methode: Clicked ItemSlot");
+        if (item != null)
+        {
+            Debug.Log("Run Methode: Clicked ItemSlot");
+            AudioManager.single.PlaySfxClipChange(0);
+            Debug.Log("Run SFX sound index: 0");
+        }
         //int||float 아이템효과 담을 변수 선언
         if (this.wearChek == true)// 장착중인 장비와 상호작용
         {
@@ -169,11 +171,11 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         /*if (item.itemType == Item.ItemType.Equipment_Arrmor)
         {
-            *//*bool isUse = item.Use();
+            bool isUse = item.Use();
             if (isUse)
             {
                 Inventory.single.RemoveItem(slotnum);
-            }*//*
+            }
             Debug.Log("This is Arrmor");
         }*/
 

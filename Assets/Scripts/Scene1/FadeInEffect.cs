@@ -74,14 +74,39 @@ public class FadeInEffect : MonoBehaviour
         color.a = endAlpha;
         fadeImage.color = color;
     }
+    public IEnumerator FadeOutAndLoadScene()
+    {
+        fadeImage.gameObject.SetActive(true); // 페이드 이미지 활성화
+        Color color = fadeImage.color;
+        float startAlpha = 0f;
+        float endAlpha = 1f;
+        float elapsedTime = 0.0f;
+
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            color.a = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / fadeDuration);
+            fadeImage.color = color;
+            yield return null;
+        }
+
+        // 페이드 아웃이 완료되면 이미지의 알파 값을 완전히 1으로 설정
+        color.a = endAlpha;
+        fadeImage.color = color;
+        GameMgr.single.OnSelectPlayer(GameMgr.single.input_Name);
+    }
 
     public void FadeON()
     {
         StartFadeIn();
     }
 
-    public void FadeOFF()
+    public void FadeOFFAndLoadScene()
     {
-        StartFadeOut();
+        if (currentCoroutine != null)
+        {
+            StopCoroutine(currentCoroutine);
+        }
+        currentCoroutine = StartCoroutine(FadeOutAndLoadScene());
     }
 }

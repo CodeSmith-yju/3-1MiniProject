@@ -2881,7 +2881,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1151781695
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3271,6 +3271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197bafb6ec38ce14799f618b9f5d67d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  input_Name: 
   popUp: {fileID: 1316948235189082396}
 --- !u!4 &1338712243
 Transform:
@@ -3478,7 +3479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4998368859008861731, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5614160232590510561, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
       propertyPath: popUp
@@ -6009,18 +6010,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1638594991}
-        m_TargetAssemblyTypeName: FadeInEffect, Assembly-CSharp
-        m_MethodName: FadeOFF
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 2345577017233653957}
         m_TargetAssemblyTypeName: AddUserName, Assembly-CSharp
         m_MethodName: OnStartGame
