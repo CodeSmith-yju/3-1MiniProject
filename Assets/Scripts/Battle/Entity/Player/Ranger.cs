@@ -35,6 +35,8 @@ public class Ranger : Ally
 
                 BattleManager.Instance.ui.GenerateLog(class_Portrait, "가시 화살");
 
+
+                ani.SetBool("isSkill", true);
                 BaseEntity target = FindTarget().GetComponent<BaseEntity>();
                 Debug.Log("타겟의 적에게 1.2배의 데미지로 공격" + " " + (atkDmg * 1.2) + "데미지");
                 GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(1);
@@ -43,10 +45,6 @@ public class Ranger : Ally
                 arrow.Shoot(this, target, atkDmg * 1.2f);
                 cur_Mp = 0;
                 Debug.Log("스킬 사용 ( " + name + " -> " + target.name + " )");
-
-                // 애니메이션 넣기
-                ani.SetBool("isSkill", true); // 임시 애니메이션
-                Debug.Log("스킬 애니메이션 끝");
 
             }
             else

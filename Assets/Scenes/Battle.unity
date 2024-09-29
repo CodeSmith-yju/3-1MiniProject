@@ -1332,7 +1332,7 @@ MonoBehaviour:
   deploy_Enemy_List: []
   deploy_area: {fileID: 0}
   unit_deploy_area: {fileID: 0}
-  level_Scale: 1
+  dungeon_Level_Scale: 0
   exp_Cnt: 0
   gold_Cnt: 0
   drop_Item: []
@@ -5400,11 +5400,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a83f742ec079b864c91c971d459bce83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabs:
+  player_Prefabs:
   - {fileID: 1585317732173075484, guid: c3b21439b4752c444bad71c153317b0a, type: 3}
-  - {fileID: 6563447237369511619, guid: 1ca675373ed0eb0469ccb67f2e5477cb, type: 3}
+  - {fileID: 3677501205606815270, guid: 972d4fdcdb0a24748bc02f9ffd9ee0da, type: 3}
   - {fileID: 8660605460297287560, guid: 6fa493f34d751de41883deb5b0cd6b84, type: 3}
+  - {fileID: 7020431350253575563, guid: 36f12facc80a14d43b4a7d2f86adfd58, type: 3}
+  enemy_Prefabs:
+  - {fileID: 6563447237369511619, guid: 1ca675373ed0eb0469ccb67f2e5477cb, type: 3}
+  - {fileID: 407595489988684709, guid: 457d1d8d096abd541b7087e08285d05b, type: 3}
   obj_Parent: {fileID: 1406815874}
+  isPlayer: 0
 --- !u!1 &1600814200
 GameObject:
   m_ObjectHideFlags: 0

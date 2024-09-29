@@ -775,13 +775,14 @@ public class MapManager : MonoBehaviour
         Vector2Int relativePos = player_Pos + targetRoom;
         player_Pos = relativePos;
         StartCoroutine(MoveToCamera(GetRoom(player_Pos).cellObject.transform));
-        
+        if (!isMoveDone && BattleManager.Instance.ui.out_Portal.activeSelf)
+            BattleManager.Instance.ui.out_Portal.GetComponent<FadeEffect>().fadein = true;
+
     }
 
     // 방 이동 시 방 카메라와 미니맵 카메라 이동 메서드
     private IEnumerator MoveToCamera(Transform targetRoom)
     {
-
         Vector3 cam_Target_Pos = new Vector3(targetRoom.position.x, targetRoom.position.y, Camera.main.transform.position.z);
         Vector3 targetMap = new Vector3(GetRoom(player_Pos).minimap_Obj.transform.position.x, GetRoom(player_Pos).minimap_Obj.transform.position.y, map_Camera.transform.position.z);
 

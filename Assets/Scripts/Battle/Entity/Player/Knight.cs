@@ -25,15 +25,12 @@ public class Knight : Ally
 
                 BattleManager.Instance.ui.GenerateLog(class_Portrait, "돌진 찌르기");
 
+                ani.SetBool("isSkill", true);
                 BaseEntity target = FindTarget().GetComponent<BaseEntity>();
                 Debug.Log("타겟의 적에게 1.3배의 데미지로 공격" + " " + (atkDmg * 1.3) + "데미지");
                 target.cur_Hp -= atkDmg * 1.3f;
                 cur_Mp = 0;
                 Debug.Log("스킬 사용 ( " + name + " -> " + target.name + " )");
-
-                // 애니메이션 넣기
-                ani.SetBool("isSkill", true); // 임시 애니메이션
-                Debug.Log("스킬 애니메이션 끝");
 
             }
             else
