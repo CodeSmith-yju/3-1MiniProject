@@ -23,7 +23,7 @@ public class BaseEntity : MonoBehaviour
     private bool isDieInProgress = false;
     public bool isMelee = false;
     public bool able_Skill = false;
-
+    protected bool using_Skill = false;
     private float atk_CoolTime;
     private float cur_atk_CoolTime;
 
@@ -160,14 +160,11 @@ public class BaseEntity : MonoBehaviour
                 _curstate = State.Death;
             }
 
-            /*if (able_Skill)
+            if (_curstate == State.Skill && using_Skill == false)
             {
-                if (cur_Mp == max_Mp && cur_Mp != 0)
-                {
-                    _curstate = State.Skill;
-                }
-            }*/
-            
+                Skill();
+            }
+
 
         }
         
@@ -453,6 +450,14 @@ public class BaseEntity : MonoBehaviour
         target.cur_Hp = getDmgHp;
         Debug.Log($"Hit to {target.name}! {target.cur_Hp}");
     }
+
+    // 스킬 작성
+    protected virtual void Skill()
+    {
+        using_Skill = true;
+        // 상속 받은 캐릭터들 마다 작성
+    }
+
 
     private IEnumerator Die()
     {

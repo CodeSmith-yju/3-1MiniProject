@@ -2084,7 +2084,7 @@ MonoBehaviour:
   deploy_Enemy_List: []
   deploy_area: {fileID: 0}
   unit_deploy_area: {fileID: 0}
-  level_Scale: 1
+  dungeon_Level_Scale: 0
   exp_Cnt: 0
   gold_Cnt: 0
   drop_Item: []
@@ -8442,6 +8442,7 @@ MonoBehaviour:
   - {fileID: 1585317732173075484, guid: c3b21439b4752c444bad71c153317b0a, type: 3}
   - {fileID: 6563447237369511619, guid: 1ca675373ed0eb0469ccb67f2e5477cb, type: 3}
   - {fileID: 8660605460297287560, guid: 6fa493f34d751de41883deb5b0cd6b84, type: 3}
+  - {fileID: 407595489988684709, guid: 457d1d8d096abd541b7087e08285d05b, type: 3}
   obj_Parent: {fileID: 1406815874}
 --- !u!1 &1600814200
 GameObject:
@@ -16786,6 +16787,10 @@ PrefabInstance:
     - target: {fileID: 3099426643035323027, guid: a3b1e2f99c4ae224380ad38b040613f6, type: 3}
       propertyPath: m_Name
       value: Skill_Log
+      objectReference: {fileID: 0}
+    - target: {fileID: 4822259050240527463, guid: a3b1e2f99c4ae224380ad38b040613f6, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6584611103307790834, guid: a3b1e2f99c4ae224380ad38b040613f6, type: 3}
       propertyPath: m_Pivot.x

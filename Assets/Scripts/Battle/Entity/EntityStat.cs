@@ -5,7 +5,7 @@ using UnityEngine;
 public class EntityStat : MonoBehaviour
 {
     public int index;
-    public string name;
+    public string entity_name;
     public int level;
     public float max_Hp;
     public float cur_hp;
@@ -19,10 +19,10 @@ public class EntityStat : MonoBehaviour
     public int gold;
     public Item item;
 
-    public EntityStat(int index, string name, int level, float max_Hp, float cur_hp, float max_Mp, float atkDmg, float atkSpd, float atkRange, bool isMelee, bool able_Skill)
+    public EntityStat(int index, string entity_name, int level, float max_Hp, float cur_hp, float max_Mp, float atkDmg, float atkSpd, float atkRange, bool isMelee, bool able_Skill)
     {
         this.index = index;
-        this.name = name;
+        this.entity_name = entity_name;
         this.level = level;
         this.max_Hp = max_Hp;
         this.cur_hp = cur_hp;  

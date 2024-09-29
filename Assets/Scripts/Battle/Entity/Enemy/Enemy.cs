@@ -55,6 +55,12 @@ public class Enemy : BaseEntity
         return randomDrop < (int)(value * BattleManager.Instance.dungeon_Level_Scale);
     }
 
+    protected int SetRandomGold(int count)
+    {
+        int randomDrop = Random.Range(count, count + 20);
+        return randomDrop;
+    }
+
 
     // 사운드 수정 예정
     public void AttackSound(int index)

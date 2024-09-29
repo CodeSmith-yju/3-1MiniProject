@@ -110,5 +110,4 @@ public class Ally : BaseEntity
        // AudioManager.single.EnemySound(index, index, 0);
     }
 
-
 }

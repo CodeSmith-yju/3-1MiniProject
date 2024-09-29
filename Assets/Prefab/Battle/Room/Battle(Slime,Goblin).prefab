@@ -4046,7 +4046,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7248009669230176658}
   m_Layer: 0
-  m_Name: Battle_1
+  m_Name: Battle(Slime,Goblin)
   m_TagString: Battle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
