@@ -178,6 +178,8 @@ public class UIManager : MonoBehaviour
 
     public void GenerateLog(Sprite player_portrait, string skill_Name)
     {
+        Debug.Log("스킬 로그 생성");
+
         if (log_Pos.childCount >= 3)
         {
             Destroy(log_Pos.GetChild(0).gameObject);

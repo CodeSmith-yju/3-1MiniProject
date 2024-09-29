@@ -85,7 +85,7 @@ public class Ally : BaseEntity
             );
 
         entity_index = stat.index;
-        player_Name = stat.name;
+        player_Name = stat.entity_name;
         level = stat.level;
         max_Hp = stat.max_Hp;
         cur_Hp = stat.cur_hp;
@@ -98,16 +98,15 @@ public class Ally : BaseEntity
         able_Skill = stat.able_Skill;
     }
 
-
     // 사운드 수정 예정
     public void AttackSound(int index)
     {
-        // AudioManager.single.PlayerSound(index, index, 1);
+        AudioManager.single.PlayerSound(index, index, 1);
     }
 
     public void DieSound(int index)
     {
-       // AudioManager.single.EnemySound(index, index, 0);
+       AudioManager.single.EnemySound(index, index, 0);
     }
 
 }

@@ -458,6 +458,17 @@ public class BaseEntity : MonoBehaviour
         // 상속 받은 캐릭터들 마다 작성
     }
 
+    public void SkillAnimationDone()
+    {
+        if (ani.GetBool("isSkill"))
+        {
+            ani.SetBool("isSkill", false);
+            ChangeState(State.Idle);
+            using_Skill = false;
+        }
+
+    }
+
 
     private IEnumerator Die()
     {

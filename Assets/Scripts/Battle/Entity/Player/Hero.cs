@@ -49,12 +49,4 @@ public class Hero : Ally
             return;
         }
     }
-
-    public void SkillAnimationDone()
-    {
-        ani.SetBool("isSkill", false);
-        ChangeState(State.Idle);
-        using_Skill = false;
-    }
-
 }
