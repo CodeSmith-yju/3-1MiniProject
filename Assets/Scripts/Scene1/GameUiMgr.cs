@@ -161,15 +161,16 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     }
     public void AddItemTest()
     {
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < ItemResources.instance.DBItems.Count; i++)
         {
             Debug.Log("AddItem");
             //아 버그 왜 생기는거냐 진짜 소모아이템생성로직에 문제가있는데
             //기존 아이템생성방식의 한계점을발견하여 아래와 같이 수정함
-            int r = Random.Range(0, 20);
-            Item _item = new Item().GenerateRandomItem(r);
+            //int r = Random.Range(0, 20);
+            Item _item = ItemResources.instance.DBItems[i];
 
             Inventory.Single.AddItem(_item); // 인벤토리에 아이템 추가,
+            Inventory.Single.AddItem(_item);
 
             Debug.Log("Make A New Test Item Code: " + _item.itemCode);
         }

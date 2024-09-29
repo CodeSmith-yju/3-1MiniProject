@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Xml;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 
 public class DBConnector : MonoBehaviour
 {
@@ -27,14 +28,15 @@ public class DBConnector : MonoBehaviour
     {
         get
         {
-            if(_connection == null)
+            if (_connection == null)
             {
                 try
                 {
                     //string formatSql = $"Server={single.IP}; Port={single.PORT}; Database={single.DB_NAME}; UserId={single.ID}; Password={single.PW}";
                     string formatSql = $"Server={single.IP}; Port={single.PORT}; Database={single.DB_NAME}; UserId={single.ID}; Password={single.PW}; Charset=utf8mb4";
                     _connection = new MySqlConnection(formatSql);
-                }catch(MySqlException e)
+                }
+                catch (MySqlException e)
                 {
                     Debug.LogError(e);
                 }
@@ -45,7 +47,7 @@ public class DBConnector : MonoBehaviour
             }
 
             return _connection;
-                
+
         }
     }
 
@@ -55,7 +57,7 @@ public class DBConnector : MonoBehaviour
         DontDestroyOnLoad(single);
     }
 
-    
+
 
     private static bool m_OnChange(string query)
     {
@@ -75,7 +77,7 @@ public class DBConnector : MonoBehaviour
             result = true;
         }
         catch (Exception e)
-        {   
+        {
             Debug.LogError(e.ToString());
         }
 
@@ -264,12 +266,29 @@ public class DBConnector : MonoBehaviour
     }
 
     // Sprite를 byte 배열로 변환하는 함수
-    private static byte[] ConvertSpriteToBytes(Sprite sprite)
+    /*private static byte[] ConvertSpriteToBytes(Sprite sprite)
     {
         CheckTextureReadable(sprite);
         Texture2D texture = sprite.texture;
         return texture.EncodeToPNG();  // PNG 형식으로 변환
+    }*/
+    private static byte[] ConvertSpriteToBytes(Sprite sprite)
+    {
+        // 압축된 텍스처인지 확인
+        if (GraphicsFormatUtility.IsCompressedFormat(sprite.texture.graphicsFormat))
+        {
+            Debug.LogWarning($"Texture '{sprite.name}' is in a compressed format and cannot be converted to bytes.");
+            return null; // 압축된 텍스처를 건너뛰도록 처리
+        }
+
+        // 텍스처가 읽기 가능한지 확인
+        CheckTextureReadable(sprite);
+
+        // PNG 형식으로 텍스처를 변환
+        Texture2D texture = sprite.texture;
+        return texture.EncodeToPNG();  // PNG 형식으로 변환
     }
+
     static void CheckTextureReadable(Sprite sprite)
     {
         if (!sprite.texture.isReadable)
@@ -396,6 +415,58 @@ public class DBConnector : MonoBehaviour
 
         return null;  // 로드 실패 시 null 반환
     }
+    public static Item LoadItemByCodeFromDB(int itemCode)
+    {
+        // SQL 쿼리: itemCode와 일치하는 아이템 선택
+        string query = "SELECT * FROM item WHERE itemCode = @itemCode";
+
+        MySqlCommand cmd = new MySqlCommand(query, DBConnector.connection);
+        cmd.Parameters.AddWithValue("@itemCode", itemCode); // 매개변수 추가
+
+        try
+        {
+            DBConnector.connection.Open();
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                // 새로운 아이템 생성 및 데이터 할당
+                Item loadedItem = new Item
+                {
+                    itemCode = reader.GetInt32("itemCode"),
+                    itemName = reader.GetString("itemName"),
+                    itemType = (Item.ItemType)System.Enum.Parse(typeof(Item.ItemType), reader.GetString("itemType")),
+                    itemTitle = reader.GetString("itemTitle"),
+                    itemDesc = reader.GetString("itemDesc"),
+                    itemPrice = reader.GetInt32("itemPrice"),
+                    itemPower = reader.GetFloat("itemPower"),
+                    itemStack = reader.GetInt32("itemStack"),
+                    modifyStack = reader.GetInt32("modifyStack")
+                };
+
+                // 이미지 데이터 처리 (BLOB 데이터 -> Sprite 변환)
+                byte[] itemImgBytes = (byte[])reader["itemImg"];
+                loadedItem.itemImage = DBConnector.ConvertBytesToSprite(itemImgBytes);
+
+                byte[] typeIconBytes = (byte[])reader["typeIcon"];
+                loadedItem.typeIcon = DBConnector.ConvertBytesToSprite(typeIconBytes);
+
+                return loadedItem;  // 로드 성공 시 아이템 반환
+            }
+
+            reader.Close();
+        }
+        catch (MySqlException ex)
+        {
+            Debug.LogError("DB 에러: " + ex.Message);
+        }
+        finally
+        {
+            DBConnector.connection.Close();
+        }
+
+        return null;  // 로드 실패 시 null 반환
+    }
 
     public static void SaveToDB(SaveData saveData, int userID)
     {
@@ -464,9 +535,9 @@ public class DBConnector : MonoBehaviour
         return DBConnector.single.uid;
     }
     public static void SetUID(int _uid)
-{
-    single.uid = _uid;
-}
+    {
+        single.uid = _uid;
+    }
 }
 
 public static class DBConnecter_Expand

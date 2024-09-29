@@ -25,6 +25,7 @@ public class TalkMgr : MonoBehaviour // 대화 데이터를 관리할 매니저 
         dictTalkData.Add(2000, new string[] { GameMgr.playerData[0].GetPlayerName() + "님!:0", "오셨군요 :0" });
         //dictTalkData.Add(1000, new string[] { "안녕!" + GameMgr.playerData.NAME + ":0", "이 곳에 처음 왔구나?:1", "개쩌는 김치피자탕수육을 만들어주렴:2" });// 하나의 대화에는 여러 문장이 있으므로 배열로 선언
         //dictTalkData.Add(2000, new string[] { GameMgr.playerData.NAME+"! :0","던전마을로 가는거야? :1", "몸조심해! :2" });
+        dictTalkData.Add(4000, new string[] { "물건 사러 왔어? 아니면 개조?"});
         dictTalkData.Add(5000, new string[] { "상자" });
         dictTalkData.Add(6000, new string[] { "표지판" });
         dictTalkData.Add(7000, new string[] { "문"});
@@ -119,6 +120,8 @@ public class TalkMgr : MonoBehaviour // 대화 데이터를 관리할 매니저 
 
         dictPortraitSprite.Add(2000 + 2, aryPortraitSprite[2]);
         dictPortraitSprite.Add(2000 + 3, aryPortraitSprite[3]);
+
+        //dictPortraitSprite.Add(4000 + 0, aryPortraitSprite[8]);
     }
     private void Start()
     {

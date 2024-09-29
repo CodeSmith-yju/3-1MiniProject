@@ -51,7 +51,7 @@ public class PartyData
         //str name = RandomGenerateName();  
 
         type = prefab.name;// 프리펩오브젝트의 이름, JobClass enum값과 큰 차이는 없음.
-        cost = Random.Range(50 + _Lvel*10, 100+ _Lvel*50);
+        cost = (50 + (_Lvel * 10)) + Random.Range(0, _Lvel * 5);
         Debug.Log("cost: "+cost);
         spPartyIcon = player.GetComponent<SpriteRenderer>().sprite;
         jobIcon = player.class_Icon;
@@ -65,31 +65,31 @@ public class PartyData
         {
             case Ally.JobClass.Ranger:
                 Debug.Log("Type Ranger, Generate Code: "+_Code);
-                partyHp = 15f;
+                partyHp = 15f + (_Lvel * 2f);
                 partyMp = 5f;
-                partyAtk = 2f;
+                partyAtk = 2f + (_Lvel * 0.5f);
                 partyAtkSpd = 1.0f;
-                partyAtkRange = 7f;
+                partyAtkRange = 7f +(_Lvel * 0.1f);
                 strPartyName = "Ranger";
                 isMelee = false;//false 일때 원거리공격
                 able_Skill = false;
                 break;
             case Ally.JobClass.Wizard:
                 Debug.Log("Type wizard, Generate Code: " + _Code);
-                partyHp = 15f;
+                partyHp = 15f + (_Lvel * 1f);
                 partyMp = 3f;
-                partyAtk = 3f;
+                partyAtk = 3f + (_Lvel * 0.5f);
                 partyAtkSpd = 0.75f;
-                partyAtkRange = 7f;
+                partyAtkRange = 7f + (_Lvel * 0.1f);
                 strPartyName = "Wizard";
                 isMelee = false;
                 able_Skill = false;
                 break;
             case Ally.JobClass.Knight:
                 Debug.Log("Type 3, Generate Code: " + _Code);
-                partyHp = 50f;
+                partyHp = 50f + (_Lvel * 5f);
                 partyMp = 5f;
-                partyAtk = 2f;
+                partyAtk = 2f + (_Lvel * 0.3f);
                 partyAtkSpd = 1.0f;
                 partyAtkRange = 1.1f;
                 strPartyName = "Knight";
@@ -99,6 +99,7 @@ public class PartyData
 /*            case 0://Player
                 break;*/
             default:
+                Debug.Log("혹시몰라서돌려봄 - 나는 근첩이다");
                 type = "Default";
                 Debug.Log("Type d, Generate Code: " + _Code);
                 partyHp = 20f + (0.01f * _Lvel);

@@ -818,7 +818,7 @@ MonoBehaviour:
   ID: root
   PW: 1234
   DB_NAME: unitygame
-  uid: 
+  uid: 0
 --- !u!4 &312773626
 Transform:
   m_ObjectHideFlags: 0
@@ -6034,7 +6034,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &2562863960973986195
 CanvasRenderer:
   m_ObjectHideFlags: 0

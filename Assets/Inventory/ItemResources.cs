@@ -7,14 +7,26 @@ public class ItemResources : MonoBehaviour
     public static ItemResources instance;
     public List<Item> itemRS = new();
     public List<Sprite> iconRS = new();
+
+
+    [Header("DB Items")]
+    public List<Item> DBItems;
     private void Awake()
     {
         instance = this;
+        DBItems = new();
+        for (int i = 0; i < 20; i++)
+        {
+            if (11 < i && i < 14 || 14 < i && i < 18 || i == 19)
+            {
+                DBItems.Add(DBConnector.LoadItemByCodeFromDB(i));
+            }
+        }
 
         for (int i = 0; i < itemRS.Count; i++)
         {
             itemRS[i].PrimaryCode = itemRS[i].GetNewPK(12);
-            Debug.Log("===================================================\n"+itemRS[i].itemType);
+            Debug.Log("===================================================\n" + itemRS[i].itemType);
             IconSet(itemRS[i]);
         }
     }
@@ -66,7 +78,16 @@ public class ItemResources : MonoBehaviour
     {
         for (int i = 0; i < itemRS.Count; i++)
         {
-            if (11 < i && i < 14 || 14 < i && i < 18 || i == 19)
+            if (DBConnector.InsertItemToDB(itemRS[i]))
+            {
+                Debug.Log("True");
+            }
+            else
+            {
+                Debug.Log("False");
+            }
+
+            /*if (11 < i && i < 14 || 14 < i && i < 18 || i == 19)
             {
                 if (DBConnector.InsertItemToDB(itemRS[i]))
                 {
@@ -76,8 +97,8 @@ public class ItemResources : MonoBehaviour
                 {
                     Debug.Log("False");
                 }
-            }
-            
+            }*/
+
         }
     }
 }
