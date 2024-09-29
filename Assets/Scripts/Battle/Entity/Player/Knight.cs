@@ -13,39 +13,37 @@ public class Knight : Ally
         Debug.Log("Knight 생성");
         job = JobClass.Knight;
     }
-   
 
-    /*protected override void Update()
+    protected override void Skill()
     {
-        base.Update();
-        *//*if (_curstate == State.Skill)
-        {
-            Skill();
-        }*//*
-        //cur_target = target;
-    }*/
-
-
-    /*public void Skill()
-    {
+        base.Skill();
         if (_curstate == State.Skill)
         {
-            
-            StopAllCoroutines();
+            StopCoroutine(SetAttack());
             if (isAttack)
             {
-                
+
+                BattleManager.Instance.ui.GenerateLog(class_Portrait, "돌진 찌르기");
+
                 BaseEntity target = FindTarget().GetComponent<BaseEntity>();
-                Debug.Log("타겟의 적에게 2배의 데미지로 한번 공격" + " " + (atkDmg * 2) + "데미지");
-                target.cur_Hp -= atkDmg * 2;
-                Debug.Log(target.cur_Hp + " " + target.name);
+                Debug.Log("타겟의 적에게 1.3배의 데미지로 공격" + " " + (atkDmg * 1.3) + "데미지");
+                target.cur_Hp -= atkDmg * 1.3f;
+                cur_Mp = 0;
+                Debug.Log("스킬 사용 ( " + name + " -> " + target.name + " )");
+
+                // 애니메이션 넣기
+                ani.SetBool("isSkill", true); // 임시 애니메이션
+                Debug.Log("스킬 애니메이션 끝");
+
             }
             else
             {
                 return;
             }
-            cur_Mp = 0;
-            ChangeState(State.Idle);
         }
-    }*/
+        else
+        {
+            return;
+        }
+    }
 }

@@ -71,8 +71,8 @@ public class PartyData
                 partyAtkSpd = 1.0f;
                 partyAtkRange = 7f;
                 strPartyName = "Ranger";
-                isMelee = false;//false 일때 원거리공격
-                able_Skill = false;
+                isMelee = false; //false 일때 원거리공격
+                able_Skill = true;
                 break;
             case Ally.JobClass.Wizard:
                 Debug.Log("Type wizard, Generate Code: " + _Code);
@@ -83,7 +83,7 @@ public class PartyData
                 partyAtkRange = 7f;
                 strPartyName = "Wizard";
                 isMelee = false;
-                able_Skill = false;
+                able_Skill = true;
                 break;
             case Ally.JobClass.Knight:
                 Debug.Log("Type 3, Generate Code: " + _Code);
@@ -94,7 +94,7 @@ public class PartyData
                 partyAtkRange = 1.1f;
                 strPartyName = "Knight";
                 isMelee = true;
-                able_Skill = false;
+                able_Skill = true;
                 break;
 /*            case 0://Player
                 break;*/
@@ -108,6 +108,7 @@ public class PartyData
                 partyAtkRange = 2f;
                 strPartyName = "근첩";
                 isMelee = true;
+                able_Skill = false;
                 break;
         }
     }

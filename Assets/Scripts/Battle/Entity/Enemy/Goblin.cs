@@ -24,10 +24,10 @@ public class Goblin : Enemy
     public override void RangeAttack(BaseEntity target)
     {
         base.RangeAttack(target);
-        GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(1); // µ¹ ÇÁ¸®ÆÕ
+        GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(0); // µ¹ ÇÁ¸®ÆÕ
         obj_Arrow.transform.position = transform.GetChild(0).position;
         Arrow arrow = obj_Arrow.GetComponent<Arrow>();
-        arrow.Shoot(this, target);
+        arrow.Shoot(this, target, atkDmg);
     }
 
 

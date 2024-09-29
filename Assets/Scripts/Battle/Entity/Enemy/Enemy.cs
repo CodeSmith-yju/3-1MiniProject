@@ -9,6 +9,13 @@ public class Enemy : BaseEntity
     public bool item_Drop_Check = false;
     private Item drop_Item;
 
+    protected override void Start()
+    {
+        base.Start();
+        BattleManager.Instance.pool.isPlayer = false;
+    }
+
+
     protected override void Update()
     {
         base.Update();

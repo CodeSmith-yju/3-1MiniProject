@@ -444,9 +444,9 @@ public class BaseEntity : MonoBehaviour
         ani.SetTrigger("isAtk");
     }
 
-    public void RangeHit(BaseEntity target)
+    public void RangeHit(BaseEntity target, float dmg)
     {
-        float getDmgHp = target.cur_Hp - atkDmg;
+        float getDmgHp = target.cur_Hp - dmg;
         target.cur_Hp = getDmgHp;
         Debug.Log($"Hit to {target.name}! {target.cur_Hp}");
     }

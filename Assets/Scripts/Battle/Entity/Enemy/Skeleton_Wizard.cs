@@ -27,10 +27,10 @@ public class Skeleton_Wizard : Enemy
     public override void RangeAttack(BaseEntity target)
     {
         base.RangeAttack(target);
-        GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(3);
+        GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(1);
         obj_Arrow.transform.position = transform.GetChild(0).position;
         Arrow arrow = obj_Arrow.GetComponent<Arrow>();
-        arrow.Shoot(this, target);
+        arrow.Shoot(this, target, atkDmg);
     }
 
 
