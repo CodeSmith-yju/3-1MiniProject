@@ -229,6 +229,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public void EnterDungeon()
     {
+        popUp.SetPopUp("던전에 입장 하시겠습니까?",  PopUpState.Dungeon);
+        popUp.gameObject.SetActive(true);
+    }
+    public void MoveInDungeon()
+    {
         AudioManager.single.PlaySfxClipChange(4);
         Debug.Log("던전 입장");
         GameSave();

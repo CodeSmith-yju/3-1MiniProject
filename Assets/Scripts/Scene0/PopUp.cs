@@ -10,6 +10,7 @@ public enum PopUpState
     GameStart,
     GameSave,
     GameReLoad,
+    Dungeon,
     Abc,
     Bcd,
 }
@@ -64,6 +65,9 @@ public class PopUp : MonoBehaviour
             case PopUpState.Quite:
                 GameQuite();
                 break;
+            case PopUpState.Dungeon:
+                GameUiMgr.single.MoveInDungeon();
+                break;
             default:
                 break;
         }
@@ -75,6 +79,29 @@ public class PopUp : MonoBehaviour
         gameObject.SetActive(false);
     }
     public void SetPopUp(string _str, PopUpState _state)
+    {
+        text_PopUp.text = _str;  // 팝업 텍스트 설정
+        popUpState = _state;     // 팝업 상태 설정
+
+        if (popUpState == PopUpState.None)
+            btn_No.gameObject.SetActive(false);
+        else
+            btn_No.gameObject.SetActive(true);
+
+        if (!gameObject.activeSelf)  // 비활성화된 상태라면 팝업을 활성화
+        {
+            gameObject.SetActive(true);
+            Debug.Log("팝업 활성화: " + _str);
+        }
+        else
+        {
+            Debug.LogWarning("팝업이 이미 활성화되어 있습니다.");
+        }
+
+        Canvas.ForceUpdateCanvases();  // 강제로 UI 갱신
+    }
+
+    public void SetPopUp(string _str, PopUpState _state, int Lv)
     {
         text_PopUp.text = _str;  // 팝업 텍스트 설정
         popUpState = _state;     // 팝업 상태 설정
