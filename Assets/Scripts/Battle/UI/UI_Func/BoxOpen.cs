@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,10 +8,9 @@ public class BoxOpen : MonoBehaviour
 {
     public Animator ani;
     public GameObject mimic;
-    bool isSetTutorial;
     int isMimic;
-    bool clck = true;
-    
+    bool isOpening = false;
+
     private void Awake()
     {
         ani = GetComponent<Animator>();
@@ -34,10 +32,10 @@ public class BoxOpen : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (clck)
+        if (!isOpening)
         {
             ani.SetTrigger("isOpen");
-           clck = !clck;
+            isOpening = true;
         }
     }
 
@@ -86,11 +84,4 @@ public class BoxOpen : MonoBehaviour
             return;
         }
     }
-
-
-    public void SetTutorial(bool setTutorial)
-    {
-        isSetTutorial = setTutorial;
-    }
- 
 }

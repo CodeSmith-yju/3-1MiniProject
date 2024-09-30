@@ -8,9 +8,6 @@ using Unity.VisualScripting;
 
 public class Hero : Ally
 {
-    bool using_Skill = false;
-
-
     protected override void Start()
     {
         base.Start();
@@ -18,26 +15,19 @@ public class Hero : Ally
         job = JobClass.Hero;
     }
 
-    protected override void Update()
-    {
-        base.Update();
-
-        if (_curstate == State.Skill && using_Skill == false)
-        {
-            Skill();
-        }
-    }
-
 
     // 나중에 코루틴으로 애니메이션을 체크하지 말고 애니메이션 클립 이벤트로 제작 예정 (애니메이션 재생이 다 완료되면 Idle 상태로 변경하도록)
-    private void Skill()
+    protected override void Skill()
     {
-        using_Skill = true;
+        base.Skill();
         if (_curstate == State.Skill)
         {
             StopCoroutine(SetAttack());
             if (isAttack)
             {
+
+                BattleManager.Instance.ui.GenerateLog(class_Portrait, "섬광 베기");
+
                 BaseEntity target = FindTarget().GetComponent<BaseEntity>();
                 Debug.Log("타겟의 적에게 2배의 데미지로 한번 공격" + " " + (atkDmg * 2) + "데미지");
                 target.cur_Hp -= atkDmg * 2;
@@ -59,12 +49,4 @@ public class Hero : Ally
             return;
         }
     }
-
-    public void SkillAnimationDone()
-    {
-        ani.SetBool("isSkill", false);
-        ChangeState(State.Idle);
-        using_Skill = false;
-    }
-
 }

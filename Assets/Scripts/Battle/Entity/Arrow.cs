@@ -7,11 +7,13 @@ public class Arrow : MonoBehaviour
     private BaseEntity shooter;
     private BaseEntity target;
     public float speed = 10f;
+    float total_Dmg;
     
-    public void Shoot(BaseEntity shooter, BaseEntity target) 
+    public void Shoot(BaseEntity shooter, BaseEntity target, float dmg) 
     {
         this.shooter = shooter;
         this.target = target;
+        this.total_Dmg = dmg;
     }
 
     private void Update()
@@ -44,7 +46,7 @@ public class Arrow : MonoBehaviour
             // TODO : 애니메이션 완성시 활성화 필요
             //enemy.ani.SetTrigger("isHit");
 
-            shooter.RangeHit(hiter);
+            shooter.RangeHit(hiter, total_Dmg);
 
             this.gameObject.SetActive(false);
         }

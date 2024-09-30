@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class ObjectManager : MonoBehaviour
 {
-    public GameObject[] prefabs;
+
+    [Header("Player_Projectile")]
+    public GameObject[] player_Prefabs;
+
+    [Header("Enemy_Projectile")]
+    public GameObject[] enemy_Prefabs;
 
     public List<GameObject>[] pools;
 
@@ -12,7 +17,7 @@ public class ObjectManager : MonoBehaviour
 
     private void Awake()
     {
-        pools = new List<GameObject>[prefabs.Length];
+        pools = new List<GameObject>[(player_Prefabs.Length + enemy_Prefabs.Length)];
 
         for (int i = 0; i < pools.Length; i++) 
         {
@@ -20,7 +25,7 @@ public class ObjectManager : MonoBehaviour
         }
     }
 
-    public GameObject GetObject(int index)
+    public GameObject GetObject(int index, bool isPlayer)
     {
         GameObject select = null;
 
@@ -40,7 +45,15 @@ public class ObjectManager : MonoBehaviour
         if (!select)
         {
             // 새로 생성하고 select에 할당
-            select = Instantiate(prefabs[index], obj_Parent);
+            if (isPlayer)
+            {
+                select = Instantiate(player_Prefabs[index], obj_Parent);
+            }  
+            else
+            {
+                select = Instantiate(enemy_Prefabs[index], obj_Parent);
+            }
+                
             pools[index].Add(select);
         }
 

@@ -250,6 +250,92 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
     }
 
+    [Header("Dungeon_Level")]
+    public GameObject dungeon_Level_Ui;
+    public float dungeon_Level_Scale = 1;
+    public int dungeon_Level;
+    public Button[] level_Buttons;
+
+    public void SetLevel(int level)
+    {
+        dungeon_Level = level;
+
+        switch (level)
+        {
+            case 0:
+                dungeon_Level_Scale = 0.75f;
+                break;
+            case 1:
+                dungeon_Level_Scale = 1;
+                break;
+            case 2:
+                dungeon_Level_Scale = 1.25f;
+                break;
+        }
+    }
+
+    private void TutoDungeonQuestCheck()
+    {
+        if (isDungeon) 
+        {
+            // level_Buttons[0]은 튜토리얼 버튼이므로 나머지 버튼을 비활성화
+            for (int i = 0; i < level_Buttons.Length; i++)
+            {
+                if (i == 0) // 인덱스 0은 튜토리얼 버튼
+                {
+                    level_Buttons[i].interactable = true; // 튜토리얼 버튼은 활성화 상태
+                    level_Buttons[i].GetComponent<CanvasGroup>().alpha = 1.0f;
+                }
+                else
+                {
+                    level_Buttons[i].interactable = false; // 나머지 버튼은 비활성화 상태
+                    level_Buttons[i].GetComponent<CanvasGroup>().alpha = 0.5f;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < level_Buttons.Length; i++)
+            {
+                if (i == 0) // 인덱스 0은 튜토리얼 버튼
+                {
+                    level_Buttons[i].interactable = false;
+                    level_Buttons[i].GetComponent<CanvasGroup>().alpha = 0.5f;
+                }
+                else
+                {
+                    level_Buttons[i].interactable = true;
+                    level_Buttons[i].GetComponent<CanvasGroup>().alpha = 1.0f;
+                }
+            }
+        }
+    }
+
+    public void OpenDungeonUi()
+    {
+        dungeon_Level_Ui.SetActive(true);
+        TutoDungeonQuestCheck();
+    }
+
+    public void EnterDungeon()
+    {
+        AudioManager.single.PlaySfxClipChange(4);
+        Debug.Log("던전 입장");
+        GameSave();
+
+        // 튜토리얼때는 튜토리얼을 제외한 나머지 버튼은 잠겨 있어야함.
+        if (isDungeon)
+        {
+            LoadingSceneController.LoadScene("Tutorial");
+            isDungeon = false;
+        }
+        else
+        {
+            LoadingSceneController.LoadScene("Battle");
+        }
+    }
+
+
     private void Awake()
     {
         single = this;
@@ -1109,7 +1195,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             Debug.Log("던전 입장");
             GameSave();
             //SceneManager.LoadScene("Battle");//아니면여기에 던전에입장하시겠습니까? 예, 아니오, Wall, 값을 넣고 던져서 예누르면 wall로 텔포,아니오누르면 그냥 retrun하게하는식으로하면~ 야매 맵이동구현 뚝딲
-            LoadingSceneController.LoadScene("Tutorial");
+            LoadingSceneController.LoadScene("Battle");
             isDungeon = false;
             return;
         }*/

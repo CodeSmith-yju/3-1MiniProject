@@ -20,6 +20,11 @@ public class UIManager : MonoBehaviour
     public GameObject room_UI;
     public GameObject item_Use_UI;
 
+    [Header("Skill_Log")]
+    public GameObject log_View;
+    public GameObject log_Prefabs;
+    public Transform log_Pos;
+
     [Header("Banner")]
     public GameObject def_Banner;
     public GameObject vic_Banner;
@@ -81,14 +86,15 @@ public class UIManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Rest || BattleManager.Instance._curphase == BattleManager.BattlePhase.End)
-        {
-            battleStart.SetActive(false);
-        }
-
         if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Battle)
         {
             item_Bar.SetActive(false);
+            log_View.SetActive(true);
+        }
+        else
+        {
+            item_Bar.SetActive(true);
+            log_View.SetActive(false);
         }
 
         if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy)
@@ -98,11 +104,6 @@ public class UIManager : MonoBehaviour
         else
         {
             battleStart.SetActive(false);
-        }
-
-        if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Rest || BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy)
-        {
-            item_Bar.SetActive(true);
         }
     }
 
@@ -174,4 +175,19 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(aniInfo.length);
         CancelPopup(banner);
     }
+
+    public void GenerateLog(Sprite player_portrait, string skill_Name)
+    {
+        Debug.Log("스킬 로그 생성");
+
+        if (log_Pos.childCount >= 3)
+        {
+            Destroy(log_Pos.GetChild(0).gameObject);
+        }
+
+        GameObject log = Instantiate(log_Prefabs, log_Pos);
+        SkillLogInit log_Init = log.GetComponent<SkillLogInit>();
+        log_Init.Init(player_portrait, skill_Name);
+    }
+
 }

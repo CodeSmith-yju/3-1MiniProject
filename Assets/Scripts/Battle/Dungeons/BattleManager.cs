@@ -30,9 +30,10 @@ public class BattleManager : MonoBehaviour
     public GameObject unit_deploy_area;
     private bool isFirstEnter;
     private bool battleEnded = false;
+    //public bool isMapDone = false;
 
     [Header("Stage")]
-    public float level_Scale = 1;
+    public float dungeon_Level_Scale;
 
     [Header("Reward")]
     public float exp_Cnt;
@@ -72,15 +73,15 @@ public class BattleManager : MonoBehaviour
 
     private void Awake()
     {
-
         if (instance == null)
         {
             instance = this;
         }
+        dungeon_Level_Scale = GameUiMgr.single.dungeon_Level_Scale;
 
         room = FindObjectOfType<MapManager>();
         isFirstEnter = true;
-
+        
         for (int i = 0; i < GameUiMgr.single.lastDeparture.Count; i++)
         {
             party_List.Add(GameUiMgr.single.lastDeparture[i].partyData.obj_Data);
@@ -436,18 +437,21 @@ public class BattleManager : MonoBehaviour
         deploy_Player_List.Clear();
         deploy_Enemy_List.Clear();
 
+        unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
+
         if (isFirstEnter)
         {
             isFirstEnter = false;
-            yield return null;
-            unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
-            PlacementUnit(); // 어떤 방이든 유닛을 소환 시키도록 함.
+            Debug.Log("첫 방은 배치 하지 않음");
+            yield return new WaitForSeconds(0.3f);
+            //PlacementUnit(); // 어떤 방이든 유닛을 소환 시키도록 함.
         }
         else
         {
-            unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
             PlacementUnit(); // 어떤 방이든 유닛을 소환 시키도록 함.
         }
+
+        
 
         if (room.cur_Room.tag == "Battle")
         {
@@ -650,4 +654,5 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+
 }

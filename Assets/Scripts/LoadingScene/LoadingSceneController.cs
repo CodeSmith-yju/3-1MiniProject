@@ -130,13 +130,14 @@ public class LoadingSceneController : MonoBehaviour
             //Debug.Log($"Loading progress: {progressBar.fillAmount:P2}");
 
             // 로딩이 완료되면 씬 전환 허용
-            if (progressBar.fillAmount >= 0.99f)
+            if (progressBar.fillAmount >= 0.99f )
             {
                 loadingText.text = "Loading Now...";
                 progressBar.fillAmount = 1f; // 최종적으로 100%로 설정
                 op.allowSceneActivation = true;
                 Debug.Log("Load Progress Complete!");
                 yield break;
+
             }
         }
     }

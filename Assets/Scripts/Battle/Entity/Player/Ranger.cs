@@ -17,44 +17,44 @@ public class Ranger : Ally
     public override void RangeAttack(BaseEntity target)
     {
         base.RangeAttack(target);
-        GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(0);
+        GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(0, isPlayer);
         obj_Arrow.transform.position = transform.GetChild(0).position;
         Arrow arrow = obj_Arrow.GetComponent<Arrow>();
-        arrow.Shoot(this, target);
+        arrow.Shoot(this, target, atkDmg);
     }
 
 
-    /*protected override void Update()
+    protected override void Skill()
     {
-        base.Update();
-        *//*if (_curstate == State.Skill)
-        {
-            Skill();
-        }*//*
-        //cur_target = target;
-    }*/
-
-
-    /*public void Skill()
-    {
+        base.Skill();
         if (_curstate == State.Skill)
         {
-            
-            StopAllCoroutines();
+            StopCoroutine(SetAttack());
             if (isAttack)
             {
-                
+
+                BattleManager.Instance.ui.GenerateLog(class_Portrait, "가시 화살");
+
+
+                ani.SetBool("isSkill", true);
                 BaseEntity target = FindTarget().GetComponent<BaseEntity>();
-                Debug.Log("타겟의 적에게 2배의 데미지로 한번 공격" + " " + (atkDmg * 2) + "데미지");
-                target.cur_Hp -= atkDmg * 2;
-                Debug.Log(target.cur_Hp + " " + target.name);
+                Debug.Log("타겟의 적에게 1.2배의 데미지로 공격" + " " + (atkDmg * 1.2) + "데미지");
+                GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(1, isPlayer);
+                obj_Arrow.transform.position = transform.GetChild(0).position;
+                Arrow arrow = obj_Arrow.GetComponent<Arrow>();
+                arrow.Shoot(this, target, atkDmg * 1.2f);
+                cur_Mp = 0;
+                Debug.Log("스킬 사용 ( " + name + " -> " + target.name + " )");
+
             }
             else
             {
                 return;
             }
-            cur_Mp = 0;
-            ChangeState(State.Idle);
         }
-    }*/
+        else
+        {
+            return;
+        }
+    }
 }

@@ -24,7 +24,7 @@ public class EnemyStatManager : MonoBehaviour
         if (hp_Check)
         {
             Debug.Log(name + " Ã¼·Â Ã¼Å©µÊ");
-            hp_Text.text = $"{(int)enemy.cur_Hp} / {enemy.max_Hp}";
+            hp_Text.text = $"{enemy.cur_Hp} / {enemy.max_Hp}";
             hp_Check = false;
             
         }
@@ -41,7 +41,7 @@ public class EnemyStatManager : MonoBehaviour
         if (enemy != null && enemy.cur_Hp >= 0)
         {
             hp.value = enemy.cur_Hp / enemy.max_Hp;
-            hp_Text.text = $"{(int)enemy.cur_Hp} / {enemy.max_Hp}";
+            hp_Text.text = $"{enemy.cur_Hp} / {enemy.max_Hp}";
             //mp.value = player.cur_Mp / player.max_Mp;
             //mp_Text.text = $"{enemy.cur_Mp} / {enemy.max_Mp}";
         }

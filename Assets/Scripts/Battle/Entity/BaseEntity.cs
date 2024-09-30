@@ -9,6 +9,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class BaseEntity : MonoBehaviour
 {
+    [Header("Entity_Stat")]
     public int entity_index;
     public float max_Hp;
     public float cur_Hp;
@@ -17,22 +18,31 @@ public class BaseEntity : MonoBehaviour
     public float atkDmg;
     public float atkSpd;
     public float atkRange;
+    public bool able_Skill = false;
+    public bool isMelee = false;
+
+    [Header("Entity_Action")]
+    public State _curstate;
     public bool isAttack = false;
     public bool isAtkDone = false;
     public bool isDie = false;
-    private bool isDieInProgress = false;
-    public bool isMelee = false;
-    public bool able_Skill = false;
+    
 
+    [Header("Entity_Animator")]
+    public Animator ani;
+
+    private bool isDieInProgress = false;
+    protected bool using_Skill = false;
+    protected bool isPlayer = true;
     private float atk_CoolTime;
     private float cur_atk_CoolTime;
 
     //public Transform target;
-    public NavMeshAgent agent;
+    NavMeshAgent agent;
     SpriteRenderer sprite;
-    public Animator ani;
+    
     protected EntityStat stat;
-
+    protected StateManager _stateManager;
 
 
     // 플레이어, 적 오브젝트의 어떤 행동을 하는지 설정
@@ -44,9 +54,6 @@ public class BaseEntity : MonoBehaviour
         Skill,
         Death
     }
-
-    public State _curstate;
-    protected StateManager _stateManager;
 
     private void Awake()
     {
@@ -160,14 +167,11 @@ public class BaseEntity : MonoBehaviour
                 _curstate = State.Death;
             }
 
-            /*if (able_Skill)
+            if (_curstate == State.Skill && using_Skill == false)
             {
-                if (cur_Mp == max_Mp && cur_Mp != 0)
-                {
-                    _curstate = State.Skill;
-                }
-            }*/
-            
+                Skill();
+            }
+
 
         }
         
@@ -447,12 +451,31 @@ public class BaseEntity : MonoBehaviour
         ani.SetTrigger("isAtk");
     }
 
-    public void RangeHit(BaseEntity target)
+    public void RangeHit(BaseEntity target, float dmg)
     {
-        float getDmgHp = target.cur_Hp - atkDmg;
+        float getDmgHp = target.cur_Hp - dmg;
         target.cur_Hp = getDmgHp;
         Debug.Log($"Hit to {target.name}! {target.cur_Hp}");
     }
+
+    // 스킬 작성
+    protected virtual void Skill()
+    {
+        using_Skill = true;
+        // 상속 받은 캐릭터들 마다 작성
+    }
+
+    public void SkillAnimationDone()
+    {
+        if (ani.GetBool("isSkill"))
+        {
+            ani.SetBool("isSkill", false);
+            ChangeState(State.Idle);
+            using_Skill = false;
+        }
+
+    }
+
 
     private IEnumerator Die()
     {

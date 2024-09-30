@@ -42,7 +42,7 @@ public class MapManager : MonoBehaviour
 
 
     Vector2Int player_Pos;             // 플레이어 시작 위치
-    int gridSize = 4;                  // 4x4 그리드 크기
+    int gridSize = 4; // 그리드 크기
     int roomSpacing = 25;              // 방 간격
     // 최소/최대 방 개수
     int maxBlockedRooms = 4;
@@ -89,6 +89,13 @@ public class MapManager : MonoBehaviour
         if (mapRows == null)
             mapRows = new();
 
+
+        gridSize += SetLevel(GameUiMgr.single.dungeon_Level);
+        maxBlockedRooms += SetLevel(GameUiMgr.single.dungeon_Level);
+        minChestRooms += SetLevel(GameUiMgr.single.dungeon_Level);
+        minRestRooms += SetLevel(GameUiMgr.single.dungeon_Level);
+        minBattleRooms += SetLevel(GameUiMgr.single.dungeon_Level);
+
         if (BattleManager.Instance.dialogue != null && BattleManager.Instance.dialogue.isTutorial)
         {
             player_Pos = new Vector2Int(0, 0);
@@ -99,6 +106,21 @@ public class MapManager : MonoBehaviour
         {
             StartCoroutine(GenerateDungeon());
         }    
+    }
+
+    // 난이도에 따른 수치 변경
+    public int SetLevel(int level)
+    {
+        int set_Level;
+
+        switch (level)
+        {
+            case 2:
+                set_Level = 1;
+                return set_Level;
+            default:
+                return 0;
+        }
     }
 
     // 던전 생성 함수
@@ -309,11 +331,11 @@ public class MapManager : MonoBehaviour
     {
         int randomValue = Random.Range(0, 100);
 
-        if (randomValue < 80)  // 80% 확률로 전투 방 배치
+        if (randomValue < 85)  // 85% 확률로 전투 방 배치
         {
             return battleRoomPrefabs[Random.Range(0, battleRoomPrefabs.Length)];
         }
-        else if (randomValue < 90)  // 10% 확률로 상자 방
+        else if (randomValue < 90)  // 5% 확률로 상자 방
         {
             return chestRoomPrefab;
         }
@@ -753,13 +775,14 @@ public class MapManager : MonoBehaviour
         Vector2Int relativePos = player_Pos + targetRoom;
         player_Pos = relativePos;
         StartCoroutine(MoveToCamera(GetRoom(player_Pos).cellObject.transform));
-        
+        if (!isMoveDone && BattleManager.Instance.ui.out_Portal.activeSelf)
+            BattleManager.Instance.ui.out_Portal.GetComponent<FadeEffect>().fadein = true;
+
     }
 
     // 방 이동 시 방 카메라와 미니맵 카메라 이동 메서드
     private IEnumerator MoveToCamera(Transform targetRoom)
     {
-
         Vector3 cam_Target_Pos = new Vector3(targetRoom.position.x, targetRoom.position.y, Camera.main.transform.position.z);
         Vector3 targetMap = new Vector3(GetRoom(player_Pos).minimap_Obj.transform.position.x, GetRoom(player_Pos).minimap_Obj.transform.position.y, map_Camera.transform.position.z);
 

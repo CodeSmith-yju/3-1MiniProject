@@ -9,6 +9,8 @@ public class TutorialManager : MonoBehaviour
     public bool isDeploy_Tutorial;
     public bool isItem_Tutorial;
 
+    public GameObject[] tuto_Boxs;
+
     public void Tutorial(int quest_cnt)
     {
         Debug.Log(quest_cnt);
@@ -202,18 +204,6 @@ public class TutorialManager : MonoBehaviour
                 {
                     BattleManager.Instance.ui.out_Portal.GetComponent<FadeEffect>().fadein = true;
                 }
-                BoxOpen[] box = FindObjectsOfType<BoxOpen>();
-                foreach (BoxOpen boxs in box)
-                {
-                    if (boxs.tag == "Box")
-                    {
-                        boxs.SetTutorial(false);
-                    }
-                    else
-                    {
-                        boxs.SetTutorial(true);
-                    }
-                }
 
                 BattleManager.Instance.ui.ui_Tutorial_Box.SetActive(true);
                 if (BattleManager.Instance.ui.ui_Tutorial_Box.activeSelf)
@@ -223,20 +213,19 @@ public class TutorialManager : MonoBehaviour
 
                 BattleManager.Instance.ui.dialogue_Bg.SetActive(false);
                 BattleManager.Instance.dialogue.ONOFF(false);
+
                 break;
             case 18:
                 BattleManager.Instance.ui.ui_Tutorial_Box.SetActive(true);
+                // ¹Ì¹Í Æ©Åä¸®¾ó¿¡¼­ È°¼ºÈ­
+                tuto_Boxs[1].SetActive(true); // ¹Ì¹Í »óÀÚ
+
                 if (BattleManager.Instance.ui.ui_Tutorial_Box.activeSelf)
                 {
-                    BattleManager.Instance.ui.ui_Tutorial_Box.transform.GetChild((quest_cnt - quest_cnt)).gameObject.SetActive(false);
-                    BattleManager.Instance.ui.ui_Tutorial_Box.transform.GetChild((quest_cnt - quest_cnt) + 1).gameObject.SetActive(true);
+                    BattleManager.Instance.ui.ui_Tutorial_Box.transform.GetChild((quest_cnt - quest_cnt)).gameObject.SetActive(true);
                 }
                 BattleManager.Instance.ui.dialogue_Bg.SetActive(false);
                 BattleManager.Instance.dialogue.ONOFF(false);
-
-                BoxOpen mimic = GameObject.FindGameObjectWithTag("Mimic").GetComponent<BoxOpen>();
-                mimic.SetTutorial(false);
-
                 break;
             case 19:
                 EndTutorial(quest_cnt);
@@ -348,7 +337,7 @@ public class TutorialManager : MonoBehaviour
             case 18:
                 Debug.Log("¹Ì¹Í Æ©Åä¸®¾ó ³¡");
                 BattleManager.Instance.ui.dialogue_Bg.SetActive(true);
-                BattleManager.Instance.ui.ui_Tutorial_Box.transform.GetChild((quest_cnt - quest_cnt) + 1).gameObject.SetActive(false);
+                BattleManager.Instance.ui.ui_Tutorial_Box.transform.GetChild((quest_cnt - quest_cnt)).gameObject.SetActive(false);
                 BattleManager.Instance.ui.ui_Tutorial_Box.SetActive(false);
 
                 BattleManager.Instance.dialogue.ONOFF(true);
