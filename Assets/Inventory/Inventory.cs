@@ -76,6 +76,10 @@ public class Inventory : MonoBehaviour
             Debug.Log("이거왜 중복호출된거냐");
             return false;
         }
+        if (DBConnector.GetUID() != -1)
+        {
+            DBConnector.LoadItemByCodeFromDB(_item.itemCode,ref _item.itemImage, ref _item.typeIcon);
+        }
         
         if (items.Count < slotCnt)//소유하고있는 아이템들의 개수가, 인벤토리 최대슬롯보다 작을때
         {

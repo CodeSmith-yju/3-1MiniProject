@@ -544,7 +544,7 @@ public class DBConnector : MonoBehaviour
 
         return null;  // 로드 실패 시 null 반환
     }
-    public static Item LoadItemByCodeFromDB(int itemCode)
+    public static bool LoadItemByCodeFromDB(int itemCode,ref Sprite _itemicon, ref Sprite _typeicon)
     {
         // SQL 쿼리: itemCode와 일치하는 아이템 선택
         string query = "SELECT * FROM item WHERE itemCode = @itemCode";
@@ -580,7 +580,10 @@ public class DBConnector : MonoBehaviour
                 byte[] typeIconBytes = (byte[])reader["typeIcon"];
                 loadedItem.typeIcon = DBConnector.ConvertBytesToSprite(typeIconBytes);
 
-                return loadedItem;  // 로드 성공 시 아이템 반환
+                _itemicon = loadedItem.itemImage;
+                _typeicon = loadedItem.typeIcon;
+
+                return true;  // 로드 성공 시 아이템 반환
             }
 
             reader.Close();
@@ -594,8 +597,9 @@ public class DBConnector : MonoBehaviour
             DBConnector.connection.Close();
         }
 
-        return null;  // 로드 실패 시 null 반환
+        return false;  // 로드 실패 시 null 반환
     }
+
 
     /*public static void SaveToDB(SaveData saveData, int userID)
     {

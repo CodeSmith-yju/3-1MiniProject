@@ -29,6 +29,7 @@ public class InSlot : MonoBehaviour
 
         blacksmith = _blacksmith;
         isInventory = _isInventory;
+        DBConnector.LoadItemByCodeFromDB(_item.itemCode, ref _item.itemImage, ref _item.typeIcon);
         myItem = _item;
         imgIcon.sprite = _item.itemImage;
         textName.text = myItem.itemName;

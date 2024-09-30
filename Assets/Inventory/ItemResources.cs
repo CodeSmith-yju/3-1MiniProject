@@ -10,17 +10,16 @@ public class ItemResources : MonoBehaviour
 
 
     [Header("DB Items")]
-    public List<Item> DBItems;
+    public List<Item> DBItems = new();
     private void Awake()
     {
         instance = this;
-        DBItems = new();
+        DBItems ??= new();
         for (int i = 0; i < 20; i++)
         {
-            DBItems.Add(DBConnector.LoadItemByCodeFromDB(i));
+            DBItems.Add(DBConnector.LoadItemFromDB(i));
         }
         setTypeIcons();
-
         itemRS.Clear();
         itemRS.AddRange(DBItems);
     }

@@ -11,6 +11,7 @@ public class SacrificeList : MonoBehaviour
     public void ChangeInspectionsVlue(Item _item)
     {
         Debug.Log("Run ChangeValue");
+        DBConnector.LoadItemByCodeFromDB(_item.itemCode, ref _item.itemImage, ref _item.typeIcon);
         for (int i = 0; i < inspections.Length; i++)
         {
             int countItem = 0;

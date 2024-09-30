@@ -1548,6 +1548,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             if (_items[i] != null)
             {
+                DBConnector.LoadItemByCodeFromDB(_items[i].itemCode,ref _items[i].itemImage, ref _items[i].typeIcon);
                 Inventory.Single.items.Add(_items[i]);
                 Debug.Log($"Inventory Item Loaded: {_items[i].itemName}");
             }
@@ -1579,6 +1580,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             if (_items[i] != null && _items[i].itemType == targetSlots[i].item?.itemType)
             {
+                DBConnector.LoadItemByCodeFromDB(_items[i].itemCode, ref _items[i].itemImage, ref _items[i].typeIcon);
                 targetSlots[i].itemIcon.sprite = _items[i].itemImage;
                 targetSlots[i].itemIcon.gameObject.SetActive(true);
                 targetSlots[i].item = _items[i];

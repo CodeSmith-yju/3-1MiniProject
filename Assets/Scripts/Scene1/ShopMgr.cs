@@ -116,6 +116,7 @@ public class ShopMgr : MonoBehaviour
 
         for (int i = 0; i < _loadShopitem.Count; i++)
         {
+            DBConnector.LoadItemByCodeFromDB(_loadShopitem[i].itemCode, ref _loadShopitem[i].itemImage, ref _loadShopitem[i].typeIcon);
             ShopSlot slot = Instantiate(slotPrefab, tfBuy);
             slot.ShopMgrSet(this);
             slot.Init(_loadShopitem[i], ShopState.BUY);
