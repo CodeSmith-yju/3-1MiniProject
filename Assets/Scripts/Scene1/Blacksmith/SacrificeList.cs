@@ -11,7 +11,6 @@ public class SacrificeList : MonoBehaviour
     public void ChangeInspectionsVlue(Item _item)
     {
         Debug.Log("Run ChangeValue");
-        DBConnector.LoadItemByCodeFromDB(_item.itemCode, ref _item.itemImage, ref _item.typeIcon);
         for (int i = 0; i < inspections.Length; i++)
         {
             int countItem = 0;
@@ -22,6 +21,7 @@ public class SacrificeList : MonoBehaviour
                     inspections[i].renovateOk = false;
                     break;
                 case 1:
+                    //DBConnector.LoadItemByCodeFromDB(_item.itemCode, ref _item.itemImage, ref _item.typeIcon);
                     if (_item == null)
                     {
                         inspections[i].SetItemPK(string.Empty);
@@ -45,6 +45,7 @@ public class SacrificeList : MonoBehaviour
                     }
                     break;
                 case 3:
+                    //DBConnector.LoadItemByCodeFromDB(_item.itemCode, ref _item.itemImage, ref _item.typeIcon);
                     for (int j = 0; j < Inventory.Single.items.Count; j++)
                     {
                         if (Inventory.Single.items[j].itemCode == inspections[i].GetItem().itemCode + 4)

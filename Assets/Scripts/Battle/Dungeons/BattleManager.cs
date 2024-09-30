@@ -331,17 +331,7 @@ public class BattleManager : MonoBehaviour
                     ui.out_Portal.GetComponent<FadeEffect>().fadeout = true;
                 }
 
-                // 총 골드, 경험치를 얻음
-                GameMgr.playerData[0].player_Gold += total_Gold;
-                GameMgr.playerData[0].GetPlayerExp(total_Exp);
-
-                // 얻은 아이템들을 인벤토리에 추가
-                foreach (Item item in total_Drop_Item)
-                {
-                    Inventory.Single.AddItem(item);
-                }
-
-
+               
                 Debug.Log("버튼 생성");
                 DestroyImmediate(ui.out_Portal.GetComponent<Button>());
                 ui.out_Portal.AddComponent<Button>().onClick.AddListener(() => TotalReward());
@@ -387,6 +377,16 @@ public class BattleManager : MonoBehaviour
                 {
                     ui.out_Portal.SetActive(true);
                     ui.out_Portal.GetComponent<FadeEffect>().fadeout = true;
+                }
+
+                // 총 골드, 경험치를 얻음
+                GameMgr.playerData[0].player_Gold += total_Gold;
+                GameMgr.playerData[0].GetPlayerExp(total_Exp);
+
+                // 얻은 아이템들을 인벤토리에 추가
+                foreach (Item item in total_Drop_Item)
+                {
+                    Inventory.Single.AddItem(item);
                 }
 
                 ui.OpenPopup(ui.vic_Popup);
@@ -536,22 +536,12 @@ public class BattleManager : MonoBehaviour
     // 던전이 끝나면 마을로 돌아가는 메서드
     public void ReturnToTown()
     {
-        /*Debug.Log("마을로 이동");
-
-    total_Gold = 0;
-    total_Exp = 0;
-
-    GameMgr.playerData[0].cur_Player_Sn -= 5;
-    GameMgr.playerData[0].cur_Player_Hp = GameMgr.playerData[0].max_Player_Hp;
-
-    GameUiMgr.single.GameSave();
-
-    SceneManager.LoadScene("Town");*/
+        total_Exp = 0;
+        total_Gold = 0;
+        total_Drop_Item.Clear();
 
         Debug.Log("Now_cur - exp" + GameMgr.playerData[0].player_cur_Exp);
         Debug.Log("Now_max - exp" + GameMgr.playerData[0].player_max_Exp);
-
-        //GameMgr.playerData[0].GetPlayerExp(40);
 
         Debug.Log("PlayerData - QID: " + GameUiMgr.single.questMgr.questId);
         Debug.Log("PlayerData - AID: " + GameUiMgr.single.questMgr.questActionIndex);
@@ -566,7 +556,6 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Load Type: " + GameMgr.single.LoadChecker());
 
         GameMgr.playerData[0].cur_Player_Sn -= 15;
-        //GameMgr.playerData[0].cur_Player_Hp -= 15;
         GameMgr.playerData[0].cur_Player_Hp = GameMgr.playerData[0].max_Player_Hp;
 
         GameUiMgr.single.GameSave();
