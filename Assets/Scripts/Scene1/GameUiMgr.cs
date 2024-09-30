@@ -2028,6 +2028,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         //게임이 최초로 시작될때, lastDepatuar[0]에 PlayerPartyData를 가진 MoveInSlot[0]에 || PartyData를 Player[0]의 Data로 채워서 Slot을만들어 MoveInSlot에 Add하고 
         PartyData pd = new(playerPrefab, GameMgr.playerData[0].player_level)//개체 초기화 단순화 하는 코드 
         {
+            //strPartyName = GameMgr.playerData[0].GetPlayerName(),
+            //level = GameMgr.playerData[0].player_level,
             partyHp = GameMgr.playerData[0].max_Player_Hp,
             partyMp = GameMgr.playerData[0].max_Player_Mp,
             partyAtk = GameMgr.playerData[0].base_atk_Dmg,
@@ -2038,9 +2040,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         poolMoveInSlot[0].partyData = pd;
         poolMoveInSlot[0].gameObject.SetActive(true);
         poolMoveInSlot[0].partyIcon.sprite = playerPrefab.GetComponent<SpriteRenderer>().sprite;
-        poolMoveInSlot[0].text_Name.text = "Player";
+        poolMoveInSlot[0].text_Name.text = GameMgr.playerData[0].GetPlayerName();
 
-        poolMoveInSlot[0].text_Lv.text = GameMgr.playerData[0].player_level.ToString();
+        poolMoveInSlot[0].text_Lv.text = "Lv"+GameMgr.playerData[0].player_level.ToString();
         poolMoveInSlot[0].classIcon.sprite = playerPrefab.GetComponent<Ally>().class_Icon;
         //poolMoveInSlot[0].partyData.obj_Data.GetComponent<Ally>().Init(GameMgr.playerData[0].playerIndex, GameMgr.playerData[0]);
         listPartyData.Add(poolMoveInSlot[0].partyData);

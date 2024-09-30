@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,7 +11,8 @@ public class BoxOpen : MonoBehaviour
     public GameObject mimic;
     bool isSetTutorial;
     int isMimic;
-
+    bool clck = true;
+    
     private void Awake()
     {
         ani = GetComponent<Animator>();
@@ -32,9 +34,10 @@ public class BoxOpen : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!isSetTutorial)
+        if (clck)
         {
             ani.SetTrigger("isOpen");
+           clck = !clck;
         }
     }
 
