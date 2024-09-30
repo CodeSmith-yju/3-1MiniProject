@@ -1,5 +1,4 @@
 ﻿//using System;
-using DarkPixelRPGUI.Scripts.UI.Equipment;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
