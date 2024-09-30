@@ -23,7 +23,7 @@ public class Ally : BaseEntity
     protected override void Start()
     {
         base.Start();
-        BattleManager.Instance.pool.isPlayer = true;
+        isPlayer = true;
     }
 
 

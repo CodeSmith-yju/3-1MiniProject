@@ -16,7 +16,7 @@ public class Wizard : Ally
     public override void RangeAttack(BaseEntity target)
     {
         base.RangeAttack(target);
-        GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(2); // 볼트 프리팹
+        GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(2, isPlayer); // 볼트 프리팹
         obj_Arrow.transform.position = transform.GetChild(0).position;
         Arrow arrow = obj_Arrow.GetComponent<Arrow>();
         arrow.Shoot(this, target, atkDmg);
@@ -36,7 +36,7 @@ public class Wizard : Ally
                 ani.SetBool("isSkill", true);
                 BaseEntity target = FindTarget().GetComponent<BaseEntity>();
                 Debug.Log("타겟의 적에게 3배의 데미지로 공격" + " " + (atkDmg * 3) + "데미지");
-                GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(3);
+                GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(3, isPlayer);
                 obj_Arrow.transform.position = transform.GetChild(0).position;
                 Arrow arrow = obj_Arrow.GetComponent<Arrow>();
                 arrow.Shoot(this, target, atkDmg * 3f);

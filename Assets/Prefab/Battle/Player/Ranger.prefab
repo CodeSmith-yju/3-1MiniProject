@@ -204,14 +204,13 @@ MonoBehaviour:
   atkDmg: 0
   atkSpd: 0
   atkRange: 0
+  able_Skill: 0
+  isMelee: 0
+  _curstate: 0
   isAttack: 0
   isAtkDone: 0
   isDie: 0
-  isMelee: 0
-  able_Skill: 0
-  agent: {fileID: 0}
   ani: {fileID: 1876938298027869184}
-  _curstate: 0
   player_Name: Ranger
   level: 5
   class_Icon: {fileID: 21300000, guid: bbf8638a8a75d9c42b93639213c92c9b, type: 3}

@@ -99,7 +99,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 2.2
+  m_Speed: 2
   m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -214,14 +214,13 @@ MonoBehaviour:
   atkDmg: 0
   atkSpd: 0
   atkRange: 0
+  able_Skill: 0
+  isMelee: 0
+  _curstate: 0
   isAttack: 0
   isAtkDone: 0
   isDie: 0
-  isMelee: 0
-  able_Skill: 0
-  agent: {fileID: 0}
   ani: {fileID: 0}
-  _curstate: 0
   exp_Cnt: 0
   gold_Cnt: 0
   item_Drop_Check: 0

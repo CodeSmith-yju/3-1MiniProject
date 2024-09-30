@@ -9,6 +9,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class BaseEntity : MonoBehaviour
 {
+    [Header("Entity_Stat")]
     public int entity_index;
     public float max_Hp;
     public float cur_Hp;
@@ -17,22 +18,31 @@ public class BaseEntity : MonoBehaviour
     public float atkDmg;
     public float atkSpd;
     public float atkRange;
+    public bool able_Skill = false;
+    public bool isMelee = false;
+
+    [Header("Entity_Action")]
+    public State _curstate;
     public bool isAttack = false;
     public bool isAtkDone = false;
     public bool isDie = false;
+    
+
+    [Header("Entity_Animator")]
+    public Animator ani;
+
     private bool isDieInProgress = false;
-    public bool isMelee = false;
-    public bool able_Skill = false;
     protected bool using_Skill = false;
+    protected bool isPlayer = true;
     private float atk_CoolTime;
     private float cur_atk_CoolTime;
 
     //public Transform target;
-    public NavMeshAgent agent;
+    NavMeshAgent agent;
     SpriteRenderer sprite;
-    public Animator ani;
+    
     protected EntityStat stat;
-
+    protected StateManager _stateManager;
 
 
     // 플레이어, 적 오브젝트의 어떤 행동을 하는지 설정
@@ -44,9 +54,6 @@ public class BaseEntity : MonoBehaviour
         Skill,
         Death
     }
-
-    public State _curstate;
-    protected StateManager _stateManager;
 
     private void Awake()
     {

@@ -14,7 +14,6 @@ public class ObjectManager : MonoBehaviour
     public List<GameObject>[] pools;
 
     public Transform obj_Parent;
-    public bool isPlayer;
 
     private void Awake()
     {
@@ -26,7 +25,7 @@ public class ObjectManager : MonoBehaviour
         }
     }
 
-    public GameObject GetObject(int index)
+    public GameObject GetObject(int index, bool isPlayer)
     {
         GameObject select = null;
 
@@ -47,10 +46,14 @@ public class ObjectManager : MonoBehaviour
         {
             // 새로 생성하고 select에 할당
             if (isPlayer)
+            {
                 select = Instantiate(player_Prefabs[index], obj_Parent);
+            }  
             else
+            {
                 select = Instantiate(enemy_Prefabs[index], obj_Parent);
-
+            }
+                
             pools[index].Add(select);
         }
 

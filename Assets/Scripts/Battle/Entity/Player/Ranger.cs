@@ -17,7 +17,7 @@ public class Ranger : Ally
     public override void RangeAttack(BaseEntity target)
     {
         base.RangeAttack(target);
-        GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(0);
+        GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(0, isPlayer);
         obj_Arrow.transform.position = transform.GetChild(0).position;
         Arrow arrow = obj_Arrow.GetComponent<Arrow>();
         arrow.Shoot(this, target, atkDmg);
@@ -39,7 +39,7 @@ public class Ranger : Ally
                 ani.SetBool("isSkill", true);
                 BaseEntity target = FindTarget().GetComponent<BaseEntity>();
                 Debug.Log("타겟의 적에게 1.2배의 데미지로 공격" + " " + (atkDmg * 1.2) + "데미지");
-                GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(1);
+                GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(1, isPlayer);
                 obj_Arrow.transform.position = transform.GetChild(0).position;
                 Arrow arrow = obj_Arrow.GetComponent<Arrow>();
                 arrow.Shoot(this, target, atkDmg * 1.2f);

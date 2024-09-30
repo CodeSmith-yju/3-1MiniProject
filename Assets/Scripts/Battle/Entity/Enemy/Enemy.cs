@@ -4,21 +4,18 @@ using UnityEngine;
 
 public class Enemy : BaseEntity
 {
+    [Header("Enemy_Item")]
     public float exp_Cnt;
     public int gold_Cnt;
     public bool item_Drop_Check = false;
+
+
     private Item drop_Item;
 
     protected override void Start()
     {
         base.Start();
-        BattleManager.Instance.pool.isPlayer = false;
-    }
-
-
-    protected override void Update()
-    {
-        base.Update();
+        isPlayer = false;
     }
 
     // 최대 체력, 최대 마나, 공격력, 공격속도, 사거리, 근접유무, 스킬유무, 경험치, 골드, 드랍아이템
@@ -74,7 +71,6 @@ public class Enemy : BaseEntity
     {
         // AudioManager.single.EnemySound(index, index, 1);
     }
-
 
     public void DieSound(int index)
     {

@@ -8,8 +8,8 @@ public class BoxOpen : MonoBehaviour
 {
     public Animator ani;
     public GameObject mimic;
-    bool isSetTutorial;
     int isMimic;
+    bool isOpening = false;
 
     private void Awake()
     {
@@ -32,9 +32,10 @@ public class BoxOpen : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!isSetTutorial)
+        if (!isOpening)
         {
             ani.SetTrigger("isOpen");
+            isOpening = true;
         }
     }
 
@@ -83,11 +84,4 @@ public class BoxOpen : MonoBehaviour
             return;
         }
     }
-
-
-    public void SetTutorial(bool setTutorial)
-    {
-        isSetTutorial = setTutorial;
-    }
- 
 }
