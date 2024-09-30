@@ -96,10 +96,12 @@ public class MainMenuMgr : MonoBehaviour
 
     public void OnClickedQuite()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
-        Application.Quit();
+        GameMgr.single.popUp.SetPopUp("게임을 종료 하시겠습니까?", PopUpState.Quite);
+        if (GameMgr.single.popUp.gameObject.activeSelf == false)
+        {
+            GameMgr.single.popUp.gameObject.SetActive(true);
+            Debug.Log("Run if");
+        }
     }
 
 

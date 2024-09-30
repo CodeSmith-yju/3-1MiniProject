@@ -223,7 +223,7 @@ public class DBConnector : MonoBehaviour
     //
     // Unity -> DB
     // 아이템 정보를 DB에 저장하는 함수 (이미지 포함)
-    public static bool InsertItemToDB(Item item)
+    /*public static bool InsertItemToDB(Item item)
     {
         // 아이템 이미지와 타입 아이콘을 바이트 배열로 변환
         byte[] itemImageBytes = ConvertSpriteToBytes(item.itemImage);
@@ -263,6 +263,49 @@ public class DBConnector : MonoBehaviour
         {
             connection.Close();
         }
+    }*/
+    public static bool InsertItemToDB(Item item)//최종수정본
+    {
+        byte[] itemImageBytes = ConvertSpriteToBytes(item.itemImage);
+        byte[] typeIconBytes = ConvertSpriteToBytes(item.typeIcon);
+
+        // 데이터 길이 로그로 출력하여 저장 전후 확인
+        Debug.Log("Item Image Bytes Length (Before Saving): " + (itemImageBytes != null ? itemImageBytes.Length : 0));
+        Debug.Log("Type Icon Bytes Length (Before Saving): " + (typeIconBytes != null ? typeIconBytes.Length : 0));
+
+        string query = "INSERT INTO item (itemCode, itemName, itemType, itemTitle, itemDesc, itemPrice, itemPower, itemStack, modifyStack, itemImg, typeIcon) " +
+                       "VALUES (@itemCode, @itemName, @itemType, @itemTitle, @itemDesc, @itemPrice, @itemPower, @itemStack, @modifyStack, @itemImg, @typeIcon)";
+
+        MySqlCommand cmd = new MySqlCommand(query, connection);
+
+        // 파라미터 추가
+        cmd.Parameters.AddWithValue("@itemCode", item.itemCode);
+        cmd.Parameters.AddWithValue("@itemName", item.itemName);
+        cmd.Parameters.AddWithValue("@itemType", item.itemType.ToString());
+        cmd.Parameters.AddWithValue("@itemTitle", item.itemTitle);
+        cmd.Parameters.AddWithValue("@itemDesc", item.itemDesc);
+        cmd.Parameters.AddWithValue("@itemPrice", item.itemPrice);
+        cmd.Parameters.AddWithValue("@itemPower", item.itemPower);
+        cmd.Parameters.AddWithValue("@itemStack", item.itemStack);
+        cmd.Parameters.AddWithValue("@modifyStack", item.modifyStack);
+        cmd.Parameters.AddWithValue("@itemImg", itemImageBytes);
+        cmd.Parameters.AddWithValue("@typeIcon", typeIconBytes);
+
+        try
+        {
+            connection.Open();
+            cmd.ExecuteNonQuery();
+            return true;
+        }
+        catch (MySqlException ex)
+        {
+            Debug.LogError("DB Insert Error: " + ex.Message);
+            return false;
+        }
+        finally
+        {
+            connection.Close();
+        }
     }
 
     // Sprite를 byte 배열로 변환하는 함수
@@ -272,7 +315,7 @@ public class DBConnector : MonoBehaviour
         Texture2D texture = sprite.texture;
         return texture.EncodeToPNG();  // PNG 형식으로 변환
     }*/
-    private static byte[] ConvertSpriteToBytes(Sprite sprite)
+    /*private static byte[] ConvertSpriteToBytes(Sprite sprite)
     {
         // 압축된 텍스처인지 확인
         if (GraphicsFormatUtility.IsCompressedFormat(sprite.texture.graphicsFormat))
@@ -287,9 +330,28 @@ public class DBConnector : MonoBehaviour
         // PNG 형식으로 텍스처를 변환
         Texture2D texture = sprite.texture;
         return texture.EncodeToPNG();  // PNG 형식으로 변환
+    }*/
+    private static byte[] ConvertSpriteToBytes(Sprite sprite)//최종 수정본
+    {
+        // 압축된 텍스처인지 확인
+        if (GraphicsFormatUtility.IsCompressedFormat(sprite.texture.graphicsFormat))
+        {
+            Debug.LogWarning($"Texture '{sprite.name}' is in a compressed format and cannot be converted to bytes.");
+            // 압축된 텍스처도 처리할 수 있도록 예외적인 경우라도 PNG로 변환을 시도
+            Texture2D decompressedTexture = new Texture2D(sprite.texture.width, sprite.texture.height);
+            Graphics.CopyTexture(sprite.texture, decompressedTexture);
+            return decompressedTexture.EncodeToPNG();
+        }
+
+        // 텍스처가 읽기 가능한지 확인
+        CheckTextureReadable(sprite);
+
+        // PNG 형식으로 텍스처를 변환
+        Texture2D texture = sprite.texture;
+        return texture.EncodeToPNG();  // PNG 형식으로 변환
     }
 
-    static void CheckTextureReadable(Sprite sprite)
+    /*static void CheckTextureReadable(Sprite sprite)
     {
         if (!sprite.texture.isReadable)
         {
@@ -299,14 +361,42 @@ public class DBConnector : MonoBehaviour
         {
             Debug.Log($"Texture '{sprite.name}' is readable.");
         }
+    }*/
+    private static void CheckTextureReadable(Sprite sprite)//최종 수정본
+    {
+        if (!sprite.texture.isReadable)
+        {
+            Debug.LogError($"Texture '{sprite.name}' is not readable. Please enable Read/Write in the texture import settings.");
+            throw new UnityException($"Texture '{sprite.name}' is not readable.");
+        }
     }
     //
     // DB -> Unity
     // BLOB 데이터를 Sprite로 변환하는 함수
-    public static Sprite ConvertBytesToSprite(byte[] imageBytes)
+    /*public static Sprite ConvertBytesToSprite(byte[] imageBytes)
     {
         Texture2D texture = new Texture2D(2, 2);
         texture.LoadImage(imageBytes);  // 이미지 데이터를 텍스처로 로드
+
+        // 텍스처를 Sprite로 변환
+        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+    }*/
+    public static Sprite ConvertBytesToSprite(byte[] imageBytes)//최종 수정본
+    {
+        // 이미지 데이터가 유효한지 먼저 확인
+        if (imageBytes == null || imageBytes.Length == 0)
+        {
+            Debug.LogError("Image byte data is invalid or empty.");
+            return null;
+        }
+
+        // 바이트 배열에서 텍스처를 생성
+        Texture2D texture = new Texture2D(2, 2);
+        if (!texture.LoadImage(imageBytes))
+        {
+            Debug.LogError("Failed to load image from byte data.");
+            return null;
+        }
 
         // 텍스처를 Sprite로 변환
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
@@ -328,7 +418,7 @@ public class DBConnector : MonoBehaviour
     }
 
     // DB에서 아이템 데이터를 읽는 함수
-    public static Item LoadItemFromDB(int itemCode)
+    /*public static Item LoadItemFromDB(int itemCode)
     {
         string query = $"SELECT * FROM item WHERE itemCode = {itemCode}";
         MySqlCommand cmd = new MySqlCommand(query, connection);
@@ -355,6 +445,45 @@ public class DBConnector : MonoBehaviour
 
             byte[] typeIconBytes = (byte[])reader["typeIcon"];
             item.typeIcon = ConvertBytesToSprite(typeIconBytes);
+
+            connection.Close();
+            return item;
+        }
+
+        connection.Close();
+        return null;
+    }*/
+    public static Item LoadItemFromDB(int itemCode)//최종 수정본
+    {
+        string query = $"SELECT * FROM item WHERE itemCode = {itemCode}";
+        MySqlCommand cmd = new MySqlCommand(query, connection);
+
+        connection.Open();
+        MySqlDataReader reader = cmd.ExecuteReader();
+
+        if (reader.Read())
+        {
+            Item item = new Item();
+            item.itemCode = reader.GetInt32("itemCode");
+            item.itemName = reader.GetString("itemName");
+            item.itemType = (Item.ItemType)Enum.Parse(typeof(Item.ItemType), reader.GetString("itemType"));
+            item.itemTitle = reader.GetString("itemTitle");
+            item.itemDesc = reader.GetString("itemDesc");
+            item.itemPrice = reader.GetInt32("itemPrice");
+            item.itemPower = reader.GetFloat("itemPower");
+            item.itemStack = reader.GetInt32("itemStack");
+            item.modifyStack = reader.GetInt32("modifyStack");
+
+            // 이미지 데이터를 BLOB에서 가져와 Sprite로 변환
+            byte[] itemImgBytes = (byte[])reader["itemImg"];
+            item.itemImage = ConvertBytesToSprite(itemImgBytes);
+
+            byte[] typeIconBytes = (byte[])reader["typeIcon"];
+            item.typeIcon = ConvertBytesToSprite(typeIconBytes);
+
+            // 불러온 바이트 길이 로그로 확인
+            Debug.Log("Item Image Bytes Length (After Loading): " + (itemImgBytes != null ? itemImgBytes.Length : 0));
+            Debug.Log("Type Icon Bytes Length (After Loading): " + (typeIconBytes != null ? typeIconBytes.Length : 0));
 
             connection.Close();
             return item;

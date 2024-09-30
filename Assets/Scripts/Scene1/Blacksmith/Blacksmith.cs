@@ -118,7 +118,7 @@ public class Blacksmith : MonoBehaviour
 
         Refresh();
     }
-    void OpenBlacksmith()
+    public void OpenBlacksmith()
     {
         NowGold();
         samenessCk = false;

@@ -55,7 +55,7 @@ public class PopUp : MonoBehaviour
                 canvas.GetComponent<FadeInEffect>().FadeOFFAndLoadScene();
                 break;
             case PopUpState.GameSave:
-                //
+                GameUiMgr.single.GameSave();
                 break;
             case PopUpState.GameReLoad:
                 GameMgr.single.IsGameLoad(true);

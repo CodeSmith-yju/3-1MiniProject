@@ -94,8 +94,38 @@ public class ShopMgr : MonoBehaviour
             shopSlots.Add(slot);
         }
     }
+    public void ReLoadShopItems(List<Item> _loadShopitem)//최종수정
+    {
+        if (_loadShopitem == null || _loadShopitem.Count == 0)
+        {
+            Debug.LogWarning("No shop items to load.");
+            return;
+        }
 
-    public void ReLoadShopItems(List<Item> _loadShopitem)
+        // 상점 슬롯 초기화
+        if (shopSlots.Count > 0)
+        {
+            foreach (var slot in shopSlots)
+            {
+                Destroy(slot.gameObject);
+            }
+            shopSlots.Clear();
+        }
+
+        Debug.Log("Run ReLoad shopItem");
+
+        for (int i = 0; i < _loadShopitem.Count; i++)
+        {
+            ShopSlot slot = Instantiate(slotPrefab, tfBuy);
+            slot.ShopMgrSet(this);
+            slot.Init(_loadShopitem[i], ShopState.BUY);
+            slot.shopIndex = i;
+            shopSlots.Add(slot);
+
+            Debug.Log($"Shop Item Loaded: {_loadShopitem[i].itemName}");
+        }
+    }
+    /*public void ReLoadShopItems(List<Item> _loadShopitem)
     {
         // 예외 처리 추가
         if (_loadShopitem == null || _loadShopitem.Count == 0)
@@ -125,7 +155,7 @@ public class ShopMgr : MonoBehaviour
             // 생성된 슬롯을 리스트에 추가
             shopSlots.Add(slot);
         }
-    }
+    }*/
 
     /*public void ReLoadShopItems(List<Item> _loadShopitem)
     {

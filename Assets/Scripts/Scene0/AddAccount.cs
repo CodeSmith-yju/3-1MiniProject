@@ -83,7 +83,13 @@ public class AddAccount : MonoBehaviour
             }
             else
             {
-                Debug.LogError("회원가입 실패: ID가 중복되었거나 다른 문제가 발생했습니다.");
+                GameMgr.single.popUp.SetPopUp("회원가입 실패: ID 중복", PopUpState.None);
+                if (GameMgr.single.popUp.gameObject.activeSelf == false)
+                {
+                    GameMgr.single.popUp.gameObject.SetActive(true);
+                    Debug.Log("Run if");
+                }
+                Debug.LogError("overlap 회원가입 실패: ID가 중복되었거나 다른 문제가 발생했습니다.");
                 // 회원가입 실패 시 처리 (예: 오류 메시지 출력)
             }
 
@@ -92,7 +98,13 @@ public class AddAccount : MonoBehaviour
         else
         {
             //비밀번호 불일치
-            Debug.Log("비밀번호 불일치로 회원가입 미실행");
+            GameMgr.single.popUp.SetPopUp("회원가입 실패: \n비밀번호 불일치", PopUpState.None);
+            if (GameMgr.single.popUp.gameObject.activeSelf == false)
+            {
+                GameMgr.single.popUp.gameObject.SetActive(true);
+                Debug.Log("Run if");
+            }
+            Debug.Log("Defects 비밀번호 불일치로 회원가입 미실행");
         }
 
         hoverCommitSoundEv.ishover = false;

@@ -155,6 +155,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     [Header("Shop UI")]
     [SerializeField] ShopMgr shopMgr;
+    [SerializeField] Blacksmith blacksmith;
+    public GameObject SnB;
+
+    [Header("PopUp")]
+    public PopUp popUp;
 
     [Header("Dungeon_Level")]
     public GameObject dungeon_Level_Ui;
@@ -332,7 +337,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         HideSubButtons();//서브버튼 하위 목록 시작할때 꺼줌
         OffVideoOption_S1();//게임옵션 설정창 시작할때 꺼줌
         panelPartyBoard.SetActive(false);//05-12 파티창 게임시작할때 꺼줌
-
+        SnB.SetActive(false);//09-30
         bigMinimapChek = true;
         smallMap.gameObject.SetActive(true);
         bigMap.gameObject.SetActive(false);
@@ -490,6 +495,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 {
                     ToggleSubButtons();
                 }
+            }
+            else if (blacksmith.gameObject.activeSelf)
+            {
+
             }
             /*else
             {
@@ -915,7 +924,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         DBConnector.SaveToDB(gameSaveData, DBConnector.GetUID());
         Debug.Log("Save Success: Data saved to DB.");
     }
-    public void GameLoad() //LoadPlayerDataFromDB()
+    /*public void GameLoad() //LoadPlayerDataFromDB()
     {
         Debug.Log("Run LoadData (DB Load)");
 
@@ -971,6 +980,54 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         GameUiMgr.single.shopMgr.ReLoadShopItems(loadData.shops);
 
         Debug.Log("Load Success: Data loaded from DB.");
+    }*/
+    public void GameLoad() //최종수정
+    {
+        Debug.Log("Run LoadData (DB Load)");
+
+        // DB에서 SaveData 불러오기
+        SaveData loadData = DBConnector.LoadFromDB(DBConnector.GetUID());
+
+        if (loadData == null)
+        {
+            Debug.LogError("No saved data found in DB for userID: " + DBConnector.GetUID());
+            return;
+        }
+
+        // 플레이어 데이터 적용
+        GameMgr.single.OnSelectPlayer(loadData.playerName);
+
+        // 플레이어 기본 정보 적용
+        GameMgr.playerData[0].max_Player_Hp = loadData.p_max_hp;
+        GameMgr.playerData[0].cur_Player_Hp = loadData.p_cur_hp;
+        GameMgr.playerData[0].max_Player_Sn = loadData.p_max_sn;
+        GameMgr.playerData[0].cur_Player_Sn = loadData.p_cur_sn;
+        GameMgr.playerData[0].max_Player_Mp = loadData.p_max_mp;
+        GameMgr.playerData[0].cur_Player_Mp = loadData.p_cur_mp;
+        GameMgr.playerData[0].player_max_Exp = loadData.p_max_Exp;
+        GameMgr.playerData[0].player_cur_Exp = loadData.p_cur_Exp;
+        GameMgr.playerData[0].player_Gold = loadData.p_gold;
+        GameMgr.playerData[0].player_level = loadData.p_level;
+        GameMgr.playerData[0].atk_Speed = loadData.p_atk_speed;
+        GameMgr.playerData[0].atk_Range = loadData.p_atk_range;
+        GameMgr.playerData[0].base_atk_Dmg = loadData.p_base_atk_Dmg;
+
+        // 인벤토리 및 장비 데이터 로드
+        LoadInventory(loadData.listInven);
+        LoadEquipment(loadData.listEquip);
+
+        // 퀘스트 데이터 로드
+        if (GameUiMgr.single.questMgr.questId <= 40)
+        {
+            GameUiMgr.single.questMgr.questId = loadData.questId;
+            GameUiMgr.single.questMgr.questActionIndex = loadData.questActionIndex;
+        }
+        GameUiMgr.single.questMgr.ControlQuestObejct();
+
+        // 상점 아이템 로드
+        GameUiMgr.single.shopMgr.ReLoadShopItems(loadData.shops);
+
+        Debug.Log("Load Success: Data loaded from DB.");
     }
 
 
@@ -1016,11 +1073,26 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnClickedQuite()
     {
-        //경고 툴팁 먼저 출력하게하기
-    #if UNITY_EDITOR
+        popUp.SetPopUp("게임을 종료 하시겠습니까?", PopUpState.Quite);
+        if (GameUiMgr.single.popUp.gameObject.activeSelf == false)
+        {
+            GameUiMgr.single.popUp.gameObject.SetActive(true);
+            Debug.Log("Run if");
+        }
+/*#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-    #endif
-        Application.Quit();
+#endif
+        Application.Quit();*/
+
+    }
+    public void OnClickedGameSave()
+    {
+        popUp.SetPopUp("게임을 저장 하시겠습니까?", PopUpState.GameSave);
+        if (GameUiMgr.single.popUp.gameObject.activeSelf == false)
+        {
+            GameUiMgr.single.popUp.gameObject.SetActive(true);
+            Debug.Log("Run if");
+        }
     }
     public void OnYesButtonClick()
     {
@@ -1455,7 +1527,75 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         questMgr.receptionist[1].SetActive(false);
     }
     #region DBConnect_Load_Method
+
+    //최종수정 2개LoadInventory LoadEquipment
     public void LoadInventory(List<Item> _items)
+    {
+        Inventory.Single.items.Clear();
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i].RemoveSlot();  // 슬롯 초기화
+        }
+
+        if (_items == null || _items.Count == 0)
+        {
+            Debug.Log("No inventory items to load.");
+            return;
+        }
+
+        // 인벤토리 아이템 추가
+        for (int i = 0; i < _items.Count; i++)
+        {
+            if (_items[i] != null)
+            {
+                Inventory.Single.items.Add(_items[i]);
+                Debug.Log($"Inventory Item Loaded: {_items[i].itemName}");
+            }
+            else
+            {
+                Debug.LogWarning("Null item found in inventory list.");
+            }
+        }
+
+        RedrawSlotUI();
+    }
+    public void LoadEquipment(List<Item> _items)
+    {
+        if (_items == null || _items.Count == 0)
+        {
+            Debug.Log("No equipment items to load.");
+            return;
+        }
+
+        // 슬롯 수와 아이템 수가 맞는지 확인
+        if (_items.Count != targetSlots.Length)
+        {
+            Debug.LogWarning("Loaded equipment items count does not match targetSlots length.");
+            return;
+        }
+
+        // 장비 슬롯에 아이템 추가
+        for (int i = 0; i < targetSlots.Length; i++)
+        {
+            if (_items[i] != null && _items[i].itemType == targetSlots[i].item?.itemType)
+            {
+                targetSlots[i].itemIcon.sprite = _items[i].itemImage;
+                targetSlots[i].itemIcon.gameObject.SetActive(true);
+                targetSlots[i].item = _items[i];
+                targetSlots[i].wearChek = true;
+
+                Debug.Log($"Equipment Loaded: {_items[i].itemName}");
+            }
+            else
+            {
+                Debug.LogWarning($"Item in slot {i} is null or type mismatch.");
+            }
+        }
+
+        RedrawSlotUI();
+    }
+
+    /*public void LoadInventory(List<Item> _items)
     {
         Inventory.Single.items.Clear();
         for (int i = 0; i < slots.Length; i++)
@@ -1507,7 +1647,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
 
         RedrawSlotUI();
-    }
+    }*/
     #endregion
     #region Local_Load_Methods
     /*public void LoadInventory(List<Item> _items)
@@ -1571,7 +1711,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     }
     public void ActiveShop()
     {
-        if (shopMgr.gameObject.activeSelf == false && !activeInventory)
+        if (SnB.activeSelf)
+            SnB.SetActive(false);
+
+        if (!shopMgr.gameObject.activeSelf && !activeInventory)
         {
             shopMgr.gameObject.SetActive(true);
             shopMgr.OpenTap(ShopState.BUY);
@@ -1579,6 +1722,21 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         else
         {
             shopMgr.gameObject.SetActive(false);
+        }
+    }
+    public void ActiveBlackSmith()
+    {
+        if (SnB.activeSelf)
+            SnB.SetActive(false);
+
+        if (!blacksmith.gameObject.activeSelf && !activeInventory)
+        {
+            blacksmith.gameObject.SetActive(true);
+            blacksmith.OpenBlacksmith();
+        }
+        else
+        {
+            blacksmith.gameObject.SetActive(false);
         }
     }
 
@@ -1900,6 +2058,22 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     public void MovePlayerPlace(int _stateIndex)
     {
         nowPlayerPlace = (PlaceState)_stateIndex;
+    }
+
+    public void OpenShop()
+    {
+        if (!shopMgr.gameObject.activeSelf)
+        {
+            ActiveShop();
+        }
+    }
+    public void OpenBlackSmith()
+    {
+        if (!blacksmith.gameObject.activeSelf)
+        {
+            ActiveBlackSmith();
+        }
+
     }
 }
 public enum PlaceState

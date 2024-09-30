@@ -19,11 +19,12 @@ public class ItemResources : MonoBehaviour
         {
             DBItems.Add(DBConnector.LoadItemByCodeFromDB(i));
         }
+        setTypeIcons();
+
         itemRS.Clear();
         itemRS.AddRange(DBItems);
-        //setTypeIcons();
     }
-    /*void setTypeIcons()//Local_Icon_Set
+    void setTypeIcons()//Local_Icon_Set
     {
         for (int i = 0; i < itemRS.Count; i++)
         {
@@ -31,7 +32,7 @@ public class ItemResources : MonoBehaviour
             Debug.Log("===================================================\n" + itemRS[i].itemType);
             IconSet(itemRS[i]);
         }
-    }*/
+    }
 
     public void IconSet(Item _item)
     {

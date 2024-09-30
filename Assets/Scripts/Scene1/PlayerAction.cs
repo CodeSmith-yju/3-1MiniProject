@@ -42,7 +42,14 @@ public class PlayerAction : MonoBehaviour
             //Debug.Log(scanRayObjcet.name); // 04- 23 Debug
 
             ObjectData obj = scanRayObjcet.GetComponent<ObjectData>();
-            if (obj.id == 9000)
+            if (obj.id == 4000)
+            {
+                if (GameUiMgr.single.questMgr.questId >= 30)
+                {
+                    GameUiMgr.single.SnB.SetActive(true);
+                }
+            }
+            else if (obj.id == 9000)
             {
                 if (GameUiMgr.single.questMgr.questId >= 30)
                 {

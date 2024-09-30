@@ -21,7 +21,7 @@ public class QuestMgr : MonoBehaviour
     public GameObject[] receptionist;// 모험가길드에서 튜토리얼을진행할 접수원을 분할하여 퀘스트기능을 구현하는데 용이하도록함
 
     //04-26 Quest Potion Ev
-    //private bool oneTimeEv = true;
+    //private static bool oneTimeEv = false;
 
     private void Awake()
     {
@@ -149,6 +149,11 @@ public class QuestMgr : MonoBehaviour
                 else if (questActionIndex == 2)
                 {
                     Debug.Log("Case32");
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Debug.Log("Make Tutorial Potion");
+                        Inventory.Single.AddItem(ItemResources.instance.itemRS[6]);
+                    }
                     receptionist[0].SetActive(true);
                     receptionist[1].SetActive(false);
                 }
@@ -160,7 +165,6 @@ public class QuestMgr : MonoBehaviour
                 }
                 if (questActionIndex == 1)
                 {
-                    //questActionIndex++;
                     Debug.Log("Case 41");
                 }
                 else if (questActionIndex == 2)
