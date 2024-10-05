@@ -37,6 +37,8 @@ public class UIManager : MonoBehaviour
     public GameObject vic_Popup;
     public GameObject def_Popup;
     public GameObject alert_Popup;
+    public GameObject event_Popup;
+    public GameObject event_Alert_Popup;
 
 
     [Header("Tutorial")]

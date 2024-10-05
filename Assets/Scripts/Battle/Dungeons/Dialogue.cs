@@ -126,6 +126,8 @@ public class Dialogue : MonoBehaviour
         }
         text_Done = true;
         isTyping = false;
+
+        Debug.Log("타이핑 끝");
         yield break;
     }
 

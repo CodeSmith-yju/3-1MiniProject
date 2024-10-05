@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Dependencies.Sqlite;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Experimental.Rendering;
@@ -30,6 +31,8 @@ public class BattleManager : MonoBehaviour
     public GameObject unit_deploy_area;
     private bool isFirstEnter;
     private bool battleEnded = false;
+    public int event_Stack = 0;
+    private bool poison_Check = false;
     //public bool isMapDone = false;
 
     [Header("Stage")]
@@ -92,6 +95,8 @@ public class BattleManager : MonoBehaviour
             Debug.Log("NOW QUESTID 40 GOLD: " + GameMgr.playerData[0].player_Gold);
             GameMgr.playerData[0].player_Gold = 1500;
         }
+
+        event_Stack = 0;
 
         // 소모품 아이템 체크 후 아이템 바에 생성
         SetItem();
@@ -262,7 +267,38 @@ public class BattleManager : MonoBehaviour
                     Debug.Log("얻을 수 있는 경험치 량 : " + exp_Cnt);
                     Debug.Log("얻을 수 있는 골드 : " + gold_Cnt);
                 }
+
+                if (poison_Check)
+                {
+                    StartCoroutine(Poison());
+                }
+
             }
+        }
+    }
+
+    // 중독 이벤트 메서드 (5초마다 체력 감소)
+    private IEnumerator Poison()
+    {
+        while (poison_Check)
+        {
+            foreach (GameObject player in deploy_Player_List)
+            {
+                Ally player_Ally = player.GetComponent<Ally>();
+
+                if (player_Ally != null && player_Ally.cur_Hp > 0)
+                {
+                    // 체력 감소
+                    player_Ally.cur_Hp -= 3;
+
+                    // 체력이 0 이하로 떨어지면 행동을 멈추기
+                    if (player_Ally.cur_Hp <= 0)
+                    {
+                        player_Ally.cur_Hp = 0; 
+                    }
+                }
+            }
+            yield return new WaitForSeconds(5f);
         }
     }
 
@@ -270,6 +306,8 @@ public class BattleManager : MonoBehaviour
     {
         if (_curphase == BattlePhase.End && !battleEnded)
         {
+            poison_Check = false;
+            StopCoroutine(Poison());
             if (deploy_Player_List.Count == 0)
             {
                 AudioManager.single.PlaySfxClipChange(10);
@@ -455,6 +493,19 @@ public class BattleManager : MonoBehaviour
 
         if (room.cur_Room.tag == "Battle")
         {
+            float event_Chance = event_Stack * 5f;
+
+            event_Chance = Mathf.Clamp(event_Chance, 0f, 50f);
+
+            float random_Event = UnityEngine.Random.Range(0, event_Chance);
+
+
+            if (random_Event < event_Chance)
+            {
+                EventOccurs(UnityEngine.Random.Range(0, 4));
+                event_Stack = 0;
+            }
+            
 
             Debug.Log("전투 방입니다.");
 
@@ -473,6 +524,79 @@ public class BattleManager : MonoBehaviour
             yield break;
         }
     }
+
+    private void EventOccurs(int event_Value)
+    {
+        ui.OpenPopup(ui.event_Alert_Popup);
+        TitleInit titleInit = ui.event_Alert_Popup.GetComponent<TitleInit>();
+
+        // 플레이어들의 각종 스텟이 감소하는 이벤트를 만듦 (현재 전투 방에서만 발동)
+        switch (event_Value) 
+        {
+            case 0:
+                // 5초마다 현재 체력이 지속적으로 감소
+                titleInit.Init("'중독' 디버프가 걸립니다.\n(5초마다 지속적으로 체력 -3)");
+
+                // 전투 시 5초마다 지속적으로 체력 -3씩 감소하도록 트리거
+                poison_Check = true;
+
+                break;
+            case 1:
+                // 공격력 감소
+                titleInit.Init("'취약' 디버프가 걸립니다.\n(공격력 -10%)");
+
+                foreach (GameObject player in deploy_Player_List)
+                {
+                    Ally player_Ally = player.GetComponent<Ally>();
+
+                    if (player_Ally != null)
+                    {
+                        if (player_Ally.cur_Hp > 0)
+                        {
+                            player_Ally.atkDmg *= 0.9f;
+                        }
+                    }
+                }
+                break;
+            case 2:
+                // 공격속도 감소
+                titleInit.Init("'마비' 디버프가 걸립니다.\n(공격속도 -10%)");
+
+                foreach (GameObject player in deploy_Player_List)
+                {
+                    Ally player_Ally = player.GetComponent<Ally>();
+
+                    if (player_Ally != null)
+                    {
+                        if (player_Ally.cur_Hp > 0)
+                        {
+                            player_Ally.atkSpd *= 0.9f;
+                        }
+                    }
+                }
+
+
+                break;
+            case 3:
+                // 최대 MP ( 스킬 쿨타임 증가 ) 증가
+                titleInit.Init("'마나결핍' 디버프가 걸립니다.\n(스킬 사용 시 필요 마나 +2)");
+
+                foreach (GameObject player in deploy_Player_List)
+                {
+                    Ally player_Ally = player.GetComponent<Ally>();
+
+                    if (player_Ally != null)
+                    {
+                        if (player_Ally.cur_Hp > 0)
+                        {
+                            player_Ally.max_Mp += 2;
+                        }
+                    }
+                }
+                break;
+        }
+    }
+
 
     // 배치 단계일때 죽은 파티원을 제외한 나머지 파티원을 배치
     private void PlacementUnit()
@@ -580,6 +704,48 @@ public class BattleManager : MonoBehaviour
             Destroy(item_Child.gameObject);
         }
 
+    }
+
+    public void EventSelect(bool check)
+    {
+        if (check)
+        {
+            // 전체 체력 증가 및 이벤트 스택 증가
+            foreach(PlayerData player in GameMgr.playerData)
+            {
+                if (player.cur_Player_Hp > 0)
+                {
+                    if (player.cur_Player_Hp + 20 >= player.max_Player_Hp)
+                    {
+                        player.cur_Player_Hp = player.max_Player_Hp;
+                    }
+                    else
+                    {
+                        player.cur_Player_Hp += 20;
+                    }
+                }
+            }
+
+            ui.CancelPopup(ui.event_Popup);
+
+            if (dialogue == null && tutorial == null)
+            {
+                event_Stack += 2;
+
+                ui.OpenPopup(ui.alert_Popup);
+                TitleInit titleInit = ui.alert_Popup.GetComponent<TitleInit>();
+                titleInit.Init("무슨 일이 일어날 것 같습니다.");
+            }
+        }
+        else
+        {
+            ui.CancelPopup(ui.event_Popup);
+        }
+
+        if (dialogue != null && dialogue.isTutorial)
+        {
+            tutorial.EndTutorial(21);
+        }
     }
 
 
