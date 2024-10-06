@@ -102,7 +102,7 @@ public class PartyData
 /*            case 0://Player
                 break;*/
             default:
-                Debug.Log("혹시몰라서돌려봄 - 나는 근첩이다");
+                Debug.Log("플레이어캐릭터를위한 파티데이터가 생성될때 동작함");
                 type = "Default";
                 Debug.Log("Type d, Generate Code: " + _Code);
                 partyHp = 20f + (0.01f * _Lvel);

@@ -25,10 +25,6 @@ public class PopUp : MonoBehaviour
 
     [SerializeField] PopUpState popUpState;
 
-    private void Awake()
-    {
-        gameObject.SetActive(false);
-    }
     void ListnerSet()//클릭 이벤트 리스너 추가했는데 버그나서 일단뺌
     {
         btn_Yes.onClick.RemoveAllListeners();

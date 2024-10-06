@@ -25,7 +25,7 @@ public class AudioManager : MonoBehaviour
     //동시에 여러 사운드들이 마구잡이로 섞이기때문에 채널시스템 구축이 필요함.
     public int channels;//다량의 효과음을 낼 수 있도록 채널 개수 변수 선언
     private int channelIndex;// 재생하고있는 채널의 인덱스값이 필요함
-
+    #region SfxClips
     [Header("#Playerble SFX")]//0 = Die, 1 = Atk
     public AudioClip[] hero_sfxClip;// hero
     public AudioClip[] ranger_sfxClip;// ranger
@@ -38,7 +38,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] gobline_sfxClip;// gobline
     public AudioClip[] mimic_sfxClip;// mimic
     public AudioClip[] skelletone_sfxClip;
-
+    #endregion
     public enum Sfx
     {
          
@@ -169,8 +169,9 @@ public class AudioManager : MonoBehaviour
 
     public void PlayBgmVolumeChange(float _val)
     {
+        Debug.Log(" Input val :" +_val);
         bgmPlayer.volume = _val / 1.5f;
-
+        Debug.Log(" output val :" + bgmPlayer.volume);
         if (bgmPlayer.volume == 0)
         {
             bgmPlayer.mute = true;
@@ -179,7 +180,6 @@ public class AudioManager : MonoBehaviour
         {
             bgmPlayer.mute = false;
         }
-        SetSfxVolumeForOtherChannels();
     }
     
     public void PlaySfxClipChange(int _index)
@@ -192,6 +192,7 @@ public class AudioManager : MonoBehaviour
     {
         sfxPlayers[_sfxIndex].volume = _val / 1.5f;
         sfxPlayers[0].Play();
+        SetSfxVolumeForOtherChannels();
     }
 
     public void PlaySfx(Sfx sfx)
@@ -227,6 +228,7 @@ public class AudioManager : MonoBehaviour
 
     public void SetSfxVolumeForOtherChannels()
     {
+        Debug.Log("설정 전_sfxPlayers[0]의 볼륨: " + sfxPlayers[0].volume);
         float baseVolume = sfxPlayers[0].volume;  // sfxPlayers[0]의 볼륨을 기준으로
         float newVolume = baseVolume * 0.3f;  // 30%로 설정
 
@@ -236,6 +238,6 @@ public class AudioManager : MonoBehaviour
             sfxPlayers[i].volume = newVolume;
         }
 
-        Debug.Log($"sfxPlayers[0]의 볼륨: {baseVolume}, 나머지 채널의 볼륨: {newVolume}");
+        Debug.Log($"설정 후_sfxPlayers[0]의 볼륨: {baseVolume}, 나머지 채널의 볼륨: {newVolume}");
     }
 }

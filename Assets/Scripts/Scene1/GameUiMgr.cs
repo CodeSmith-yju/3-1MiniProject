@@ -344,7 +344,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         bigMinimapChek = true;
         smallMap.gameObject.SetActive(true);
         bigMap.gameObject.SetActive(false);
-
+        popUp.gameObject.SetActive(false);
         PlayerDesc.gameObject.SetActive(true);
         DescCheck = true;
 

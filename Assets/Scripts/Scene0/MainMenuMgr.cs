@@ -24,8 +24,6 @@ public class MainMenuMgr : MonoBehaviour
     public List<Sprite> TitleBtnSprites;
     private void Awake()
     {
-        Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);// 게임 시작 시 1920*1080 창모드 실행
-
         RefreshiTitle();
     }
     private void Start()

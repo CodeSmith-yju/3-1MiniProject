@@ -10,6 +10,7 @@ public class GameMgr : MonoBehaviour
     public static List<PlayerData> playerData { get; private set; }//여기 수정함 06-02
 
     private bool loadChecker = false;
+    public int selectedResolution;
     public string input_Name = "";
     [Header("PopUp")]
     public PopUp popUp;
@@ -20,6 +21,7 @@ public class GameMgr : MonoBehaviour
         if (playerData == null)
         {
             playerData = new();
+            selectedResolution = -1;
         }
         else
         {
