@@ -241,6 +241,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         if (isDungeon)
         {
             LoadingSceneController.LoadScene("Tutorial");
+            //LoadingSceneController.LoadScene("Battle");
             isDungeon = false;
         }
         else

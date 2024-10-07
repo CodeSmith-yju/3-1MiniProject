@@ -5,11 +5,21 @@ using TMPro;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
-using static Unity.VisualScripting.Metadata;
 
+public enum BlacksmithState
+{
+    None,
+    Renovate,
+    Upgrade
+}
 public class Blacksmith : MonoBehaviour
 {
+    public BlacksmithState blacksmithState = BlacksmithState.None;
+
     [SerializeField] private InSlot Prefab;
+
+    [Header("Renovate")]
+    [SerializeField] GameObject Renovates;
 
     [SerializeField] private List<InSlot> renovateItems;
     [SerializeField] private List<InSlot> invenItems;
@@ -18,6 +28,13 @@ public class Blacksmith : MonoBehaviour
     [SerializeField] private Transform inventr;
     bool samenessCk;
 
+    [Header("Upgrade")]
+    [SerializeField] GameObject Upgrades;
+    [SerializeField] private List<InSlot> upgradeInvenItems;
+    [SerializeField] private Transform upgradeInventr;
+
+
+    [Header("***")]
     public int selectedCk = -1;
     public int invenCk = -1;
     public SacrificeList sacrificeList;// 좌측상단 목록클릭시 얘가 활성, 해당아이템정보로 덮어씀
@@ -34,153 +51,229 @@ public class Blacksmith : MonoBehaviour
         MakeRenovateItems();
         //OpenBlacksmith();
     }
+    public void OpenUpgrade()
+    {
+        if (blacksmithState != BlacksmithState.Upgrade)
+            blacksmithState = BlacksmithState.Upgrade;
+
+        MakeUpgradeInvenItems();
+    }
     public void OnClickCommit()
     {
-        for (int i = 0; i < sacrificeList.inspections.Length; i++)
+        if (blacksmithState == BlacksmithState.Renovate)
         {
-            switch (i)
+            for (int i = 0; i < sacrificeList.inspections.Length; i++)
             {
-                case 0:
-                    for (int j = 0; j < Inventory.Single.items.Count; j++)
-                    {                                                                       //inspection ItemCode가 문제인듯 확인필요
-                        if (Inventory.Single.items[j].PrimaryCode.Equals(sacrificeList.inspections[i].ItemPK))
-                        {
-                            Inventory.Single.RemoveItem(Inventory.Single.items[j]);
-                            break;
-                        }
-                    }
-                    break;
-                case 1:
-                    int stk = 3; // 제거할 아이템의 개수
-
-                    for (int j = 0; j < Inventory.Single.items.Count; j++)
-                    {
-                        // 아이템 코드가 동일할 경우
-                        if (Inventory.Single.items[j].itemCode == sacrificeList.inspections[i].GetItem().itemCode + 4)
-                        {
-                            // 현재 아이템의 stack이 제거할 개수보다 많거나 같을 경우
-                            if (Inventory.Single.items[j].itemStack >= stk)
+                switch (i)
+                {
+                    case 0:
+                        for (int j = 0; j < Inventory.Single.items.Count; j++)
+                        {                                                                       //inspection ItemCode가 문제인듯 확인필요
+                            if (Inventory.Single.items[j].PrimaryCode.Equals(sacrificeList.inspections[i].ItemPK))
                             {
-                                // stk 수만큼 아이템 제거
-                                for (int k = 0; k < stk; k++)
-                                {
-                                    Inventory.Single.RemoveItem(Inventory.Single.items[j]);
-                                }
-                                break; // 아이템을 다 제거했으므로 루프를 종료
+                                Inventory.Single.RemoveItem(Inventory.Single.items[j]);
+                                break;
                             }
-                            else
-                            {
-                                // 현재 stack이 부족할 경우 남은 stk에서 제거할 수 있는 만큼 제거
-                                stk -= Inventory.Single.items[j].itemStack;
-                                for (int k = 0; k < Inventory.Single.items[j].itemStack; k++)
-                                {
-                                    Inventory.Single.RemoveItem(Inventory.Single.items[j]);
+                        }
+                        break;
+                    case 1:
+                        int stk = 3; // 제거할 아이템의 개수
 
-                                    // stk가 0이 되면 즉시 루프를 종료
-                                    if (--stk == 0)
+                        for (int j = 0; j < Inventory.Single.items.Count; j++)
+                        {
+                            // 아이템 코드가 동일할 경우
+                            if (Inventory.Single.items[j].itemCode == sacrificeList.inspections[i].GetItem().itemCode + 4)
+                            {
+                                // 현재 아이템의 stack이 제거할 개수보다 많거나 같을 경우
+                                if (Inventory.Single.items[j].itemStack >= stk)
+                                {
+                                    // stk 수만큼 아이템 제거
+                                    for (int k = 0; k < stk; k++)
+                                    {
+                                        Inventory.Single.RemoveItem(Inventory.Single.items[j]);
+                                    }
+                                    break; // 아이템을 다 제거했으므로 루프를 종료
+                                }
+                                else
+                                {
+                                    // 현재 stack이 부족할 경우 남은 stk에서 제거할 수 있는 만큼 제거
+                                    stk -= Inventory.Single.items[j].itemStack;
+                                    for (int k = 0; k < Inventory.Single.items[j].itemStack; k++)
+                                    {
+                                        Inventory.Single.RemoveItem(Inventory.Single.items[j]);
+
+                                        // stk가 0이 되면 즉시 루프를 종료
+                                        if (--stk == 0)
+                                        {
+                                            break;
+                                        }
+                                    }
+
+                                    // stk가 0이 되면 전체 루프를 종료
+                                    if (stk == 0)
                                     {
                                         break;
                                     }
                                 }
-
-                                // stk가 0이 되면 전체 루프를 종료
-                                if (stk == 0)
-                                {
-                                    break;
-                                }
                             }
                         }
-                    }
 
-                    break;
-                case 2:
-                    if (GameMgr.playerData[0].player_Gold >= 300)
-                    {
-                        GameMgr.playerData[0].player_Gold -= 300;
-                    }
-                    else
-                    {
-                        Debug.Log("골드부족한데스?");
-                    }
-                    break;
+                        break;
+                    case 2:
+                        if (GameMgr.playerData[0].player_Gold >= 300)
+                        {
+                            GameMgr.playerData[0].player_Gold -= 300;
+                        }
+                        else
+                        {
+                            Debug.Log("골드부족한데스?");
+                        }
+                        break;
 
-                default:
-                    Debug.Log("버그인데스");
-                    break;
+                    default:
+                        Debug.Log("버그인데스");
+                        break;
+                }
             }
+
+            Inventory.Single.AddItem(ItemResources.instance.itemRS[
+                renovateItems[selectedCk].GetItem().itemCode
+                ]);
+
+            OpenBlacksmith();
+            AllInvenUnSelect();
+            ReOrder();
+
+            Refresh();
+            
+        }
+        else if (blacksmithState == BlacksmithState.Upgrade)
+        {
+            // 장비강화및 초기화
+
         }
 
-        Inventory.Single.AddItem(ItemResources.instance.itemRS[
-            renovateItems[selectedCk].GetItem().itemCode
-            ]);
-
-        OpenBlacksmith();
-        AllInvenUnSelect();
-        ReOrder();
-
-        Refresh();
+        NowGold();
     }
     public void OpenBlacksmith()
     {
+        blacksmithState = BlacksmithState.Renovate;
+        Renovates.SetActive(true);
+        Upgrades.SetActive(false);
+
         NowGold();
         samenessCk = false;
         // TODO: invenList Add. (foreach Inventory.items[i].PK != BlackSmithSlot.item.PK) 문으로 기존invenList와비교하여 Destroy or As it is 
-
+        
         // 최초실행 = 리스트가 없다면 초기화 == invenItems ??= new List<InSlot>();
-        if (invenItems == null)
-        {
-            invenItems = new List<InSlot>();
-        }
+        invenItems ??= new List<InSlot>();
+        upgradeInvenItems ??= new List<InSlot>();
 
-        // 기존의 리스트가 존재한다면.
-        if (invenItems.Count > 0)
+        if (blacksmithState == BlacksmithState.Renovate)
         {
-            //기존의 리스트와 새로 만들어야할 리스트가 동일한지 확인
-            if (Inventory.Single.items.Count == invenItems.Count)
+            // 기존의 리스트가 존재한다면.
+            if (invenItems.Count > 0)
             {
-                // 일단 동일하다고 가정하고 시작
-                samenessCk = true;
-
-                for (int i = 0; i < invenItems.Count; i++)
+                //기존의 리스트와 새로 만들어야할 리스트가 동일한지 확인
+                if (Inventory.Single.items.Count == invenItems.Count)
                 {
-                    if (invenItems[i].GetItem().PrimaryCode != Inventory.Single.items[i].PrimaryCode)
+                    // 일단 동일하다고 가정하고 시작
+                    samenessCk = true;
+
+                    for (int i = 0; i < invenItems.Count; i++)
                     {
-                        // 다른 아이템이 발견되면 false로 설정
-                        samenessCk = false; 
-                        break; // 차이가 발견되면 더 이상 비교할 필요가 없음
+                        if (invenItems[i].GetItem().PrimaryCode != Inventory.Single.items[i].PrimaryCode)
+                        {
+                            // 다른 아이템이 발견되면 false로 설정
+                            samenessCk = false;
+                            break; // 차이가 발견되면 더 이상 비교할 필요가 없음
+                        }
+                    }
+
+                    if (!samenessCk)
+                    {
+                        // 기존 아이템을 모두 삭제하고 리스트 초기화
+                        Refresh();
                     }
                 }
-
-                if (!samenessCk)
+                else
                 {
-                    // 기존 아이템을 모두 삭제하고 리스트 초기화
+                    // 아이템 개수가 다르면 무조건 새로 만들어야 함
                     Refresh();
                 }
             }
-            else
+            //새로 만드는 코드
+            if (!samenessCk)
             {
-                // 아이템 개수가 다르면 무조건 새로 만들어야 함
-                Refresh();
+                MakeInvenItems();
             }
         }
-        //새로 만드는 코드
-        if (!samenessCk)
+        else if(blacksmithState == BlacksmithState.Upgrade)
         {
-            MakeInvenItems();
+            // 기존의 리스트가 존재한다면.
+            if (invenItems.Count > 0)
+            {
+                //기존의 리스트와 새로 만들어야할 리스트가 동일한지 확인
+                if (Inventory.Single.items.Count == upgradeInvenItems.Count)
+                {
+                    // 일단 동일하다고 가정하고 시작
+                    samenessCk = true;
+
+                    for (int i = 0; i < upgradeInvenItems.Count; i++)
+                    {
+                        if (upgradeInvenItems[i].GetItem().PrimaryCode != Inventory.Single.items[i].PrimaryCode)
+                        {
+                            // 다른 아이템이 발견되면 false로 설정
+                            samenessCk = false;
+                            break; // 차이가 발견되면 더 이상 비교할 필요가 없음
+                        }
+                    }
+
+                    if (!samenessCk)
+                    {
+                        // 기존 아이템을 모두 삭제하고 리스트 초기화
+                        Refresh();
+                    }
+                }
+                else
+                {
+                    // 아이템 개수가 다르면 무조건 새로 만들어야 함
+                    Refresh();
+                }
+            }
+            //새로 만드는 코드
+            if (!samenessCk)
+            {
+                MakeUpgradeInvenItems();
+            }
         }
-        // TODO: revnovateItems
     }
 
     void Refresh()
     {
         NowGold();
-        int cnt = invenItems.Count;
-        for (int i = 0; i < cnt; i++)
+
+        if (blacksmithState == BlacksmithState.Renovate)
         {
-            invenItems[i].gameObject.SetActive(false);
-            Destroy(invenItems[i]);
+            int cnt = invenItems.Count;
+            for (int i = 0; i < cnt; i++)
+            {
+                invenItems[i].gameObject.SetActive(false);
+                Destroy(invenItems[i]);
+            }
+            invenItems.Clear();
         }
-        invenItems.Clear();
+        else if(blacksmithState == BlacksmithState.Upgrade)
+        {
+            int cnt = upgradeInvenItems.Count;
+            for (int i = 0; i < cnt; i++)
+            {
+                upgradeInvenItems[i].gameObject.SetActive(false);
+                Destroy(upgradeInvenItems[i]);
+            }
+            upgradeInvenItems.Clear();
+        }
+        
     }
     public void RefreshRenovate(int _index)
     {
@@ -239,6 +332,39 @@ public class Blacksmith : MonoBehaviour
                 slot.invenItemIndex = invenItems.Count;
                 // 생성된 슬롯을 리스트에 추가
                 invenItems.Add(slot);
+            }
+        }
+    }
+    void MakeUpgradeInvenItems()
+    {
+        for (int i = 0; i < Inventory.Single.items.Count; i++)
+        {
+            //if (Inventory.Single.items[i].itemType != Item.ItemType.Consumables && Inventory.Single.items[i].itemType != Item.ItemType.Ect)
+            // RS[8 ~ 11] 까지 일반장비
+            if (Inventory.Single.items[i].itemCode > 11 && Inventory.Single.items[i].itemCode < 16)
+            {
+                InSlot slot = Instantiate(Prefab, upgradeInventr);
+
+                Item _item = new()
+                {
+                    itemCode = Inventory.Single.items[i].itemCode,
+                    itemName = Inventory.Single.items[i].itemName,
+                    itemType = Inventory.Single.items[i].itemType,
+                    itemImage = Inventory.Single.items[i].itemImage,
+                    itemPrice = Inventory.Single.items[i].itemPrice,
+                    itemPower = Inventory.Single.items[i].itemPower,
+                    itemDesc = Inventory.Single.items[i].itemDesc,
+                    itemStack = Inventory.Single.items[i].itemStack,
+                    modifyStack = Inventory.Single.items[i].modifyStack,
+                    typeIcon = Inventory.Single.items[i].typeIcon,
+                    PrimaryCode = Inventory.Single.items[i].PrimaryCode,
+                };
+
+                // 생성된 슬롯 초기화
+                slot.Init(this, _item, true);
+                slot.invenItemIndex = upgradeInvenItems.Count;
+                // 생성된 슬롯을 리스트에 추가
+                upgradeInvenItems.Add(slot);
             }
         }
     }
