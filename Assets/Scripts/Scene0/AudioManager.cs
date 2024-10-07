@@ -26,7 +26,7 @@ public class AudioManager : MonoBehaviour
     public int channels;//다량의 효과음을 낼 수 있도록 채널 개수 변수 선언
     private int channelIndex;// 재생하고있는 채널의 인덱스값이 필요함
     #region SfxClips
-    [Header("#Playerble SFX")]//0 = Die, 1 = Atk
+    [Header("#Playerble SFX")]//0 = Die, 1 = Atk, 2 = Skill
     public AudioClip[] hero_sfxClip;// hero
     public AudioClip[] ranger_sfxClip;// ranger
     public AudioClip[] wizard_sfxClip;// wizard
@@ -37,7 +37,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] slime_sfxClip;// slime
     public AudioClip[] gobline_sfxClip;// gobline
     public AudioClip[] mimic_sfxClip;// mimic
-    public AudioClip[] skelletone_sfxClip;
+    public AudioClip[] skelletone_sfxClip;//skelleton
+    public AudioClip[] skeletonWizard_sfxClip;// Boss
+    public AudioClip[] puppetHuman_sfxClip;// hero
+
     #endregion
     public enum Sfx
     {
@@ -64,16 +67,52 @@ public class AudioManager : MonoBehaviour
                 sfxPlayers[partyIndex].Play();
                 break;
             case 1:
-                sfxPlayers[partyIndex].clip = gobline_sfxClip[sfx_Index];
-                sfxPlayers[partyIndex].Play();
+                if (sfx_Index == 0)
+                {
+                    // 현재 볼륨 저장
+                    float originalVolume = sfxPlayers[partyIndex].volume;
+
+                    // 볼륨을 25%로 줄임
+                    sfxPlayers[partyIndex].volume = originalVolume * 0.12f;
+
+                    // 클립 설정 및 재생
+                    sfxPlayers[partyIndex].clip = gobline_sfxClip[sfx_Index];
+                    sfxPlayers[partyIndex].Play();
+
+                    // 볼륨 복구 작업을 위한 코루틴 실행
+                    StartCoroutine(RestoreVolumeAfterPlayback(partyIndex, originalVolume));
+                }
+                else
+                {
+                    sfxPlayers[partyIndex].clip = gobline_sfxClip[sfx_Index];
+                    sfxPlayers[partyIndex].Play();
+                }
                 break;
             case 2:
                 sfxPlayers[partyIndex].clip = mimic_sfxClip[sfx_Index];
                 sfxPlayers[partyIndex].Play();
                 break;
             case 3:
-                sfxPlayers[partyIndex].clip = skelletone_sfxClip[sfx_Index];
-                sfxPlayers[partyIndex].Play();
+                if (sfx_Index == 0)
+                {
+                    // 현재 볼륨 저장
+                    float originalVolume = sfxPlayers[partyIndex].volume;
+
+                    // 볼륨을 25%로 줄임
+                    sfxPlayers[partyIndex].volume = originalVolume * 0.5f;
+
+                    // 클립 설정 및 재생
+                    sfxPlayers[partyIndex].clip = skelletone_sfxClip[sfx_Index];
+                    sfxPlayers[partyIndex].Play();
+
+                    // 볼륨 복구 작업을 위한 코루틴 실행
+                    StartCoroutine(RestoreVolumeAfterPlayback(partyIndex, originalVolume));
+                }
+                else
+                {
+                    sfxPlayers[partyIndex].clip = skelletone_sfxClip[sfx_Index];
+                    sfxPlayers[partyIndex].Play();
+                }
                 break;
             default:
                 break;
@@ -239,5 +278,15 @@ public class AudioManager : MonoBehaviour
         }
 
         Debug.Log($"설정 후_sfxPlayers[0]의 볼륨: {baseVolume}, 나머지 채널의 볼륨: {newVolume}");
+    }
+
+    // 볼륨 복구를 위한 코루틴
+    private IEnumerator RestoreVolumeAfterPlayback(int partyIndex, float originalVolume)
+    {
+        // 재생 중일 때까지 대기
+        yield return new WaitUntil(() => !sfxPlayers[partyIndex].isPlaying);
+
+        // 볼륨을 원래대로 복구
+        sfxPlayers[partyIndex].volume = originalVolume;
     }
 }

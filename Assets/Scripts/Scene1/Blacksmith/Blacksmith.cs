@@ -22,6 +22,8 @@ public class Blacksmith : MonoBehaviour
     public int invenCk = -1;
     public SacrificeList sacrificeList;// 좌측상단 목록클릭시 얘가 활성, 해당아이템정보로 덮어씀
 
+    public Button btn_Renovate;
+    public Button btn_Upgrade;
     public Button btn_Commit;
     public TextMeshProUGUI tmp_nowGold;
     private void Start()
@@ -211,7 +213,6 @@ public class Blacksmith : MonoBehaviour
     {
         for (int i = 0; i < Inventory.Single.items.Count; i++)
         {
-            //일단 장비만 출력되게 했는데 개조가능한아이템의 코드만된다던가 하는식으로 수정 필요
             //if (Inventory.Single.items[i].itemType != Item.ItemType.Consumables && Inventory.Single.items[i].itemType != Item.ItemType.Ect)
             // RS[8 ~ 11] 까지 일반장비
             if (Inventory.Single.items[i].itemCode > 7 && Inventory.Single.items[i].itemCode < 12)

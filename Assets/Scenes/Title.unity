@@ -3190,6 +3190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197bafb6ec38ce14799f618b9f5d67d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedResolution: 0
   input_Name: 
   popUp: {fileID: 1316948235189082396}
 --- !u!4 &1338712243
@@ -3988,6 +3989,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e5f988c16ac40434e859d6b0d2100851, type: 3}
   - {fileID: 8300000, guid: bdefa0a9a39357e4d96daece64a004f9, type: 3}
   - {fileID: 8300000, guid: b1d310eb3ea759a4abcf5a40ed07b0b8, type: 3}
+  - {fileID: 8300000, guid: 6eb44c41a6ac2ca459917ab6dd740676, type: 3}
   sfxVolume: 0.5
   channels: 10
   hero_sfxClip:
