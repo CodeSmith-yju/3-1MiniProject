@@ -16,28 +16,30 @@ public class Blacksmith : MonoBehaviour
 {
     public BlacksmithState blacksmithState = BlacksmithState.None;
 
-    [SerializeField] private InSlot Prefab;
+    [SerializeField] InSlot Prefab;
 
     [Header("Renovate")]
+    public SacrificeList sacrificeList;// 좌측상단 목록클릭시 얘가 활성, 해당아이템정보로 덮어씀
+
     [SerializeField] GameObject Renovates;
+    [SerializeField] List<InSlot> renovateItems;
+    [SerializeField] List<InSlot> invenItems;
 
-    [SerializeField] private List<InSlot> renovateItems;
-    [SerializeField] private List<InSlot> invenItems;
-
-    [SerializeField] private Transform renovatetr;
-    [SerializeField] private Transform inventr;
+    [SerializeField] Transform renovatetr;
+    [SerializeField] Transform inventr;
     bool samenessCk;
 
     [Header("Upgrade")]
-    [SerializeField] GameObject Upgrades;
-    [SerializeField] private List<InSlot> upgradeInvenItems;
-    [SerializeField] private Transform upgradeInventr;
+    public SacrificeList upgradesMaterials;
+
+    [SerializeField] GameObject upgrades;
+    [SerializeField] List<InSlot> upgradeInvenItems;
+    [SerializeField] Transform upgradeInventr;
 
 
     [Header("***")]
     public int selectedCk = -1;
     public int invenCk = -1;
-    public SacrificeList sacrificeList;// 좌측상단 목록클릭시 얘가 활성, 해당아이템정보로 덮어씀
 
     public Button btn_Renovate;
     public Button btn_Upgrade;
@@ -48,15 +50,24 @@ public class Blacksmith : MonoBehaviour
         btn_Commit.interactable = false;
         //씬최초실행시 한번
         sacrificeList.gameObject.SetActive(false);
+        upgradesMaterials.gameObject.SetActive(false);
         MakeRenovateItems();
         //OpenBlacksmith();
     }
     public void OpenUpgrade()
     {
+        // 상태 체크
         if (blacksmithState != BlacksmithState.Upgrade)
             blacksmithState = BlacksmithState.Upgrade;
+        Debug.Log("++++++++Now State: "+ blacksmithState);
+        
+        //화면 초기화
+        Renovates.SetActive(false);
+        upgrades.SetActive(true);
 
+        //장비목록 생성
         MakeUpgradeInvenItems();
+
     }
     public void OnClickCommit()
     {
@@ -159,7 +170,7 @@ public class Blacksmith : MonoBehaviour
     {
         blacksmithState = BlacksmithState.Renovate;
         Renovates.SetActive(true);
-        Upgrades.SetActive(false);
+        upgrades.SetActive(false);
 
         NowGold();
         samenessCk = false;
@@ -211,7 +222,7 @@ public class Blacksmith : MonoBehaviour
         else if(blacksmithState == BlacksmithState.Upgrade)
         {
             // 기존의 리스트가 존재한다면.
-            if (invenItems.Count > 0)
+            if (upgradeInvenItems.Count > 0)
             {
                 //기존의 리스트와 새로 만들어야할 리스트가 동일한지 확인
                 if (Inventory.Single.items.Count == upgradeInvenItems.Count)
@@ -406,16 +417,20 @@ public class Blacksmith : MonoBehaviour
     {
         return renovateItems[_index].GetItem();
     }
-    //TODO: LeftTop Side one = Renovate
-    //TODO: LeftTop Side two = Enhance
-    //TODO: Click(OneTab || Two Tab)
-    //TODO: LeftBottom Side View List
     public void ReOrder()
     {
         selectedCk = -1;
         invenCk = -1;
 
-        sacrificeList.gameObject.SetActive(false);
+        if (blacksmithState == BlacksmithState.Renovate)
+        {
+            sacrificeList.gameObject.SetActive(false);
+        }
+        else if(blacksmithState == BlacksmithState.Upgrade)
+        {
+
+        }
+        
     }
     void NowGold()
     {

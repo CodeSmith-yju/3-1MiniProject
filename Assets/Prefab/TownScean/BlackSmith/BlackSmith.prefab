@@ -1934,17 +1934,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blacksmithState: 0
   Prefab: {fileID: 8068274291350091643, guid: 233fc0233eac5b046885618255fd42a7, type: 3}
+  sacrificeList: {fileID: 3157045501263414757}
   Renovates: {fileID: 7752325110870137719}
   renovateItems: []
   invenItems: []
   renovatetr: {fileID: 3891660805787967373}
   inventr: {fileID: 700184143979498780}
-  Upgrades: {fileID: 2574393153391263991}
+  upgradesMaterials: {fileID: 0}
+  upgrades: {fileID: 0}
   upgradeInvenItems: []
   upgradeInventr: {fileID: 0}
   selectedCk: -1
   invenCk: -1
-  sacrificeList: {fileID: 3157045501263414757}
   btn_Renovate: {fileID: 0}
   btn_Upgrade: {fileID: 0}
   btn_Commit: {fileID: 6953210347332823388}

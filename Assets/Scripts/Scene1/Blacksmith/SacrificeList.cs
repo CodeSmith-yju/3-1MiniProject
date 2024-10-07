@@ -11,85 +11,94 @@ public class SacrificeList : MonoBehaviour
     public void ChangeInspectionsVlue(Item _item)
     {
         Debug.Log("Run ChangeValue");
-        for (int i = 0; i < inspections.Length; i++)
+        if (gameObject.transform.parent.name == "Renovate")
         {
-            int countItem = 0;
-            switch (inspections[i].cnt)
+            Debug.Log("Renovate");
+
+            for (int i = 0; i < inspections.Length; i++)
             {
-                case 0:
-                    Debug.Log("0");
-                    inspections[i].renovateOk = false;
-                    break;
-                case 1:
-                    //DBConnector.LoadItemByCodeFromDB(_item.itemCode, ref _item.itemImage, ref _item.typeIcon);
-                    if (_item == null)
-                    {
-                        inspections[i].SetItemPK(string.Empty);
-                        inspections[i].SetAlphaToPartial();
-                        inspections[i].SetTextColor(Color.red);
-                        inspections[i].count.text = "0/1";
+                int countItem = 0;
+                switch (inspections[i].cnt)
+                {
+                    case 0:
+                        Debug.Log("0");
                         inspections[i].renovateOk = false;
-
-                        Debug.Log("아이템이없어요");
-                        inspections[i].SetItemPK("");
-                    }
-                    else if (_item.itemCode == inspections[i].GetItem().itemCode - 4)
-                    {
-                        inspections[i].SetAlphaToFull();
-                        inspections[i].SetTextColor(Color.green);
-                        inspections[i].count.text = _item.itemStack.ToString() + "/1";
-                        inspections[i].renovateOk = true;
-
-                        Debug.Log("=============== 제 발 요 ===============");
-                        inspections[i].SetItemPK(_item.GetItemUniqueCode());
-                    }
-                    break;
-                case 3:
-                    //DBConnector.LoadItemByCodeFromDB(_item.itemCode, ref _item.itemImage, ref _item.typeIcon);
-                    for (int j = 0; j < Inventory.Single.items.Count; j++)
-                    {
-                        if (Inventory.Single.items[j].itemCode == inspections[i].GetItem().itemCode + 4)
+                        break;
+                    case 1:
+                        //DBConnector.LoadItemByCodeFromDB(_item.itemCode, ref _item.itemImage, ref _item.typeIcon);
+                        if (_item == null)
                         {
-                            countItem += Inventory.Single.items[j].itemStack;
-                            continue;
-                        }
-                    }
-                    if (countItem >= 3)
-                    {
-                        inspections[i].SetAlphaToFull();
-                        inspections[i].SetTextColor(Color.green);
-                        inspections[i].renovateOk = true;
-                    }
-                    else
-                    {
-                        inspections[i].SetAlphaToPartial();
-                        inspections[i].SetTextColor(Color.red);
-                        inspections[i].renovateOk = false;
-                    }
-                    inspections[i].count.text = countItem.ToString() + "/3";
-                    break;
-                case 300:
-                    if (GameMgr.playerData[0].player_Gold >= 300)
-                    {
-                        inspections[i].SetAlphaToFull();
-                        inspections[i].SetTextColor(Color.green);
-                        inspections[i].renovateOk = true;
-                    }
-                    else
-                    {
-                        inspections[i].SetAlphaToPartial();
-                        inspections[i].SetTextColor(Color.red);
-                        inspections[i].renovateOk = false;
-                    }
-                    inspections[i].count.text = GameMgr.playerData[0].player_Gold.ToString() + "/300";
-                    break;
-                default:
-                    Debug.LogWarning("Erorr");
-                    break;
-            }
-        }
+                            inspections[i].SetItemPK(string.Empty);
+                            inspections[i].SetAlphaToPartial();
+                            inspections[i].SetTextColor(Color.red);
+                            inspections[i].count.text = "0/1";
+                            inspections[i].renovateOk = false;
 
-        AllCk();
+                            Debug.Log("아이템이없어요");
+                            inspections[i].SetItemPK("");
+                        }
+                        else if (_item.itemCode == inspections[i].GetItem().itemCode - 4)
+                        {
+                            inspections[i].SetAlphaToFull();
+                            inspections[i].SetTextColor(Color.green);
+                            inspections[i].count.text = _item.itemStack.ToString() + "/1";
+                            inspections[i].renovateOk = true;
+
+                            Debug.Log("=============== 제 발 요 ===============");
+                            inspections[i].SetItemPK(_item.GetItemUniqueCode());
+                        }
+                        break;
+                    case 3:
+                        //DBConnector.LoadItemByCodeFromDB(_item.itemCode, ref _item.itemImage, ref _item.typeIcon);
+                        for (int j = 0; j < Inventory.Single.items.Count; j++)
+                        {
+                            if (Inventory.Single.items[j].itemCode == inspections[i].GetItem().itemCode + 4)
+                            {
+                                countItem += Inventory.Single.items[j].itemStack;
+                                continue;
+                            }
+                        }
+                        if (countItem >= 3)
+                        {
+                            inspections[i].SetAlphaToFull();
+                            inspections[i].SetTextColor(Color.green);
+                            inspections[i].renovateOk = true;
+                        }
+                        else
+                        {
+                            inspections[i].SetAlphaToPartial();
+                            inspections[i].SetTextColor(Color.red);
+                            inspections[i].renovateOk = false;
+                        }
+                        inspections[i].count.text = countItem.ToString() + "/3";
+                        break;
+                    case 300:
+                        if (GameMgr.playerData[0].player_Gold >= 300)
+                        {
+                            inspections[i].SetAlphaToFull();
+                            inspections[i].SetTextColor(Color.green);
+                            inspections[i].renovateOk = true;
+                        }
+                        else
+                        {
+                            inspections[i].SetAlphaToPartial();
+                            inspections[i].SetTextColor(Color.red);
+                            inspections[i].renovateOk = false;
+                        }
+                        inspections[i].count.text = GameMgr.playerData[0].player_Gold.ToString() + "/300";
+                        break;
+                    default:
+                        Debug.LogWarning("Erorr");
+                        break;
+                }
+            }
+
+            AllCk();
+        }
+        else if (gameObject.transform.parent.name == "Upgrade")
+        {
+            Debug.Log("Upgrade");
+        }
     }
     public void FirstItemMinus()
     {

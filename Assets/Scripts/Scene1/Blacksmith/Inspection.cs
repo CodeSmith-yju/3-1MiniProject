@@ -22,6 +22,7 @@ public class Inspection : MonoBehaviour
     public string ItemPK;
     public void Init(Item _item)
     {
+        // 여기도 시원하게 수정해야되네 시붏~
         DBConnector.LoadItemByCodeFromDB(_item.itemCode, ref _item.itemImage, ref _item.typeIcon);
         ItemPK = "";
         myItem = _item;
