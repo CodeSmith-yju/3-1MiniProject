@@ -13,28 +13,32 @@ public class FountainEvent : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (event_Check) 
+        if (!BattleManager.Instance.ui.option_UI.activeSelf)
         {
-            event_Check = false;
-
-            if (BattleManager.Instance.dialogue != null)
+            if (event_Check)
             {
-                if (BattleManager.Instance.dialogue.isTutorial)
+                event_Check = false;
+
+                if (BattleManager.Instance.dialogue != null)
                 {
-                    BattleManager.Instance.tutorial.EndTutorial(20);
+                    if (BattleManager.Instance.dialogue.isTutorial)
+                    {
+                        BattleManager.Instance.tutorial.EndTutorial(20);
+                    }
+                }
+
+                if (!BattleManager.Instance.ui.event_Popup.activeSelf)
+                {
+                    BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.event_Popup);
+
+                }
+                else
+                {
+                    event_Check = true;
+                    return;
                 }
             }
-
-            if (!BattleManager.Instance.ui.event_Popup.activeSelf)
-            {
-                BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.event_Popup);
-                
-            }
-            else
-            {
-                event_Check = true;
-                return;
-            }
         }
+        
     }
 }

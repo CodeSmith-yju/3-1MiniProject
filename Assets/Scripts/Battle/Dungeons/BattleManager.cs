@@ -341,7 +341,7 @@ public class BattleManager : MonoBehaviour
                 total_Gold += gold_Cnt;
 
                 GameObject exp_Obj = Instantiate(ui.reward_Prefab, popup.inner_Gold_Exp);
-                exp_Obj.GetComponent<RewardInit>().Init(ui.reward_Icons[1], exp_Cnt + " Exp");
+                exp_Obj.GetComponent<RewardInit>().Init(ui.reward_Icons[1], exp_Cnt.ToString("0.##") + " Exp");
                 total_Exp += exp_Cnt;
 
 
@@ -436,7 +436,7 @@ public class BattleManager : MonoBehaviour
                 gold_Obj.GetComponent<RewardInit>().Init(ui.reward_Icons[0], total_Gold + " Gold");
 
                 GameObject exp_Obj = Instantiate(ui.reward_Prefab, popup.inner_Gold_Exp);
-                exp_Obj.GetComponent<RewardInit>().Init(ui.reward_Icons[1], total_Exp + " Exp");
+                exp_Obj.GetComponent<RewardInit>().Init(ui.reward_Icons[1], total_Exp.ToString("0.##") + " Exp");
 
                 SetIconDropItem(popup, total_Drop_Item);
 

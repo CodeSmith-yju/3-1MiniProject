@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     public GameObject next_Room_Popup;
     public GameObject room_UI;
     public GameObject item_Use_UI;
+    public GameObject option_UI;
 
     [Header("Skill_Log")]
     public GameObject log_View;
@@ -36,9 +37,12 @@ public class UIManager : MonoBehaviour
     public GameObject popup_Bg;
     public GameObject vic_Popup;
     public GameObject def_Popup;
+    public GameObject exit_Popup;
     public GameObject alert_Popup;
     public GameObject event_Popup;
     public GameObject event_Alert_Popup;
+    public GameObject check_Popup;
+    public GameObject option_Popup;
 
 
     [Header("Tutorial")]
@@ -83,6 +87,28 @@ public class UIManager : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!option_UI.activeSelf) 
+            {
+                OpenPopup(option_UI);
+                Time.timeScale = 0;
+            }
+            else if (option_UI.activeSelf && check_Popup.activeSelf)
+            {
+                check_Popup.SetActive(false);
+            }
+            else if (option_UI.activeSelf && option_Popup)
+            {
+                option_Popup.SetActive(false);
+            }
+            else
+            {
+                CancelPopup(option_UI);
+                Time.timeScale = 1;
+            }
+        }
+
         tooltip.MoveTooltip();
     }
 
@@ -113,6 +139,31 @@ public class UIManager : MonoBehaviour
     {
         popup_Bg.SetActive(true);
         popup.SetActive(true);
+    }
+
+    public void CheckPopup(int value)
+    {
+        popup_Bg.SetActive(true);
+        check_Popup.SetActive(true);
+
+        string detail = "";
+        PopUpState popupStates = PopUpState.None;
+
+        switch (value)
+        {
+            case 0:  // 던전 중단 체크 팝업
+                detail = "탐험을 중단 하시겠습니까?";
+                popupStates = PopUpState.DungeonExit;
+                break;
+            case 1: // 게임 종료 체크 팝업
+                detail = "게임을 종료 하시겠습니까?";
+                popupStates = PopUpState.Quite;
+                break;
+            default:
+                break;
+        }
+
+        check_Popup.GetComponent<PopUp>().SetPopUp(detail, popupStates);
     }
 
     public void CancelPopup(GameObject popup)
