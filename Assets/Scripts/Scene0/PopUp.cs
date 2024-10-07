@@ -11,8 +11,7 @@ public enum PopUpState
     GameSave,
     GameReLoad,
     Dungeon,
-    Abc,
-    Bcd,
+    DungeonExit
 }
 public class PopUp : MonoBehaviour
 {
@@ -63,6 +62,17 @@ public class PopUp : MonoBehaviour
                 break;
             case PopUpState.Dungeon:
                 GameUiMgr.single.MoveInDungeon();
+                break;
+            case PopUpState.DungeonExit:
+                if (Time.timeScale == 0)
+                {
+                    Time.timeScale = 1;
+                }
+
+                if (BattleManager.Instance.ui.option_UI.activeSelf)
+                    BattleManager.Instance.ui.option_UI.SetActive(false);
+
+                BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.exit_Popup); // 던전 중단 결과창
                 break;
             default:
                 break;

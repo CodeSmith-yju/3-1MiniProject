@@ -35,7 +35,7 @@ public class Enemy : BaseEntity
             );
 
         this.max_Hp = stat.max_Hp * BattleManager.Instance.dungeon_Level_Scale;
-        this.cur_Hp = this.max_Hp * BattleManager.Instance.dungeon_Level_Scale;
+        this.cur_Hp = this.max_Hp;
         this.max_Mp = stat.max_Mp;
         this.cur_Mp = 0f;
         this.atkDmg = stat.atkDmg * BattleManager.Instance.dungeon_Level_Scale;
