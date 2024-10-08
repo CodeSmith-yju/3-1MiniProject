@@ -8,7 +8,7 @@ public class GameMgr : MonoBehaviour
 {
     public static GameMgr single { get; private set; }
     public static List<PlayerData> playerData { get; private set; }//여기 수정함 06-02
-
+    public bool tutorial = false;
     private bool loadChecker = false;
     public int selectedResolution;
     public string input_Name = "";

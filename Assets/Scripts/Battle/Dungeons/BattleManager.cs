@@ -681,7 +681,7 @@ public class BattleManager : MonoBehaviour
 
         GameMgr.playerData[0].cur_Player_Sn -= 15;
         GameMgr.playerData[0].cur_Player_Hp = GameMgr.playerData[0].max_Player_Hp;
-
+        GameMgr.single.tutorial = true;
         GameUiMgr.single.GameSave();
         GameMgr.single.IsGameLoad(true);
         Debug.Log("Load Type: " + GameMgr.single.LoadChecker());

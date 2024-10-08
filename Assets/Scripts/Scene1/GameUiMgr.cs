@@ -332,7 +332,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             shopMgr.RefreshShopItems();
             Debug.Log("지금은 게임 로드중이 아닙니다.");
         }
-        
+
+        Debug.Log("GameMgr.single.tutorial: " + GameMgr.single.tutorial);
         //06-14 BGM
         AudioManager.single.PlayBgmClipChange(1);
 
@@ -369,12 +370,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         questDesc.text = questMgr.CheckQuest();
 
         SetPlayerDatas();//PlayerData[0]의 데이터를가져와서 데이터 저장하고 Dsce/각종 게이지 슬라이더/골드 변동사항 반영
-        
-        //if dungeonClear Ck == true 임시코드임
-        if (questMgr.questId == 40 && questMgr.questActionIndex == 1)
-        {
-            TutorialDungeonClear();
-        }
+
+        //튜토리얼던전 클리어 여부 확인하여 접수원 배치 변경하는 코드
+        TutorialDungeonClear();
         //Tooltip
         SetTooltip();
 
@@ -921,7 +919,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         SaveData gameSaveData = new SaveData(GameMgr.playerData[0].GetPlayerName(), GameMgr.playerData[0].player_level, GameMgr.playerData[0].player_Gold, GameUiMgr.single.questMgr.questId, GameUiMgr.single.questMgr.questActionIndex,
             GameMgr.playerData[0].max_Player_Hp, GameMgr.playerData[0].cur_Player_Hp, GameMgr.playerData[0].max_Player_Sn, GameMgr.playerData[0].cur_Player_Sn, GameMgr.playerData[0].max_Player_Mp, GameMgr.playerData[0].cur_Player_Mp,
             GameMgr.playerData[0].atk_Speed, GameMgr.playerData[0].atk_Range, GameMgr.playerData[0].base_atk_Dmg,
-            GameMgr.playerData[0].player_max_Exp, GameMgr.playerData[0].player_cur_Exp,
+            GameMgr.playerData[0].player_max_Exp, GameMgr.playerData[0].player_cur_Exp, GameMgr.single.tutorial,
             saveInventoryItem, saveWearItem, saveShopItems);
 
         // SaveData를 DB에 저장
@@ -1021,11 +1019,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         LoadEquipment(loadData.listEquip);
 
         // 퀘스트 데이터 로드
-        if (GameUiMgr.single.questMgr.questId <= 40)
-        {
-            GameUiMgr.single.questMgr.questId = loadData.questId;
-            GameUiMgr.single.questMgr.questActionIndex = loadData.questActionIndex;
-        }
+        GameMgr.single.tutorial = loadData.tutorialClear;
+
+        GameUiMgr.single.questMgr.questId = loadData.questId;
+        GameUiMgr.single.questMgr.questActionIndex = loadData.questActionIndex;
+
         GameUiMgr.single.questMgr.ControlQuestObejct();
 
         // 상점 아이템 로드
@@ -1515,20 +1513,24 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     }
     public void TutorialDungeonClear()
     {
-
-        Debug.Log("튜토리얼 던전 클리어");
-        Receptionist_1();
-        Debug.Log("Run Method: Recep_1");
+        if (GameMgr.single.tutorial)
+        {
+            Receptionist_1();
+            Debug.Log("튜토리얼 던전 클리어 GameMgr.single.tutorial: " + GameMgr.single.tutorial);
+        }
+        
     }
     public void Receptionist_1()
     {
         questMgr.receptionist[0].SetActive(false);
         questMgr.receptionist[1].SetActive(true);
+        Debug.Log("======================================\nRun Method: Recep_1");
     }
     public void Receptionist_0()
     {
         questMgr.receptionist[0].SetActive(true);
         questMgr.receptionist[1].SetActive(false);
+        Debug.Log("======================================\nRun Method: Recep_0");
     }
     #region DBConnect_Load_Method
 

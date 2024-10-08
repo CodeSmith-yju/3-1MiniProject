@@ -138,6 +138,8 @@ public class SaveData
     public float p_max_Exp;
     public float p_cur_Exp;
 
+    public bool tutorialClear;
+
     public List<Item> listInven;
     public List<Item> listEquip;
     public List<Item> shops;
@@ -145,7 +147,7 @@ public class SaveData
     public SaveData(string name, int level, int gold, int qID, int qActID, 
         float max_hp, float cur_hp, float max_sn, float cur_sn, float max_mp, float cur_mp, 
         float a_spd, float a_range, float a_dmg, 
-        float max_exp, float cur_exp, 
+        float max_exp, float cur_exp, bool _tutorialClear,
         List<Item> _invenItem, List<Item> _invenEquip,
         List<Item> _shopSlots)
     {
@@ -166,6 +168,7 @@ public class SaveData
         this.p_max_mp = max_mp;
         this.p_cur_mp = cur_mp;
 
+        this.tutorialClear = _tutorialClear;
 
         this.p_atk_speed = a_spd;
         this.p_atk_range = a_range;
@@ -204,7 +207,7 @@ public static class SaveSystem
         if (!File.Exists(saveFilePath))
         {
             Debug.LogWarning("No such saveFile exists. Creating a new one...");
-            SaveData noneSave = new SaveData("", 0,0,0,0, 0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f, null, null, null);
+            SaveData noneSave = new SaveData("", 0,0,0,0, 0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f, false, null, null, null);
             Save(noneSave, saveFileName);  // Create a new save file
             return noneSave;
         }
