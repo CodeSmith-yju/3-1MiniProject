@@ -11,13 +11,13 @@ public class Skeleton_Wizard : Enemy
     {
         base.Start();
         // 최대 체력, 최대 마나, 공격력, 공격속도, 사거리, 근접유무, 스킬유무, 경험치, 골드, 아이템 드랍
-        InitStat(200, 10, 5, 0.7f, 50f, false, true, 20, SetRandomGold(400), ItemResources.instance.itemRS[4]);
+        InitStat(200, 10, 5, 0.7f, 50f, false, true, 20, SetRandomGold(400), ItemResources.instance.itemRS[15]);
         // 아이템 바꿔야됨
 
         if (BattleManager.Instance.dialogue != null && BattleManager.Instance.dialogue.isTutorial)
             item_Drop_Check = false;
         else
-            item_Drop_Check = ShouldDropItem(15);
+            item_Drop_Check = ShouldDropItem(5);
 
         Debug.Log("경험치 설정 : " + exp_Cnt);
         Debug.Log("골드 설정 : " + gold_Cnt);
