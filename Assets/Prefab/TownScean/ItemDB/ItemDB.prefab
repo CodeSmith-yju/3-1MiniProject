@@ -46,14 +46,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemRS:
   - itemType: 5
-    itemName: "\uB8E8\uB3C4\uC758 \uCC45"
+    itemName: "\uAE30\uB825 \uD3EC\uC158"
     itemStack: 1
     modifyStack: 0
-    itemImage: {fileID: 21300000, guid: 7972dd97521bb1c44ba8e3774391b996, type: 3}
+    itemImage: {fileID: 21300000, guid: f65023889763c7644b5579f0b019da6b, type: 3}
     typeIcon: {fileID: 0}
-    itemTitle: "\uB8E8\uB3C4\uAC00 \uC783\uC5B4\uBC84\uB9B0 \uCC45"
-    itemDesc: "\uB8E8\uB3C4\uAC00 \uD638\uC22B\uAC00\uC5D0\uC11C \uC783\uC5B4\uBC84\uB9B0
-      \uCC45\uC774\uB2E4. \uB3CC\uB824\uC8FC\uC790."
+    itemTitle: "\uB5A8\uC5B4\uC9C4 \uAE30\uB825\uC744 \uD68C\uBCF5\uD560 \uC218 \uC788\uB2E4"
+    itemDesc: "\uAE30\uB825 \uD68C\uBCF5 +5"
     itemIndex: 0
     itemCode: 0
     itemPower: 0
@@ -125,12 +124,12 @@ MonoBehaviour:
     itemPrice: 200
     PrimaryCode: 
   - itemType: 4
-    itemName: "\uC0C8\uB0B4\uAE30 \uD3EC\uC158"
+    itemName: "\uCCB4\uB825 \uD3EC\uC158"
     itemStack: 1
     modifyStack: 0
     itemImage: {fileID: 21300000, guid: 7b3876a2b72c44540a4bbd5aaba9e506, type: 3}
     typeIcon: {fileID: 0}
-    itemTitle: "\uC0C8\uB0B4\uAE30 \uBAA8\uD5D8\uAC00\uB97C \uC704\uD55C \uC9C0\uAE09\uD488"
+    itemTitle: "\uB5A8\uC5B4\uC9C4 \uCCB4\uB825\uC744 \uD68C\uBCF5\uD560 \uC218 \uC788"
     itemDesc: "\uCCB4\uB825 \uD68C\uBCF5 +5"
     itemIndex: 0
     itemCode: 6

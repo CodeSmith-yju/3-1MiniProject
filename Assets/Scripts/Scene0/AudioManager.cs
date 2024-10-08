@@ -49,7 +49,7 @@ public class AudioManager : MonoBehaviour
 
     public void EnemySound(int partyIndex, int _enemyIndex, int sfx_Index)
     {
-        // sfx_Index : 0 Die, 1 Attack
+        // sfx_Index : 0 Die, 1 Attack, 2 Skill
 
         /*if (sfx_Index != 0)
         {

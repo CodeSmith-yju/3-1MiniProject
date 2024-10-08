@@ -11,7 +11,8 @@ public enum PopUpState
     GameSave,
     GameReLoad,
     Dungeon,
-    DungeonExit
+    DungeonExit,
+    SnPotion,
 }
 public class PopUp : MonoBehaviour
 {
@@ -73,6 +74,10 @@ public class PopUp : MonoBehaviour
                     BattleManager.Instance.ui.option_UI.SetActive(false);
 
                 BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.exit_Popup); // 던전 중단 결과창
+                break;
+            case PopUpState.SnPotion:
+                GameMgr.playerData[0].GetPlayerstamina(GameUiMgr.single.nowSlot.item.itemPower);
+                Inventory.Single.RemoveItem(GameUiMgr.single.nowSlot.item);
                 break;
             default:
                 break;

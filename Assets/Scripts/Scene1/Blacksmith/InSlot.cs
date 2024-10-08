@@ -130,49 +130,51 @@ public class InSlot : MonoBehaviour
     public void OnClickSelected()
     {
         Debug.Log("Clicked Btn of InSlot");
-        //isInventory 일 경우, 그리고 LeftTopRenovate가 활성화중인지아닌지,
-        if (isInventory)
-        {
-            //blacksmith.RenovateList[i].items.itemCode-4 = myItem.itemcode 일때 재료로 추가.
 
-            if (blacksmith.selectedCk != -1 && blacksmith.NowSelectedRenovateItem(blacksmith.selectedCk).itemCode-4 == myItem.itemCode )//좌측목록에서 선택된 아이템이 있을 경우.
-            {
-                Debug.Log("Run Clicked Selected Panel");
-                SelectedPanel();
-            }
-            //selectedPanel.activeSelf == true 일때, 좌측하단 아이템목록에서 제거
-        }
-        else
+        if (blacksmith.blacksmithState == BlacksmithState.Renovate)
         {
-            Debug.Log("Run Left Side: renovateItems");
-            blacksmith.AllInvenUnSelect();
-            if (blacksmith.selectedCk == renovateIndex)
+            //isInventory 일 경우, 그리고 LeftTopRenovate가 활성화중인지아닌지,
+            if (isInventory)
             {
-                blacksmith.ReOrder();
-            }
-            else if (blacksmith.selectedCk != -1)
-            {
-                //먼저 선택된게 있으면, 기존의 선택된거 다 갈아치우고 
-                blacksmith.RefreshRenovate(renovateIndex);
+                //blacksmith.RenovateList[i].items.itemCode-4 = myItem.itemcode 일때 재료로 추가.
 
-                //내가선택한걸 체크
-                blacksmith.selectedCk = renovateIndex;
-                blacksmith.ShowInspections(myItem);
+                if (blacksmith.selectedCk != -1 && blacksmith.NowSelectedRenovateItem(blacksmith.selectedCk).itemCode - 4 == myItem.itemCode)//좌측목록에서 선택된 아이템이 있을 경우.
+                {
+                    Debug.Log("Run Clicked Selected Panel");
+                    SelectedPanel();
+                }
+                //selectedPanel.activeSelf == true 일때, 좌측하단 아이템목록에서 제거
             }
             else
             {
-                //선택된게 없다? 즉시 실행
-                blacksmith.selectedCk = renovateIndex;
-                blacksmith.ShowInspections(myItem);
+                Debug.Log("Run Left Side: renovateItems");
+                blacksmith.AllInvenUnSelect();
+                if (blacksmith.selectedCk == renovateIndex)
+                {
+                    blacksmith.ReOrder();
+                }
+                else if (blacksmith.selectedCk != -1)
+                {
+                    //먼저 선택된게 있으면, 기존의 선택된거 다 갈아치우고 
+                    blacksmith.RefreshRenovate(renovateIndex);
+
+                    //내가선택한걸 체크
+                    blacksmith.selectedCk = renovateIndex;
+                    blacksmith.ShowInspections(myItem);
+                }
+                else
+                {
+                    //선택된게 없다? 즉시 실행
+                    blacksmith.selectedCk = renovateIndex;
+                    blacksmith.ShowInspections(myItem);
+                }
             }
         }
-        //invenItems
-        //SelectedImg.SetActive(true);
-        //if Area.item != null, else
-        //LeftDown Area.items == this.item, Area.item = this.item
+        else if(blacksmith.blacksmithState == BlacksmithState.Upgrade)
+        {
 
-        //renoItems
-        //if for (int i =0; i<RenovateItems.count; i++) { inventory.items.itemcode == RenovateItems.item.itemcode - 4 }, HightLight.ActiveTrue
+        }
+        
     }
     
 }

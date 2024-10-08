@@ -1940,8 +1940,8 @@ MonoBehaviour:
   invenItems: []
   renovatetr: {fileID: 3891660805787967373}
   inventr: {fileID: 700184143979498780}
-  upgradesMaterials: {fileID: 0}
-  upgrades: {fileID: 0}
+  upgradesMaterials: {fileID: 5073517526512493321}
+  upgrades: {fileID: 2574393153391263991}
   upgradeInvenItems: []
   upgradeInventr: {fileID: 0}
   selectedCk: -1

@@ -44,10 +44,8 @@ public class PlayerAction : MonoBehaviour
             ObjectData obj = scanRayObjcet.GetComponent<ObjectData>();
             if (obj.id == 4000)
             {
-                if (GameUiMgr.single.questMgr.questId >= 30)
-                {
+                //if (GameUiMgr.single.questMgr.questId >= 30)
                     GameUiMgr.single.SnB.SetActive(true);
-                }
             }
             else if (obj.id == 9000)
             {
@@ -68,6 +66,12 @@ public class PlayerAction : MonoBehaviour
                 Debug.Log("8000 실행");
                 if (GameUiMgr.single.questMgr.questId >= 40 && GameUiMgr.single.questMgr.questId < 50)
                 {
+                    if (GameMgr.playerData[0].cur_Player_Sn <= 15)
+                    {
+                        GameUiMgr.single.popUp.SetPopUp("기력이 부족합니다.",PopUpState.None);
+                        return;
+                    }
+
                     GameUiMgr.single.isDungeon = true;
                     GameUiMgr.single.OpenDungeonUi();
                     //GameUiMgr.single.textEquipPanel.text = "던전에 입장하시겠습니까?";//OK버튼 클릭했을때 다른효과가 나와야하는데 생각조금 더 해봐야함

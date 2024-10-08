@@ -22,7 +22,6 @@ public class Inspection : MonoBehaviour
     public string ItemPK;
     public void Init(Item _item)
     {
-        // 여기도 시원하게 수정해야되네 시붏~
         DBConnector.LoadItemByCodeFromDB(_item.itemCode, ref _item.itemImage, ref _item.typeIcon);
         ItemPK = "";
         myItem = _item;
@@ -35,26 +34,53 @@ public class Inspection : MonoBehaviour
 
     void Setting()
     {
-        switch (type)
+        if (gameObject.transform.parent.GetComponent<SacrificeList>().ParentCk(gameObject).Equals("Renovate"))
         {
-            case TypeInspection.Equip:
-                icon.sprite = ItemResources.instance.itemRS[myItem.itemCode - 4].itemImage;
-                count.text = "0/1";
-                cnt = 1;
-                break;
-            case TypeInspection.Ect:
-                icon.sprite = ItemResources.instance.itemRS[myItem.itemCode + 4].itemImage;
-                count.text = "0/3";//for()
-                cnt = 3;
-                break;
-            case TypeInspection.Gold:
-                //Default icon == Coin
-                count.text = "0/300";//GmaeMgr.playerData[0].golde /300 
-                cnt = 300;
-                break;
-            default:
-                break;
+            switch (type)
+            {
+                case TypeInspection.Equip:
+                    icon.sprite = ItemResources.instance.itemRS[myItem.itemCode - 4].itemImage;
+                    count.text = "0/1";
+                    cnt = 1;
+                    break;
+                case TypeInspection.Ect:
+                    icon.sprite = ItemResources.instance.itemRS[myItem.itemCode + 4].itemImage;
+                    count.text = "0/3";//for()
+                    cnt = 3;
+                    break;
+                case TypeInspection.Gold:
+                    //Default icon == Coin
+                    count.text = "0/300";//GmaeMgr.playerData[0].golde /300 
+                    cnt = 300;
+                    break;
+                default:
+                    break;
+            }
         }
+        else if (gameObject.transform.parent.GetComponent<SacrificeList>().ParentCk(gameObject).Equals("Upgrade"))
+        {
+            switch (type)
+            {
+                case TypeInspection.Equip:
+                    icon.sprite = ItemResources.instance.itemRS[myItem.itemCode].itemImage;
+                    count.text = "0/1";
+                    cnt = 1;
+                    break;
+                case TypeInspection.Ect:
+                    icon.sprite = ItemResources.instance.itemRS[myItem.itemCode + 4].itemImage;
+                    count.text = "0/3";//for()
+                    cnt = 3;
+                    break;
+                case TypeInspection.Gold:
+                    //Default icon == Coin
+                    count.text = "0/300";//GmaeMgr.playerData[0].golde /300 
+                    cnt = 300;
+                    break;
+                default:
+                    break;
+            }
+        }
+        
         SetAlphaToPartial();
     }
 
