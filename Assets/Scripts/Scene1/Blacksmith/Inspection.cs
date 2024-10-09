@@ -68,13 +68,13 @@ public class Inspection : MonoBehaviour
                     break;
                 case TypeInspection.Ect:
                     icon.sprite = ItemResources.instance.itemRS[myItem.itemCode + 4].itemImage;
-                    count.text = "0/3";//for()
-                    cnt = 3;
+                    cnt = SetEctItemCnt(myItem.modifyStack);
+                    count.text = "0/"+cnt.ToString();
                     break;
                 case TypeInspection.Gold:
                     //Default icon == Coin
-                    count.text = "0/300";//GmaeMgr.playerData[0].golde /300 
-                    cnt = 300;
+                    cnt = SetGoldCnt(myItem.modifyStack);
+                    count.text = "0/"+cnt.ToString();
                     break;
                 default:
                     break;
@@ -123,7 +123,37 @@ public class Inspection : MonoBehaviour
     public void SetItemPK(string _str)
     {
         ItemPK = _str;
-        //Debug.Log("¿Ö¾È‰Î ¾¾¤Ó»¡"+_str);
+    }
+    int SetEctItemCnt(int _modifyStack)
+    {
+        int _cnt = 0;
+
+        if (_modifyStack < 1)
+        {
+            _cnt = 1;
+        }
+        else
+        {
+            _cnt = ++_modifyStack + 2;
+        }
+
+        return _cnt;
+    }
+    int SetGoldCnt(int _modifyStack)
+    {
+        int _cnt = 300;
+
+        if (_modifyStack < 1)
+        {
+            _cnt = 300;
+        }
+        else
+        {
+            _cnt *= (_modifyStack + 1);
+            _cnt -= 100;
+        }
+
+        return _cnt;
     }
 }
 

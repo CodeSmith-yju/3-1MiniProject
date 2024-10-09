@@ -58,57 +58,98 @@ public class InSlot : MonoBehaviour
 
     public void SelectedPanel()
     {
-        if (isInventory)//Right Side
+        if (blacksmith.blacksmithState == BlacksmithState.Renovate)
         {
-            // 오른쪽 항목을 선택하면 왼쪽 항목의 선택을 모두 해제함
-            blacksmith.AllInvenUnSelect();
+            if (isInventory)//Right Side
+            {
+                // 오른쪽 항목을 선택하면 왼쪽 항목의 선택을 모두 해제함
+                blacksmith.AllInvenUnSelect();
 
-            // 동일한 항목을 다시 선택한 경우 선택 해제하고 반환
-            if (blacksmith.invenCk == invenItemIndex)
-            {
-                Debug.Log("InventCk");
-                UnSelect();
-                blacksmith.sacrificeList.FirstItemMinus();
-                blacksmith.invenCk = -1;
-                return;
-            }
-            Debug.Log("Not InvenCk");
-            //현재 항목 선택
-            selectedPanel.SetActive(true);
-            ParentBtn.interactable = true;
-            ChildBtn.interactable = false;
-
-            // sacrificeList에 선택된 항목 업데이트
-            blacksmith.sacrificeList.ChangeInspectionsVlue(myItem);
-            if (blacksmith.sacrificeList.inpectionRedy == true)
-            {
-                blacksmith.btn_Commit.interactable = true;
-            }
-            else
-            {
-                blacksmith.btn_Commit.interactable = false;
-            }
-            blacksmith.invenCk = invenItemIndex;
-        }
-        else//Left Side
-        {
-            // 왼쪽 항목을 선택하면 오른쪽 항목의 선택을 모두 해제함
-            blacksmith.AllInvenUnSelect();
-
-            // 동일한 항목을 다시 선택한 경우 선택 해제하고 반환
-            if (blacksmith.selectedCk == renovateIndex)
-            {
-                Debug.Log("More Click");
-                selectedPanel.SetActive(false);
-                blacksmith.selectedCk = -1;
-                return;
-            }
-
-            if (selectedPanel.activeSelf)
-            {
+                // 동일한 항목을 다시 선택한 경우 선택 해제하고 반환
+                if (blacksmith.invenCk == invenItemIndex)
+                {
+                    Debug.Log("InventCk");
+                    UnSelect();
+                    blacksmith.sacrificeList.FirstItemMinus();
+                    blacksmith.invenCk = -1;
+                    return;
+                }
+                Debug.Log("Not InvenCk");
+                //현재 항목 선택
                 selectedPanel.SetActive(true);
+                ParentBtn.interactable = true;
+                ChildBtn.interactable = false;
+
+                // sacrificeList에 선택된 항목 업데이트
+                blacksmith.sacrificeList.ChangeInspectionsVlue(myItem);
+                if (blacksmith.sacrificeList.inpectionRedy == true)
+                {
+                    blacksmith.btn_Commit.interactable = true;
+                }
+                else
+                {
+                    blacksmith.btn_Commit.interactable = false;
+                }
+                blacksmith.invenCk = invenItemIndex;
+            }
+            else//Left Side
+            {
+                // 왼쪽 항목을 선택하면 오른쪽 항목의 선택을 모두 해제함
+                blacksmith.AllInvenUnSelect();
+
+                // 동일한 항목을 다시 선택한 경우 선택 해제하고 반환
+                if (blacksmith.selectedCk == renovateIndex)
+                {
+                    Debug.Log("More Click");
+                    selectedPanel.SetActive(false);
+                    blacksmith.selectedCk = -1;
+                    return;
+                }
+
+                if (selectedPanel.activeSelf)
+                {
+                    selectedPanel.SetActive(true);
+                }
             }
         }
+        else if (blacksmith.blacksmithState == BlacksmithState.Upgrade)
+        {
+            if (isInventory)//Right Side
+            {
+                //이 부분부터 새로만들어야할수도있음
+                // 선택하면 우측목록리스트 선택하고
+                //미리보기 만들어주고
+                // 
+
+                // 동일한 항목을 다시 선택한 경우 선택 해제하고 반환
+                if (blacksmith.invenCk == invenItemIndex)
+                {
+                    Debug.Log("InventCk");
+                    UnSelect();
+                    blacksmith.sacrificeList.FirstItemMinus();
+                    blacksmith.invenCk = -1;
+                    return;
+                }
+                Debug.Log("Not InvenCk");
+                //현재 항목 선택
+                selectedPanel.SetActive(true);
+                ParentBtn.interactable = true;
+                ChildBtn.interactable = false;
+
+                // sacrificeList에 선택된 항목 업데이트
+                blacksmith.sacrificeList.ChangeInspectionsVlue(myItem);
+                if (blacksmith.sacrificeList.inpectionRedy == true)
+                {
+                    blacksmith.btn_Commit.interactable = true;
+                }
+                else
+                {
+                    blacksmith.btn_Commit.interactable = false;
+                }
+                blacksmith.invenCk = invenItemIndex;
+            }
+        }
+        
     }
     public void Highlight()
     {

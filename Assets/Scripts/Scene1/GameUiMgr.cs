@@ -183,7 +183,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 break;
         }
     }
-
     private void TutoDungeonQuestCheck()
     {
         if (isDungeon)
@@ -225,7 +224,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         dungeon_Level_Ui.SetActive(true);
         TutoDungeonQuestCheck();
     }
-
     public void EnterDungeon()
     {
         popUp.SetPopUp("던전에 입장 하시겠습니까?",  PopUpState.Dungeon);
@@ -255,7 +253,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     }
     public void AddItemTest()
     {
-        for (int i = 0; i < ItemResources.instance.DBItems.Count; i++)
+        /*for (int i = 0; i < ItemResources.instance.DBItems.Count; i++)
         {
             Debug.Log("AddItem");
             //아 버그 왜 생기는거냐 진짜 소모아이템생성로직에 문제가있는데
@@ -267,6 +265,24 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             Inventory.Single.AddItem(_item);
 
             Debug.Log("Make A New Test Item Code: " + _item.itemCode);
+        }*/
+        for (int i = 8; i < 20; i++)
+        {
+            Item _item = new Item().GenerateRandomItem(i);
+
+            if (i > 15)
+            {
+                Inventory.Single.AddItem(_item);
+                Inventory.Single.AddItem(_item);
+                Inventory.Single.AddItem(_item);
+
+                Inventory.Single.AddItem(_item);
+                Inventory.Single.AddItem(_item);
+                Inventory.Single.AddItem(_item);
+
+                Inventory.Single.AddItem(_item);
+            }
+            Inventory.Single.AddItem(_item);
         }
 
         RedrawSlotUI();
@@ -1739,7 +1755,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         if (!blacksmith.gameObject.activeSelf && !activeInventory)
         {
-            blacksmith.gameObject.SetActive(true);
+            //blacksmith.gameObject.SetActive(true);
             blacksmith.OpenBlacksmith();
         }
         else

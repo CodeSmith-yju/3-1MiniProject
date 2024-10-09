@@ -54,21 +54,7 @@ public class Blacksmith : MonoBehaviour
         MakeRenovateItems();
         //OpenBlacksmith();
     }
-    public void OpenUpgrade()
-    {
-        // 상태 체크
-        if (blacksmithState != BlacksmithState.Upgrade)
-            blacksmithState = BlacksmithState.Upgrade;
-        Debug.Log("++++++++Now State: "+ blacksmithState);
-        
-        //화면 초기화
-        Renovates.SetActive(false);
-        upgrades.SetActive(true);
-
-        //장비목록 생성
-        MakeUpgradeInvenItems();
-
-    }
+    
     public void OnClickCommit()
     {
         if (blacksmithState == BlacksmithState.Renovate)
@@ -79,7 +65,7 @@ public class Blacksmith : MonoBehaviour
                 {
                     case 0:
                         for (int j = 0; j < Inventory.Single.items.Count; j++)
-                        {                                                                       //inspection ItemCode가 문제인듯 확인필요
+                        { 
                             if (Inventory.Single.items[j].PrimaryCode.Equals(sacrificeList.inspections[i].ItemPK))
                             {
                                 Inventory.Single.RemoveItem(Inventory.Single.items[j]);
@@ -88,8 +74,8 @@ public class Blacksmith : MonoBehaviour
                         }
                         break;
                     case 1:
-                        int stk = 3; // 제거할 아이템의 개수
-
+                        int stk = sacrificeList.inspections[i].cnt; // 제거할 아이템의 개수
+                        Debug.Log("\n\n아이템 강화에 필요한 아이템개수: " + sacrificeList.inspections[i].cnt + "\n\n");
                         for (int j = 0; j < Inventory.Single.items.Count; j++)
                         {
                             // 아이템 코드가 동일할 경우
@@ -131,9 +117,10 @@ public class Blacksmith : MonoBehaviour
 
                         break;
                     case 2:
-                        if (GameMgr.playerData[0].player_Gold >= 300)
+                        if (GameMgr.playerData[0].player_Gold >= sacrificeList.inspections[i].cnt)
                         {
-                            GameMgr.playerData[0].player_Gold -= 300;
+                            GameMgr.playerData[0].player_Gold -= sacrificeList.inspections[i].cnt;
+                            Debug.Log("\n\n아이템 강화에 필요한 골드: "+ sacrificeList.inspections[i].cnt+"\n\n");
                         }
                         else
                         {
@@ -168,6 +155,7 @@ public class Blacksmith : MonoBehaviour
     }
     public void OpenBlacksmith()
     {
+        // 상태 체크
         blacksmithState = BlacksmithState.Renovate;
         Renovates.SetActive(true);
         upgrades.SetActive(false);
@@ -178,7 +166,6 @@ public class Blacksmith : MonoBehaviour
         
         // 최초실행 = 리스트가 없다면 초기화 == invenItems ??= new List<InSlot>();
         invenItems ??= new List<InSlot>();
-        upgradeInvenItems ??= new List<InSlot>();
 
         if (blacksmithState == BlacksmithState.Renovate)
         {
@@ -219,7 +206,25 @@ public class Blacksmith : MonoBehaviour
                 MakeInvenItems();
             }
         }
-        else if(blacksmithState == BlacksmithState.Upgrade)
+    }
+    public void OpenUpgrade()
+    {
+        // 상태 체크
+        if (blacksmithState != BlacksmithState.Upgrade)
+            blacksmithState = BlacksmithState.Upgrade;
+        Debug.Log("++++++++Now State: " + blacksmithState);
+
+        //화면 초기화
+        Renovates.SetActive(false);
+        upgrades.SetActive(true);
+        NowGold();
+
+        // 리스트 초기화
+        samenessCk = false;
+        upgradeInvenItems ??= new List<InSlot>();
+
+        // 무결성 확인 및 오브젝트 생성
+        if (blacksmithState == BlacksmithState.Upgrade)
         {
             // 기존의 리스트가 존재한다면.
             if (upgradeInvenItems.Count > 0)
@@ -259,7 +264,6 @@ public class Blacksmith : MonoBehaviour
             }
         }
     }
-
     void Refresh()
     {
         NowGold();
