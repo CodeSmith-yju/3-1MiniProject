@@ -28,13 +28,13 @@ public class Inspection : MonoBehaviour
         cnt = 0;
         Debug.Log("Init Pls");
         Setting();
-
+        Debug.Log("Now cnt: "+cnt);
         renovateOk = false;
     }
 
     void Setting()
     {
-        if (gameObject.transform.parent.GetComponent<SacrificeList>().ParentCk(gameObject).Equals("Renovate"))
+        if (gameObject.transform.parent.GetComponent<SacrificeList>().ParentCk(gameObject.transform.parent.gameObject).Equals("Renovate"))
         {
             switch (type)
             {
@@ -57,7 +57,7 @@ public class Inspection : MonoBehaviour
                     break;
             }
         }
-        else if (gameObject.transform.parent.GetComponent<SacrificeList>().ParentCk(gameObject).Equals("Upgrade"))
+        else if (gameObject.transform.parent.GetComponent<SacrificeList>().ParentCk(gameObject.transform.parent.gameObject).Equals("Upgrade"))
         {
             switch (type)
             {

@@ -17,6 +17,7 @@ public class Blacksmith : MonoBehaviour
     public BlacksmithState blacksmithState = BlacksmithState.None;
 
     [SerializeField] InSlot Prefab;
+    [SerializeField] Preview preview;
 
     [Header("Renovate")]
     public SacrificeList sacrificeList;// 좌측상단 목록클릭시 얘가 활성, 해당아이템정보로 덮어씀
@@ -49,7 +50,6 @@ public class Blacksmith : MonoBehaviour
     {
         btn_Commit.interactable = false;
         //씬최초실행시 한번
-        sacrificeList.gameObject.SetActive(false);
         upgradesMaterials.gameObject.SetActive(false);
         MakeRenovateItems();
         //OpenBlacksmith();
@@ -159,7 +159,7 @@ public class Blacksmith : MonoBehaviour
         blacksmithState = BlacksmithState.Renovate;
         Renovates.SetActive(true);
         upgrades.SetActive(false);
-
+        sacrificeList.gameObject.SetActive(false);
         NowGold();
         samenessCk = false;
         // TODO: invenList Add. (foreach Inventory.items[i].PK != BlackSmithSlot.item.PK) 문으로 기존invenList와비교하여 Destroy or As it is 
@@ -217,6 +217,7 @@ public class Blacksmith : MonoBehaviour
         //화면 초기화
         Renovates.SetActive(false);
         upgrades.SetActive(true);
+        preview.gameObject.SetActive(false);
         NowGold();
 
         // 리스트 초기화
@@ -439,5 +440,16 @@ public class Blacksmith : MonoBehaviour
     void NowGold()
     {
         tmp_nowGold.text = GameMgr.playerData[0].player_Gold.ToString();
+    }
+
+    public void ShowPreView(Item _item)
+    {
+        preview.gameObject.SetActive(true);
+        preview.Init(_item);
+        upgradesMaterials.ChangeInspectionsVlue(_item);
+    }
+    public void UnShowPreView()
+    {
+        preview.gameObject.SetActive(false);
     }
 }

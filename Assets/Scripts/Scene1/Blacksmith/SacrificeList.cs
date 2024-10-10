@@ -13,6 +13,7 @@ public class SacrificeList : MonoBehaviour
         Debug.Log("Run ChangeValue");
         if (ParentCk(gameObject).Equals("Renovate"))
         {
+            Debug.Log("Run Renovate Change Value ");
             for (int i = 0; i < inspections.Length; i++)
             {
                 int countItem = 0;
@@ -196,6 +197,7 @@ public class SacrificeList : MonoBehaviour
     }
     public string ParentCk(GameObject go)
     {
+        Debug.Log("Run ParentCk: "+go.name);
         string str;
         if (go.transform.parent.name.Equals("Renovate"))//Debug.Log("Renovate True");
             str = "Renovate";
@@ -203,7 +205,7 @@ public class SacrificeList : MonoBehaviour
             str = "Upgrade";
         else
             str = "";
-
+        Debug.Log("str: "+ str);
         return str;
     }
 }

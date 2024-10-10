@@ -1755,7 +1755,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         if (!blacksmith.gameObject.activeSelf && !activeInventory)
         {
-            //blacksmith.gameObject.SetActive(true);
+            blacksmith.gameObject.SetActive(true);
             blacksmith.OpenBlacksmith();
         }
         else

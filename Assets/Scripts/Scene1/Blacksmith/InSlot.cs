@@ -124,10 +124,9 @@ public class InSlot : MonoBehaviour
                 // 동일한 항목을 다시 선택한 경우 선택 해제하고 반환
                 if (blacksmith.invenCk == invenItemIndex)
                 {
-                    Debug.Log("InventCk");
-                    UnSelect();
-                    blacksmith.sacrificeList.FirstItemMinus();
+                    Debug.Log("중복클릭 ");
                     blacksmith.invenCk = -1;
+                    blacksmith.UnShowPreView();
                     return;
                 }
                 Debug.Log("Not InvenCk");
@@ -136,17 +135,7 @@ public class InSlot : MonoBehaviour
                 ParentBtn.interactable = true;
                 ChildBtn.interactable = false;
 
-                // sacrificeList에 선택된 항목 업데이트
-                blacksmith.sacrificeList.ChangeInspectionsVlue(myItem);
-                if (blacksmith.sacrificeList.inpectionRedy == true)
-                {
-                    blacksmith.btn_Commit.interactable = true;
-                }
-                else
-                {
-                    blacksmith.btn_Commit.interactable = false;
-                }
-                blacksmith.invenCk = invenItemIndex;
+                blacksmith.ShowPreView(myItem);
             }
         }
         

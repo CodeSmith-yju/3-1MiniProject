@@ -99,18 +99,27 @@ public class Item
     {
         if (_item.modifyStack > 0)
         {
-            switch (_item.modifyStack)
+            _item.modifyStack++;
+            _item.itemPower = ItemResources.instance.itemRS[_item.itemCode].itemPower + (ItemResources.instance.itemRS[_item.itemCode].itemPower) * 0.5f * _item.modifyStack;
+            _item.itemPrice = ItemResources.instance.itemRS[_item.itemCode].itemPrice + (int)((ItemResources.instance.itemRS[_item.itemCode].itemPrice * 0.1) * _item.modifyStack);
+            /*switch (_item.modifyStack)
             {
-                /*case 0:
-                    break;*/
+                case 0:
+                    break
                 default:
                     _item.modifyStack++;
                     _item.itemPower = ItemResources.instance.itemRS[_item.itemCode].itemPower + (ItemResources.instance.itemRS[_item.itemCode].itemPower) * 0.5f * _item.modifyStack;
                     _item.itemPrice = ItemResources.instance.itemRS[_item.itemCode].itemPrice + (int)((ItemResources.instance.itemRS[_item.itemCode].itemPrice * 0.1) * _item.modifyStack);
-                    break;
-            }
+                    break
+            }*/
         }
         return _item;
+    }
+    public int GetPreViewPower(Item _item)
+    {
+        float power = ItemResources.instance.itemRS[_item.itemCode].itemPower + (ItemResources.instance.itemRS[_item.itemCode].itemPower) * 0.5f * _item.modifyStack;
+
+        return (int)power;
     }
     public void IconSet(Item _item)
     {
