@@ -31,7 +31,7 @@ public class Blacksmith : MonoBehaviour
     bool samenessCk;
 
     [Header("Upgrade")]
-    public SacrificeList upgradesMaterials;
+    public SacrificeList upgradesMaterials;//좌측하단에 표시될 강화재료 목록
 
     [SerializeField] GameObject upgrades;
     [SerializeField] List<InSlot> upgradeInvenItems;
@@ -163,7 +163,7 @@ public class Blacksmith : MonoBehaviour
         NowGold();
         samenessCk = false;
         // TODO: invenList Add. (foreach Inventory.items[i].PK != BlackSmithSlot.item.PK) 문으로 기존invenList와비교하여 Destroy or As it is 
-        
+        ReOrder();
         // 최초실행 = 리스트가 없다면 초기화 == invenItems ??= new List<InSlot>();
         invenItems ??= new List<InSlot>();
 
@@ -217,7 +217,7 @@ public class Blacksmith : MonoBehaviour
         //화면 초기화
         Renovates.SetActive(false);
         upgrades.SetActive(true);
-        preview.gameObject.SetActive(false);
+        ReOrder();
         NowGold();
 
         // 리스트 초기화
@@ -308,14 +308,25 @@ public class Blacksmith : MonoBehaviour
     }
     public void AllInvenUnSelect()
     {
-        for (int i = 0; i < invenItems.Count; i++)
+        if (blacksmithState == BlacksmithState.Renovate)
         {
-            invenItems[i].UnSelect();
-            /*invenItems[i].selectedPanel.SetActive(false);
-
-            invenItems[i].ParentBtn.interactable = false;
-            invenItems[i].ChildBtn.interactable = true;*/
+            for (int i = 0; i < invenItems.Count; i++)
+            {
+                invenItems[i].UnSelect();
+                /*invenItems[i].selectedPanel.SetActive(false);
+                invenItems[i].ParentBtn.interactable = false;
+                invenItems[i].ChildBtn.interactable = true;*/
+            }
         }
+        else if(blacksmithState == BlacksmithState.Upgrade)
+        {
+            for (int i = 0; i < upgradeInvenItems.Count; i++)
+            {
+                upgradeInvenItems[i].UnSelect();
+            }
+            
+        }
+        
     }
 
     void MakeInvenItems()
@@ -422,6 +433,10 @@ public class Blacksmith : MonoBehaviour
     {
         return renovateItems[_index].GetItem();
     }
+    public Item NowSelectedUpgradeItem(int _index)
+    {
+        return upgradeInvenItems[_index].GetItem();
+    }
     public void ReOrder()
     {
         selectedCk = -1;
@@ -433,7 +448,40 @@ public class Blacksmith : MonoBehaviour
         }
         else if(blacksmithState == BlacksmithState.Upgrade)
         {
+            preview.gameObject.SetActive(false);
+            upgradesMaterials.gameObject.SetActive(false);
+        }
+        
+    }
+    public void SetOnOffLights(bool _onoff, int _index)
+    {
+        Debug.Log("Off Highlight index : "+_index +" type is :" + _onoff);
 
+        if (_onoff)
+        {
+            if (_index == -1)
+            {
+                Debug.Log("Error on -1");
+            }
+            else
+            {
+                renovateItems[_index].Highlight(true);
+            }
+        }
+        else
+        {
+            if (_index == -1)
+            {
+                for (int i = 0; i < renovateItems.Count; i++)
+                {
+                    renovateItems[i].Highlight(false);
+                }
+
+            }
+            else
+            {
+                renovateItems[_index].Highlight(false);
+            }
         }
         
     }

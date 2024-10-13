@@ -15,7 +15,7 @@ public class InSlot : MonoBehaviour
     public TextMeshProUGUI textName;
     
     public GameObject selectedPanel;
-    //Image HightRight
+    public GameObject HightRight;
 
     [Header("Btn UI")]
     public Button ParentBtn;
@@ -37,7 +37,15 @@ public class InSlot : MonoBehaviour
         
         if (selectedPanel.activeSelf)
         {
-            SelectedPanel();
+            if (blacksmith.blacksmithState == BlacksmithState.Renovate)
+            {
+                SelectedPanel();
+            }
+            else
+            {
+                selectedPanel.SetActive(false);
+            }
+            
         }
         if (!isInventory)
         {
@@ -116,6 +124,7 @@ public class InSlot : MonoBehaviour
         {
             if (isInventory)//Right Side
             {
+                blacksmith.AllInvenUnSelect();
                 //이 부분부터 새로만들어야할수도있음
                 // 선택하면 우측목록리스트 선택하고
                 //미리보기 만들어주고
@@ -130,7 +139,7 @@ public class InSlot : MonoBehaviour
                     return;
                 }
                 Debug.Log("Not InvenCk");
-                //현재 항목 선택
+                //현재 항목 활성
                 selectedPanel.SetActive(true);
                 ParentBtn.interactable = true;
                 ChildBtn.interactable = false;
@@ -140,9 +149,10 @@ public class InSlot : MonoBehaviour
         }
         
     }
-    public void Highlight()
+    public void Highlight(bool _onoff)
     {
         // 하이라이트 켜기/끄기
+        HightRight.SetActive(_onoff);
     }
     public void UnSelect()
     {
@@ -182,27 +192,40 @@ public class InSlot : MonoBehaviour
                 if (blacksmith.selectedCk == renovateIndex)
                 {
                     blacksmith.ReOrder();
+                    blacksmith.SetOnOffLights(false, -1);
                 }
                 else if (blacksmith.selectedCk != -1)
                 {
                     //먼저 선택된게 있으면, 기존의 선택된거 다 갈아치우고 
                     blacksmith.RefreshRenovate(renovateIndex);
+                    blacksmith.SetOnOffLights(false, -1);
 
                     //내가선택한걸 체크
                     blacksmith.selectedCk = renovateIndex;
                     blacksmith.ShowInspections(myItem);
+                    blacksmith.SetOnOffLights(true, renovateIndex);
                 }
                 else
                 {
                     //선택된게 없다? 즉시 실행
                     blacksmith.selectedCk = renovateIndex;
                     blacksmith.ShowInspections(myItem);
+                    blacksmith.SetOnOffLights(true, renovateIndex);
                 }
             }
         }
         else if(blacksmith.blacksmithState == BlacksmithState.Upgrade)
         {
-
+            Debug.Log("now state is Upgrade");
+            if (isInventory)
+            {
+                SelectedPanel();
+            }
+            else
+            {
+                Debug.Log("Error");
+                //이거는 실행될일없음 
+            }
         }
         
     }
