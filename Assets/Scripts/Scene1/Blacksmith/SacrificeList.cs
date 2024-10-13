@@ -107,25 +107,34 @@ public class SacrificeList : MonoBehaviour
                         //DBConnector.LoadItemByCodeFromDB(_item.itemCode, ref _item.itemImage, ref _item.typeIcon);
                         if (_item == null)
                         {
+                            Debug.Log("Upgrade할 아이템이 없어요");
+
                             inspections[i].SetItemPK(string.Empty);
                             inspections[i].SetAlphaToPartial();
                             inspections[i].SetTextColor(Color.red);
                             inspections[i].count.text = "0/1";
                             inspections[i].renovateOk = false;
-
-                            Debug.Log("아이템이없어요");
                             inspections[i].SetItemPK("");
                         }
-                        else if (_item.itemCode == inspections[i].GetItem().itemCode)
+                        else if(_item.itemType == Item.ItemType.Ect)
                         {
-                            inspections[i].SetAlphaToFull();
-                            inspections[i].SetTextColor(Color.green);
-                            inspections[i].count.text = _item.itemStack.ToString() + "/1";
-                            inspections[i].renovateOk = true;
-
-                            Debug.Log("=============== 제 발 요 ===============");
-                            inspections[i].SetItemPK(_item.GetItemUniqueCode());
+                            //여기에이제 뭐세팅하고 _item null로들어오는거 다른쪽로직검사좀해봐야겠네
                         }
+                        else
+                        {
+                            Debug.Log("Upgrade할 장비가 있어요");
+                            if (_item.itemCode == inspections[i].GetItem().itemCode)
+                            {
+                                Debug.Log("=============== 제 발 요 ===============");
+                                inspections[i].SetAlphaToFull();
+                                inspections[i].SetTextColor(Color.green);
+                                inspections[i].count.text = _item.itemStack.ToString() + "/1";
+                                inspections[i].renovateOk = true;
+
+                                inspections[i].SetItemPK(_item.GetItemUniqueCode());
+                            }
+                        }
+                        
                         break;
                     case 3:
                         //DBConnector.LoadItemByCodeFromDB(_item.itemCode, ref _item.itemImage, ref _item.typeIcon);

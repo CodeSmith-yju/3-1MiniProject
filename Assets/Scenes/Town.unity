@@ -12287,7 +12287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 4000
-  isNpc: 0
+  isNpc: 1
 --- !u!70 &635772898
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -17257,7 +17257,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.0278847
+      m_AnimationSpeed: 1.0431075
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -17268,7 +17268,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.089938
+      m_AnimationSpeed: 2.9678857
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -17279,7 +17279,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.1640463
+      m_AnimationSpeed: 1.984278
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -17290,7 +17290,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.177913
+      m_AnimationSpeed: 2.7999263
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -17301,7 +17301,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.527599
+      m_AnimationSpeed: 2.4345746
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -29890,6 +29890,7 @@ MonoBehaviour:
   partyNameSetting: {fileID: 1153008176}
   isDungeon: 0
   uiEventCk: 1
+  move_doit: 1
   shopMgr: {fileID: 4123372368317223246}
   blacksmith: {fileID: 225362056}
   SnB: {fileID: 3904087297289994909}
@@ -41895,7 +41896,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.9072702
+      m_AnimationSpeed: 1.4760005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -41906,7 +41907,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.3192306
+      m_AnimationSpeed: 2.7270265
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -41917,7 +41918,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.4178083
+      m_AnimationSpeed: 2.2680416
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -41928,7 +41929,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.751858
+      m_AnimationSpeed: 1.8536136
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -41939,7 +41940,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.6486527
+      m_AnimationSpeed: 1.8943937
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -45991,14 +45992,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aryPortraitSprite:
   - {fileID: 21300000, guid: 5ffe736cb1a5bb742ae4fd2fad21fdd5, type: 3}
-  - {fileID: 21300000, guid: 5ffe736cb1a5bb742ae4fd2fad21fdd5, type: 3}
-  - {fileID: 21300000, guid: 5ffe736cb1a5bb742ae4fd2fad21fdd5, type: 3}
-  - {fileID: 21300000, guid: 5ffe736cb1a5bb742ae4fd2fad21fdd5, type: 3}
-  - {fileID: 21300008, guid: d79edf18a76e2654a9ac99f15de8b2b3, type: 3}
-  - {fileID: 21300010, guid: d79edf18a76e2654a9ac99f15de8b2b3, type: 3}
-  - {fileID: 21300012, guid: d79edf18a76e2654a9ac99f15de8b2b3, type: 3}
-  - {fileID: 21300014, guid: d79edf18a76e2654a9ac99f15de8b2b3, type: 3}
   - {fileID: 21300000, guid: 71cad7314a39890459f670b5596a8bb3, type: 3}
+  - {fileID: 21300000, guid: 6c973476ce3b82d45949a12ffe10565f, type: 3}
 --- !u!4 &1695580459
 Transform:
   m_ObjectHideFlags: 0
@@ -48655,6 +48650,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -140
       objectReference: {fileID: 0}
+    - target: {fileID: 1472023923588563199, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472023923588563199, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472023923588563199, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 195
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472023923588563199, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -233.33334
+      objectReference: {fileID: 0}
     - target: {fileID: 1516253236514926332, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -48759,6 +48770,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4988671218564386994, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4988671218564386994, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4988671218564386994, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 195
+      objectReference: {fileID: 0}
+    - target: {fileID: 4988671218564386994, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -140
+      objectReference: {fileID: 0}
     - target: {fileID: 6114723807320338893, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -48779,6 +48806,38 @@ PrefabInstance:
       propertyPath: m_SpriteState.m_HighlightedSprite
       value: 
       objectReference: {fileID: 21300000, guid: ebe9718364f118b48bc6c99500032b04, type: 3}
+    - target: {fileID: 6246576304902855406, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246576304902855406, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246576304902855406, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1153008174}
+    - target: {fileID: 6246576304902855406, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246576304902855406, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: MoveDoitCk
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246576304902855406, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: GameUiMgr, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246576304902855406, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246576304902855406, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6495725871773524634, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
       propertyPath: m_Name
       value: BlackSmith
@@ -48800,6 +48859,22 @@ PrefabInstance:
       value: 195
       objectReference: {fileID: 0}
     - target: {fileID: 8223797774017121549, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -46.666668
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328872837431685037, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328872837431685037, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328872837431685037, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 195
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328872837431685037, guid: 667a995bf65e86d499e0545be830f47a, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -46.666668
       objectReference: {fileID: 0}
@@ -52840,7 +52915,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.0540597
+      m_AnimationSpeed: 2.8475556
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -52851,7 +52926,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.4276738
+      m_AnimationSpeed: 1.8868315
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -52862,7 +52937,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.2343943
+      m_AnimationSpeed: 1.5236708
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -52873,7 +52948,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.1097493
+      m_AnimationSpeed: 1.2035642
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -52884,7 +52959,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.236492
+      m_AnimationSpeed: 1.3202558
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -53809,6 +53884,42 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1153008174}
+    - target: {fileID: 5846445094637565795, guid: 8eb30c100124fbb48a0fbc0364bac6f4, type: 3}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ebe9718364f118b48bc6c99500032b04, type: 3}
+    - target: {fileID: 5846445094637565795, guid: 8eb30c100124fbb48a0fbc0364bac6f4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5846445094637565795, guid: 8eb30c100124fbb48a0fbc0364bac6f4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5846445094637565795, guid: 8eb30c100124fbb48a0fbc0364bac6f4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1153008174}
+    - target: {fileID: 5846445094637565795, guid: 8eb30c100124fbb48a0fbc0364bac6f4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5846445094637565795, guid: 8eb30c100124fbb48a0fbc0364bac6f4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: MoveDoitCk
+      objectReference: {fileID: 0}
+    - target: {fileID: 5846445094637565795, guid: 8eb30c100124fbb48a0fbc0364bac6f4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: GameUiMgr, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5846445094637565795, guid: 8eb30c100124fbb48a0fbc0364bac6f4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5846445094637565795, guid: 8eb30c100124fbb48a0fbc0364bac6f4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6585525010848611259, guid: 8eb30c100124fbb48a0fbc0364bac6f4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -56272,6 +56383,38 @@ PrefabInstance:
       propertyPath: m_SpriteState.m_HighlightedSprite
       value: 
       objectReference: {fileID: 21300000, guid: ebe9718364f118b48bc6c99500032b04, type: 3}
+    - target: {fileID: 8547629445853935636, guid: 52d9671a8df736946a536247289411fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547629445853935636, guid: 52d9671a8df736946a536247289411fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547629445853935636, guid: 52d9671a8df736946a536247289411fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1153008174}
+    - target: {fileID: 8547629445853935636, guid: 52d9671a8df736946a536247289411fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547629445853935636, guid: 52d9671a8df736946a536247289411fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: MoveDoitCk
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547629445853935636, guid: 52d9671a8df736946a536247289411fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: GameUiMgr, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547629445853935636, guid: 52d9671a8df736946a536247289411fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547629445853935636, guid: 52d9671a8df736946a536247289411fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8837704022552577950, guid: 52d9671a8df736946a536247289411fc, type: 3}
       propertyPath: m_Name
       value: Shop

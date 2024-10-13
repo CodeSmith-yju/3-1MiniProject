@@ -26,7 +26,8 @@ public class Preview : MonoBehaviour
         {
             text_modify_stack.gameObject.SetActive(true);
         }
-        text_pre_stat.text = myItem.itemPower.ToString()+" -> " + myItem.GetPreViewPower(myItem).ToString() + "(+ "+ (myItem.GetPreViewPower(myItem)-myItem.itemPower).ToString() + ")";
+        float _f = myItem.GetPreViewPower(myItem);
+        text_pre_stat.text = myItem.itemPower.ToString()+" -> " + _f.ToString() + "(+ "+ (_f - myItem.itemPower).ToString() + ")";
     }
 
 }

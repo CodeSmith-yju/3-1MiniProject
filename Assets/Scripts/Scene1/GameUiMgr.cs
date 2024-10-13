@@ -150,7 +150,12 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     //06-16 던전입장용변수
     public bool isDungeon = false;
+
+    //활성화된 ui창이있으면 강제로 종료하게하기위한 변수
     public bool uiEventCk = true;
+
+    //특정 ui가 활성화되어있을때 캐릭터 이동을 막는 변수
+    public bool move_doit = true;
 
     [Header("Shop UI")]
     [SerializeField] ShopMgr shopMgr;
@@ -746,6 +751,16 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 tmp_PlayerRating.text = "견습 모험가";
             }
 
+            if (scanObj_isNpc)
+            {
+                Debug.Log("ID : " + scanObj_ID);
+            }
+            if (scanObj_ID == 4000)
+            {
+                Debug.Log("상점 npc와 대화종료되면 상점/대장간 ui오픈");
+                SnB.SetActive(true);
+                move_doit = false;
+            }
             //Debug.Log("NulltalkData // ToosTalkData: " + scanObj_ID); // 04 -23 Debug
             /*if (AllEquipChek())
             {
@@ -1762,6 +1777,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             blacksmith.gameObject.SetActive(false);
         }
+    }
+    public void MoveDoitCk(bool _onoff)
+    {
+        move_doit = _onoff;
     }
 
     public void RefreshiPartyBord()

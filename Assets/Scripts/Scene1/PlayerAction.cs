@@ -32,22 +32,24 @@ public class PlayerAction : MonoBehaviour
         v = (up ? 1 : 0) - (down ? 1 : 0);
 
         // 애니메이션 상태 업데이트
-        UpdateAnimation();
+        if (GameUiMgr.single.move_doit)
+            UpdateAnimation();
 
         // Scan Ray Object
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && scanRayObjcet != null || (GameUiMgr.single.isActionTalk && Input.GetMouseButtonDown(0)))
+        if (GameUiMgr.single.move_doit && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && scanRayObjcet != null || (GameUiMgr.single.isActionTalk && Input.GetMouseButtonDown(0)))
         {
             GameUiMgr.single.HideSubButtons();
             //Debug.Log("This is : "+ scanRayObjcet.name);// 레이에 맞고 스페이스바를 통해 상호작용하여 Scan Object에 저장된 물체가 있을 시 오브젝트 이름 출력 
             //Debug.Log(scanRayObjcet.name); // 04- 23 Debug
 
             ObjectData obj = scanRayObjcet.GetComponent<ObjectData>();
-            if (obj.id == 4000)
+            /*if (obj.id == 4000)
             {
                 //if (GameUiMgr.single.questMgr.questId >= 30)
                     GameUiMgr.single.SnB.SetActive(true);
             }
-            else if (obj.id == 9000)
+            else*/ 
+            if (obj.id == 9000)
             {
                 if (GameUiMgr.single.questMgr.questId >= 30)
                 {
@@ -104,7 +106,7 @@ public class PlayerAction : MonoBehaviour
     private void FixedUpdate()
     {
         moveDirection = new Vector2(h, v).normalized;
-        if (!GameUiMgr.single.isActionTalk)
+        if (!GameUiMgr.single.isActionTalk && GameUiMgr.single.move_doit)
         {
             rigid.velocity = moveDirection * 4f;
         }

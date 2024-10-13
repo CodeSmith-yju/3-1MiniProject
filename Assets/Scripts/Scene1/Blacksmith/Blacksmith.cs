@@ -5,6 +5,7 @@ using TMPro;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public enum BlacksmithState
 {
@@ -416,17 +417,35 @@ public class Blacksmith : MonoBehaviour
 
     public void ShowInspections(Item _item)
     {
-        sacrificeList.gameObject.SetActive(true);
-        for (int i = 0; i < sacrificeList.inspections.Length; i++)
+        if (blacksmithState == BlacksmithState.Renovate)
         {
-            sacrificeList.inspections[i].Init(_item);
+            sacrificeList.gameObject.SetActive(true);
+            for (int i = 0; i < sacrificeList.inspections.Length; i++)
+            {
+                sacrificeList.inspections[i].Init(_item);
+            }
+            sacrificeList.ChangeInspectionsVlue(null);
+
+            if (sacrificeList.AllCk() == true)
+            {
+                btn_Commit.interactable = true;
+            }
         }
-
-        sacrificeList.ChangeInspectionsVlue(null);
-
-        if (sacrificeList.AllCk() == true)
+        else if(blacksmithState == BlacksmithState.Upgrade)
         {
-            btn_Commit.interactable = true;
+            Debug.Log("업그레이드 를위한 재료아이템 무결성 검사중");
+            upgradesMaterials.gameObject.SetActive(true);
+
+            for (int i = 0; i < upgradesMaterials.inspections.Length; i++)
+            {
+                upgradesMaterials.inspections[i].Init(_item);
+                upgradesMaterials.ChangeInspectionsVlue(_item);
+            }
+
+            if (upgradesMaterials.AllCk() == true)
+            {
+                btn_Commit.interactable = true;
+            }
         }
     }
     public Item NowSelectedRenovateItem(int _index)
@@ -494,10 +513,11 @@ public class Blacksmith : MonoBehaviour
     {
         preview.gameObject.SetActive(true);
         preview.Init(_item);
-        upgradesMaterials.ChangeInspectionsVlue(_item);
+        ShowInspections(_item);
     }
     public void UnShowPreView()
     {
         preview.gameObject.SetActive(false);
+        ShowInspections(null);
     }
 }

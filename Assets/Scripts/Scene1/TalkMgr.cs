@@ -25,13 +25,13 @@ public class TalkMgr : MonoBehaviour // 대화 데이터를 관리할 매니저 
         dictTalkData.Add(2000, new string[] { GameMgr.playerData[0].GetPlayerName() + "님!:0", "오셨군요 :0" });
         //dictTalkData.Add(1000, new string[] { "안녕!" + GameMgr.playerData.NAME + ":0", "이 곳에 처음 왔구나?:1", "개쩌는 김치피자탕수육을 만들어주렴:2" });// 하나의 대화에는 여러 문장이 있으므로 배열로 선언
         //dictTalkData.Add(2000, new string[] { GameMgr.playerData.NAME+"! :0","던전마을로 가는거야? :1", "몸조심해! :2" });
-        dictTalkData.Add(4000, new string[] { "물건 사러 왔어? 아니면 개조?"});
+        dictTalkData.Add(4000, new string[] { "물건 사러 왔어? 아니면 개조? :1"});
         dictTalkData.Add(5000, new string[] { "상자" });
         dictTalkData.Add(6000, new string[] { "표지판" });
         dictTalkData.Add(7000, new string[] { "문"});
         dictTalkData.Add(8000, new string[] { "던전"});
 
-        //dictTalkData.Add(01 + 1000, new string[] { "안녕! :0", "이 곳에 처음 왔구나?:1", "나는 루나라고해!:2" });
+        //dictTalkData.Add(01 + 1000, new string[] { "안녕! :0", "이 곳에 처음 왔구나?:1", "나는 루나라고해!:2" })
         dictTalkData.Add(10 + 1000, new string[] {
             "견습 모험가님 안녕하세요. \n9급 모험가 시험에 응시하러 오셨군요. :0",
             "저희가 준비한 모의전투에 승리하시면 \n정식으로 모험가 길드에 가입할 수 있습니다. :0",
@@ -112,16 +112,21 @@ public class TalkMgr : MonoBehaviour // 대화 데이터를 관리할 매니저 
 
         //Portrait Data, 0:Idel, 1: Talk, 2: Happy, 3: Angry
         // (내가 지정한 Npc의 ID + NPC상태에 따른 변수), 스프라이트배열 aryPortraitSprite에 저장된 스프라이트 이미지 << 이건 추후에 배열번호가아니라 배열에저장된 스프라이트 이름으로 주는식으로 변경할수있을듯 
+        // aryPortraitSprite[0] = 접수원, [1] = player, [2] = blacksmith
         dictPortraitSprite.Add(1000 + 0, aryPortraitSprite[0]);// Idel
-        dictPortraitSprite.Add(1000 + 1, aryPortraitSprite[8]);
+        dictPortraitSprite.Add(1000 + 1, aryPortraitSprite[1]);
 
         dictPortraitSprite.Add(2000 + 0, aryPortraitSprite[0]);// Idel
-        dictPortraitSprite.Add(2000 + 1, aryPortraitSprite[8]);
+        dictPortraitSprite.Add(2000 + 1, aryPortraitSprite[1]);
 
-        dictPortraitSprite.Add(2000 + 2, aryPortraitSprite[2]);
-        dictPortraitSprite.Add(2000 + 3, aryPortraitSprite[3]);
+        /*dictPortraitSprite.Add(2000 + 2, aryPortraitSprite[0]);
+        dictPortraitSprite.Add(2000 + 3, aryPortraitSprite[0]);*/
 
-        //dictPortraitSprite.Add(4000 + 0, aryPortraitSprite[8]);
+        for (int i = 0; i < 4; i++)
+        {
+            dictPortraitSprite.Add(4000 + i, aryPortraitSprite[2]);
+        }
+        
     }
     private void Start()
     {
@@ -130,7 +135,8 @@ public class TalkMgr : MonoBehaviour // 대화 데이터를 관리할 매니저 
         dictTalkName.Clear();
 
         dictTalkName.Add(aryPortraitSprite[0], "접수원");
-        dictTalkName.Add(aryPortraitSprite[8], GameMgr.playerData[0].GetPlayerName());//GameMgr.playerData[0].GetPlayerName()
+        dictTalkName.Add(aryPortraitSprite[2], "대장장이");
+        dictTalkName.Add(aryPortraitSprite[1], GameMgr.playerData[0].GetPlayerName());//GameMgr.playerData[0].GetPlayerName()
     }
 
     public string GetTalk(int objectID, int talkDataIndex)// 지정된 대화 문장을 반환하는 함수

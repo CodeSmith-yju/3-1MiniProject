@@ -157,14 +157,26 @@ public class InSlot : MonoBehaviour
     public void UnSelect()
     {
         Debug.Log("Run UnSelect");
-        if (selectedPanel.activeSelf)
+        if (blacksmith.blacksmithState == BlacksmithState.Renovate)
         {
-            Debug.Log("active True ");
-            selectedPanel.SetActive(false);
+            if (selectedPanel.activeSelf)
+            {
+                Debug.Log("active True");
+                selectedPanel.SetActive(false);
 
+                ParentBtn.interactable = false;
+                ChildBtn.interactable = true;
+            }
+        }
+        else if (blacksmith.blacksmithState == BlacksmithState.Upgrade)
+        {
+            selectedPanel.SetActive(false);
+            Debug.Log("중복클릭으로인한 선택취소기능 ");
+           
             ParentBtn.interactable = false;
             ChildBtn.interactable = true;
         }
+        
     }
 
     public void OnClickSelected()

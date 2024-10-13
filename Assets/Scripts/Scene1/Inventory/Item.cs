@@ -115,11 +115,21 @@ public class Item
         }
         return _item;
     }
-    public int GetPreViewPower(Item _item)
+    public float GetPreViewPower(Item _item)
     {
-        float power = ItemResources.instance.itemRS[_item.itemCode].itemPower + (ItemResources.instance.itemRS[_item.itemCode].itemPower) * 0.5f * _item.modifyStack;
-
-        return (int)power;
+        int _i = _item.modifyStack;
+        if (_i < 1)
+        {
+            _i = 2;
+        }
+        else
+        {
+            _i += 2;
+        }
+        float power = 0f;
+        power = _item.itemPower + _item.itemPower * 0.5f * _i;
+        Debug.Log("Befor: "+_item.itemPower + " / After: "+ power);
+        return power;
     }
     public void IconSet(Item _item)
     {
