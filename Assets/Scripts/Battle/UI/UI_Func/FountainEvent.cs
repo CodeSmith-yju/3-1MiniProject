@@ -13,6 +13,12 @@ public class FountainEvent : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (BattleManager.Instance.dialogue != null && BattleManager.Instance.dialogue.isTutorial)
+        {
+            if (BattleManager.Instance.ui.dialogue_Box.activeSelf)
+                return;
+        }
+
         if (!BattleManager.Instance.ui.option_UI.activeSelf)
         {
             if (event_Check)
@@ -39,6 +45,5 @@ public class FountainEvent : MonoBehaviour
                 }
             }
         }
-        
     }
 }

@@ -258,6 +258,7 @@ Transform:
   m_Children:
   - {fileID: 2003622586909474021}
   - {fileID: 3820278342547530980}
+  - {fileID: 7688368528239455342}
   m_Father: {fileID: 8130411445160796816}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &8536312764416503142
@@ -869,6 +870,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spritePrefab: {fileID: 6722684952164056622, guid: 5e67c91476f60264babf66fee7f6648b, type: 3}
   deloy_obj: {fileID: 4073435112864086854}
+  buff_Prefab: {fileID: 1636957286907848521, guid: c9fdb6000c03066408616f4af8d2d31c, type: 3}
+  buff_Deploy_Tf: {fileID: 7688368528239455342}
   highlight: []
 --- !u!1 &4073435112864086854
 GameObject:
@@ -4827,6 +4830,37 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!1 &8231773896688554257
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7688368528239455342}
+  m_Layer: 0
+  m_Name: Buff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7688368528239455342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8231773896688554257}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3499268193266957771}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8570941553596722663
 GameObject:
   m_ObjectHideFlags: 0

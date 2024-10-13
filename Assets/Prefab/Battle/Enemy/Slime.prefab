@@ -397,7 +397,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 5, y: 122}
-  m_SizeDelta: {x: 160, y: 6}
+  m_SizeDelta: {x: 160, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5331608812123811110
 MonoBehaviour:
@@ -684,6 +684,7 @@ MonoBehaviour:
   able_Skill: 0
   isMelee: 0
   _curstate: 0
+  attribute: 0
   isAttack: 0
   isAtkDone: 0
   isDie: 0
