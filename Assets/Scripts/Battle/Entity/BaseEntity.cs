@@ -59,12 +59,12 @@ public class BaseEntity : MonoBehaviour
 
     public enum Attribute // 유닛 속성 설정
     {
-        Normal,
-        Fire,
-        Water,
-        Grass,
-        Light,
-        Dark
+        Normal, // 주인공
+        Fire, // 불
+        Water, // 물
+        Grass, // 풀
+        Light, // 광
+        Dark // 암
     }
 
     private void Awake()
