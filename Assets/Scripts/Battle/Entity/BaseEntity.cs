@@ -23,6 +23,7 @@ public class BaseEntity : MonoBehaviour
 
     [Header("Entity_Action")]
     public State _curstate;
+    public Attribute attribute;
     public bool isAttack = false;
     public bool isAtkDone = false;
     public bool isDie = false;
@@ -34,6 +35,7 @@ public class BaseEntity : MonoBehaviour
     private bool isDieInProgress = false;
     protected bool using_Skill = false;
     protected bool isPlayer = true;
+    protected bool isInvulnerable = false;
     private float atk_CoolTime;
     private float cur_atk_CoolTime;
 
@@ -53,6 +55,16 @@ public class BaseEntity : MonoBehaviour
         Attack,
         Skill,
         Death
+    }
+
+    public enum Attribute // 유닛 속성 설정
+    {
+        Normal, // 주인공
+        Fire, // 불
+        Water, // 물
+        Grass, // 풀
+        Light, // 광
+        Dark // 암
     }
 
     private void Awake()
@@ -439,9 +451,55 @@ public class BaseEntity : MonoBehaviour
     {
         ani.SetTrigger("isAtk");
         Debug.Log("공격함 ( " + name + " -> " + target.name + " )");
+        float getDmgHp;
 
-        float getDmgHp = target.cur_Hp - atkDmg;
-        target.cur_Hp = getDmgHp;
+        switch (attribute)
+        {
+            case Attribute.Fire:
+                if (target.attribute == Attribute.Water)
+                    getDmgHp = target.cur_Hp - (atkDmg * 0.75f);
+                else if (target.attribute == Attribute.Grass)
+                    getDmgHp = target.cur_Hp - (atkDmg * 1.25f);
+                else
+                     getDmgHp = target.cur_Hp - (atkDmg * 1f);
+                break;
+            case Attribute.Water:   
+                if (target.attribute == Attribute.Grass)
+                    getDmgHp = target.cur_Hp - (atkDmg * 0.75f);
+                else if (target.attribute == Attribute.Fire)
+                    getDmgHp = target.cur_Hp - (atkDmg * 1.25f);
+                else
+                    getDmgHp = target.cur_Hp - (atkDmg * 1f);
+                break;
+            case Attribute.Grass:
+                if (target.attribute == Attribute.Fire)
+                    getDmgHp = target.cur_Hp - (atkDmg * 0.75f);
+                else if (target.attribute == Attribute.Water)
+                    getDmgHp = target.cur_Hp - (atkDmg * 1.25f);
+                else
+                    getDmgHp = target.cur_Hp - (atkDmg * 1f);
+                break;
+            case Attribute.Light:
+                if (target.attribute == Attribute.Dark)
+                    getDmgHp = target.cur_Hp - (atkDmg * 1.25f);
+                else
+                    getDmgHp = target.cur_Hp - (atkDmg * 1f);
+                break;
+            case Attribute.Dark:
+                if (target.attribute == Attribute.Light)
+                    getDmgHp = target.cur_Hp - (atkDmg * 1.25f);
+                else
+                    getDmgHp = target.cur_Hp - (atkDmg * 1f);
+                break;
+            default: // 주인공일 경우 (속성이 없을 경우)
+                getDmgHp = target.cur_Hp - (atkDmg * 1f);
+                break;
+        }
+
+        if (!target.isInvulnerable)
+            target.cur_Hp = getDmgHp;
+        else
+            target.cur_Hp -= 0f;
         Debug.Log(target.cur_Hp + " " + target.name);
     }
 
@@ -453,8 +511,56 @@ public class BaseEntity : MonoBehaviour
 
     public void RangeHit(BaseEntity target, float dmg)
     {
-        float getDmgHp = target.cur_Hp - dmg;
-        target.cur_Hp = getDmgHp;
+        float getDmgHp;
+
+        switch (attribute)
+        {
+            case Attribute.Fire:
+                if (target.attribute == Attribute.Water)
+                    getDmgHp = target.cur_Hp - (dmg * 0.75f);
+                else if (target.attribute == Attribute.Grass)
+                    getDmgHp = target.cur_Hp - (dmg * 1.25f);
+                else
+                    getDmgHp = target.cur_Hp - (dmg * 1f);
+                break;
+            case Attribute.Water:
+                if (target.attribute == Attribute.Grass)
+                    getDmgHp = target.cur_Hp - (dmg * 0.75f);
+                else if (target.attribute == Attribute.Fire)
+                    getDmgHp = target.cur_Hp - (dmg * 1.25f);
+                else
+                    getDmgHp = target.cur_Hp - (dmg * 1f);
+                break;
+            case Attribute.Grass:
+                if (target.attribute == Attribute.Fire)
+                    getDmgHp = target.cur_Hp - (dmg * 0.75f);
+                else if (target.attribute == Attribute.Water)
+                    getDmgHp = target.cur_Hp - (dmg * 1.25f);
+                else
+                    getDmgHp = target.cur_Hp - (dmg * 1f);
+                break;
+            case Attribute.Light:
+                if (target.attribute == Attribute.Dark)
+                    getDmgHp = target.cur_Hp - (dmg * 1.25f);
+                else
+                    getDmgHp = target.cur_Hp - (dmg * 1f);
+                break;
+            case Attribute.Dark:
+                if (target.attribute == Attribute.Light)
+                    getDmgHp = target.cur_Hp - (dmg * 1.25f);
+                else
+                    getDmgHp = target.cur_Hp - (dmg * 1f);
+                break;
+            default: // 주인공일 경우 (속성이 없을 경우)
+                getDmgHp = target.cur_Hp - (dmg * 1f);
+                break;
+        }
+
+        if (!target.isInvulnerable)
+            target.cur_Hp = getDmgHp;
+        else
+            target.cur_Hp -= 0f;
+
         Debug.Log($"Hit to {target.name}! {target.cur_Hp}");
     }
 

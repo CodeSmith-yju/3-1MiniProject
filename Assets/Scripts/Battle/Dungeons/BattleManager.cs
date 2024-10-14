@@ -33,6 +33,7 @@ public class BattleManager : MonoBehaviour
     private bool battleEnded = false;
     public int event_Stack = 0;
     private bool poison_Check = false;
+    public bool buff_On = false;
     //public bool isMapDone = false;
 
     [Header("Stage")]
@@ -116,6 +117,7 @@ public class BattleManager : MonoBehaviour
         yield return StartCoroutine(ui.StartBanner(ui.battle_Ready_Banner));
         yield return new WaitForSeconds(0.15f);
 
+        buff_On = true;
         // PlacementUnit(); // 파티 리스트에 있는 유닛 생성
 
         Enemy[] entity = FindObjectsOfType<Enemy>(); // 몬스터를 찾음
