@@ -149,7 +149,83 @@ public class Blacksmith : MonoBehaviour
         else if (blacksmithState == BlacksmithState.Upgrade)
         {
             // 장비강화및 초기화
+            for (int i = 0; i < sacrificeList.inspections.Length; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        for (int j = 0; j < Inventory.Single.items.Count; j++)
+                        {
+                            if (Inventory.Single.items[j].PrimaryCode.Equals(sacrificeList.inspections[i].ItemPK))
+                            {
+                                Inventory.Single.RemoveItem(Inventory.Single.items[j]);
+                                break;
+                            }
+                        }
+                        break;
+                    case 1:
+                        int stk = sacrificeList.inspections[i].cnt; // 제거할 아이템의 개수
+                        Debug.Log("\n\n아이템 강화에 필요한 아이템개수: " + sacrificeList.inspections[i].cnt + "\n\n");
+                        for (int j = 0; j < Inventory.Single.items.Count; j++)
+                        {
+                            // 아이템 코드가 동일할 경우
+                            if (Inventory.Single.items[j].itemCode == sacrificeList.inspections[i].GetItem().itemCode + 4)
+                            {
+                                // 현재 아이템의 stack이 제거할 개수보다 많거나 같을 경우
+                                if (Inventory.Single.items[j].itemStack >= stk)
+                                {
+                                    // stk 수만큼 아이템 제거
+                                    for (int k = 0; k < stk; k++)
+                                    {
+                                        Inventory.Single.RemoveItem(Inventory.Single.items[j]);
+                                    }
+                                    break; // 아이템을 다 제거했으므로 루프를 종료
+                                }
+                                else
+                                {
+                                    // 현재 stack이 부족할 경우 남은 stk에서 제거할 수 있는 만큼 제거
+                                    stk -= Inventory.Single.items[j].itemStack;
+                                    for (int k = 0; k < Inventory.Single.items[j].itemStack; k++)
+                                    {
+                                        Inventory.Single.RemoveItem(Inventory.Single.items[j]);
 
+                                        // stk가 0이 되면 즉시 루프를 종료
+                                        if (--stk == 0)
+                                        {
+                                            break;
+                                        }
+                                    }
+
+                                    // stk가 0이 되면 전체 루프를 종료
+                                    if (stk == 0)
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        break;
+                    case 2:
+                        if (GameMgr.playerData[0].player_Gold >= sacrificeList.inspections[i].cnt)
+                        {
+                            GameMgr.playerData[0].player_Gold -= sacrificeList.inspections[i].cnt;
+                            Debug.Log("\n\n아이템 강화에 필요한 골드: " + sacrificeList.inspections[i].cnt + "\n\n");
+                        }
+                        else
+                        {
+                            Debug.Log("골드부족한데스?");
+                        }
+                        break;
+                    default:
+                        Debug.Log("버그인데스");
+                        break;
+                }
+            }
+
+            //다끝났으니까 뚱땅애니메이션 출력하고
+            //장비강화하고
+            //화면초기화하고
         }
 
         NowGold();

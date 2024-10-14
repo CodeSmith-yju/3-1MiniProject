@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-enum TypeInspection
+public enum TypeInspection
 {
     Equip,
     Ect,
@@ -115,6 +115,10 @@ public class Inspection : MonoBehaviour
         {
             Debug.LogWarning("Target Image is not assigned!");
         }
+    }
+    public TypeInspection GetMyInspectionType()
+    {
+        return type;
     }
     public Item GetItem()
     {
