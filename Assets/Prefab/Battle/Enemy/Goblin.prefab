@@ -539,6 +539,7 @@ MonoBehaviour:
   able_Skill: 0
   isMelee: 0
   _curstate: 0
+  attribute: 3
   isAttack: 0
   isAtkDone: 0
   isDie: 0
@@ -717,7 +718,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 15/15
+  m_text: HP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b1bafcd9c7a6b7247a63275da0ec75c1, type: 2}
   m_sharedMaterial: {fileID: 4824551100483818342, guid: b1bafcd9c7a6b7247a63275da0ec75c1, type: 2}

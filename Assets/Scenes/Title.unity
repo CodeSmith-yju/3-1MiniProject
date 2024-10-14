@@ -3190,6 +3190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197bafb6ec38ce14799f618b9f5d67d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorial: 0
   selectedResolution: 0
   input_Name: 
   popUp: {fileID: 1316948235189082396}
@@ -4016,6 +4017,8 @@ MonoBehaviour:
   skelletone_sfxClip:
   - {fileID: 8300000, guid: 1a5395130b6beed4d8cce71ff4a5af43, type: 3}
   - {fileID: 8300000, guid: 46893be0329284d488cfea35a52cbf91, type: 3}
+  skeletonWizard_sfxClip: []
+  puppetHuman_sfxClip: []
 --- !u!4 &1750171242
 Transform:
   m_ObjectHideFlags: 0

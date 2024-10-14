@@ -105,7 +105,7 @@ public class BattleManager : MonoBehaviour
 
     private void Start()
     {
-        ChangePhase(BattlePhase.Start); // 방 체크
+        //ChangePhase(BattlePhase.Start); // 방 체크 (맵 매니저에서 하도록 함)
         AudioManager.single.PlayBgmClipChange(2);
     }
 
@@ -170,7 +170,7 @@ public class BattleManager : MonoBehaviour
             case BattlePhase.Start:
                 if (room.isMoveDone || isFirstEnter)
                 {
-                    StartCoroutine(CheckRoom());
+                    CheckRoom();
                 }
                 break;
             case BattlePhase.Rest:
@@ -209,8 +209,6 @@ public class BattleManager : MonoBehaviour
 
     public IEnumerator BattleStart()
     {
-        if (ui.party_List.activeSelf)
-            ui.party_List.SetActive(false);
 
         if (deploy_Player_List.Count == 0)
         {
@@ -383,7 +381,7 @@ public class BattleManager : MonoBehaviour
             {
                 Ally ally = obj as Ally;
                 if (ally != null)
-                    ally.UpdateCurrentHPToSingle();
+                    ally.UpdateCurrentHPMPToSingle();
                 Destroy(obj.gameObject);
 
                 foreach (Transform arrow_Obj in pool.obj_Parent)
@@ -447,9 +445,8 @@ public class BattleManager : MonoBehaviour
     }
 
     // 방 종류 체크 메서드
-    public IEnumerator CheckRoom()
+    public void CheckRoom()
     {
-        yield return null;
         // 전 방에 배치된 유닛들 제거
         if (deploy_Player_List != null)
         {
@@ -460,7 +457,7 @@ public class BattleManager : MonoBehaviour
                 foreach (Ally obj in unit)
                 {
                     if (obj != null)
-                        obj.UpdateCurrentHPToSingle();
+                        obj.UpdateCurrentHPMPToSingle();
                     Destroy(obj.gameObject);
 
                     foreach (Transform arrow_Obj in pool.obj_Parent)
@@ -478,20 +475,7 @@ public class BattleManager : MonoBehaviour
         deploy_Enemy_List.Clear();
 
         unit_deploy_area = GameObject.FindGameObjectWithTag("Wait");
-
-        if (isFirstEnter)
-        {
-            isFirstEnter = false;
-            Debug.Log("첫 방은 배치 하지 않음");
-            yield return new WaitForSeconds(0.3f);
-            //PlacementUnit(); // 어떤 방이든 유닛을 소환 시키도록 함.
-        }
-        else
-        {
-            PlacementUnit(); // 어떤 방이든 유닛을 소환 시키도록 함.
-        }
-
-        
+        PlacementUnit(); // 어떤 방이든 유닛을 소환 시키도록 함.
 
         if (room.cur_Room.tag == "Battle")
         {
@@ -515,15 +499,12 @@ public class BattleManager : MonoBehaviour
             {
                 AudioManager.single.PlayBgmClipChange(3);
             }
-
             ChangePhase(BattlePhase.Deploy);
-            yield break;
         }
         else
         {
             ChangePhase(BattlePhase.Rest);
             Debug.Log("휴식");
-            yield break;
         }
     }
 

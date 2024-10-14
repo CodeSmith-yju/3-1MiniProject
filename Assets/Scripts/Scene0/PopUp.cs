@@ -69,10 +69,8 @@ public class PopUp : MonoBehaviour
                 {
                     Time.timeScale = 1;
                 }
-
                 if (BattleManager.Instance.ui.option_UI.activeSelf)
                     BattleManager.Instance.ui.option_UI.SetActive(false);
-
                 BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.exit_Popup); // 던전 중단 결과창
                 break;
             case PopUpState.SnPotion:

@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BuffInit : MonoBehaviour
 {
     [SerializeField] private Sprite[] buff_Icons;
     private int buff_Index;
-    private Dictionary<Ally, PlayerStats> temp_Stats = new Dictionary<Ally, PlayerStats>();
-    private List<Ally> buffedPlayers = new List<Ally>(); // 버프가 적용된 플레이어 추적
+    private Dictionary<PlayerData, PlayerStats> temp_Stats = new Dictionary<PlayerData, PlayerStats>();
+    private Dictionary<int, PlayerData> playerDataMapping = new Dictionary<int, PlayerData>();
+    private HashSet<Ally> buffedPlayers = new HashSet<Ally>();
+    private GameObject[] players;
 
     // 툴팁 오브젝트 참조 (씬에 존재하는 툴팁 오브젝트에 연결)
     [SerializeField] private BuffTooltip buffTooltip;
@@ -16,6 +19,14 @@ public class BuffInit : MonoBehaviour
     private void Start()
     {
         buffTooltip = FindObjectOfType<BuffTooltip>();
+        players = GameObject.FindGameObjectsWithTag("Player");
+
+        // 초기화: Ally와 PlayerData 매핑
+        foreach (PlayerData data in GameMgr.playerData)
+        {
+            playerDataMapping[data.playerIndex] = data;
+        }
+
     }
 
     public void Init(int index)
@@ -32,46 +43,51 @@ public class BuffInit : MonoBehaviour
         {
             CheckPlayerDistances();
         }
+
+        if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Battle)
+        {
+            if (buffTooltip.transform.GetChild(0).gameObject.activeSelf)
+                HideTooltip();
+        }
     }
+
 
     // 매 프레임마다 플레이어들과의 거리 체크
     private void CheckPlayerDistances()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-
         foreach (GameObject playerObj in players)
         {
             Ally player = playerObj.GetComponent<Ally>();
             if (player == null) continue;
 
-            float distance = Vector3.Distance(transform.position, player.transform.position);
+            // 해당 플레이어의 PlayerData 가져오기
+            if (playerDataMapping.TryGetValue(player.entity_index, out PlayerData playerStat))
+            {
+                float distance = Vector3.Distance(transform.position, player.transform.position);
 
-            if (distance < 0.1f) // 플레이어가 버프 타일 위에 있을 때
-            {
-                if (!buffedPlayers.Contains(player))
+                if (distance < 0.1f) // 플레이어가 버프 타일 위에 있을 때
                 {
-                    Buff(buff_Index, player); // 버프 적용
-                    buffedPlayers.Add(player);
+                    if (buffedPlayers.Add(player)) // 새로운 플레이어일 때만 버프 적용
+                    {
+                        Buff(buff_Index, player, playerStat);
+                    }
                 }
-            }
-            else // 플레이어가 버프 타일을 벗어났을 때
-            {
-                if (buffedPlayers.Contains(player))
+                else // 플레이어가 타일에서 벗어났을 때
                 {
-                    RemoveBuff(player); // 버프 해제
-                    buffedPlayers.Remove(player);
+                    if (buffedPlayers.Remove(player)) // 제거되었을 때만 버프 해제
+                    {
+                        RemoveBuff(player, playerStat);
+                    }
                 }
             }
         }
     }
 
-
-
-    private void Buff(int index, Ally player)
+    private void Buff(int index, Ally player, PlayerData player_Data)
     {
-        if (!temp_Stats.ContainsKey(player))
+        if (!temp_Stats.ContainsKey(player_Data))
         {
-            temp_Stats[player] = new PlayerStats(player.atkDmg, player.max_Hp, player.max_Mp);
+            temp_Stats[player_Data] = new PlayerStats(player_Data.base_atk_Dmg, player_Data.max_Player_Hp, player_Data.max_Player_Mp);
         }
 
 
@@ -91,11 +107,11 @@ public class BuffInit : MonoBehaviour
         }
     }
 
-    private void RemoveBuff(Ally player)
+    private void RemoveBuff(Ally player, PlayerData player_Data)
     {
-        if (temp_Stats.ContainsKey(player))
+        if (temp_Stats.ContainsKey(player_Data))
         {
-            PlayerStats stats = temp_Stats[player];
+            PlayerStats stats = temp_Stats[player_Data];
 
             player.atkDmg = stats.temp_Dmg;
             player.max_Hp = stats.temp_MaxHp;
@@ -105,7 +121,7 @@ public class BuffInit : MonoBehaviour
 
             player.cur_Hp = Mathf.Min(player.cur_Hp, player.max_Hp);
 
-            temp_Stats.Remove(player);
+            temp_Stats.Remove(player_Data);
         }
     }
 

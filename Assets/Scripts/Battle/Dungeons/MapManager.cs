@@ -101,6 +101,7 @@ public class MapManager : MonoBehaviour
             player_Pos = new Vector2Int(0, 0);
             SetRoom(player_Pos);
             MiniMapUpdate(player_Pos);
+            BattleManager.Instance.ChangePhase(BattleManager.BattlePhase.Start); // 첫방 시작
         }
         else
         {
@@ -151,6 +152,9 @@ public class MapManager : MonoBehaviour
                 nav_Surface.BuildNavMeshAsync();
                 SetRoom(player_Pos);
                 MiniMapUpdate(player_Pos);
+
+                BattleManager.Instance.ChangePhase(BattleManager.BattlePhase.Start); // 첫방 시작
+
                 break;
             }
 
