@@ -6,7 +6,7 @@ public class Ally : BaseEntity
 {
     public string player_Name;
     public int level;
-    public Sprite class_Icon;
+    //public Sprite class_Icon;
     public Sprite class_Portrait;
 
 

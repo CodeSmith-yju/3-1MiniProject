@@ -23,7 +23,7 @@ public class UnitPlacement : MonoBehaviour
         this.unitPrefab = unit;
         this.unit_Icon.sprite = icon;
         this.data = data;
-        this.class_Icon.sprite = unit.GetComponent<Ally>().class_Icon;
+        //this.class_Icon.sprite = unit.GetComponent<Ally>().class_Icon;
     }
 
     public void DeployUnit()

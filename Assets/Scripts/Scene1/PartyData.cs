@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 /*public enum State { 
     Ranger, 
@@ -14,7 +11,10 @@ public class PartyData
     //Party Panel Act
     public string strPartyName;
     //public string strName;
-
+    public BaseEntity.Attribute Elemental;
+    List<BaseEntity.Attribute> rangerAttributes = new() { BaseEntity.Attribute.Wind, BaseEntity.Attribute.Water };
+    List<BaseEntity.Attribute> wizardAttributes = new() { BaseEntity.Attribute.Fire, BaseEntity.Attribute.Dark };
+    List<BaseEntity.Attribute> knightAttributes = new() { BaseEntity.Attribute.Light, BaseEntity.Attribute.Wind };
     public string type;
 
     public int cost = 128;
@@ -41,6 +41,7 @@ public class PartyData
 
     public Ally.JobClass jobType;
     public Sprite jobIcon;
+    public Sprite ElementalIcon;
 
     public PartyData(GameObject prefab, int _Lvel)
     {
@@ -54,7 +55,7 @@ public class PartyData
         cost = (150 + (_Lvel * 20)) + Random.Range(0, _Lvel * 10);
         Debug.Log("cost: "+cost);
         spPartyIcon = player.GetComponent<SpriteRenderer>().sprite;
-        jobIcon = player.class_Icon;
+        SetClassAndAttributeIcon(player.job);
     }
 
 
@@ -116,4 +117,37 @@ public class PartyData
         }
         Debug.Log("party Name: " + strPartyName);
     }
+    
+    void SetClassAndAttributeIcon(Ally.JobClass _jobClass)
+    {
+        switch (_jobClass)
+        {
+            case Ally.JobClass.Ranger:
+                Elemental = GetRandomElement(rangerAttributes);
+                jobIcon = GameUiMgr.single.partyIconRS.dictn_jobIcon[_jobClass];
+                ElementalIcon = GameUiMgr.single.partyIconRS.dictn_ElementIcon[Elemental];
+                break;
+            case Ally.JobClass.Wizard:
+                Elemental = GetRandomElement(wizardAttributes);
+                jobIcon = GameUiMgr.single.partyIconRS.dictn_jobIcon[_jobClass];
+                ElementalIcon = GameUiMgr.single.partyIconRS.dictn_ElementIcon[Elemental];
+                break;
+            case Ally.JobClass.Knight:
+                Elemental = GetRandomElement(knightAttributes);
+                jobIcon = GameUiMgr.single.partyIconRS.dictn_jobIcon[_jobClass];
+                ElementalIcon = GameUiMgr.single.partyIconRS.dictn_ElementIcon[Elemental];
+                break;
+            default:
+                Elemental = BaseEntity.Attribute.Normal;
+                jobIcon = GameUiMgr.single.partyIconRS.dictn_jobIcon[Ally.JobClass.Hero];
+                ElementalIcon = GameUiMgr.single.partyIconRS.dictn_ElementIcon[Elemental];
+                break;
+        }
+    }
+    BaseEntity.Attribute GetRandomElement(List<BaseEntity.Attribute> attributes)
+    {
+        int randomIndex = UnityEngine.Random.Range(0, attributes.Count);
+        return attributes[randomIndex];
+    }
+
 }

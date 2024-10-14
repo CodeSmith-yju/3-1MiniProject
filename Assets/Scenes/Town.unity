@@ -17257,7 +17257,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.0431075
+      m_AnimationSpeed: 2.1060812
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -17268,7 +17268,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.9678857
+      m_AnimationSpeed: 2.702478
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -17279,7 +17279,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.984278
+      m_AnimationSpeed: 2.7750907
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -17290,7 +17290,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.7999263
+      m_AnimationSpeed: 2.736528
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -17301,7 +17301,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.4345746
+      m_AnimationSpeed: 2.2301266
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -29872,6 +29872,7 @@ MonoBehaviour:
   playerGold: 0
   playerLevel: 0
   panelPartyBoard: {fileID: 831210878}
+  partyIconRS: {fileID: 1196257641}
   poolPartySlot:
   - {fileID: 542398056}
   poolMoveInSlot:
@@ -31145,6 +31146,62 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1196257639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1196257640}
+  - component: {fileID: 1196257641}
+  m_Layer: 0
+  m_Name: PartyIconRS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1196257640
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196257639}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1346686965}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1196257641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196257639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2961dbe3e64b8d74781df557b75d028b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spElementIcon:
+  - {fileID: 21300000, guid: 34bdb056c1b59644a885dcd0ac78d894, type: 3}
+  - {fileID: 21300000, guid: 152349144a16f5a4c8f26607893968a2, type: 3}
+  - {fileID: 21300000, guid: 1f91bd97307f75d4288618ef3f766663, type: 3}
+  - {fileID: 21300000, guid: db807901b64330f47a321af7bee28544, type: 3}
+  - {fileID: 21300000, guid: 02fdbe10f2bc41143b02e23d9f0c0274, type: 3}
+  - {fileID: 21300000, guid: 895dd2b6d362bd74d8eff848bac17132, type: 3}
+  spJobIcon:
+  - {fileID: 21300000, guid: 95052c6b62fb3de4695beaa99f842ac2, type: 3}
+  - {fileID: 21300000, guid: 256205b9c6ca12c45ab7762da8a65631, type: 3}
+  - {fileID: 21300000, guid: bbf8638a8a75d9c42b93639213c92c9b, type: 3}
+  - {fileID: 21300000, guid: 02ff976d39577774bb44b83610e61dec, type: 3}
 --- !u!1 &1228136019
 GameObject:
   m_ObjectHideFlags: 0
@@ -36005,6 +36062,7 @@ Transform:
   - {fileID: 1695580459}
   - {fileID: 1153008175}
   - {fileID: 1750034850}
+  - {fileID: 1196257640}
   - {fileID: 989698085}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -41896,7 +41954,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.4760005
+      m_AnimationSpeed: 2.8307848
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -41907,7 +41965,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.7270265
+      m_AnimationSpeed: 1.1521885
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -41918,7 +41976,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.2680416
+      m_AnimationSpeed: 1.6370403
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -41929,7 +41987,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.8536136
+      m_AnimationSpeed: 2.4198194
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -41940,7 +41998,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.8943937
+      m_AnimationSpeed: 1.9422295
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -52915,7 +52973,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.8475556
+      m_AnimationSpeed: 1.5036005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -52926,7 +52984,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.8868315
+      m_AnimationSpeed: 1.0587423
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -52937,7 +52995,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.5236708
+      m_AnimationSpeed: 2.830536
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -52948,7 +53006,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.2035642
+      m_AnimationSpeed: 1.1214252
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -52959,7 +53017,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.3202558
+      m_AnimationSpeed: 2.1320894
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:

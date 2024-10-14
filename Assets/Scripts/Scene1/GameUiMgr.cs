@@ -124,6 +124,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     //05-12 PartyList
     [Header("Party Bord")]
     public GameObject panelPartyBoard;// 파티 게시판오브젝트
+    public PartyIconRS partyIconRS;
     [SerializeField] private List<PartySlot> poolPartySlot = new(); // 파티게시판의 Body에 해당하는 고용가능한 파티원 리스트 이거수정해야할수도있음
     [SerializeField] private List<PartyData> listPartyData = new();// 실제파티원들 정보가 저장되어야함
     
@@ -378,6 +379,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         //05-21 
         partyNameSetting.RefreshiNameList();
+        partyIconRS.SetElement();
+        partyIconRS.SetJob();
         RefreshiPartyBord();
 
         //04-22
@@ -1802,7 +1805,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             //Debug.Log("MoveInSlots Active: False");
         }
         //MoveInSlot 초기화
-        PartyListInPlayer();
+        PartyListInPlayer(GetPlayerPrefab());
 
         //05-23 고용리스트 텍스트 관리
         RefreshiEmploy();
@@ -2004,7 +2007,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public void EmploymentCompleted()
     {
-        PartyListInPlayer();
+        PartyListInPlayer(GetPlayerPrefab());
 
         int battleIndex = 1;
         Debug.Log("고용 전: 현재자금"+ GameMgr.playerData[0].player_Gold);
@@ -2062,7 +2065,13 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             
         }
     }
-    public void PartyListInPlayer()
+
+    public GameObject GetPlayerPrefab()
+    {
+        return playerPrefab;
+    }
+
+    public void PartyListInPlayer(GameObject playerPrefab)
     {
         lastDeparture.Clear();
 
@@ -2084,7 +2093,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         poolMoveInSlot[0].text_Name.text = GameMgr.playerData[0].GetPlayerName();
 
         poolMoveInSlot[0].text_Lv.text = "Lv"+GameMgr.playerData[0].player_level.ToString();
-        poolMoveInSlot[0].classIcon.sprite = playerPrefab.GetComponent<Ally>().class_Icon;
+        //poolMoveInSlot[0].classIcon.sprite = playerPrefab.GetComponent<PartyData>().jobIcon; //이새기수정중...
+        
         //poolMoveInSlot[0].partyData.obj_Data.GetComponent<Ally>().Init(GameMgr.playerData[0].playerIndex, GameMgr.playerData[0]);
         listPartyData.Add(poolMoveInSlot[0].partyData);
         lastDeparture.Add(poolMoveInSlot[0]);
