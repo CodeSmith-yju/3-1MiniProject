@@ -98,6 +98,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     [Header("ToolTip")]
     public Tooltip tooltip;
+    public PartyTooltip partytooltip;
     public Canvas cv;
     //Vector3 lodingPosition;// player Position
 
@@ -540,6 +541,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
         //Tooltip
         tooltip.MoveTooltip();
+        partytooltip.MoveTooltip();
 
         /*Debug.Log("x:" + player.transform.position.x);시발시발시발
         Debug.Log("y:" + player.transform.position.y);*/
@@ -572,6 +574,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     void SetTooltip()
     {
         tooltip.TooltipSetting(cv.GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f, tooltip.GetComponent<RectTransform>());
+        partytooltip.TooltipSetting(cv.GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f, partytooltip.GetComponent<RectTransform>());
     }
     #region MinimapMethod
     private void ChangeRanderTextur()

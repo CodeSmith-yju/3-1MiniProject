@@ -40,20 +40,27 @@ public class PartyNameSetting : MonoBehaviour
         archerNames ??= new List<string> { "Robin", "Elduin", "Faolan", "Nimue", "Ayla", "Vara", "Rylai", "Orin", "Shara", "Elandra" };
         mageNames ??= new List<string> { "Merlin", "Gandalf", "Morgana", "Zatanna", "Aegis", "Althas", "Luna", "Arcanis", "Solara", "Faye" };
 
+        //knightNames ??= new List<string> { "알프레드", "에드먼드", "해럴드", "제프리", "월터", "가이", "레이먼드", "오스윈", "아이보", "휴" };
+        //archerNames ??= new List<string> { "에일린", "길다", "이소벨", "엘레노어", "콜린", "레이놀드", "아델라", "에디스", "오스카", "앨런" };
+        //mageNames ??= new List<string> { "마이클", "리처드", "에드워드", "가브리엘", "토머스", "알렉산더", "제이콥", "크리스토퍼", "필립", "도미닉", };
+
         if (knightNames.Count < 10)
         {
             knightNames.Clear();
             knightNames = new List<string> { "Alaric", "Gawain", "Roland", "Lancelot", "Arthas", "Tristan", "Bedivere", "Galahad", "Percival", "Kay" };
+            //knightNames = new List<string> { "알프레드", "에드먼드", "해럴드", "제프리", "월터", "가이", "레이먼드", "오스윈", "아이보", "휴" };
         }
         if (archerNames.Count < 10)
         {
             archerNames.Clear();
             archerNames = new List<string> { "Robin", "Elduin", "Faolan", "Nimue", "Ayla", "Vara", "Rylai", "Orin", "Shara", "Elandra" };
+            //archerNames = new List<string> { "에일린", "길다", "이소벨", "엘레노어", "콜린", "레이놀드", "아델라", "에디스", "오스카", "앨런" };
         }
         if (mageNames.Count < 10)
         {
             mageNames.Clear();
             mageNames = new List<string> { "Merlin", "Gandalf", "Morgana", "Zatanna", "Aegis", "Althas", "Luna", "Arcanis", "Solara", "Faye" };
+            //mageNames = new List<string> { "마이클", "리처드", "에드워드", "가브리엘", "토머스", "알렉산더", "제이콥", "크리스토퍼", "필립", "도미닉", };
         }
     }
 }
