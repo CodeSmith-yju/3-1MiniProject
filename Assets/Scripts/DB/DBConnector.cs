@@ -631,6 +631,11 @@ public class DBConnector : MonoBehaviour
     }*/
     public static void SaveToDB(SaveData saveData, int userID)
     {
+        if (userID <= 0) // 유효한 uID가 아닌 경우 예외 처리
+        {
+            Debug.LogError("Invalid UserID: " + userID);
+            return;
+        }
         // SaveData를 JSON 문자열로 변환
         string saveJson = JsonUtility.ToJson(saveData);
 

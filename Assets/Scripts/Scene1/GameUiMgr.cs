@@ -924,45 +924,45 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     }
     #endregion
 
-    public void GameSave()//SavePlayerDataToDB()
-    {
-        Debug.Log("Run SaveData (DB Save)");
-
-        // Inventory 및 Equipment 데이터를 리스트로 저장
-        List<Item> saveInventoryItem = new();
-        List<Item> saveWearItem = new();
-
-        foreach (Item item in Inventory.Single.items)
+        public void GameSave()//SavePlayerDataToDB()
         {
-            saveInventoryItem.Add(item);
-        }
+            Debug.Log("Run SaveData (DB Save)");
 
-        for (int i = 0; i < targetSlots.Length; i++)
-        {
-            if (targetSlots[i].wearChek == true && targetSlots[i].item != null)
+            // Inventory 및 Equipment 데이터를 리스트로 저장
+            List<Item> saveInventoryItem = new();
+            List<Item> saveWearItem = new();
+
+            foreach (Item item in Inventory.Single.items)
             {
-                saveWearItem.Add(targetSlots[i].item);
+                saveInventoryItem.Add(item);
             }
+
+            for (int i = 0; i < targetSlots.Length; i++)
+            {
+                if (targetSlots[i].wearChek == true && targetSlots[i].item != null)
+                {
+                    saveWearItem.Add(targetSlots[i].item);
+                }
+            }
+
+            // Shop에 있는 아이템들 저장
+            List<Item> saveShopItems = new();
+            foreach (var _item in GameUiMgr.single.shopMgr.GetShopSlots())
+            {
+                saveShopItems.Add(_item.GetItem());
+            }
+
+            // SaveData 객체 생성
+            SaveData gameSaveData = new SaveData(GameMgr.playerData[0].GetPlayerName(), GameMgr.playerData[0].player_level, GameMgr.playerData[0].player_Gold, GameUiMgr.single.questMgr.questId, GameUiMgr.single.questMgr.questActionIndex,
+                GameMgr.playerData[0].max_Player_Hp, GameMgr.playerData[0].cur_Player_Hp, GameMgr.playerData[0].max_Player_Sn, GameMgr.playerData[0].cur_Player_Sn, GameMgr.playerData[0].max_Player_Mp, GameMgr.playerData[0].cur_Player_Mp,
+                GameMgr.playerData[0].atk_Speed, GameMgr.playerData[0].atk_Range, GameMgr.playerData[0].base_atk_Dmg,
+                GameMgr.playerData[0].player_max_Exp, GameMgr.playerData[0].player_cur_Exp, GameMgr.single.tutorial,
+                saveInventoryItem, saveWearItem, saveShopItems);
+
+            // SaveData를 DB에 저장
+            DBConnector.SaveToDB(gameSaveData, DBConnector.GetUID());
+            Debug.Log("Save Success: Data saved to DB.");
         }
-
-        // Shop에 있는 아이템들 저장
-        List<Item> saveShopItems = new();
-        foreach (var _item in GameUiMgr.single.shopMgr.GetShopSlots())
-        {
-            saveShopItems.Add(_item.GetItem());
-        }
-
-        // SaveData 객체 생성
-        SaveData gameSaveData = new SaveData(GameMgr.playerData[0].GetPlayerName(), GameMgr.playerData[0].player_level, GameMgr.playerData[0].player_Gold, GameUiMgr.single.questMgr.questId, GameUiMgr.single.questMgr.questActionIndex,
-            GameMgr.playerData[0].max_Player_Hp, GameMgr.playerData[0].cur_Player_Hp, GameMgr.playerData[0].max_Player_Sn, GameMgr.playerData[0].cur_Player_Sn, GameMgr.playerData[0].max_Player_Mp, GameMgr.playerData[0].cur_Player_Mp,
-            GameMgr.playerData[0].atk_Speed, GameMgr.playerData[0].atk_Range, GameMgr.playerData[0].base_atk_Dmg,
-            GameMgr.playerData[0].player_max_Exp, GameMgr.playerData[0].player_cur_Exp, GameMgr.single.tutorial,
-            saveInventoryItem, saveWearItem, saveShopItems);
-
-        // SaveData를 DB에 저장
-        DBConnector.SaveToDB(gameSaveData, DBConnector.GetUID());
-        Debug.Log("Save Success: Data saved to DB.");
-    }
     /*public void GameLoad() //LoadPlayerDataFromDB()
     {
         Debug.Log("Run LoadData (DB Load)");

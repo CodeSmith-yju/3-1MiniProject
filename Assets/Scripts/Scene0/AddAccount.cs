@@ -77,9 +77,23 @@ public class AddAccount : MonoBehaviour
             {
                 Debug.Log("회원가입 성공");
                 // 회원가입 성공 시 처리 (예: 로그인 화면으로 전환) 및 초기화
-                gameObject.transform.parent.gameObject.transform.parent.GetComponent<MainMenuMgr>().OnClickedGameStart();
 
-                ClearNewAccountPannel();
+                int userID = DBConnector.SelectUserAndGetUID(id, pw);
+
+                if (userID > 0)
+                {
+                    DBConnector.SetUID(userID); // UID 설정
+                    Debug.Log("UID 설정 완료: " + userID);
+
+                    // 로그인 화면으로 전환
+                    gameObject.transform.parent.gameObject.transform.parent.GetComponent<MainMenuMgr>().OnClickedGameStart();
+                    ClearNewAccountPannel();
+                }
+                else
+                {
+                    Debug.LogError("UID 가져오기 실패: 유저 데이터가 존재하지 않습니다.");
+                    GameMgr.single.popUp.SetPopUp("회원가입 실패: UID 가져오기 실패", PopUpState.None);
+                }
             }
             else
             {
