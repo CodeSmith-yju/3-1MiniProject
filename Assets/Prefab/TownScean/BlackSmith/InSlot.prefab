@@ -784,7 +784,7 @@ MonoBehaviour:
   invenItemIndex: 0
   imgIcon: {fileID: 2262902686545342406}
   textName: {fileID: 809699405886980053}
-  textStack: {fileID: 0}
+  textStack: {fileID: 3953125363755119957}
   selectedPanel: {fileID: 5128091067803214295}
   HightRight: {fileID: 751188097994957377}
   ParentBtn: {fileID: 5213515044712455159}

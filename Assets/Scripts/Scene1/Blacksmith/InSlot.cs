@@ -33,7 +33,7 @@ public class InSlot : MonoBehaviour
         myItem = _item;
         imgIcon.sprite = _item.itemImage;
         textName.text = myItem.itemName;
-        textStack.text = myItem.modifyStack.ToString();
+        textStack.text = "+"+myItem.modifyStack.ToString();
 
         if (myItem.modifyStack < 1)
             textStack.gameObject.SetActive(false);

@@ -245,17 +245,16 @@ public class Blacksmith : MonoBehaviour
 
             Item _item = new Item().GenerateRandomItem(upgradesMaterials.inspections[0].GetItem().itemCode);
             Inventory.Single.AddItem(_item.UpgradeModifyPowerSet(_item));
-            Debug.Log("제작된 아이템: " + Inventory.Single.items[Inventory.Single.items.Count-1].itemPower);
+            Debug.Log("제작된 아이템: " + Inventory.Single.items[Inventory.Single.items.Count - 1].itemPower);
 
-            //다끝났으니까 뚱땅애니메이션 출력하고
-            //장비강화하고
-            //화면초기화하고
+            //다끝났으니까 뚱땅애니메이션 출력하고 - 이새기너무느림
             AllInvenUnSelect();
             Refresh();
             OpenUpgrade();
         }
-        //아이템제거 안됨.
-        //새로고침한 아이템들다시뽑아줘야됨
+        //1강만되고 2강부터 정상적으로 안 됨
+        //미리보기 클릭할때마다 아이템 ++++++++ 이지랄되서 개좆버그남
+        // 씨발 upgradeInvenSlots  무한클릭됨 병신들한번클릭하면막히라고...
     }
     public void OpenBlacksmith()
     {
@@ -548,6 +547,10 @@ public class Blacksmith : MonoBehaviour
             if (upgradesMaterials.AllCk() == true)
             {
                 btn_Commit.interactable = true;
+            }
+            else
+            {
+                btn_Commit.interactable = false;
             }
         }
     }
