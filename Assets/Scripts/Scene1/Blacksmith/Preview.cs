@@ -17,7 +17,7 @@ public class Preview : MonoBehaviour
         myItem = _item;
         icon.sprite = myItem.itemImage;
         text_name.text = myItem.itemName;
-        text_modify_stack.text = myItem.itemPower.ToString();
+        text_modify_stack.text = "+"+myItem.modifyStack.ToString();
         if (myItem.modifyStack < 1)
         {
             text_modify_stack.gameObject.SetActive(false);

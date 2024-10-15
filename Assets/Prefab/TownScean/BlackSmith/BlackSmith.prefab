@@ -1947,6 +1947,7 @@ MonoBehaviour:
   upgrades: {fileID: 2574393153391263991}
   upgradeInvenItems: []
   upgradeInventr: {fileID: 3895941298552991}
+  commitAni: {fileID: 1044802867343831746}
   selectedCk: -1
   invenCk: -1
   btn_Renovate: {fileID: 0}

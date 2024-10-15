@@ -13,7 +13,8 @@ public class InSlot : MonoBehaviour
     [Header("Show UI")]
     public Image imgIcon;
     public TextMeshProUGUI textName;
-    
+    public TextMeshProUGUI textStack;
+
     public GameObject selectedPanel;
     public GameObject HightRight;
 
@@ -32,7 +33,13 @@ public class InSlot : MonoBehaviour
         myItem = _item;
         imgIcon.sprite = _item.itemImage;
         textName.text = myItem.itemName;
-        
+        textStack.text = myItem.modifyStack.ToString();
+
+        if (myItem.modifyStack < 1)
+            textStack.gameObject.SetActive(false);
+        else
+            textStack.gameObject.SetActive(true);
+
         gameObject.SetActive(true);
         
         if (selectedPanel.activeSelf)

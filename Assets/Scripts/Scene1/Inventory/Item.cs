@@ -97,7 +97,7 @@ public class Item
     //뭔가 장비아이템을 사용할때 사용될 메서드를 여기다 만들어야하는듯..?
     public Item UpgradeModifyPowerSet(Item _item)
     {
-        if (_item.modifyStack > 0)
+        if (_item.modifyStack > -1)
         {
             _item.modifyStack++;
             _item.itemPower = ItemResources.instance.itemRS[_item.itemCode].itemPower + (ItemResources.instance.itemRS[_item.itemCode].itemPower) * 0.5f * _item.modifyStack;

@@ -38,7 +38,7 @@ public class Blacksmith : MonoBehaviour
     [SerializeField] List<InSlot> upgradeInvenItems;
     [SerializeField] Transform upgradeInventr;
 
-
+    [SerializeField] GameObject commitAni;
     [Header("***")]
     public int selectedCk = -1;
     public int invenCk = -1;
@@ -55,7 +55,26 @@ public class Blacksmith : MonoBehaviour
         MakeRenovateItems();
         //OpenBlacksmith();
     }
-    
+    /// <summary>
+    /// 3초 동안 오브젝트를 활성화했다가 비활성화하는 코루틴
+    /// </summary>
+    public void ToggleObjectWithAnimation()
+    {
+        StartCoroutine(ActivateAndDeactivateObject());
+    }
+
+    private IEnumerator ActivateAndDeactivateObject()
+    {
+        // 1. 오브젝트 활성화
+        commitAni.SetActive(true);
+        // 3. 3초 대기
+        yield return new WaitForSeconds(3f);
+        
+        // 4. 오브젝트 비활성화
+        commitAni.SetActive(false);
+        yield break;
+    }
+
     public void OnClickCommit()
     {
         if (blacksmithState == BlacksmithState.Renovate)
@@ -139,37 +158,36 @@ public class Blacksmith : MonoBehaviour
                 renovateItems[selectedCk].GetItem().itemCode
                 ]);
 
-            OpenBlacksmith();
             AllInvenUnSelect();
-            ReOrder();
-
             Refresh();
-            
+            OpenBlacksmith();
         }
         else if (blacksmithState == BlacksmithState.Upgrade)
         {
             // 장비강화및 초기화
-            for (int i = 0; i < sacrificeList.inspections.Length; i++)
+            for (int i = 0; i < upgradesMaterials.inspections.Length; i++)
             {
                 switch (i)
                 {
                     case 0:
+                        Debug.Log("아이템 강화에 필요한 아이템개수: " + upgradesMaterials.inspections[i].cnt + "");
                         for (int j = 0; j < Inventory.Single.items.Count; j++)
                         {
-                            if (Inventory.Single.items[j].PrimaryCode.Equals(sacrificeList.inspections[i].ItemPK))
+                            if (Inventory.Single.items[j].PrimaryCode.Equals(upgradesMaterials.inspections[i].ItemPK))
                             {
+                                Debug.Log("Remove UpgradeMaterials Item: "+ upgradesMaterials.inspections[i].GetItem().itemName);
                                 Inventory.Single.RemoveItem(Inventory.Single.items[j]);
                                 break;
                             }
                         }
                         break;
                     case 1:
-                        int stk = sacrificeList.inspections[i].cnt; // 제거할 아이템의 개수
-                        Debug.Log("\n\n아이템 강화에 필요한 아이템개수: " + sacrificeList.inspections[i].cnt + "\n\n");
+                        int stk = upgradesMaterials.inspections[i].cnt; // 제거할 아이템의 개수
+                        Debug.Log("아이템 강화에 필요한 아이템개수: " + upgradesMaterials.inspections[i].cnt + "");
                         for (int j = 0; j < Inventory.Single.items.Count; j++)
                         {
                             // 아이템 코드가 동일할 경우
-                            if (Inventory.Single.items[j].itemCode == sacrificeList.inspections[i].GetItem().itemCode + 4)
+                            if (Inventory.Single.items[j].itemCode == upgradesMaterials.inspections[i].GetItem().itemCode + 4)
                             {
                                 // 현재 아이템의 stack이 제거할 개수보다 많거나 같을 경우
                                 if (Inventory.Single.items[j].itemStack >= stk)
@@ -207,10 +225,10 @@ public class Blacksmith : MonoBehaviour
 
                         break;
                     case 2:
-                        if (GameMgr.playerData[0].player_Gold >= sacrificeList.inspections[i].cnt)
+                        if (GameMgr.playerData[0].player_Gold >= upgradesMaterials.inspections[i].cnt)
                         {
-                            GameMgr.playerData[0].player_Gold -= sacrificeList.inspections[i].cnt;
-                            Debug.Log("\n\n아이템 강화에 필요한 골드: " + sacrificeList.inspections[i].cnt + "\n\n");
+                            GameMgr.playerData[0].player_Gold -= upgradesMaterials.inspections[i].cnt;
+                            Debug.Log("아이템 강화에 필요한 골드: " + upgradesMaterials.inspections[i].cnt);
                         }
                         else
                         {
@@ -222,13 +240,22 @@ public class Blacksmith : MonoBehaviour
                         break;
                 }
             }
+            ToggleObjectWithAnimation();
+            
+
+            Item _item = new Item().GenerateRandomItem(upgradesMaterials.inspections[0].GetItem().itemCode);
+            Inventory.Single.AddItem(_item.UpgradeModifyPowerSet(_item));
+            Debug.Log("제작된 아이템: " + Inventory.Single.items[Inventory.Single.items.Count-1].itemPower);
 
             //다끝났으니까 뚱땅애니메이션 출력하고
             //장비강화하고
             //화면초기화하고
+            AllInvenUnSelect();
+            Refresh();
+            OpenUpgrade();
         }
-
-        NowGold();
+        //아이템제거 안됨.
+        //새로고침한 아이템들다시뽑아줘야됨
     }
     public void OpenBlacksmith()
     {
