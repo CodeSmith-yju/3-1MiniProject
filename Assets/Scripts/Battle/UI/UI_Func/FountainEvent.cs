@@ -21,7 +21,7 @@ public class FountainEvent : MonoBehaviour
 
         if (!BattleManager.Instance.ui.option_UI.activeSelf)
         {
-            if (event_Check)
+            if (event_Check && !BattleManager.Instance.ui.isOpenUI)
             {
                 event_Check = false;
 

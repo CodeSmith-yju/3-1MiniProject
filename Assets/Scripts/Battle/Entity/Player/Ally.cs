@@ -35,6 +35,12 @@ public class Ally : BaseEntity
         {
             UpdateCurrentHPMPToSingle();
         }
+
+        if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Rest)
+        {
+            cur_Hp = GameMgr.playerData[entity_index].cur_Player_Hp;
+            cur_Mp = 0;
+        }
     }
 
     public void UpdateCurrentHPMPToSingle()

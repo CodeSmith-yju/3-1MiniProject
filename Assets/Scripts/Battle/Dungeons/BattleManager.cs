@@ -32,9 +32,14 @@ public class BattleManager : MonoBehaviour
     private bool isFirstEnter;
     private bool battleEnded = false;
     public int event_Stack = 0;
+    private bool event_Trigger = false;
     private bool poison_Check = false;
-    public bool buff_On = false;
     //public bool isMapDone = false;
+
+    [Header("BuffTile")]
+    public Dictionary<Ally, PlayerStats> temp_Stats = new Dictionary<Ally, PlayerStats>();
+    public HashSet<Ally> buffedPlayers = new HashSet<Ally>();
+    public bool buff_On = false;
 
     [Header("Stage")]
     public float dungeon_Level_Scale;
@@ -61,6 +66,33 @@ public class BattleManager : MonoBehaviour
         }
 
     }
+
+    // 스텟을 버프 받기 전의 스텟을 저장 (버프타일)
+    public class PlayerStats
+    {
+        public float temp_Dmg;
+        public float temp_MaxHp;
+        public float temp_MaxMp;
+        public float temp_AtkSpd;
+
+        // 버프 타일용
+        public PlayerStats(float atkDmg, float maxHp, float maxMp)
+        {
+            temp_Dmg = atkDmg;
+            temp_MaxHp = maxHp;
+            temp_MaxMp = maxMp;
+        }
+
+        // 샘물 이벤트용
+        public PlayerStats(float atkDmg, float maxHp, float maxMp, float atkSpd)
+        {
+            temp_Dmg = atkDmg;
+            temp_MaxHp = maxHp;
+            temp_MaxMp = maxMp;
+            temp_AtkSpd = atkSpd;
+        }
+    }
+
 
 
     public enum BattlePhase
@@ -117,13 +149,16 @@ public class BattleManager : MonoBehaviour
         yield return StartCoroutine(ui.StartBanner(ui.battle_Ready_Banner));
         yield return new WaitForSeconds(0.15f);
 
-        buff_On = true;
-        // PlacementUnit(); // 파티 리스트에 있는 유닛 생성
-
+        buff_On = true; // 버프 타일 활성화
+        if (event_Trigger)
+        {
+            EventOccurs(UnityEngine.Random.Range(0, 4));
+            event_Trigger = false;
+        }
+           
         Enemy[] entity = FindObjectsOfType<Enemy>(); // 몬스터를 찾음
         battleEnded = false;
 
-        //ui.party_List.SetActive(true);
         deploy_area.SetActive(true);
         unit_deploy_area.SetActive(true);
 
@@ -174,11 +209,8 @@ public class BattleManager : MonoBehaviour
                 }
                 break;
             case BattlePhase.Rest:
-                if (!ui.out_Portal.activeSelf)
-                {
-                    ui.out_Portal.SetActive(true);
-                    ui.out_Portal.GetComponent<FadeEffect>().fadeout = true;
-                }
+                ui.out_Portal.SetActive(true);
+                ui.out_Portal.GetComponent<FadeEffect>().fadeout = true;
 
                 foreach (GameObject ally in deploy_Player_List)
                 {
@@ -209,7 +241,6 @@ public class BattleManager : MonoBehaviour
 
     public IEnumerator BattleStart()
     {
-
         if (deploy_Player_List.Count == 0)
         {
             ui.OpenPopup(ui.alert_Popup);
@@ -302,12 +333,41 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    private void ResetBuffs()
+    {
+        foreach (Ally buff_Player in buffedPlayers)
+        {
+            PlayerData playerData = GameMgr.playerData[buff_Player.entity_index];
+
+            // temp_Stats에서 해당 플레이어의 원래 스탯 찾기
+            if (temp_Stats.TryGetValue(buff_Player, out PlayerStats stats))
+            {
+                // 원래 스탯 복원
+                float healthRatio = (buff_Player.max_Hp > 0) ? buff_Player.cur_Hp / buff_Player.max_Hp : 1;
+
+
+                playerData.base_atk_Dmg = stats.temp_Dmg;
+                playerData.max_Player_Hp = stats.temp_MaxHp;
+                playerData.max_Player_Mp = stats.temp_MaxMp;
+
+                buff_Player.cur_Hp = Mathf.Clamp(healthRatio * stats.temp_MaxHp, 0, stats.temp_MaxHp);
+
+                playerData.cur_Player_Hp = buff_Player.cur_Hp;
+
+                temp_Stats.Remove(buff_Player); // 스탯 초기화
+            }
+        }
+
+        buffedPlayers.Clear();
+    }
+
     private IEnumerator EndBattle()
     {
         if (_curphase == BattlePhase.End && !battleEnded)
         {
             poison_Check = false;
             StopCoroutine(Poison());
+            ResetBuffs(); // 버프 타일로 증가되기 전 스텟으로 리셋
             if (deploy_Player_List.Count == 0)
             {
                 AudioManager.single.PlaySfxClipChange(10);
@@ -488,7 +548,7 @@ public class BattleManager : MonoBehaviour
 
             if (random_Event < event_Chance)
             {
-                EventOccurs(UnityEngine.Random.Range(0, 4));
+                event_Trigger = true;
                 event_Stack = 0;
             }
             

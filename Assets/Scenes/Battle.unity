@@ -1546,6 +1546,7 @@ MonoBehaviour:
   room_UI: {fileID: 1909942847}
   item_Use_UI: {fileID: 155361232}
   option_UI: {fileID: 711579342}
+  isOpenUI: 0
   log_View: {fileID: 2137968648}
   log_Prefabs: {fileID: 253034509691111925, guid: 82452d0c113a7d34aa32705868579db0, type: 3}
   log_Pos: {fileID: 2137968647}
@@ -4423,19 +4424,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5446678502051937777, guid: bf8ec4cf5a19fb34fb42604fd89970c7, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5446678502051937777, guid: bf8ec4cf5a19fb34fb42604fd89970c7, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5446678502051937777, guid: bf8ec4cf5a19fb34fb42604fd89970c7, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 5446678502051937777, guid: bf8ec4cf5a19fb34fb42604fd89970c7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -75
       objectReference: {fileID: 0}
     - target: {fileID: 7921947222200966463, guid: bf8ec4cf5a19fb34fb42604fd89970c7, type: 3}
       propertyPath: m_Name
@@ -4445,6 +4446,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9183675839087872700, guid: bf8ec4cf5a19fb34fb42604fd89970c7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 379160249}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

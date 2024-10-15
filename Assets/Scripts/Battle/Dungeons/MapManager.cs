@@ -353,6 +353,7 @@ public class MapManager : MonoBehaviour
     {
         // 방 이동 UI 띄우기
         BattleManager.Instance.ui.room_UI.SetActive(true);
+        BattleManager.Instance.ui.isOpenUI = true;
         // UI 업데이트
         UpdateRoomUI();
     }
@@ -360,6 +361,7 @@ public class MapManager : MonoBehaviour
     public void HideRoomUI()
     {
         BattleManager.Instance.ui.room_UI.SetActive(false);
+        BattleManager.Instance.ui.isOpenUI = false;
     }
 
     private void MiniMapUpdate(Vector2Int cur_Room) // 이동 할 때 마다 인접한 방 표시 미니맵 업데이트
@@ -400,6 +402,7 @@ public class MapManager : MonoBehaviour
         BattleManager.Instance.ui.mini_Map_Big.SetActive(isOpen);
         BattleManager.Instance.ui.mini_Map.SetActive(!isOpen);
         map_Camera.gameObject.SetActive(!isOpen);
+        BattleManager.Instance.ui.isOpenUI = isOpen;
 
         OpenMapUpdate(isOpen);
     }
@@ -501,6 +504,7 @@ public class MapManager : MonoBehaviour
                     cell.cellObject.SetActive(true);
                     cur_Room = cell.cellObject.transform;
                     Camera.main.transform.position = new Vector3(cur_Room.position.x, cur_Room.position.y, Camera.main.transform.position.z);
+                    cell.isClear = true; // 시작방은 클리어로 간주
                 }
             }
         }
@@ -868,7 +872,7 @@ public class MapManager : MonoBehaviour
 
         if (mapRows[player_Pos.y].cells[player_Pos.x].isClear)
         {
-            BattleManager.Instance._curphase = BattleManager.BattlePhase.Rest;
+            BattleManager.Instance.ChangePhase(BattleManager.BattlePhase.Rest);
         }
         else
         {

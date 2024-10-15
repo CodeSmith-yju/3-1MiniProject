@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     public GameObject room_UI;
     public GameObject item_Use_UI;
     public GameObject option_UI;
+    public bool isOpenUI = false;
 
     [Header("Skill_Log")]
     public GameObject log_View;
@@ -112,6 +113,7 @@ public class UIManager : MonoBehaviour
             {
                 CancelPopup(option_UI);
                 Time.timeScale = 1;
+                
             }
         }
 
@@ -145,12 +147,14 @@ public class UIManager : MonoBehaviour
     {
         popup_Bg.SetActive(true);
         popup.SetActive(true);
+        isOpenUI = true;
     }
 
     public void CheckPopup(int value)
     {
         popup_Bg.SetActive(true);
         check_Popup.SetActive(true);
+        isOpenUI = true;
 
         string detail = "";
         PopUpState popupStates = PopUpState.None;
@@ -174,6 +178,7 @@ public class UIManager : MonoBehaviour
 
     public void CancelPopup(GameObject popup)
     {
+        isOpenUI = false;
         if (BattleManager.Instance.dialogue != null)
         {
             if (BattleManager.Instance.dialogue.isTutorial)
