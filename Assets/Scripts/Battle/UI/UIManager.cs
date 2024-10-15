@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     public GameObject room_UI;
     public GameObject item_Use_UI;
     public GameObject option_UI;
+    public bool isOpenUI = false;
 
     [Header("Skill_Log")]
     public GameObject log_View;
@@ -43,6 +44,7 @@ public class UIManager : MonoBehaviour
     public GameObject event_Alert_Popup;
     public GameObject check_Popup;
     public GameObject option_Popup;
+    public GameObject attribute_Popup;
 
 
     [Header("Tutorial")]
@@ -91,14 +93,19 @@ public class UIManager : MonoBehaviour
         {
             if (!option_UI.activeSelf) 
             {
-                OpenPopup(option_UI);
-                Time.timeScale = 0;
+                if (BattleManager.Instance.dialogue != null && dialogue_Box.activeSelf)
+                    return;
+                else
+                {
+                    OpenPopup(option_UI);
+                    Time.timeScale = 0;
+                }
             }
-            else if (option_UI.activeSelf && check_Popup.activeSelf)
+            else if (check_Popup.activeSelf)
             {
                 check_Popup.SetActive(false);
             }
-            else if (option_UI.activeSelf && option_Popup)
+            else if (option_Popup.activeSelf)
             {
                 option_Popup.SetActive(false);
             }
@@ -106,6 +113,7 @@ public class UIManager : MonoBehaviour
             {
                 CancelPopup(option_UI);
                 Time.timeScale = 1;
+                
             }
         }
 
@@ -139,12 +147,14 @@ public class UIManager : MonoBehaviour
     {
         popup_Bg.SetActive(true);
         popup.SetActive(true);
+        isOpenUI = true;
     }
 
     public void CheckPopup(int value)
     {
         popup_Bg.SetActive(true);
         check_Popup.SetActive(true);
+        isOpenUI = true;
 
         string detail = "";
         PopUpState popupStates = PopUpState.None;
@@ -168,6 +178,7 @@ public class UIManager : MonoBehaviour
 
     public void CancelPopup(GameObject popup)
     {
+        isOpenUI = false;
         if (BattleManager.Instance.dialogue != null)
         {
             if (BattleManager.Instance.dialogue.isTutorial)

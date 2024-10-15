@@ -33,22 +33,19 @@ public class Ally : BaseEntity
         base.Update();
         if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy || BattleManager.Instance._curphase == BattleManager.BattlePhase.Battle)
         {
-            UpdateCurrentHPToSingle();
+            UpdateCurrentHPMPToSingle();
         }
 
-        if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Battle)
+        if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Rest)
         {
-            UpdateCurrentMPToSingle();
+            cur_Hp = GameMgr.playerData[entity_index].cur_Player_Hp;
+            cur_Mp = 0;
         }
     }
 
-    public void UpdateCurrentHPToSingle()
+    public void UpdateCurrentHPMPToSingle()
     {
-        GameMgr.playerData[entity_index].cur_Player_Hp = cur_Hp; 
-    }
-
-    public void UpdateCurrentMPToSingle()
-    {
+        GameMgr.playerData[entity_index].cur_Player_Hp = cur_Hp;
         GameMgr.playerData[entity_index].cur_Player_Mp = cur_Mp;
     }
 

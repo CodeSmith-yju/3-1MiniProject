@@ -822,6 +822,7 @@ MonoBehaviour:
   able_Skill: 0
   isMelee: 0
   _curstate: 0
+  attribute: 1
   isAttack: 0
   isAtkDone: 0
   isDie: 0

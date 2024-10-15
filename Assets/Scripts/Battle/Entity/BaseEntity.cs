@@ -62,7 +62,7 @@ public class BaseEntity : MonoBehaviour
         Normal, // 주인공
         Fire, // 불
         Water, // 물
-        Wind, // 풀
+        Wind, // 바람
         Light, // 광
         Dark // 암
     }
@@ -459,7 +459,7 @@ public class BaseEntity : MonoBehaviour
                 if (target.attribute == Attribute.Water)
                     getDmgHp = target.cur_Hp - (atkDmg * 0.75f);
                 else if (target.attribute == Attribute.Wind)
-                    getDmgHp = target.cur_Hp - (atkDmg * 1.25f);
+                    getDmgHp = target.cur_Hp - (atkDmg * 1.5f);
                 else
                      getDmgHp = target.cur_Hp - (atkDmg * 1f);
                 break;
@@ -467,7 +467,7 @@ public class BaseEntity : MonoBehaviour
                 if (target.attribute == Attribute.Wind)
                     getDmgHp = target.cur_Hp - (atkDmg * 0.75f);
                 else if (target.attribute == Attribute.Fire)
-                    getDmgHp = target.cur_Hp - (atkDmg * 1.25f);
+                    getDmgHp = target.cur_Hp - (atkDmg * 1.5f);
                 else
                     getDmgHp = target.cur_Hp - (atkDmg * 1f);
                 break;
@@ -475,7 +475,7 @@ public class BaseEntity : MonoBehaviour
                 if (target.attribute == Attribute.Fire)
                     getDmgHp = target.cur_Hp - (atkDmg * 0.75f);
                 else if (target.attribute == Attribute.Water)
-                    getDmgHp = target.cur_Hp - (atkDmg * 1.25f);
+                    getDmgHp = target.cur_Hp - (atkDmg * 1.5f);
                 else
                     getDmgHp = target.cur_Hp - (atkDmg * 1f);
                 break;
@@ -519,7 +519,7 @@ public class BaseEntity : MonoBehaviour
                 if (target.attribute == Attribute.Water)
                     getDmgHp = target.cur_Hp - (dmg * 0.75f);
                 else if (target.attribute == Attribute.Wind)
-                    getDmgHp = target.cur_Hp - (dmg * 1.25f);
+                    getDmgHp = target.cur_Hp - (dmg * 1.5f);
                 else
                     getDmgHp = target.cur_Hp - (dmg * 1f);
                 break;
@@ -527,7 +527,7 @@ public class BaseEntity : MonoBehaviour
                 if (target.attribute == Attribute.Wind)
                     getDmgHp = target.cur_Hp - (dmg * 0.75f);
                 else if (target.attribute == Attribute.Fire)
-                    getDmgHp = target.cur_Hp - (dmg * 1.25f);
+                    getDmgHp = target.cur_Hp - (dmg * 1.5f);
                 else
                     getDmgHp = target.cur_Hp - (dmg * 1f);
                 break;
@@ -535,7 +535,7 @@ public class BaseEntity : MonoBehaviour
                 if (target.attribute == Attribute.Fire)
                     getDmgHp = target.cur_Hp - (dmg * 0.75f);
                 else if (target.attribute == Attribute.Water)
-                    getDmgHp = target.cur_Hp - (dmg * 1.25f);
+                    getDmgHp = target.cur_Hp - (dmg * 1.5f);
                 else
                     getDmgHp = target.cur_Hp - (dmg * 1f);
                 break;
