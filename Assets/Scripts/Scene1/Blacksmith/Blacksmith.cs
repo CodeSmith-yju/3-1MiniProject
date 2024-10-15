@@ -58,20 +58,24 @@ public class Blacksmith : MonoBehaviour
     /// <summary>
     /// 3초 동안 오브젝트를 활성화했다가 비활성화하는 코루틴
     /// </summary>
-    public void ToggleObjectWithAnimation()
+    public void CommitAnimation()
     {
         StartCoroutine(ActivateAndDeactivateObject());
     }
-
     private IEnumerator ActivateAndDeactivateObject()
     {
         // 1. 오브젝트 활성화
         commitAni.SetActive(true);
         // 3. 3초 대기
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2.1f);
         
         // 4. 오브젝트 비활성화
         commitAni.SetActive(false);
+
+        AllInvenUnSelect();
+        Refresh();
+        OpenUpgrade();
+
         yield break;
     }
 
@@ -157,10 +161,6 @@ public class Blacksmith : MonoBehaviour
             Inventory.Single.AddItem(ItemResources.instance.itemRS[
                 renovateItems[selectedCk].GetItem().itemCode
                 ]);
-
-            AllInvenUnSelect();
-            Refresh();
-            OpenBlacksmith();
         }
         else if (blacksmithState == BlacksmithState.Upgrade)
         {
@@ -240,24 +240,20 @@ public class Blacksmith : MonoBehaviour
                         break;
                 }
             }
-            ToggleObjectWithAnimation();
-            
-
             Item _item = new Item().GenerateRandomItem(upgradesMaterials.inspections[0].GetItem().itemCode);
             Inventory.Single.AddItem(_item.UpgradeModifyPowerSet(_item));
             Debug.Log("제작된 아이템: " + Inventory.Single.items[Inventory.Single.items.Count - 1].itemPower);
-
-            //다끝났으니까 뚱땅애니메이션 출력하고 - 이새기너무느림
-            AllInvenUnSelect();
-            Refresh();
-            OpenUpgrade();
         }
+        CommitAnimation();
+        //1강재료넣었는데 2강됨 씨ㅣ빨!
         //1강만되고 2강부터 정상적으로 안 됨
         //미리보기 클릭할때마다 아이템 ++++++++ 이지랄되서 개좆버그남
         // 씨발 upgradeInvenSlots  무한클릭됨 병신들한번클릭하면막히라고...
     }
     public void OpenBlacksmith()
     {
+        btn_Upgrade.interactable = true;
+        btn_Renovate.interactable = false;
         // 상태 체크
         blacksmithState = BlacksmithState.Renovate;
         Renovates.SetActive(true);
@@ -268,6 +264,7 @@ public class Blacksmith : MonoBehaviour
         // TODO: invenList Add. (foreach Inventory.items[i].PK != BlackSmithSlot.item.PK) 문으로 기존invenList와비교하여 Destroy or As it is 
         ReOrder();
         // 최초실행 = 리스트가 없다면 초기화 == invenItems ??= new List<InSlot>();
+        SetOnOffLights(false, -1);
         invenItems ??= new List<InSlot>();
 
         if (blacksmithState == BlacksmithState.Renovate)
@@ -312,6 +309,8 @@ public class Blacksmith : MonoBehaviour
     }
     public void OpenUpgrade()
     {
+        btn_Upgrade.interactable = false;
+        btn_Renovate.interactable = true;
         // 상태 체크
         if (blacksmithState != BlacksmithState.Upgrade)
             blacksmithState = BlacksmithState.Upgrade;
@@ -540,7 +539,19 @@ public class Blacksmith : MonoBehaviour
 
             for (int i = 0; i < upgradesMaterials.inspections.Length; i++)
             {
-                upgradesMaterials.inspections[i].Init(_item);
+                if (i == 0)
+                {
+                    if (upgradesMaterials.inspections[i].GetItem() == null)
+                    {
+                        upgradesMaterials.inspections[i].Init(_item);
+                    }
+                    else
+                    {
+                        upgradesMaterials.inspections[i].Refresh();
+                        upgradesMaterials.inspections[i].Init(_item);
+                    }
+                }
+                //upgradesMaterials.inspections[i].Init(_item);
                 upgradesMaterials.ChangeInspectionsVlue(_item);
             }
 

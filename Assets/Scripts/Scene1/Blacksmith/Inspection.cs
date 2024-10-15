@@ -31,6 +31,11 @@ public class Inspection : MonoBehaviour
         Debug.Log("Now cnt: "+cnt);
         renovateOk = false;
     }
+    public void Refresh()
+    {
+        myItem = null;
+        cnt = 0;
+    }
 
     void Setting()
     {

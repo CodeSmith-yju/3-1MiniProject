@@ -260,47 +260,47 @@ MonoBehaviour:
     modifyStack: 0
     itemImage: {fileID: 21300000, guid: 1ab9d28df2e6ef340b7ebcc55f5740a4, type: 3}
     typeIcon: {fileID: 0}
-    itemTitle: "\uC2AC\uB77C\uC784\uC758 \uD575"
-    itemDesc: "\uAC11\uC637\uC744 \uAC1C\uC870\uD558\uB294\uB370 \uC0AC\uC6A9\uD55C\uB2E4"
+    itemTitle: "\uAC11\uC637\uC744 \uAC1C\uC870\uD558\uB294\uB370 \uC0AC\uC6A9\uD55C\uB2E4"
+    itemDesc: "\uC2AC\uB77C\uC784\uC758 \uD575"
     itemIndex: 0
     itemCode: 16
     itemPower: 0
     itemPrice: 40
     PrimaryCode: 
   - itemType: 5
-    itemName: "\uACE0\uBE14\uB9B0\uC758 \uADC0"
+    itemName: "\uACE0\uBE14\uB9B0 \uADC0"
     itemStack: 1
     modifyStack: 0
     itemImage: {fileID: 21300000, guid: d49446be3071a144581f73dd071393cd, type: 3}
     typeIcon: {fileID: 0}
-    itemTitle: "\uACE0\uBE14\uB9B0\uC5D0\uAC8C\uC11C \uC798\uB77C\uB0B8 \uADC0"
-    itemDesc: "\uC2E0\uBC1C\uC744 \uAC1C\uC870\uD558\uB294\uB370 \uC0AC\uC6A9\uD55C\uB2E4"
+    itemTitle: "\uC2E0\uBC1C\uC744 \uAC1C\uC870\uD558\uB294\uB370 \uC0AC\uC6A9\uD55C\uB2E4"
+    itemDesc: "\uACE0\uBE14\uB9B0\uC758 \uADC0"
     itemIndex: 0
     itemCode: 17
     itemPower: 0
     itemPrice: 30
     PrimaryCode: 
   - itemType: 5
-    itemName: "\uBBF8\uBBF9\uC758 \uD30C\uD3B8"
+    itemName: "\uBBF8\uBBF9 \uD30C\uD3B8"
     itemStack: 1
     modifyStack: 0
     itemImage: {fileID: 21300000, guid: e929b6ab54898ac44ad6c5f9d40916c0, type: 3}
     typeIcon: {fileID: 0}
-    itemTitle: "\uBBF8\uBBF9\uC758 \uD30C\uD3B8"
-    itemDesc: "\uD22C\uAD6C\uB97C \uAC1C\uC870\uD558\uB294\uB370 \uC0AC\uC6A9\uD55C\uB2E4"
+    itemTitle: "\uD22C\uAD6C\uB97C \uAC1C\uC870\uD558\uB294\uB370 \uC0AC\uC6A9\uD55C\uB2E4"
+    itemDesc: "\uBBF8\uBBF9\uC758 \uD30C\uD3B8"
     itemIndex: 0
     itemCode: 18
     itemPower: 0
     itemPrice: 200
     PrimaryCode: 
   - itemType: 5
-    itemName: "\uC2A4\uCF08\uB808\uD1A4\uC758 \uBF08"
+    itemName: "\uC2A4\uCF08\uB808\uD1A4 \uBF08"
     itemStack: 1
     modifyStack: 0
     itemImage: {fileID: 21300000, guid: d14c90bb28890244d80877c2f7e6bba5, type: 3}
     typeIcon: {fileID: 0}
-    itemTitle: "\uC2A4\uCF08\uB808\uD1A4\uC758 \uCF54\uC5B4"
-    itemDesc: "\uAC80\uC744 \uAC1C\uC870\uD558\uB294\uB370 \uC0AC\uC6A9\uD55C\uB2E4"
+    itemTitle: "\uAC80\uC744 \uAC1C\uC870\uD558\uB294\uB370 \uC0AC\uC6A9\uD55C\uB2E4"
+    itemDesc: "\uC2A4\uCF08\uB808\uD1A4\uC758 \uBF08"
     itemIndex: 0
     itemCode: 19
     itemPower: 0

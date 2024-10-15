@@ -125,7 +125,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     //05-12 PartyList
     [Header("Party Bord")]
     public GameObject panelPartyBoard;// 파티 게시판오브젝트
-    public PartyIconRS partyIconRS;
+    public PartyIconRS entityIconRS;
     [SerializeField] private List<PartySlot> poolPartySlot = new(); // 파티게시판의 Body에 해당하는 고용가능한 파티원 리스트 이거수정해야할수도있음
     [SerializeField] private List<PartyData> listPartyData = new();// 실제파티원들 정보가 저장되어야함
     
@@ -380,8 +380,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         //05-21 
         partyNameSetting.RefreshiNameList();
-        partyIconRS.SetElement();
-        partyIconRS.SetJob();
+        entityIconRS.SetElement();
+        entityIconRS.SetJob();
         RefreshiPartyBord();
 
         //04-22

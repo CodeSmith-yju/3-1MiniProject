@@ -45,16 +45,16 @@ public class PartyTooltip : MonoBehaviour
                 switch (_data.partyData.Elemental)
                 {
                     case BaseEntity.Attribute.Fire:
-                        attribute_icon1.sprite = GameUiMgr.single.partyIconRS.dictn_ElementIcon[BaseEntity.Attribute.Wind];
-                        attribute_icon2.sprite = GameUiMgr.single.partyIconRS.dictn_ElementIcon[BaseEntity.Attribute.Water];
+                        attribute_icon1.sprite = GameUiMgr.single.entityIconRS.dictn_ElementIcon[BaseEntity.Attribute.Wind];
+                        attribute_icon2.sprite = GameUiMgr.single.entityIconRS.dictn_ElementIcon[BaseEntity.Attribute.Water];
                         break;
                     case BaseEntity.Attribute.Wind:
-                        attribute_icon1.sprite = GameUiMgr.single.partyIconRS.dictn_ElementIcon[BaseEntity.Attribute.Water];
-                        attribute_icon2.sprite = GameUiMgr.single.partyIconRS.dictn_ElementIcon[BaseEntity.Attribute.Fire];
+                        attribute_icon1.sprite = GameUiMgr.single.entityIconRS.dictn_ElementIcon[BaseEntity.Attribute.Water];
+                        attribute_icon2.sprite = GameUiMgr.single.entityIconRS.dictn_ElementIcon[BaseEntity.Attribute.Fire];
                         break;
                     case BaseEntity.Attribute.Water:
-                        attribute_icon1.sprite = GameUiMgr.single.partyIconRS.dictn_ElementIcon[BaseEntity.Attribute.Fire];
-                        attribute_icon2.sprite = GameUiMgr.single.partyIconRS.dictn_ElementIcon[BaseEntity.Attribute.Wind];
+                        attribute_icon1.sprite = GameUiMgr.single.entityIconRS.dictn_ElementIcon[BaseEntity.Attribute.Fire];
+                        attribute_icon2.sprite = GameUiMgr.single.entityIconRS.dictn_ElementIcon[BaseEntity.Attribute.Wind];
                         break;
                     default:
                         Debug.LogWarning("Party PopUp is Warning");
@@ -66,7 +66,7 @@ public class PartyTooltip : MonoBehaviour
                 VeiwToolTip(2);
                 if (_data.partyData.Elemental == BaseEntity.Attribute.Normal)//원소 아니면 노멀 아니면 빛/암
                 {
-                    attribute_icon3.sprite = GameUiMgr.single.partyIconRS.dictn_ElementIcon[BaseEntity.Attribute.Normal];
+                    attribute_icon3.sprite = GameUiMgr.single.entityIconRS.dictn_ElementIcon[BaseEntity.Attribute.Normal];
                     nomal_Icon_text.gameObject.SetActive(true);
                     lightdark_Icon_text.gameObject.SetActive(false);
                 }
@@ -74,11 +74,11 @@ public class PartyTooltip : MonoBehaviour
                 {
                     if (_data.partyData.Elemental == BaseEntity.Attribute.Light)
                     {
-                        attribute_icon3.sprite = GameUiMgr.single.partyIconRS.dictn_ElementIcon[BaseEntity.Attribute.Dark];
+                        attribute_icon3.sprite = GameUiMgr.single.entityIconRS.dictn_ElementIcon[BaseEntity.Attribute.Dark];
                     }
                     else if (_data.partyData.Elemental == BaseEntity.Attribute.Dark)
                     {
-                        attribute_icon3.sprite = GameUiMgr.single.partyIconRS.dictn_ElementIcon[BaseEntity.Attribute.Light];
+                        attribute_icon3.sprite = GameUiMgr.single.entityIconRS.dictn_ElementIcon[BaseEntity.Attribute.Light];
                     }
 
                     nomal_Icon_text.gameObject.SetActive(false);

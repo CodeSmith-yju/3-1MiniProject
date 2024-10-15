@@ -1316,7 +1316,7 @@ GameObject:
   - component: {fileID: 3735538630462974762}
   - component: {fileID: 6695278246505580161}
   m_Layer: 5
-  m_Name: Renovate
+  m_Name: Btn_Renovate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1950,8 +1950,8 @@ MonoBehaviour:
   commitAni: {fileID: 1044802867343831746}
   selectedCk: -1
   invenCk: -1
-  btn_Renovate: {fileID: 0}
-  btn_Upgrade: {fileID: 0}
+  btn_Renovate: {fileID: 3735538630462974762}
+  btn_Upgrade: {fileID: 2114266736998637704}
   btn_Commit: {fileID: 6953210347332823388}
   tmp_nowGold: {fileID: 2883701665968884633}
 --- !u!1 &6570108491456693535
@@ -2612,7 +2612,7 @@ GameObject:
   - component: {fileID: 2114266736998637704}
   - component: {fileID: 2040522610456082332}
   m_Layer: 5
-  m_Name: Upgrade
+  m_Name: Btn_Upgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
