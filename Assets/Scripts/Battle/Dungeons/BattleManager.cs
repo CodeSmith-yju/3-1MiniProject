@@ -37,7 +37,7 @@ public class BattleManager : MonoBehaviour
     //public bool isMapDone = false;
 
     [Header("BuffTile")]
-    public Dictionary<Ally, PlayerStats> temp_Stats = new Dictionary<Ally, PlayerStats>();
+    public Dictionary<PlayerData, PlayerStats> temp_Stats = new Dictionary<PlayerData, PlayerStats>();
     public HashSet<Ally> buffedPlayers = new HashSet<Ally>();
     public bool buff_On = false;
 
@@ -121,6 +121,12 @@ public class BattleManager : MonoBehaviour
         for (int i = 0; i < GameUiMgr.single.lastDeparture.Count; i++)
         {
             party_List.Add(GameUiMgr.single.lastDeparture[i].partyData.obj_Data);
+
+            temp_Stats[GameMgr.playerData[i]] = new PlayerStats(GameMgr.playerData[i].base_atk_Dmg, 
+                GameMgr.playerData[i].max_Player_Hp, 
+                GameMgr.playerData[i].max_Player_Mp, 
+                GameMgr.playerData[i].atk_Speed);
+            // temp_Stats.Add(GameMgr.playerData[i], temp_Stats[GameMgr.playerData[i]]);
         }
 
         if (GameUiMgr.single.questMgr.questId == 40)
@@ -340,7 +346,7 @@ public class BattleManager : MonoBehaviour
             PlayerData playerData = GameMgr.playerData[buff_Player.entity_index];
 
             // temp_Stats에서 해당 플레이어의 원래 스탯 찾기
-            if (temp_Stats.TryGetValue(buff_Player, out PlayerStats stats))
+            if (temp_Stats.TryGetValue(playerData, out PlayerStats stats))
             {
                 // 원래 스탯 복원
                 float healthRatio = (buff_Player.max_Hp > 0) ? buff_Player.cur_Hp / buff_Player.max_Hp : 1;
@@ -354,7 +360,7 @@ public class BattleManager : MonoBehaviour
 
                 playerData.cur_Player_Hp = buff_Player.cur_Hp;
 
-                temp_Stats.Remove(buff_Player); // 스탯 초기화
+                // temp_Stats.Remove(playerData); // 스탯 초기화
             }
         }
 

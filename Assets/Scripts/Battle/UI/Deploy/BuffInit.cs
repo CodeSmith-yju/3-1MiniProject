@@ -10,11 +10,12 @@ public class BuffInit : MonoBehaviour
     private int buff_Index;
     private Dictionary<int, PlayerData> playerDataMapping = new Dictionary<int, PlayerData>();
     [SerializeField] private GameObject[] players;
-    private Dictionary<Ally, PlayerStats> temp_Stats = new Dictionary<Ally, PlayerStats>();
-    private HashSet<Ally> buffedPlayers = new HashSet<Ally>();
+/*    private Dictionary<Ally, PlayerStats> temp_Stats = new Dictionary<Ally, PlayerStats>();
+    private HashSet<Ally> buffedPlayers = new HashSet<Ally>();*/
 
     // 툴팁 오브젝트 참조 (씬에 존재하는 툴팁 오브젝트에 연결)
     [SerializeField] private BuffTooltip buffTooltip;
+    private bool buff_Check = false;
 
 
     private void Start()
@@ -27,6 +28,8 @@ public class BuffInit : MonoBehaviour
         {
             playerDataMapping[data.playerIndex] = data;
         }
+
+        buff_Check = false;
     }
 
     public void Init(int index)
@@ -41,7 +44,10 @@ public class BuffInit : MonoBehaviour
     {
         if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy)
         {
-            CheckPlayerDistances();
+            if (buff_Check == false) 
+            {
+                CheckPlayerDistances();
+            }
         }
 
         if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Battle)
@@ -67,20 +73,22 @@ public class BuffInit : MonoBehaviour
 
                 if (distance < 0.1f) // 플레이어가 버프 타일 위에 있을 때
                 {
-                    if (!buffedPlayers.Contains(player))
+                    if (!Instance.buffedPlayers.Contains(player))
                     {
+                        buff_Check = true;
                         Buff(buff_Index, player, playerStat);
-                        buffedPlayers.Add(player);
-                        BattleManager.Instance.buffedPlayers.Add(player); // 플레이어를 버프된 리스트에 추가
+                        Instance.buffedPlayers.Add(player);
+                        break;
                     }
                 }
                 else // 플레이어가 타일에서 벗어났을 때
                 {
-                    if (buffedPlayers.Contains(player))
+                    if (Instance.buffedPlayers.Contains(player))
                     {
+                        buff_Check = false;
                         RemoveBuff(player, playerStat);
-                        buffedPlayers.Remove(player);
-                        BattleManager.Instance.buffedPlayers.Remove(player); // 플레이어를 버프된 리스트에서 제거
+                        Instance.buffedPlayers.Remove(player);
+                        break;
                     }
                 }
             }
@@ -89,11 +97,10 @@ public class BuffInit : MonoBehaviour
 
     private void Buff(int index, Ally player, PlayerData player_Data)
     {
-        if (!temp_Stats.ContainsKey(player))
+/*        if (!temp_Stats.ContainsKey(player))
         {
             temp_Stats[player] = new PlayerStats(player_Data.base_atk_Dmg, player_Data.max_Player_Hp, player_Data.max_Player_Mp);
-            Instance.temp_Stats.Add(player, temp_Stats[player]);
-        }
+        }*/
 
 
         switch (index) 
@@ -122,9 +129,9 @@ public class BuffInit : MonoBehaviour
 
     private void RemoveBuff(Ally player, PlayerData player_Data)
     {
-        if (temp_Stats.ContainsKey(player))
+        if (Instance.temp_Stats.ContainsKey(player_Data))
         {
-            PlayerStats stats = temp_Stats[player];
+            PlayerStats stats = Instance.temp_Stats[player_Data];
 
             float healthRatio = (player.max_Hp > 0) ? player.cur_Hp / player.max_Hp : 1;
 
@@ -141,8 +148,8 @@ public class BuffInit : MonoBehaviour
             player_Data.cur_Player_Hp = player.cur_Hp;
             
 
-            temp_Stats.Remove(player);
-            BattleManager.Instance.temp_Stats.Remove(player);
+            //temp_Stats.Remove(player);
+            BattleManager.Instance.temp_Stats.Remove(player_Data);
         }
     }
 
