@@ -282,9 +282,14 @@ public class Blacksmith : MonoBehaviour
                     {
                         if (invenItems[i].GetItem().PrimaryCode != Inventory.Single.items[i].PrimaryCode)
                         {
+                            Debug.Log("다르네요? : " + invenItems[i].GetItem().PrimaryCode + " 원본: " + Inventory.Single.items[i].PrimaryCode);
                             // 다른 아이템이 발견되면 false로 설정
                             samenessCk = false;
                             break; // 차이가 발견되면 더 이상 비교할 필요가 없음
+                        }
+                        else
+                        {
+                            Debug.Log("동일하네요");
                         }
                     }
 
@@ -543,10 +548,12 @@ public class Blacksmith : MonoBehaviour
                 {
                     if (upgradesMaterials.inspections[i].GetItem() == null)
                     {
+                        Debug.Log("최초실행");
                         upgradesMaterials.inspections[i].Init(_item);
                     }
                     else
                     {
+                        Debug.Log("중복실행");
                         upgradesMaterials.inspections[i].Refresh();
                         upgradesMaterials.inspections[i].Init(_item);
                     }
@@ -635,6 +642,8 @@ public class Blacksmith : MonoBehaviour
     public void UnShowPreView()
     {
         preview.gameObject.SetActive(false);
+        upgradesMaterials.gameObject.SetActive(false);
+        upgradesMaterials.ChangeInspectionsVlue(null);
         ShowInspections(null);
     }
 }

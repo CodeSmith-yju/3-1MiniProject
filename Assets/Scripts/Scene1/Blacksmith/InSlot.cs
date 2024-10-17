@@ -152,6 +152,8 @@ public class InSlot : MonoBehaviour
                 ChildBtn.interactable = false;
 
                 blacksmith.ShowPreView(myItem);
+
+                blacksmith.invenCk = invenItemIndex;
             }
         }
         
@@ -178,7 +180,7 @@ public class InSlot : MonoBehaviour
         else if (blacksmith.blacksmithState == BlacksmithState.Upgrade)
         {
             selectedPanel.SetActive(false);
-            Debug.Log("중복클릭으로인한 선택취소기능 ");
+            Debug.Log("초기화");
            
             ParentBtn.interactable = false;
             ChildBtn.interactable = true;

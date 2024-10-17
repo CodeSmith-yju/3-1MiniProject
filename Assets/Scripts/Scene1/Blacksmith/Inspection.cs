@@ -22,7 +22,13 @@ public class Inspection : MonoBehaviour
     public string ItemPK;
     public void Init(Item _item)
     {
+        if (_item == null)
+        {
+            Debug.LogError("Init called with a null item.");
+            return; // null일 경우 초기화 종료
+        }
         DBConnector.LoadItemByCodeFromDB(_item.itemCode, ref _item.itemImage, ref _item.typeIcon);
+        
         ItemPK = "";
         myItem = _item;
         cnt = 0;

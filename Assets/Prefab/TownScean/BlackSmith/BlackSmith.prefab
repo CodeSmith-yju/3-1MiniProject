@@ -748,7 +748,7 @@ GameObject:
   - component: {fileID: 1158309081039633419}
   - component: {fileID: 5073517526512493321}
   m_Layer: 5
-  m_Name: Sacrifice
+  m_Name: Up_Sacrifice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1612,7 +1612,7 @@ GameObject:
   - component: {fileID: 7863991346373453801}
   - component: {fileID: 6597485419980154502}
   m_Layer: 5
-  m_Name: InvenSlots
+  m_Name: UpgradeScroll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2102,7 +2102,7 @@ GameObject:
   - component: {fileID: 3229492213704873001}
   - component: {fileID: 3157045501263414757}
   m_Layer: 5
-  m_Name: Sacrifice
+  m_Name: Re_Sacrifice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
