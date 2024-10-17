@@ -272,41 +272,31 @@ public class Blacksmith : MonoBehaviour
             // 기존의 리스트가 존재한다면.
             if (invenItems.Count > 0)
             {
-                //기존의 리스트와 새로 만들어야할 리스트가 동일한지 확인
-                if (Inventory.Single.items.Count == invenItems.Count)
+                List<string> invenItemPKs = invenItems.Select(slot => slot.GetItem().PrimaryCode).ToList();
+
+                // Inventory의 아이템들과 비교하여 일치하는 경우 invenItemPKs에서 제거
+                for (int j = Inventory.Single.items.Count - 1; j >= 0; j--) // 역순으로 순회
                 {
-                    // 일단 동일하다고 가정하고 시작
-                    samenessCk = true;
-
-                    for (int i = 0; i < invenItems.Count; i++)
+                    if (invenItemPKs.Contains(Inventory.Single.items[j].PrimaryCode))
                     {
-                        if (invenItems[i].GetItem().PrimaryCode != Inventory.Single.items[i].PrimaryCode)
-                        {
-                            Debug.Log("다르네요? : " + invenItems[i].GetItem().PrimaryCode + " 원본: " + Inventory.Single.items[i].PrimaryCode);
-                            // 다른 아이템이 발견되면 false로 설정
-                            samenessCk = false;
-                            break; // 차이가 발견되면 더 이상 비교할 필요가 없음
-                        }
-                        else
-                        {
-                            Debug.Log("동일하네요");
-                        }
+                        // invenItemPKs에서 해당 아이템 PK 제거
+                        invenItemPKs.Remove(Inventory.Single.items[j].PrimaryCode);
                     }
+                }
 
-                    if (!samenessCk)
-                    {
-                        // 기존 아이템을 모두 삭제하고 리스트 초기화
-                        Refresh();
-                    }
+                // invenItemPKs가 비었는지 확인
+                if (invenItemPKs.Count == 0)
+                {
+                    Debug.Log("invenItemPKs가 비어있습니다. 새로 생성하지 않습니다.");
+                    return; // 새로 생성하지 않음
                 }
                 else
                 {
-                    // 아이템 개수가 다르면 무조건 새로 만들어야 함
-                    Refresh();
+                    Debug.Log("invenItemPKs가 비어있지 않습니다. 새로 생성합니다.");
+                    MakeInvenItems(); // 새로 생성
                 }
             }
-            //새로 만드는 코드
-            if (!samenessCk)
+            else
             {
                 MakeInvenItems();
             }
@@ -328,41 +318,35 @@ public class Blacksmith : MonoBehaviour
         NowGold();
 
         // 리스트 초기화
-        samenessCk = false;
         upgradeInvenItems ??= new List<InSlot>();
 
         // 무결성 확인 및 오브젝트 생성
         if (blacksmithState == BlacksmithState.Upgrade)
         {
-            // 기존의 리스트가 존재한다면.
-            if (upgradeInvenItems.Count > 0)
+            if (upgradeInvenItems.Count > 0)// 기존의 리스트가 존재한다면.
             {
-                //기존의 리스트와 새로 만들어야할 리스트가 동일한지 확인
-                if (Inventory.Single.items.Count == upgradeInvenItems.Count)
+                List<string> upgradeInvenItemPKs = upgradeInvenItems.Select(slot => slot.GetItem().PrimaryCode).ToList();
+
+                // Inventory의 아이템들과 비교하여 일치하는 경우 invenItemPKs에서 제거
+                for (int j = Inventory.Single.items.Count - 1; j >= 0; j--) // 역순으로 순회
                 {
-                    // 일단 동일하다고 가정하고 시작
-                    samenessCk = true;
-
-                    for (int i = 0; i < upgradeInvenItems.Count; i++)
+                    if (upgradeInvenItemPKs.Contains(Inventory.Single.items[j].PrimaryCode))
                     {
-                        if (upgradeInvenItems[i].GetItem().PrimaryCode != Inventory.Single.items[i].PrimaryCode)
-                        {
-                            // 다른 아이템이 발견되면 false로 설정
-                            samenessCk = false;
-                            break; // 차이가 발견되면 더 이상 비교할 필요가 없음
-                        }
+                        // invenItemPKs에서 해당 아이템 PK 제거
+                        upgradeInvenItemPKs.Remove(Inventory.Single.items[j].PrimaryCode);
                     }
+                }
 
-                    if (!samenessCk)
-                    {
-                        // 기존 아이템을 모두 삭제하고 리스트 초기화
-                        Refresh();
-                    }
+                //기존의 리스트와 새로 만들어야할 리스트가 동일한지 확인
+                if (upgradeInvenItemPKs.Count == 0)
+                {
+                    Debug.Log("UpgradeInvenItemPKs가 비어있습니다. 새로 생성하지 않습니다.");
+                    return; // 새로 생성하지 않음
                 }
                 else
                 {
                     // 아이템 개수가 다르면 무조건 새로 만들어야 함
-                    Refresh();
+                    MakeUpgradeInvenItems();
                 }
             }
             //새로 만드는 코드
@@ -378,23 +362,11 @@ public class Blacksmith : MonoBehaviour
 
         if (blacksmithState == BlacksmithState.Renovate)
         {
-            int cnt = invenItems.Count;
-            for (int i = 0; i < cnt; i++)
-            {
-                invenItems[i].gameObject.SetActive(false);
-                Destroy(invenItems[i]);
-            }
-            invenItems.Clear();
+            MakeInvenItems();
         }
         else if(blacksmithState == BlacksmithState.Upgrade)
         {
-            int cnt = upgradeInvenItems.Count;
-            for (int i = 0; i < cnt; i++)
-            {
-                upgradeInvenItems[i].gameObject.SetActive(false);
-                Destroy(upgradeInvenItems[i]);
-            }
-            upgradeInvenItems.Clear();
+            MakeUpgradeInvenItems();
         }
         
     }
@@ -438,6 +410,19 @@ public class Blacksmith : MonoBehaviour
 
     void MakeInvenItems()
     {
+        if (invenItems != null)
+        {
+            Debug.Log("기존 리스트 파괴 및 초기화 후 새로 생성");
+            foreach (var slot in invenItems)
+            {
+                slot.gameObject.SetActive(false);
+                Destroy(slot.gameObject); // 슬롯 오브젝트를 파괴
+            }
+            invenItems.Clear(); // 리스트 비우기
+        }
+        else
+            Debug.Log("최초 실행 or 버그");
+
         for (int i = 0; i < Inventory.Single.items.Count; i++)
         {
             //if (Inventory.Single.items[i].itemType != Item.ItemType.Consumables && Inventory.Single.items[i].itemType != Item.ItemType.Ect)
@@ -471,6 +456,19 @@ public class Blacksmith : MonoBehaviour
     }
     void MakeUpgradeInvenItems()
     {
+        if (upgradeInvenItems != null)
+        {
+            Debug.Log("기존 리스트 파괴 및 초기화 후 새로 생성");
+            foreach (var slot in upgradeInvenItems)
+            {
+                slot.gameObject.SetActive(false);
+                Destroy(slot.gameObject); // 슬롯 오브젝트를 파괴
+            }
+            upgradeInvenItems.Clear(); // 리스트 비우기
+        }
+        else
+            Debug.Log("최초 실행 or 버그");
+
         for (int i = 0; i < Inventory.Single.items.Count; i++)
         {
             //if (Inventory.Single.items[i].itemType != Item.ItemType.Consumables && Inventory.Single.items[i].itemType != Item.ItemType.Ect)

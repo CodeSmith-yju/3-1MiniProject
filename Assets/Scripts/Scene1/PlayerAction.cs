@@ -12,13 +12,6 @@ public class PlayerAction : MonoBehaviour
     Vector3 dirVec;// Ray를 발사하고 충돌을 체크할때 사용할, 현재 바라보고 있는 방향 값을 가진 변수 선언 
     GameObject scanRayObjcet;// Ray에 충돌한 오브젝트를 저장할 변수
 
-
-    /*    private void Awake()
-        {
-            rigid = GetComponent<Rigidbody2D>();
-            animator = GetComponentInChildren<Animator>();
-        }*/
-
     void Update()
     {
         // 입력 값을 확인
@@ -171,6 +164,7 @@ public class PlayerAction : MonoBehaviour
             // Idle 애니메이션이 실행 중일 때
             h = 0;
             v = 0;
+            dirVec = Vector3.zero;
         }
 
         // RayCast Draw
