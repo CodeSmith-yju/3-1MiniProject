@@ -22,7 +22,7 @@ public class Preview : MonoBehaviour
         text_modify_stack.text = "+"+ (myItem.modifyStack + 1).ToString();
 
         float _f = myItem.GetPreViewPower(myItem);
-        text_pre_stat.text = myItem.itemPower.ToString()+" -> " + _f.ToString() + "(+ "+ (_f - myItem.itemPower).ToString() + ")";
+        text_pre_stat.text = myItem.itemPower.ToString()+" -> " + _f.ToString() + "(<color=red> +"+ (_f - myItem.itemPower).ToString() + "</color>)";
     }
 
 }
