@@ -29,7 +29,6 @@ public class Blacksmith : MonoBehaviour
 
     [SerializeField] Transform renovatetr;
     [SerializeField] Transform inventr;
-    bool samenessCk;
 
     [Header("Upgrade")]
     public SacrificeList upgradesMaterials;//좌측하단에 표시될 강화재료 목록
@@ -71,7 +70,7 @@ public class Blacksmith : MonoBehaviour
         
         // 4. 오브젝트 비활성화
         commitAni.SetActive(false);
-
+        btn_Commit.interactable = false;
         AllInvenUnSelect();
         Refresh();
         OpenUpgrade();
@@ -176,6 +175,8 @@ public class Blacksmith : MonoBehaviour
                             if (Inventory.Single.items[j].PrimaryCode.Equals(upgradesMaterials.inspections[i].ItemPK))
                             {
                                 Debug.Log("Remove UpgradeMaterials Item: "+ upgradesMaterials.inspections[i].GetItem().itemName);
+                                Item upgradedItem = Inventory.Single.items[j].UpgradeModifyPowerSet(Inventory.Single.items[j]);
+                                Inventory.Single.AddItem(upgradedItem);
                                 Inventory.Single.RemoveItem(Inventory.Single.items[j]);
                                 break;
                             }
@@ -240,15 +241,11 @@ public class Blacksmith : MonoBehaviour
                         break;
                 }
             }
-            Item _item = new Item().GenerateRandomItem(upgradesMaterials.inspections[0].GetItem().itemCode);
-            Inventory.Single.AddItem(_item.UpgradeModifyPowerSet(_item));
+            //Item _item = new Item().GenerateRandomItem(upgradesMaterials.inspections[0].GetItem().itemCode);
+            //Inventory.Single.AddItem(_item.UpgradeModifyPowerSet(_item));
             Debug.Log("제작된 아이템: " + Inventory.Single.items[Inventory.Single.items.Count - 1].itemPower);
         }
         CommitAnimation();
-        //1강재료넣었는데 2강됨 씨ㅣ빨!
-        //1강만되고 2강부터 정상적으로 안 됨
-        //미리보기 클릭할때마다 아이템 ++++++++ 이지랄되서 개좆버그남
-        // 씨발 upgradeInvenSlots  무한클릭됨 병신들한번클릭하면막히라고...
     }
     public void OpenBlacksmith()
     {
@@ -260,13 +257,12 @@ public class Blacksmith : MonoBehaviour
         upgrades.SetActive(false);
         sacrificeList.gameObject.SetActive(false);
         NowGold();
-        samenessCk = false;
         // TODO: invenList Add. (foreach Inventory.items[i].PK != BlackSmithSlot.item.PK) 문으로 기존invenList와비교하여 Destroy or As it is 
         ReOrder();
         // 최초실행 = 리스트가 없다면 초기화 == invenItems ??= new List<InSlot>();
         SetOnOffLights(false, -1);
         invenItems ??= new List<InSlot>();
-
+        int _cnt = 0;
         if (blacksmithState == BlacksmithState.Renovate)
         {
             // 기존의 리스트가 존재한다면.
@@ -277,13 +273,22 @@ public class Blacksmith : MonoBehaviour
                 // Inventory의 아이템들과 비교하여 일치하는 경우 invenItemPKs에서 제거
                 for (int j = Inventory.Single.items.Count - 1; j >= 0; j--) // 역순으로 순회
                 {
+                    if (!(Inventory.Single.items[j].itemType == Item.ItemType.Consumables || Inventory.Single.items[j].itemType == Item.ItemType.Ect))
+                    {
+                        _cnt++;
+                    }
+
                     if (invenItemPKs.Contains(Inventory.Single.items[j].PrimaryCode))
                     {
                         // invenItemPKs에서 해당 아이템 PK 제거
                         invenItemPKs.Remove(Inventory.Single.items[j].PrimaryCode);
                     }
                 }
-
+                if (_cnt != invenItems.Count)
+                {
+                    Debug.Log("invenItem의 개수가 인벤토리와 일치하지않습니다. 새로 생성합니다.");
+                    MakeInvenItems();
+                }
                 // invenItemPKs가 비었는지 확인
                 if (invenItemPKs.Count == 0)
                 {
@@ -312,13 +317,12 @@ public class Blacksmith : MonoBehaviour
         Debug.Log("++++++++Now State: " + blacksmithState);
 
         //화면 초기화
+        upgradeInvenItems ??= new List<InSlot>();
         Renovates.SetActive(false);
         upgrades.SetActive(true);
         ReOrder();
         NowGold();
-
-        // 리스트 초기화
-        upgradeInvenItems ??= new List<InSlot>();
+        int _cnt = 0;
 
         // 무결성 확인 및 오브젝트 생성
         if (blacksmithState == BlacksmithState.Upgrade)
@@ -330,11 +334,22 @@ public class Blacksmith : MonoBehaviour
                 // Inventory의 아이템들과 비교하여 일치하는 경우 invenItemPKs에서 제거
                 for (int j = Inventory.Single.items.Count - 1; j >= 0; j--) // 역순으로 순회
                 {
+                    if (!(Inventory.Single.items[j].itemType == Item.ItemType.Consumables || Inventory.Single.items[j].itemType == Item.ItemType.Ect))
+                    {
+                        _cnt++;
+                    }
+
                     if (upgradeInvenItemPKs.Contains(Inventory.Single.items[j].PrimaryCode))
                     {
                         // invenItemPKs에서 해당 아이템 PK 제거
                         upgradeInvenItemPKs.Remove(Inventory.Single.items[j].PrimaryCode);
                     }
+                }
+
+                if (_cnt != upgradeInvenItems.Count)
+                {
+                    Debug.Log("UpgradeInvenItem의 개수가 인벤토리와 일치하지않습니다. 새로 생성합니다.");
+                    MakeUpgradeInvenItems();
                 }
 
                 //기존의 리스트와 새로 만들어야할 리스트가 동일한지 확인
@@ -349,8 +364,7 @@ public class Blacksmith : MonoBehaviour
                     MakeUpgradeInvenItems();
                 }
             }
-            //새로 만드는 코드
-            if (!samenessCk)
+            else//새로 만드는 코드
             {
                 MakeUpgradeInvenItems();
             }
@@ -542,7 +556,8 @@ public class Blacksmith : MonoBehaviour
 
             for (int i = 0; i < upgradesMaterials.inspections.Length; i++)
             {
-                if (i == 0)
+                Debug.Log("강화재료 배치중: "+i+"회");
+                /*if (i == 0)
                 {
                     if (upgradesMaterials.inspections[i].GetItem() == null)
                     {
@@ -555,10 +570,11 @@ public class Blacksmith : MonoBehaviour
                         upgradesMaterials.inspections[i].Refresh();
                         upgradesMaterials.inspections[i].Init(_item);
                     }
-                }
+                }*/
                 //upgradesMaterials.inspections[i].Init(_item);
-                upgradesMaterials.ChangeInspectionsVlue(_item);
+                upgradesMaterials.inspections[i].Init(_item);
             }
+            upgradesMaterials.ChangeInspectionsVlue(_item);
 
             if (upgradesMaterials.AllCk() == true)
             {
@@ -642,6 +658,10 @@ public class Blacksmith : MonoBehaviour
         preview.gameObject.SetActive(false);
         upgradesMaterials.gameObject.SetActive(false);
         upgradesMaterials.ChangeInspectionsVlue(null);
-        ShowInspections(null);
+        //ShowInspections(_item);
+    }
+    public void Test()
+    {
+        //upgradesMaterials.inspections.refresh();
     }
 }

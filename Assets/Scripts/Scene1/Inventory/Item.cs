@@ -97,10 +97,12 @@ public class Item
     //뭔가 장비아이템을 사용할때 사용될 메서드를 여기다 만들어야하는듯..?
     public Item UpgradeModifyPowerSet(Item _item)
     {
+        float _f = GetPreViewPower(_item);
         if (_item.modifyStack > -1)
         {
             _item.modifyStack++;
-            _item.itemPower = ItemResources.instance.itemRS[_item.itemCode].itemPower + (ItemResources.instance.itemRS[_item.itemCode].itemPower) * 0.5f * _item.modifyStack;
+            //_item.itemPower = ItemResources.instance.itemRS[_item.itemCode].itemPower + (ItemResources.instance.itemRS[_item.itemCode].itemPower) * 0.5f * _item.modifyStack;
+            _item.itemPower = _f;
             _item.itemPrice = ItemResources.instance.itemRS[_item.itemCode].itemPrice + (int)((ItemResources.instance.itemRS[_item.itemCode].itemPrice * 0.1) * _item.modifyStack);
             /*switch (_item.modifyStack)
             {
@@ -117,7 +119,7 @@ public class Item
     }
     public float GetPreViewPower(Item _item)
     {
-        int _i = _item.modifyStack;
+        float _i = _item.modifyStack; // _item.modifyStack을 바로 사용
         if (_i < 1)
         {
             _i = 2;
@@ -126,9 +128,8 @@ public class Item
         {
             _i += 2;
         }
-        float power = 0f;
-        power = _item.itemPower + _item.itemPower * 0.5f * _i;
-        Debug.Log("Befor: "+_item.itemPower + " / After: "+ power);
+        float power = _item.itemPower + _item.itemPower * 0.5f * _i;
+        Debug.Log("Before: " + _item.itemPower + " / After: " + power + " | _i: " + _i);
         return power;
     }
     public void IconSet(Item _item)

@@ -131,12 +131,10 @@ public class InSlot : MonoBehaviour
         {
             if (isInventory)//Right Side
             {
-                blacksmith.AllInvenUnSelect();
-                //이 부분부터 새로만들어야할수도있음
-                // 선택하면 우측목록리스트 선택하고
-                //미리보기 만들어주고
-                // 
-
+                if (blacksmith.invenCk != -1)
+                {
+                    blacksmith.AllInvenUnSelect();
+                }
                 // 동일한 항목을 다시 선택한 경우 선택 해제하고 반환
                 if (blacksmith.invenCk == invenItemIndex)
                 {
@@ -179,13 +177,15 @@ public class InSlot : MonoBehaviour
         }
         else if (blacksmith.blacksmithState == BlacksmithState.Upgrade)
         {
-            selectedPanel.SetActive(false);
-            Debug.Log("초기화");
-           
-            ParentBtn.interactable = false;
-            ChildBtn.interactable = true;
+            if (selectedPanel.activeSelf)
+            {
+                selectedPanel.SetActive(false);
+                Debug.Log("초기화");
+
+                ParentBtn.interactable = false;
+                ChildBtn.interactable = true;
+            }
         }
-        
     }
 
     public void OnClickSelected()

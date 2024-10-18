@@ -20,9 +20,15 @@ public class Tooltip : MonoBehaviour
 
     public void SetupTooltip(Item _item)//(string _name, string _title, string _desc,Sprite _img)
     {
-        textName.text = _item.itemName;
+        if (_item.modifyStack > 0)
+        {
+            textName.text = "<color=red>+" + _item.modifyStack + "</color> " + _item.itemName;
+        }
+        else
+            textName.text = _item.itemName;
         textDesc.text = _item.itemTitle;
-        textStat.text = _item.itemDesc;
+        //textStat.text = _item.itemDesc;
+        textStat.text = SetUpStatText(_item);
 
         imgIcon.sprite = _item.itemImage;
         powerIcon.sprite = _item.typeIcon;
@@ -44,5 +50,33 @@ public class Tooltip : MonoBehaviour
             tooltipRect.pivot = new Vector2(1, 0);
         else
             tooltipRect.pivot = new Vector2(0, 0);
+    }
+
+    string SetUpStatText(Item _item)
+    {
+        string _text = "";
+        switch (_item.itemType)
+        {
+            case Item.ItemType.Equipment_Arrmor:
+                _text = "공격사거리 + " + (_item.itemPower * 100).ToString();
+                break;
+            case Item.ItemType.Equipment_Boots:
+                _text = "공격속도 + " + (_item.itemPower * 100).ToString();
+                break;
+            case Item.ItemType.Equipment_Helmet:
+                _text = "체력 + " + (_item.itemPower).ToString();
+                break;
+            case Item.ItemType.Equipment_Weapon:
+                _text = "공격력 + " + (_item.itemPower).ToString();
+                break;
+            /*case Item.ItemType.Consumables:
+                break;
+            case Item.ItemType.Ect:
+                break;*/
+            default:
+                _text = _item.itemDesc;
+                break;
+        }
+        return _text;
     }
 }

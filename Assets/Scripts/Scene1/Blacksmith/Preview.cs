@@ -17,15 +17,10 @@ public class Preview : MonoBehaviour
         myItem = _item;
         icon.sprite = myItem.itemImage;
         text_name.text = myItem.itemName;
-        text_modify_stack.text = "+"+ (++myItem.modifyStack).ToString();
-        if (myItem.modifyStack < 1)
-        {
-            text_modify_stack.gameObject.SetActive(false);
-        }
-        else
-        {
-            text_modify_stack.gameObject.SetActive(true);
-        }
+
+        text_modify_stack.gameObject.SetActive(true);
+        text_modify_stack.text = "+"+ (myItem.modifyStack + 1).ToString();
+
         float _f = myItem.GetPreViewPower(myItem);
         text_pre_stat.text = myItem.itemPower.ToString()+" -> " + _f.ToString() + "(+ "+ (_f - myItem.itemPower).ToString() + ")";
     }

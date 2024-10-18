@@ -134,7 +134,7 @@ public class PlayerAction : MonoBehaviour
             h = -1; // 왼쪽 이동
             v = 0;  // 상하 이동 없음
             dirVec = Vector3.left;// RayCast Direction
-
+            StopPosition(false);
             gameObject.GetComponent<SpriteRenderer>().flipX = true;
         }
         else if (stateInfo.IsName("Player_Right_Walk"))
@@ -144,6 +144,7 @@ public class PlayerAction : MonoBehaviour
             v = 0;  // 상하 이동 없음
             dirVec = Vector3.right;
             gameObject.GetComponent<SpriteRenderer>().flipX = false;
+            StopPosition(false);
         }
         else if (stateInfo.IsName("Player_Up_Walk"))
         {
@@ -151,6 +152,7 @@ public class PlayerAction : MonoBehaviour
             h = 0; // 좌우 이동 없음
             v = 1; // 위쪽 이동
             dirVec = Vector3.up;
+            StopPosition(false);
         }
         else if (stateInfo.IsName("Player_Down_Walk"))
         {
@@ -158,6 +160,7 @@ public class PlayerAction : MonoBehaviour
             h = 0; // 좌우 이동 없음
             v = -1; // 아래쪽 이동
             dirVec = Vector3.down;
+            StopPosition(false);
         }
         else if (stateInfo.IsName("Player_Idle"))
         {
@@ -165,6 +168,8 @@ public class PlayerAction : MonoBehaviour
             h = 0;
             v = 0;
             dirVec = Vector3.zero;
+            rigid.velocity = Vector2.zero;
+            StopPosition(true);
         }
 
         // RayCast Draw
@@ -183,5 +188,18 @@ public class PlayerAction : MonoBehaviour
         else
             scanRayObjcet = null;// 충돌이없다면 scanObj는 비워져야함.
     }
-
+    void StopPosition(bool _onoff)
+    {
+        if (_onoff)
+        {
+            rigid.constraints = RigidbodyConstraints2D.FreezePositionX;
+            rigid.constraints = RigidbodyConstraints2D.FreezePositionY;
+        }
+        else
+        {
+            rigid.constraints = RigidbodyConstraints2D.None;
+            rigid.freezeRotation = true;
+        }
+        
+    }
 }

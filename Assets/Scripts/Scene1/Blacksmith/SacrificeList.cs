@@ -166,6 +166,14 @@ public class SacrificeList : MonoBehaviour
                     inspections[i].count.text = GameMgr.playerData[0].player_Gold.ToString() + "/" + inspections[i].cnt.ToString();
                 }
             }
+
+            if (_item == null)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    inspections[i].Refresh();
+                }
+            }
         }
 
         AllCk();
