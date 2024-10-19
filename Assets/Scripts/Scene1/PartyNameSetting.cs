@@ -30,7 +30,7 @@ public class PartyNameSetting : MonoBehaviour
 
         // 선택된 이름을 리스트에서 제거
         nameList.RemoveAt(randomIndex);
-        Debug.Log("반환되어 리스트에서 제거됨:" + selectedName);
+        //Debug.Log("반환되어 리스트에서 제거됨:" + selectedName);
         // 선택된 이름 반환
         return selectedName;
     }

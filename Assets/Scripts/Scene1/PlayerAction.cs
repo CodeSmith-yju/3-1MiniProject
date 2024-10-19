@@ -25,8 +25,7 @@ public class PlayerAction : MonoBehaviour
         v = (up ? 1 : 0) - (down ? 1 : 0);
 
         // 애니메이션 상태 업데이트
-        if (GameUiMgr.single.move_doit)
-            UpdateAnimation();
+        UpdateAnimation();
 
         // Scan Ray Object
         if (GameUiMgr.single.move_doit && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && scanRayObjcet != null || (GameUiMgr.single.isActionTalk && Input.GetMouseButtonDown(0)))
@@ -36,13 +35,11 @@ public class PlayerAction : MonoBehaviour
             //Debug.Log(scanRayObjcet.name); // 04- 23 Debug
 
             ObjectData obj = scanRayObjcet.GetComponent<ObjectData>();
-            /*if (obj.id == 4000)
+            if (obj.id == 4000)
             {
-                //if (GameUiMgr.single.questMgr.questId >= 30)
-                    GameUiMgr.single.SnB.SetActive(true);
+                rigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
             }
-            else*/ 
-            if (obj.id == 9000)
+            else if (obj.id == 9000)
             {
                 if (GameUiMgr.single.questMgr.questId >= 30)
                 {
@@ -134,7 +131,6 @@ public class PlayerAction : MonoBehaviour
             h = -1; // 왼쪽 이동
             v = 0;  // 상하 이동 없음
             dirVec = Vector3.left;// RayCast Direction
-            StopPosition(false);
             gameObject.GetComponent<SpriteRenderer>().flipX = true;
         }
         else if (stateInfo.IsName("Player_Right_Walk"))
@@ -144,7 +140,6 @@ public class PlayerAction : MonoBehaviour
             v = 0;  // 상하 이동 없음
             dirVec = Vector3.right;
             gameObject.GetComponent<SpriteRenderer>().flipX = false;
-            StopPosition(false);
         }
         else if (stateInfo.IsName("Player_Up_Walk"))
         {
@@ -152,7 +147,6 @@ public class PlayerAction : MonoBehaviour
             h = 0; // 좌우 이동 없음
             v = 1; // 위쪽 이동
             dirVec = Vector3.up;
-            StopPosition(false);
         }
         else if (stateInfo.IsName("Player_Down_Walk"))
         {
@@ -160,16 +154,23 @@ public class PlayerAction : MonoBehaviour
             h = 0; // 좌우 이동 없음
             v = -1; // 아래쪽 이동
             dirVec = Vector3.down;
-            StopPosition(false);
         }
         else if (stateInfo.IsName("Player_Idle"))
         {
             // Idle 애니메이션이 실행 중일 때
             h = 0;
             v = 0;
+        }
+
+        if (GameUiMgr.single.move_doit)
+        {
+            StopPosition(false);
+        }
+        else
+        {
+            StopPosition(true);
             dirVec = Vector3.zero;
             rigid.velocity = Vector2.zero;
-            StopPosition(true);
         }
 
         // RayCast Draw
@@ -192,8 +193,7 @@ public class PlayerAction : MonoBehaviour
     {
         if (_onoff)
         {
-            rigid.constraints = RigidbodyConstraints2D.FreezePositionX;
-            rigid.constraints = RigidbodyConstraints2D.FreezePositionY;
+            rigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY; // 두 제약 조건을 함께 설정
         }
         else
         {

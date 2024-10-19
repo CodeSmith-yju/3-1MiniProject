@@ -50,7 +50,7 @@ public class PartyData
 
         type = prefab.name;// 프리펩오브젝트의 이름, JobClass enum값과 큰 차이는 없음.
         cost = (150 + (_Lvel * 20)) + Random.Range(0, _Lvel * 10);
-        Debug.Log("cost: "+cost);
+        //Debug.Log("cost: "+cost);
         spPartyIcon = player.GetComponent<SpriteRenderer>().sprite;
         SetClassAndAttributeIcon(player.job);
     }
@@ -103,17 +103,24 @@ public class PartyData
                 Debug.Log("플레이어캐릭터를위한 파티데이터가 생성될때 동작함");
                 type = "Default";
                 Debug.Log("Type d, Generate Code: " + _Code);
-
-                partyHp = GameMgr.playerData[0].max_Player_Hp;
-                partyMp = GameMgr.playerData[0].max_Player_Mp;
-                partyAtk = GameMgr.playerData[0].base_atk_Dmg;
-                partyAtkSpd = GameMgr.playerData[0].atk_Speed;   
+                // 스텟 상한 설정
+                
+                partyHp = GameMgr.playerData[0].max_Player_Hp + (_Lvel * 3f);
+                partyMp = GameMgr.playerData[0].max_Player_Mp - (_Lvel * 0.5f);
+                partyAtk = GameMgr.playerData[0].base_atk_Dmg + (_Lvel * 0.6f);
+                partyAtkSpd = GameMgr.playerData[0].atk_Speed + (_Lvel * 0.05f);   
                 partyAtkRange = GameMgr.playerData[0].atk_Range;
                 strPartyName = GameMgr.playerData[0].GetPlayerName();
+
+                if (partyMp < 2)
+                    partyMp = 2f;
+                if (partyAtkSpd > 4f)
+                    partyAtkSpd = 4f;
+
                 isMelee = true;
                 break;
         }
-        Debug.Log("party Name: " + strPartyName);
+        //Debug.Log("party Name: " + strPartyName);
     }
     
     void SetClassAndAttributeIcon(Ally.JobClass _jobClass)

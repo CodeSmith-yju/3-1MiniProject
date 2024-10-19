@@ -36,7 +36,7 @@ public class ShopSlot : MonoBehaviour
         state = _state;
 
         //Debug.Log($"Item Price: {item.itemPrice}");
-        Debug.Log("지금생성된 아이템의 스택: " + _item.itemStack);
+        //Debug.Log("지금생성된 아이템의 스택: " + _item.itemStack);
 
         slotPirce = item.itemPrice;
         if (state == ShopState.SELL)

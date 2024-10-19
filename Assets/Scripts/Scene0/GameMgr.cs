@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+public enum SaveState
+{
+    None,
+    DungeonSave,
+    TownSave,
+}
 public class GameMgr : MonoBehaviour
 {
     public static GameMgr single { get; private set; }
@@ -12,6 +17,7 @@ public class GameMgr : MonoBehaviour
     private bool loadChecker = false;
     public int selectedResolution;
     public string input_Name = "";
+    public SaveState saveState = SaveState.None;
     [Header("PopUp")]
     public PopUp popUp;
 

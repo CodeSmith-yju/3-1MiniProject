@@ -82,6 +82,16 @@ public class LoadingSceneController : MonoBehaviour
     {
         //Debug.Log($"Run LoadScene: {_sceneName}");
         nextScene = _sceneName;
+        if (nextScene.Equals("Town"))
+        {
+            GameMgr.single.saveState = SaveState.TownSave;
+            //Debug.Log("Tonw으로 가는중");
+        }
+        else if (nextScene.Equals("Battle") || nextScene.Equals("Tutorial"))
+        {
+            GameMgr.single.saveState = SaveState.DungeonSave;
+            //Debug.Log("Dungeon으로 가는중");
+        }
         SceneManager.LoadScene("LoadingScene"); // 로딩 씬으로 이동
     }
 

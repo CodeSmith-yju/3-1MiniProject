@@ -6,6 +6,7 @@ public class ItemResources : MonoBehaviour
 {
     public static ItemResources instance;
     public List<Item> itemRS = new();//LocalType
+    public List<Sprite> itemSpriteRS = new();
     public List<Sprite> iconRS = new();
 
 

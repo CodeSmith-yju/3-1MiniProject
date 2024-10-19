@@ -451,6 +451,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             for (int i = 0; i < itemCount; i++)
             {
                 slots[i].item = Inventory.Single.items[i];
+                //DBConnector.LoadItemByCodeFromDB(slots[i].item.itemCode, ref slots[i].item.itemImage, ref slots[i].item.typeIcon);
                 slots[i].item.itemIndex = i;
 
                 if (i < ItemResources.instance.itemRS.Count && slots[i].name == ItemResources.instance.itemRS[i].itemName)
@@ -947,18 +948,19 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             }
         }
 
-        for (int i = 0; i < GameUiMgr.single.poolPartySlot.Count; i++)
+        if (GameMgr.single.saveState == SaveState.TownSave)
         {
-            PartyData pd = GameUiMgr.single.poolPartySlot[i].GetPartyData();
-            GameMgr.playerData[0].listPartyDatas.Add(pd);
+            for (int i = 0; i < GameUiMgr.single.poolPartySlot.Count; i++)
+            {
+                PartyData pd = GameUiMgr.single.poolPartySlot[i].GetPartyData();
+                GameMgr.playerData[0].listPartyDatas.Add(pd);
+            }
+            for (int i = 0; i < GameUiMgr.single.lastDeparture.Count; i++)
+            {
+                PartyData pd = GameUiMgr.single.lastDeparture[i].GetPartyData();
+                GameMgr.playerData[0].listPartyDeparture.Add(pd);
+            }
         }
-        for (int i = 0; i < GameUiMgr.single.lastDeparture.Count; i++)
-        {
-            PartyData pd = GameUiMgr.single.lastDeparture[i].GetPartyData();
-            GameMgr.playerData[0].listPartyDeparture.Add(pd);
-        }
-
-
         // Shop에 있는 아이템들 저장
         List<Item> saveShopItems = new();
         foreach (var _item in GameUiMgr.single.shopMgr.GetShopSlots())
@@ -1306,6 +1308,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
      *///GPT가 작성해준 디버깅코드 적용은나중에해보겠음 개힘들다진짜...
     public void WearEquipment()
     {
+        //여기 수정했음  10-19
+        EquipSlotSetting();
         string pk = "";
         // 현재 선택된 슬롯의 아이템을 복제하여 대상 슬롯에 추가
         for (int i = 0; i < targetSlots.Length; i++)
@@ -1380,6 +1384,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             itemImage = _Slot.item.itemImage,
             itemPrice = _Slot.item.itemPrice,
             itemPower = _Slot.item.itemPower,
+            itemTitle = _Slot.item.itemTitle,
             itemDesc = _Slot.item.itemDesc,
             itemStack = _Slot.item.itemStack,
             modifyStack = _Slot.item.modifyStack,
@@ -1549,8 +1554,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         if (sum == (targetSlots.Length))
         {
-            Debug.Log("장비 장착 완료");
-            Receptionist_1();
+            if (questMgr.questId < 30)
+            {
+                Receptionist_1();
+                Debug.Log("장비 장착 퀘스트 조건 충족");
+            }
             //tutorial Quest - wearEquipment
             if (wearEquipment != true)
             {
@@ -1561,7 +1569,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
         else
         {
-            Receptionist_0();
+            if (questMgr.questId < 30)
+            {
+                Receptionist_0();
+                Debug.Log("장비 장착 퀘스트 조건 미충족");
+            }
         }
         return false;
     }
@@ -1619,6 +1631,12 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
 
         RedrawSlotUI();
+
+        /*for (int i = 0; i < Inventory.Single.items.Count; i++)
+        {
+            DBConnector.LoadItemByCodeFromDB(Inventory.Single.items[i].itemCode, ref Inventory.Single.items[i].itemImage, ref Inventory.Single.items[i].typeIcon);
+        }*/
+
     }
     public void LoadEquipment(List<Item> _items)
     {
@@ -1646,7 +1664,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 targetSlots[i].item = _items[i];
                 targetSlots[i].wearChek = true;
 
-                Debug.Log($"Equipment Loaded: {_items[i].itemName}");
+                //Debug.Log($"Equipment Loaded: {_items[i].itemName}");
             }
             else
             {

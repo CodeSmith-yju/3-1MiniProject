@@ -52,10 +52,17 @@ public class ShopMgr : MonoBehaviour
     {
         Debug.Log("Make Shop Items");
         //이 아래의 for문 생성로직은 GameUIMgr로 빼내야할거같음 여기서관리하기엔조금? 연계된 기능이많은듯
-        for (int i = 0; i < 12; i++)
+        int[] numbers = { 6, 8, 9, 10, 11 };
+        for (int i = 0; i < 4; i++)
         {
+            Item originalItem = new();
             // 원본 아이템을 선택
-            Item originalItem = ItemResources.instance.itemRS[Random.Range(1, 3)];
+            if (i == 0 )
+            {
+                originalItem = ItemResources.instance.itemRS[0];
+            }
+            int randomIndex = UnityEngine.Random.Range(0, numbers.Length);
+            originalItem = ItemResources.instance.itemRS[randomIndex];
 
             // 새로운 아이템 인스턴스를 생성
             Item newItem = new Item
@@ -75,12 +82,12 @@ public class ShopMgr : MonoBehaviour
             if (newItem.itemType == Item.ItemType.Consumables)
             {
                 newItem.itemStack = Random.Range(1, 10);
-            }
+            }/*
             else
             {
                 newItem.modifyStack = Random.Range(1, 4);
                 newItem.UpgradeModifyPowerSet(newItem);
-            }
+            }*/
 
             // 프리팹을 인스턴스화하여 ShopSlot을 생성
             ShopSlot slot = Instantiate(slotPrefab, tfBuy);
