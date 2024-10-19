@@ -12,11 +12,11 @@ public class PartyData
     List<BaseEntity.Attribute> wizardAttributes = new() { BaseEntity.Attribute.Fire, BaseEntity.Attribute.Dark };
     List<BaseEntity.Attribute> knightAttributes = new() { BaseEntity.Attribute.Light, BaseEntity.Attribute.Wind };
     public string type;
-
+    public bool moveInCk;
     public int cost = 128;
     public int index;
     public int level = 0;
-
+    
     public Sprite spPartyIcon;
 
     //Party Stat .. hp, atk, ... 여기넣어야되나
@@ -41,6 +41,7 @@ public class PartyData
 
     public PartyData(GameObject prefab, int _Lvel)
     {
+        moveInCk = false;
         obj_Data = prefab;
         this.player = prefab.GetComponent<Ally>();
         level = _Lvel;
@@ -147,4 +148,30 @@ public class PartyData
         return attributes[randomIndex];
     }
 
+    public int GetPlayerbleObjIndex()
+    {
+        int _index = -1;
+        switch (jobType)
+        {
+            case Ally.JobClass.Ranger:
+                _index = 0;
+                break;
+            case Ally.JobClass.Knight:
+                _index = 1;
+                break;
+            case Ally.JobClass.Wizard:
+                _index = 2;
+                break;
+        }
+        return _index;
+    }
+    public void PartyDataSetMoveInCk(bool _bool)
+    {
+        moveInCk = _bool;
+    }
+    public void SetPartyCost(int _cost)
+    {
+        //Debug.Log("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG Run SetPartyCost: Befor:"+cost +"/ After: "+_cost);
+        cost = _cost;
+    }
 }

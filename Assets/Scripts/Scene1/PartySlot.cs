@@ -62,6 +62,7 @@ public class PartySlot : MonoBehaviour
 
         if (GameUiMgr.single.ClickedPartySlot(this.partyData))
         {
+            partyData.PartyDataSetMoveInCk(true);
             Debug.Log("Generate MoveInSlot");
             block.SetActive(true);
             moveInChek = true;
@@ -72,5 +73,24 @@ public class PartySlot : MonoBehaviour
     public void ReSetPartySlot()
     {
         this.partyData = null;
+    }
+
+    public PartyData GetPartyData()
+    {
+        Debug.Log("Get PartyData name: "+partyData.strPartyName);
+        return this.partyData;
+    }
+    public void IsLoadPartySlot()
+    {
+        Debug.Log("***********************************Generate Load MoveInSlot");
+        block.SetActive(true);
+        moveInChek = true;
+        btnMy.interactable = false;
+    }
+    public void IsLoadSetting()
+    {
+        block.SetActive(false);
+        this.moveInChek = false;
+        btnMy.interactable = true;
     }
 }

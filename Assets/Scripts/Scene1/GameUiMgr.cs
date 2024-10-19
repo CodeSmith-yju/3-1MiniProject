@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static Unity.Collections.AllocatorManager;
 
 public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndDragHandler*/
 {
@@ -924,45 +925,60 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     }
     #endregion
 
-        public void GameSave()//SavePlayerDataToDB()
+    public void GameSave()//SavePlayerDataToDB()
+    {
+        Debug.Log("Run SaveData (DB Save)");
+
+        // Inventory 및 Equipment 데이터를 저장할 리스트를 초기화
+        List<Item> saveInventoryItem = new();
+        List<Item> saveWearItem = new();
+        GameMgr.playerData[0].listPartyDatas.Clear();
+        GameMgr.playerData[0].listPartyDeparture.Clear();
+        // Inventory 및 Equipment의 아이템정보를 저장
+        foreach (Item item in Inventory.Single.items)
         {
-            Debug.Log("Run SaveData (DB Save)");
-
-            // Inventory 및 Equipment 데이터를 리스트로 저장
-            List<Item> saveInventoryItem = new();
-            List<Item> saveWearItem = new();
-
-            foreach (Item item in Inventory.Single.items)
+            saveInventoryItem.Add(item);
+        }
+        for (int i = 0; i < targetSlots.Length; i++)
+        {
+            if (targetSlots[i].wearChek == true && targetSlots[i].item != null)
             {
-                saveInventoryItem.Add(item);
+                saveWearItem.Add(targetSlots[i].item);
             }
+        }
 
-            for (int i = 0; i < targetSlots.Length; i++)
-            {
-                if (targetSlots[i].wearChek == true && targetSlots[i].item != null)
-                {
-                    saveWearItem.Add(targetSlots[i].item);
-                }
-            }
+        for (int i = 0; i < GameUiMgr.single.poolPartySlot.Count; i++)
+        {
+            PartyData pd = GameUiMgr.single.poolPartySlot[i].GetPartyData();
+            GameMgr.playerData[0].listPartyDatas.Add(pd);
+        }
+        for (int i = 0; i < GameUiMgr.single.lastDeparture.Count; i++)
+        {
+            PartyData pd = GameUiMgr.single.lastDeparture[i].GetPartyData();
+            GameMgr.playerData[0].listPartyDeparture.Add(pd);
+        }
 
-            // Shop에 있는 아이템들 저장
-            List<Item> saveShopItems = new();
-            foreach (var _item in GameUiMgr.single.shopMgr.GetShopSlots())
-            {
-                saveShopItems.Add(_item.GetItem());
-            }
 
-            // SaveData 객체 생성
-            SaveData gameSaveData = new SaveData(GameMgr.playerData[0].GetPlayerName(), GameMgr.playerData[0].player_level, GameMgr.playerData[0].player_Gold, GameUiMgr.single.questMgr.questId, GameUiMgr.single.questMgr.questActionIndex,
+        // Shop에 있는 아이템들 저장
+        List<Item> saveShopItems = new();
+        foreach (var _item in GameUiMgr.single.shopMgr.GetShopSlots())
+        {
+            saveShopItems.Add(_item.GetItem());
+        }
+
+        // SaveData 객체 생성
+        SaveData gameSaveData = new SaveData(GameMgr.playerData[0].GetPlayerName(), GameMgr.playerData[0].player_level, GameMgr.playerData[0].player_Gold, GameUiMgr.single.questMgr.questId, GameUiMgr.single.questMgr.questActionIndex,
                 GameMgr.playerData[0].max_Player_Hp, GameMgr.playerData[0].cur_Player_Hp, GameMgr.playerData[0].max_Player_Sn, GameMgr.playerData[0].cur_Player_Sn, GameMgr.playerData[0].max_Player_Mp, GameMgr.playerData[0].cur_Player_Mp,
                 GameMgr.playerData[0].atk_Speed, GameMgr.playerData[0].atk_Range, GameMgr.playerData[0].base_atk_Dmg,
                 GameMgr.playerData[0].player_max_Exp, GameMgr.playerData[0].player_cur_Exp, GameMgr.single.tutorial,
-                saveInventoryItem, saveWearItem, saveShopItems);
+                saveInventoryItem, saveWearItem, saveShopItems,
+                GameMgr.playerData[0].listPartyDatas, GameMgr.playerData[0].listPartyDeparture
+                );
 
-            // SaveData를 DB에 저장
-            DBConnector.SaveToDB(gameSaveData, DBConnector.GetUID());
-            Debug.Log("Save Success: Data saved to DB.");
-        }
+        // SaveData를 DB에 저장
+        DBConnector.SaveToDB(gameSaveData, DBConnector.GetUID());
+        Debug.Log("Save Success: Data saved to DB.");
+    }
     /*public void GameLoad() //LoadPlayerDataFromDB()
     {
         Debug.Log("Run LoadData (DB Load)");
@@ -1050,7 +1066,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         GameMgr.playerData[0].atk_Speed = loadData.p_atk_speed;
         GameMgr.playerData[0].atk_Range = loadData.p_atk_range;
         GameMgr.playerData[0].base_atk_Dmg = loadData.p_base_atk_Dmg;
-
+        GameMgr.playerData[0].listPartyDatas = loadData.listPartyData;
+        GameMgr.playerData[0].listPartyDeparture = loadData.listPartyDeparture;
         // 인벤토리 및 장비 데이터 로드
         LoadInventory(loadData.listInven);
         LoadEquipment(loadData.listEquip);
@@ -1850,29 +1867,127 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnClickCreateParty()// 모집가능파티원리스트 생성 메서드
     {
-        for (int i = 0; i < 3; i++)
+        
+        if (GameMgr.playerData[0].listPartyDatas.Count == 0)//l || GameMgr.playerData[0].listPartyDatas!= null && GameMgr.playerData[0].listPartyDatas.Count < 2)
         {
-            int ran = Random.Range(1, 10);
-            PartyData newParty = new(objListPlayable[i], ran);
+            Debug.Log("---------------------------저장해놓은 파티원목록이 없습니다.");
+            for (int i = 0; i < 3; i++)
+            {
+                int ran = Random.Range(1, 10);
+                PartyData newParty = new(objListPlayable[i], ran);
 
-            Debug.Log("Btn 각 직업별 파티 영입가능인원 생성 ");
+                Debug.Log("Btn 각 직업별 파티 영입가능인원 생성 ");
 
-            CreatePartySlot(newParty);
-            listPartyData.Add(newParty);
+                CreatePartySlot(newParty);
+                listPartyData.Add(newParty);
+            }
+            int random = Random.Range(0, 14);
+
+            for (int i = 0; i < random; i++)
+            {
+                // 0부터 10 사이의 정수 난수 생성 (10은 포함되지 않음)
+                int ran = Random.Range(1, 10);
+                PartyData newParty = new(objListPlayable[Random.Range(0, objListPlayable.Count)], ran);
+
+                Debug.Log("Btn 파티 영입가능인원 생성 ");
+
+                CreatePartySlot(newParty);
+                listPartyData.Add(newParty);// 고용가능 파티원목록리스트를 저장, 여기에서 저장했으니까 씬 넘어갈때 Clier해서 비워줘야겠지??
+            }
         }
-        int random = Random.Range(0, 14);
-
-        for (int i = 0; i < random; i++)
+        else
         {
-            // 0부터 10 사이의 정수 난수 생성 (10은 포함되지 않음)
-            int ran = Random.Range(1, 10);
-            PartyData newParty = new(objListPlayable[Random.Range(0, objListPlayable.Count)], ran);
+            Debug.Log("---------------------------저장해놓은 파티원목록이 존재합니다."+ GameMgr.playerData[0].listPartyDatas.Count);
+            bool blockedOK = false;
+            if (GameMgr.playerData[0].listPartyDeparture != null && GameMgr.playerData[0].listPartyDeparture.Count > 1)//저장된 고용목록이있다면 여기서동작
+            {
+                Debug.Log("++++++++++++++++++++++++++++++++++++++저장해놓은 고용목록이 존재합니다.");
+                for (int i = 0; i < GameMgr.playerData[0].listPartyDatas.Count; i++)//기존에 만들어둔 파티보드의 목록을 생성
+                {
+                    //Debug.Log("i: " + i);
+                    PartyData newParty = new (objListPlayable[GameMgr.playerData[0].listPartyDatas[i].GetPlayerbleObjIndex()], GameMgr.playerData[0].listPartyDatas[i].level);
+                    newParty.SetPartyCost(GameMgr.playerData[0].listPartyDatas[i].cost);
+                    newParty.moveInCk = GameMgr.playerData[0].listPartyDatas[i].moveInCk;
+                    listPartyData.Add(newParty);
+                    CreatePartySlot(newParty);
+                }
+                for (int j = 0; j < poolPartySlot.Count; j++)
+                {
+                    if (poolPartySlot[j].GetPartyData().moveInCk)//저장된고용목록을전부받아다가 newSlots에저장하고 체크표시해주고
+                    {
+                        Debug.Log("저장된고용목록의 정보를 확인중...");
+                        ClickedPartySlot(poolPartySlot[j].GetPartyData());
+                        poolPartySlot[j].IsLoadPartySlot();
+                        blockedOK = true;
+                    }
+                }
+                if (blockedOK)
+                {
+                    PartyListInPlayer(GetPlayerPrefab());
+                    if (questMgr.questId == 30 && questMgr.questActionIndex == 1)
+                        Receptionist_1();
+                    blockedPartyBord.SetActive(true);
+                    int battleIndex = 1;
+                    foreach (PartySlot _slot in poolMoveInSlot)
+                    {
+                        if (_slot.partySlotIndex != 0 && _slot.partyData != null)
+                        {
+                            _slot.partyData.partyJobIndex = battleIndex++;
+                            lastDeparture.Add(_slot);
 
-            Debug.Log("Btn 파티 영입가능인원 생성 ");
+                            PlayerData _pd = new(
+                                _slot.partyData.partyJobIndex,
 
-            CreatePartySlot(newParty);
-            listPartyData.Add(newParty);// 고용가능 파티원목록리스트를 저장, 여기에서 저장했으니까 씬 넘어갈때 Clier해서 비워줘야겠지??
+                                _slot.partyData.partyHp,
+                                _slot.partyData.partyMp,
+
+                                _slot.partyData.partyAtkSpd,
+                                _slot.partyData.partyAtkRange,
+                                _slot.partyData.partyAtk,
+
+                                _slot.partyData.level,
+                                _slot.partyData.strPartyName,
+
+                                _slot.partyData.able_Skill,
+                                _slot.partyData.isMelee,
+
+                                _slot.partyData.jobType
+                                );
+                            //_pd.partySlotData = _slot.partyData;// 06-05 수정
+
+                            GameMgr.playerData.Add(_pd);
+
+                            //_slot.partyData.obj_Data.GetComponent<Ally>().Init(_pd.playerIndex, _pd);
+                            Debug.Log("최종파티원LV: " + _slot.partyData.level + ", 파티인덱스 :" + _slot.partyData.partyJobIndex);
+                        }
+
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("(++++++++++++++++++++++++++++++++++++++저장해놓은 고용목록이 없습니다.");
+                for (int i = 0; i < GameMgr.playerData[0].listPartyDatas.Count; i++)
+                {
+                    PartyData newParty = new(objListPlayable[GameMgr.playerData[0].listPartyDatas[i].GetPlayerbleObjIndex()], GameMgr.playerData[0].listPartyDatas[i].level);
+                    newParty.SetPartyCost(GameMgr.playerData[0].listPartyDatas[i].cost);
+                    listPartyData.Add(newParty);
+                    CreatePartySlot(newParty);
+                    for (int j = 0; j < poolPartySlot.Count; j++)
+                    {
+                        /*if (poolPartySlot[i].moveInChek == true)//여기까지 기존에 저장되어있는 파티데이터 가져와서 파티보드에 표시
+                        {
+                            poolPartySlot[i].block.SetActive(true);
+                            poolPartySlot[i].moveInChek = true;
+                            poolPartySlot[i].btnMy.interactable = false;
+                            ClickedPartySlot(poolPartySlot[i].partyData);
+                        }*/
+                        poolPartySlot[i].moveInChek = false;
+                    }
+                }
+            }
         }
+        
     }
     
     /*public bool ClickedPartySlot(PartyData _partyData)
