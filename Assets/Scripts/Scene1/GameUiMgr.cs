@@ -2079,32 +2079,18 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         lastDeparture.Clear();
 
         //게임이 최초로 시작될때, lastDepatuar[0]에 PlayerPartyData를 가진 MoveInSlot[0]에 || PartyData를 Player[0]의 Data로 채워서 Slot을만들어 MoveInSlot에 Add하고 
-        PartyData pd = new(playerPrefab, GameMgr.playerData[0].player_level)//개체 초기화 단순화 하는 코드 
-        {
-            //strPartyName = GameMgr.playerData[0].GetPlayerName(),
-            //level = GameMgr.playerData[0].player_level,
-            partyHp = GameMgr.playerData[0].max_Player_Hp,
-            partyMp = GameMgr.playerData[0].max_Player_Mp,
-            partyAtk = GameMgr.playerData[0].base_atk_Dmg,
-            partyAtkSpd = GameMgr.playerData[0].atk_Speed,
-            partyAtkRange = GameMgr.playerData[0].atk_Range
-        };
+        PartyData pd = new(playerPrefab, GameMgr.playerData[0].player_level);// 초기화 
 
         poolMoveInSlot[0].partyData = pd;
         poolMoveInSlot[0].gameObject.SetActive(true);
         poolMoveInSlot[0].partyIcon.sprite = playerPrefab.GetComponent<SpriteRenderer>().sprite;
         poolMoveInSlot[0].text_Name.text = GameMgr.playerData[0].GetPlayerName();
-
         poolMoveInSlot[0].text_Lv.text = "Lv"+GameMgr.playerData[0].player_level.ToString();
-        //poolMoveInSlot[0].classIcon.sprite = playerPrefab.GetComponent<PartyData>().jobIcon; //이새기수정중...
-        
-        //poolMoveInSlot[0].partyData.obj_Data.GetComponent<Ally>().Init(GameMgr.playerData[0].playerIndex, GameMgr.playerData[0]);
+
         listPartyData.Add(poolMoveInSlot[0].partyData);
         lastDeparture.Add(poolMoveInSlot[0]);
 
         poolMoveInSlot[0].btnMy.interactable = false;
-        /*        PartySlot nSlot = new();
-                nSlot.Init(pd);*/
     }
 
     public void ChangePlayerPlace(PlaceState _playerState)// 플레이어 스폰 포인트(= arySpawnPoint) 값을 사전에 인스펙터창에서 등록하여 enum값과 통일시켜주어서 State값으로 이동하는기능 

@@ -1,11 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/*public enum State { 
-    Ranger, 
-    Magician,
-    Knight
-}*/
+[System.Serializable]
 public class PartyData
 {
     //Party Panel Act
@@ -106,12 +102,13 @@ public class PartyData
                 Debug.Log("플레이어캐릭터를위한 파티데이터가 생성될때 동작함");
                 type = "Default";
                 Debug.Log("Type d, Generate Code: " + _Code);
-                partyHp = 20f + (0.01f * _Lvel);
-                partyMp = 5f;
-                partyAtk = 2f + (0.1f * _Lvel);
-                partyAtkSpd = 1.0f + (0.1f * _Lvel);
-                partyAtkRange = 2f;
-                strPartyName = "근첩";
+
+                partyHp = GameMgr.playerData[0].max_Player_Hp;
+                partyMp = GameMgr.playerData[0].max_Player_Mp;
+                partyAtk = GameMgr.playerData[0].base_atk_Dmg;
+                partyAtkSpd = GameMgr.playerData[0].atk_Speed;   
+                partyAtkRange = GameMgr.playerData[0].atk_Range;
+                strPartyName = GameMgr.playerData[0].GetPlayerName();
                 isMelee = true;
                 break;
         }

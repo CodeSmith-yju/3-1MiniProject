@@ -208,7 +208,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4292138196
   m_fontColor: {r: 0.8301887, g: 0.8301887, b: 0.8301887, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -226,10 +226,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 23
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -262,10 +262,10 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 3.437683, z: 0, w: 3.8197632}
+  m_margin: {x: 12, y: 2, z: 12, w: 10}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &2308390005827590789
@@ -417,6 +417,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partySlotIndex: 0
+  partyData:
+    strPartyName: 
+    Elemental: 0
+    type: 
+    cost: 0
+    index: 0
+    level: 0
+    spPartyIcon: {fileID: 0}
+    partyJobIndex: 0
+    partyHp: 0
+    partyMp: 0
+    partyAtk: 0
+    partyAtkSpd: 0
+    partyAtkRange: 0
+    able_Skill: 0
+    isMelee: 0
+    obj_Data: {fileID: 0}
+    player: {fileID: 0}
+    jobType: 0
+    jobIcon: {fileID: 0}
+    ElementalIcon: {fileID: 0}
   player: {fileID: 0}
   index: 0
   partyIcon: {fileID: 4436923067017451898}

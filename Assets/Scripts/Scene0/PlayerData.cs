@@ -109,10 +109,23 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
         else
         {
             this.player_cur_Exp += _exp;
+            SetLevelUpStats(player_level);
         }
 
     }
-
+    void SetLevelUpStats(int _nowLevel)//현재 레벨에 따라 스텟 새롭게 설정하는 메서드 추가
+    {
+        max_Player_Hp = 40f + (_nowLevel * 3f);     // 체력: 플레이어가 전투에서 생존할 수 있도록 기본 체력을 높게 설정하고 레벨에 따라 체력이 증가
+        max_Player_Mp = 5f - (_nowLevel * 0.5f);    // MP: 스킬 사용 빈도를 고려해 기본 MP를 조금 높게 설정
+        base_atk_Dmg = 3f + (_nowLevel * 0.6f);     // 공격력: 플레이어의 공격력을 중간 수준으로 설정하고 레벨에 따른 상승폭을 조정
+        atk_Speed = 1.0f + (_nowLevel * 0.05f);     // 공격 속도: 중간 속도로 설정하며 레벨업 시 약간 증가
+        
+        // 스텟 상한 설정
+        if (max_Player_Mp < 2)
+            max_Player_Mp = 2f;
+        if (atk_Speed > 4f)
+            atk_Speed = 4f;
+    }
     public void GetPlayerstamina(float _sn)
     {
         Debug.Log("회복량: " + _sn);
