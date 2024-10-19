@@ -144,21 +144,12 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 case Item.ItemType.Ect:
                     break;
                 case Item.ItemType.Consumables:
-
                     if (item.itemCode == 0)
                     {
+                        GameUiMgr.single.nowSlot = this;
                         GameUiMgr.single.popUp.SetPopUp(item.itemName+"을 사용 하시겠습니까?",PopUpState.SnPotion);
                         GameUiMgr.single.popUp.gameObject.SetActive(true);
                     }
-                    /*if (item.itemName.Equals("새내기 포션") && wearChek == true)
-                    {
-                        GameUiMgr.single.questMgr.receptionist[0].SetActive(false);
-                        GameUiMgr.single.questMgr.receptionist[1].SetActive(true);
-                    }
-                    Inventory.Single.RemoveItem(item);
-                    UpdateStack();
-                    GameUiMgr.single.tooltip.gameObject.SetActive(false);*/
-
                     break;
                 default:
                     GameUiMgr.single.nowSlot = this;

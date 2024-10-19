@@ -274,11 +274,15 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
             Debug.Log("Make A New Test Item Code: " + _item.itemCode);
         }*/
-        for (int i = 8; i < 20; i++)
+        for (int i = 7; i < 20; i++)
         {
             Item _item = new Item().GenerateRandomItem(i);
 
-            if (i > 15)
+            if (i == 7)
+            {
+                _item = new Item().GenerateRandomItem(0);
+            }
+            if (i > 15 || i==7)
             {
                 Inventory.Single.AddItem(_item);
                 Inventory.Single.AddItem(_item);
@@ -1308,8 +1312,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
      *///GPT가 작성해준 디버깅코드 적용은나중에해보겠음 개힘들다진짜...
     public void WearEquipment()
     {
-        //여기 수정했음  10-19
-        EquipSlotSetting();
         string pk = "";
         // 현재 선택된 슬롯의 아이템을 복제하여 대상 슬롯에 추가
         for (int i = 0; i < targetSlots.Length; i++)
@@ -1606,7 +1608,15 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         Inventory.Single.items.Clear();
         for (int i = 0; i < slots.Length; i++)
         {
-            slots[i].RemoveSlot();  // 슬롯 초기화
+            if (slots[i].slotnum > -1)
+            {
+                slots[i].RemoveSlot();  // 슬롯 초기화
+            }
+            else
+            {
+                Debug.Log("예외처리추가");
+            }
+            
         }
 
         if (_items == null || _items.Count == 0)
@@ -1802,6 +1812,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         else
         {
             shopMgr.gameObject.SetActive(false);
+            MoveDoitCk(true);
         }
     }
     public void ActiveBlackSmith()
@@ -1817,6 +1828,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         else
         {
             blacksmith.gameObject.SetActive(false);
+            MoveDoitCk(true);
         }
     }
     public void MoveDoitCk(bool _onoff)

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public enum PopUpState
 {
     None,
+    NoStamina,
     Quite,
     GameStart,
     GameSave,
@@ -47,6 +48,29 @@ public class PopUp : MonoBehaviour
                 else
                     Debug.Log("Bug");
                 break;
+            case PopUpState.NoStamina:
+                if (gameObject.activeSelf == true)
+                {
+                    Debug.Log("소지금: "+GameMgr.playerData[0].player_Gold + "잔금: "+ (int)(GameMgr.playerData[0].player_Gold * 0.9f));
+                    GameMgr.playerData[0].player_Gold -= (int)(GameMgr.playerData[0].player_Gold *0.1f);
+                    if (GameMgr.playerData[0].player_Gold < 0)
+                    {
+                        GameMgr.playerData[0].player_Gold = 0;
+                    }
+                    GameMgr.playerData[0].GetPlayerstamina(-1234);
+                    Debug.Log("스태미나 회복: " + GameMgr.playerData[0].cur_Player_Sn );
+
+                    GameMgr.single.IsGameLoad(true);
+                    GameUiMgr.single.GameSave();
+
+                    LoadingSceneController.LoadScene("Town");
+
+                    Debug.Log("None Btn Clicked");
+                    gameObject.SetActive(false);
+                }
+                else
+                    Debug.Log("Bug");
+                break;
             case PopUpState.GameStart:
                 Canvas canvas = FindObjectOfType<Canvas>();
                 canvas.GetComponent<FadeInEffect>().FadeOFFAndLoadScene();
@@ -75,7 +99,16 @@ public class PopUp : MonoBehaviour
                 break;
             case PopUpState.SnPotion:
                 GameMgr.playerData[0].GetPlayerstamina(GameUiMgr.single.nowSlot.item.itemPower);
-                Inventory.Single.RemoveItem(GameUiMgr.single.nowSlot.item);
+                for (int i = 0; i < Inventory.Single.items.Count; i++)
+                {
+                    if (GameUiMgr.single.nowSlot.item.PrimaryCode == Inventory.Single.items[i].PrimaryCode)
+                    {
+                        Inventory.Single.RemoveItem(Inventory.Single.items[i]);
+                        GameUiMgr.single.RedrawSlotUI();
+                    }
+                }
+
+                GameUiMgr.single.SliderChange();
                 break;
             default:
                 break;
@@ -92,7 +125,7 @@ public class PopUp : MonoBehaviour
         text_PopUp.text = _str;  // 팝업 텍스트 설정
         popUpState = _state;     // 팝업 상태 설정
 
-        if (popUpState == PopUpState.None)
+        if (popUpState == PopUpState.None || popUpState == PopUpState.NoStamina)
             btn_No.gameObject.SetActive(false);
         else
             btn_No.gameObject.SetActive(true);

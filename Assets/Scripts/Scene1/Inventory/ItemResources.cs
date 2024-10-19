@@ -21,13 +21,13 @@ public class ItemResources : MonoBehaviour
             DBItems.Add(DBConnector.LoadItemFromDB(i));
         }
         setTypeIcons();
-        itemRS.Clear();
+        /*itemRS.Clear();
         itemRS.AddRange(DBItems);
 
         for (int i = 0; i < itemRS.Count; i++)
         {
             itemRS[i].itemImage = itemSpriteRS[i];
-        }
+        }*/
     }
     void setTypeIcons()//Local_Icon_Set
     {
@@ -64,6 +64,35 @@ public class ItemResources : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public Sprite SetTpyeIcon(Item _item)
+    {
+        Sprite sp = null;
+        switch (_item.itemType)
+        {
+            case Item.ItemType.Equipment_Arrmor://Range
+                sp = Inventory.Single.typeIconRS[0];
+                break;
+            case Item.ItemType.Equipment_Boots://Atk spd
+                sp = Inventory.Single.typeIconRS[1];
+                break;
+            case Item.ItemType.Equipment_Helmet://HP
+                sp = Inventory.Single.typeIconRS[2];
+                break;
+            case Item.ItemType.Equipment_Weapon://Atk
+                sp = Inventory.Single.typeIconRS[3];
+                break;
+            case Item.ItemType.Consumables:// +
+                sp = Inventory.Single.typeIconRS[4];
+                break;
+            case Item.ItemType.Ect:// 
+                sp = Inventory.Single.typeIconRS[5];
+                break;
+            default:
+                break;
+        }
+        return sp;
     }
 
     //FieldItem Prefab copy code

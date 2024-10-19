@@ -56,14 +56,17 @@ public class PlayerAction : MonoBehaviour
             else if (obj.id == 8000)
             {
                 Debug.Log("8000 실행");
+                Debug.Log("스태미나가좀이상한데 못들어가야되는데 팝업넣었는데?");
+                Debug.Log("현재 스태미나: " + GameMgr.playerData[0].max_Player_Sn);
+                Debug.Log("현재 스태미나: " + GameMgr.playerData[0].cur_Player_Sn);
+                if (GameMgr.playerData[0].cur_Player_Sn <= 15)
+                {
+                    GameUiMgr.single.popUp.SetPopUp("기력이 부족합니다.\n소지금을 10%잃고 회복합니다.", PopUpState.NoStamina);
+                    return;
+                }
+
                 if (GameUiMgr.single.questMgr.questId >= 40 && GameUiMgr.single.questMgr.questId < 50)
                 {
-                    if (GameMgr.playerData[0].cur_Player_Sn <= 15)
-                    {
-                        GameUiMgr.single.popUp.SetPopUp("기력이 부족합니다.",PopUpState.None);
-                        return;
-                    }
-
                     GameUiMgr.single.isDungeon = true;
                     GameUiMgr.single.OpenDungeonUi();
                     //GameUiMgr.single.textEquipPanel.text = "던전에 입장하시겠습니까?";//OK버튼 클릭했을때 다른효과가 나와야하는데 생각조금 더 해봐야함

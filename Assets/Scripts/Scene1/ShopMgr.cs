@@ -48,21 +48,28 @@ public class ShopMgr : MonoBehaviour
         OpenTap(shopState);
         //RefreshShopItems();
     }
+    private int[] numbers = { 0, 6, 8, 9, 10, 11 };
+
+    // 랜덤 숫자 출력 함수
+    public int GetRandomNumber()
+    {
+        // Random.Range는 0부터 numbers.Length - 1까지의 인덱스를 반환
+        int randomIndex = UnityEngine.Random.Range(0, numbers.Length);
+        return numbers[randomIndex];
+    }
     public void RefreshShopItems()
     {
         Debug.Log("Make Shop Items");
         //이 아래의 for문 생성로직은 GameUIMgr로 빼내야할거같음 여기서관리하기엔조금? 연계된 기능이많은듯
-        int[] numbers = { 6, 8, 9, 10, 11 };
         for (int i = 0; i < 4; i++)
         {
-            Item originalItem = new();
             // 원본 아이템을 선택
-            if (i == 0 )
-            {
-                originalItem = ItemResources.instance.itemRS[0];
-            }
-            int randomIndex = UnityEngine.Random.Range(0, numbers.Length);
-            originalItem = ItemResources.instance.itemRS[randomIndex];
+            int randomIndex = GetRandomNumber();
+            if (i == 0)
+                randomIndex = 0;
+
+            Item originalItem = ItemResources.instance.itemRS[randomIndex];
+            
 
             // 새로운 아이템 인스턴스를 생성
             Item newItem = new Item

@@ -134,14 +134,20 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
     }
     public void GetPlayerstamina(float _sn)
     {
+        if (_sn == -1234)
+        {
+            cur_Player_Sn = max_Player_Sn;
+            return;
+        }
+
         Debug.Log("회복량: " + _sn);
-        if ((this.max_Player_Sn - this.cur_Player_Sn) <= _sn)//overflow
+        if ((max_Player_Sn - cur_Player_Sn) <= _sn)//overflow
         {
             cur_Player_Sn = max_Player_Sn;
         }
         else
         {
-            this.cur_Player_Sn += _sn;
+            cur_Player_Sn += _sn;
         }
     }
 }

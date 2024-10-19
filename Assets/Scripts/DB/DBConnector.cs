@@ -8,6 +8,7 @@ using System.Xml;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
+using static UnityEditor.Progress;
 
 public class DBConnector : MonoBehaviour
 {
@@ -546,58 +547,63 @@ public class DBConnector : MonoBehaviour
     }
     public static bool LoadItemByCodeFromDB(int itemCode,ref Sprite _itemicon, ref Sprite _typeicon)
     {
-        // SQL 쿼리: itemCode와 일치하는 아이템 선택
-        string query = "SELECT * FROM item WHERE itemCode = @itemCode";
+        /*
+                // SQL 쿼리: itemCode와 일치하는 아이템 선택
+                string query = "SELECT * FROM item WHERE itemCode = @itemCode";
 
-        MySqlCommand cmd = new MySqlCommand(query, DBConnector.connection);
-        cmd.Parameters.AddWithValue("@itemCode", itemCode); // 매개변수 추가
+                MySqlCommand cmd = new MySqlCommand(query, DBConnector.connection);
+                cmd.Parameters.AddWithValue("@itemCode", itemCode); // 매개변수 추가
 
-        try
-        {
-            DBConnector.connection.Open();
-            MySqlDataReader reader = cmd.ExecuteReader();
-
-            if (reader.Read())
-            {
-                // 새로운 아이템 생성 및 데이터 할당
-                Item loadedItem = new Item
+                try
                 {
-                    itemCode = reader.GetInt32("itemCode"),
-                    itemName = reader.GetString("itemName"),
-                    itemType = (Item.ItemType)System.Enum.Parse(typeof(Item.ItemType), reader.GetString("itemType")),
-                    itemTitle = reader.GetString("itemTitle"),
-                    itemDesc = reader.GetString("itemDesc"),
-                    itemPrice = reader.GetInt32("itemPrice"),
-                    itemPower = reader.GetFloat("itemPower"),
-                    itemStack = reader.GetInt32("itemStack"),
-                    modifyStack = reader.GetInt32("modifyStack")
-                };
+                    DBConnector.connection.Open();
+                    MySqlDataReader reader = cmd.ExecuteReader();
 
-                // 이미지 데이터 처리 (BLOB 데이터 -> Sprite 변환)
-                byte[] itemImgBytes = (byte[])reader["itemImg"];
-                loadedItem.itemImage = DBConnector.ConvertBytesToSprite(itemImgBytes);
+                    if (reader.Read())
+                    {
+                        // 새로운 아이템 생성 및 데이터 할당
+                        Item loadedItem = new Item
+                        {
+                            itemCode = reader.GetInt32("itemCode"),
+                            itemName = reader.GetString("itemName"),
+                            itemType = (Item.ItemType)System.Enum.Parse(typeof(Item.ItemType), reader.GetString("itemType")),
+                            itemTitle = reader.GetString("itemTitle"),
+                            itemDesc = reader.GetString("itemDesc"),
+                            itemPrice = reader.GetInt32("itemPrice"),
+                            itemPower = reader.GetFloat("itemPower"),
+                            itemStack = reader.GetInt32("itemStack"),
+                            modifyStack = reader.GetInt32("modifyStack")
+                        };
 
-                byte[] typeIconBytes = (byte[])reader["typeIcon"];
-                loadedItem.typeIcon = DBConnector.ConvertBytesToSprite(typeIconBytes);
+                        // 이미지 데이터 처리 (BLOB 데이터 -> Sprite 변환)
+                        byte[] itemImgBytes = (byte[])reader["itemImg"];
+                        loadedItem.itemImage = DBConnector.ConvertBytesToSprite(itemImgBytes);
 
-                _itemicon = loadedItem.itemImage;
-                _typeicon = loadedItem.typeIcon;
+                        byte[] typeIconBytes = (byte[])reader["typeIcon"];
+                        loadedItem.typeIcon = DBConnector.ConvertBytesToSprite(typeIconBytes);
 
-                return true;  // 로드 성공 시 아이템 반환
-            }
+                        _itemicon = loadedItem.itemImage;
+                        _typeicon = loadedItem.typeIcon;
 
-            reader.Close();
-        }
-        catch (MySqlException ex)
-        {
-            Debug.LogError("DB 에러: " + ex.Message);
-        }
-        finally
-        {
-            DBConnector.connection.Close();
-        }
+                        return true;  // 로드 성공 시 아이템 반환
+                    }
 
-        return false;  // 로드 실패 시 null 반환
+                    reader.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    Debug.LogError("DB 에러: " + ex.Message);
+                }
+                finally
+                {
+                    DBConnector.connection.Close();
+                }
+
+                return false;  // 로드 실패 시 null 반환
+        */
+        _itemicon = ItemResources.instance.itemSpriteRS[itemCode];
+        _typeicon = ItemResources.instance.SetTpyeIcon(new Item().GenerateRandomItem(itemCode));
+        return true;
     }
 
 
