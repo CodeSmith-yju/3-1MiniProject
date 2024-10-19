@@ -72,7 +72,7 @@ MonoBehaviour:
     itemPrice: 300
     PrimaryCode: 
   - itemType: 0
-    itemName: "\uB808\uB354\uC544\uBA38"
+    itemName: "\uB808\uB354 \uC544\uBA38"
     itemStack: 1
     modifyStack: 0
     itemImage: {fileID: 21300000, guid: e37ee0b1cbe20c5458102626b95a6b7c, type: 3}
@@ -85,7 +85,7 @@ MonoBehaviour:
     itemPrice: 150
     PrimaryCode: 
   - itemType: 1
-    itemName: "\uB808\uB354\uBD80\uCE20"
+    itemName: "\uB808\uB354 \uBD80\uCE20"
     itemStack: 1
     modifyStack: 0
     itemImage: {fileID: 21300000, guid: 29a1226f7b5e20240942612e151c3c4c, type: 3}
@@ -98,7 +98,7 @@ MonoBehaviour:
     itemPrice: 100
     PrimaryCode: 
   - itemType: 2
-    itemName: "\uB808\uB354\uD5EC\uB984"
+    itemName: "\uB808\uB354 \uD5EC\uB984"
     itemStack: 1
     modifyStack: 0
     itemImage: {fileID: 21300000, guid: 5ff9b869a12e70b4db7a137f84ed920b, type: 3}
@@ -111,7 +111,7 @@ MonoBehaviour:
     itemPrice: 50
     PrimaryCode: 
   - itemType: 3
-    itemName: "\uC544\uC774\uC5B8\uC18C\uB4DC"
+    itemName: "\uC544\uC774\uC5B8 \uC18C\uB4DC"
     itemStack: 1
     modifyStack: 0
     itemImage: {fileID: 21300000, guid: 8f28955d92038974a9b04aafaeea79b0, type: 3}
@@ -150,55 +150,55 @@ MonoBehaviour:
     itemPrice: 0
     PrimaryCode: 
   - itemType: 0
-    itemName: "\uC784\uC2DC\uC7A5\uBE441"
+    itemName: "\uC544\uC774\uC5B8 \uC544\uBA38"
     itemStack: 1
     modifyStack: 0
     itemImage: {fileID: 21300000, guid: 567fdd2e557fefc478f8aaa7ae56fb11, type: 3}
     typeIcon: {fileID: 0}
-    itemTitle: "\uC77C\uBC18\uC7A5\uBE441"
-    itemDesc: "\uAC00\uC8FD \uC7A5\uBE44\uBCF4\uB2E4 \uAC15\uD558\uB2E4"
+    itemTitle: "\uCCA0\uB85C \uB9CC\uB4E4\uC5C8\uB2E4"
+    itemDesc: "\uACF5\uACA9 \uC0AC\uAC70\uB9AC +30"
     itemIndex: 0
     itemCode: 8
-    itemPower: 0
+    itemPower: 0.3
     itemPrice: 0
     PrimaryCode: 
   - itemType: 1
-    itemName: "\uC77C\uBC18\uC7A5\uBE442"
+    itemName: "\uC544\uC774\uC5B8 \uBD80\uCE20"
     itemStack: 1
     modifyStack: 0
     itemImage: {fileID: 21300000, guid: 5170e0068a8cf184fb119834fa7ba0f3, type: 3}
     typeIcon: {fileID: 0}
-    itemTitle: "\uC77C\uBC18\uC7A5\uBE442"
-    itemDesc: "\uAC00\uC8FD \uC7A5\uBE44\uBCF4\uB2E4 \uAC15\uD558\uB2E4"
+    itemTitle: "\uCCA0\uB85C \uB9CC\uB4E4\uC5C8\uB2E4"
+    itemDesc: "\uACF5\uACA9\uC18D\uB3C4 +10"
     itemIndex: 0
     itemCode: 9
-    itemPower: 0
+    itemPower: 0.1
     itemPrice: 0
     PrimaryCode: 
   - itemType: 2
-    itemName: "\uC77C\uBC18\uC7A5\uBE443"
+    itemName: "\uC544\uC774\uC5B8 \uD5EC\uB984"
     itemStack: 1
     modifyStack: 0
     itemImage: {fileID: 21300000, guid: b227c6c1c35b36940b602110d9556b13, type: 3}
     typeIcon: {fileID: 0}
-    itemTitle: "\uC77C\uBC18\uC801\uC778 \uC7A5\uBE44 3"
-    itemDesc: "\uAC00\uC8FD\uC7A5\uBE44\uBCF4\uB2E4 \uAC15\uD558\uB2E4"
+    itemTitle: "\uCCA0\uB85C \uB9CC\uB4E4\uC5C8\uB2E4"
+    itemDesc: "\uCD5C\uB300 \uCCB4\uB825 +10"
     itemIndex: 0
     itemCode: 10
-    itemPower: 0
+    itemPower: 10
     itemPrice: 0
     PrimaryCode: 
   - itemType: 3
-    itemName: "\uC77C\uBC18\uBB34\uAE30\uC7784"
+    itemName: "\uACE8\uB4DC \uC18C\uB4DC"
     itemStack: 1
     modifyStack: 0
     itemImage: {fileID: 21300000, guid: 90e99a7fde056a4418b9fe16084adb5c, type: 3}
     typeIcon: {fileID: 0}
-    itemTitle: "\uC77C\uBC18\uC801\uC778\uBB34\uAE304"
-    itemDesc: "\uBCF4\uAE09\uD488\uBCF4\uB2E4 \uAC15\uD558\uB2E4"
+    itemTitle: "\uAE08\uC73C\uB85C \uB9CC\uB4E4\uC5C8\uB2E4"
+    itemDesc: "\uACF5\uACA9\uB825 +4"
     itemIndex: 0
     itemCode: 11
-    itemPower: 0
+    itemPower: 4
     itemPrice: 0
     PrimaryCode: 
   - itemType: 0
@@ -306,6 +306,27 @@ MonoBehaviour:
     itemPower: 0
     itemPrice: 300
     PrimaryCode: 
+  itemSpriteRS:
+  - {fileID: 21300000, guid: f65023889763c7644b5579f0b019da6b, type: 3}
+  - {fileID: 21300000, guid: 3a83c410b17731a4b940b03e547d1152, type: 3}
+  - {fileID: 21300000, guid: e37ee0b1cbe20c5458102626b95a6b7c, type: 3}
+  - {fileID: 21300000, guid: 29a1226f7b5e20240942612e151c3c4c, type: 3}
+  - {fileID: 21300000, guid: 5ff9b869a12e70b4db7a137f84ed920b, type: 3}
+  - {fileID: 21300000, guid: 8f28955d92038974a9b04aafaeea79b0, type: 3}
+  - {fileID: 21300000, guid: 7b3876a2b72c44540a4bbd5aaba9e506, type: 3}
+  - {fileID: 21300000, guid: 394899dbf2938874ca7d1025f7598406, type: 3}
+  - {fileID: 21300000, guid: 567fdd2e557fefc478f8aaa7ae56fb11, type: 3}
+  - {fileID: 21300000, guid: 5170e0068a8cf184fb119834fa7ba0f3, type: 3}
+  - {fileID: 21300000, guid: b227c6c1c35b36940b602110d9556b13, type: 3}
+  - {fileID: 21300000, guid: 90e99a7fde056a4418b9fe16084adb5c, type: 3}
+  - {fileID: 21300000, guid: 39fec531825ea6347b7b4f3e81b2f6e9, type: 3}
+  - {fileID: 21300000, guid: 508351fad1c8df0429fe092096f984a4, type: 3}
+  - {fileID: 21300000, guid: 2d62d25b10b06b244bbccfd41af79c2b, type: 3}
+  - {fileID: 21300000, guid: 0bbe83d09b4702644b108973eecf5c1c, type: 3}
+  - {fileID: 21300000, guid: 1ab9d28df2e6ef340b7ebcc55f5740a4, type: 3}
+  - {fileID: 21300000, guid: d49446be3071a144581f73dd071393cd, type: 3}
+  - {fileID: 21300000, guid: e929b6ab54898ac44ad6c5f9d40916c0, type: 3}
+  - {fileID: 21300000, guid: d14c90bb28890244d80877c2f7e6bba5, type: 3}
   iconRS:
   - {fileID: 21300000, guid: 4f033cdd2b09f9a43b139729d09d002c, type: 3}
   - {fileID: 21300000, guid: a003b65dbb89c2f439943795a7217e2b, type: 3}

@@ -23,6 +23,11 @@ public class ItemResources : MonoBehaviour
         setTypeIcons();
         itemRS.Clear();
         itemRS.AddRange(DBItems);
+
+        for (int i = 0; i < itemRS.Count; i++)
+        {
+            itemRS[i].itemImage = itemSpriteRS[i];
+        }
     }
     void setTypeIcons()//Local_Icon_Set
     {
