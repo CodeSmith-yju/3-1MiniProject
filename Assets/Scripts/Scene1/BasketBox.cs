@@ -29,6 +29,7 @@ public class BasketBox : MonoBehaviour
         BasketStack.text = stack.ToString();
         BasketName.text = myItem.itemName;
 
+        UpdateButtonState();
     }
     public void ClickPlus()
     {
@@ -56,8 +57,27 @@ public class BasketBox : MonoBehaviour
 
     private void UpdateButtonState()
     {
-        btnPlus.interactable = stack < maxStack;
+        /*수정 전
+         * btnPlus.interactable = stack < maxStack;
         btnMinus.interactable = stack > 0;
+        btnPlus와 btnMinus의 상태 초기화*/
+
+        Debug.Log("Run UpdateBtn interactable");
+        //수정 후
+        btnPlus.interactable = true;
+        btnMinus.interactable = true;
+
+        // stack과 maxStack의 관계에 따라 버튼 상태 설정
+        if (stack >= maxStack)
+        {
+            btnPlus.interactable = false; // maxStack에 도달하면 btnPlus 비활성화
+            Debug.Log("stack is Max");
+        }
+        if (stack <= 0)
+        {
+            btnMinus.interactable = false; // stack이 0이면 btnMinus 비활성화
+            Debug.Log("stack is 0");
+        }
     }
 
     public int BasketShopIndex()
