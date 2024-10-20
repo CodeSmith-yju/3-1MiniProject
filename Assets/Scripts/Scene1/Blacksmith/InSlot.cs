@@ -170,7 +170,7 @@ public class InSlot : MonoBehaviour
             {
                 Debug.Log("active True");
                 selectedPanel.SetActive(false);
-
+                blacksmith.btn_Commit.interactable = false;//10-20 ¥Î¿œπÍµÂ 
                 ParentBtn.interactable = false;
                 ChildBtn.interactable = true;
             }

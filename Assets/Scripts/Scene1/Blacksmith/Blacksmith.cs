@@ -74,6 +74,7 @@ public class Blacksmith : MonoBehaviour
         AllInvenUnSelect();
         Refresh();
         OpenUpgrade();
+        btn_Commit.interactable = false;
 
         yield break;
     }
