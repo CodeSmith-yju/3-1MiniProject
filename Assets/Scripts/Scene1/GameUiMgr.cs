@@ -460,12 +460,12 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             {
                 slots[i].item = Inventory.Single.items[i];
                 //DBConnector.LoadItemByCodeFromDB(slots[i].item.itemCode, ref slots[i].item.itemImage, ref slots[i].item.typeIcon);
-                slots[i].item.itemIndex = i;
+                //slots[i].item.itemIndex = i;
 
-                if (i < ItemResources.instance.itemRS.Count && slots[i].name == ItemResources.instance.itemRS[i].itemName)
+                /*if (i < ItemResources.instance.itemRS.Count && slots[i].name == ItemResources.instance.itemRS[i].itemName)
                 {
                     slots[i].item.itemCode = ItemResources.instance.itemRS[i].itemCode;
-                }
+                }*/
 
                 slots[i].UpdateSloutUI();
             }
@@ -1214,7 +1214,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             TakeOffItem(ref nowSlot);
 
             AllEquipChek();
-            RedrawSlotUI();
+            //RedrawSlotUI();
             addEquipPanel.gameObject.SetActive(false);
             return;
         }
@@ -1444,7 +1444,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         //일단 장착해제
         _Slot.wearChek = false;//슬롯의 장비가 빠졌으니 fasle로 바꿔줌
-        ApplyEquipPower(_Slot.wearChek, nowSlot.item);
+        ApplyEquipPower(_Slot.wearChek, livingItem);
 
         //현재 슬롯의 아이템 지우기
         _Slot.item = new Item
@@ -1479,7 +1479,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         //인벤토리에 장착 해제한 아이템 추가 후 인벤토리 새로그리기
 
-        if (livingItem.itemName != string.Empty)
+        /*if (livingItem.itemName != string.Empty)
         {
             if (Inventory.Single.AddItem(livingItem))
             {
@@ -1491,8 +1491,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             {
                 Debug.Log("버그발생?");
             }
-        }
-        
+        }*/
+
+        Inventory.Single.AddItem(livingItem);
+        RedrawSlotUI();
         Debug.Log("/??? : " + livingItem.itemName);
         nowSlot = null;
     }

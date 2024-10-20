@@ -20,33 +20,44 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void UpdateSloutUI()
     {
-        itemIcon.sprite = item.itemImage;
-        if (item.itemType == Item.ItemType.Consumables || item.itemType == Item.ItemType.Ect)
+        if (itemIcon != null && itemStack != null && modifyStack != null)
         {
-            itemStack.text = item.itemStack.ToString();
-            itemStack.gameObject.SetActive(true);
-        }
-        else if (item.itemType == Item.ItemType.Equipment_Helmet || item.itemType == Item.ItemType.Equipment_Weapon || item.itemType == Item.ItemType.Equipment_Boots || item.itemType == Item.ItemType.Equipment_Arrmor)
-        {
-            if (item.modifyStack > 0)
+            itemIcon.sprite = item.itemImage;
+            if (item.itemType == Item.ItemType.Consumables || item.itemType == Item.ItemType.Ect)
             {
-                modifyStack.text = "+"+item.modifyStack.ToString();
-                modifyStack.gameObject.SetActive(true);
+                itemStack.text = item.itemStack.ToString();
+                itemStack.gameObject.SetActive(true);
             }
-        }
+            else if (item.itemType == Item.ItemType.Equipment_Helmet || item.itemType == Item.ItemType.Equipment_Weapon || item.itemType == Item.ItemType.Equipment_Boots || item.itemType == Item.ItemType.Equipment_Arrmor)
+            {
+                if (item.modifyStack > 0)
+                {
+                    modifyStack.text = "+" + item.modifyStack.ToString();
+                    modifyStack.gameObject.SetActive(true);
+                }
+            }
 
-        if (!itemIcon.gameObject.activeSelf)
-        {
-            itemIcon.gameObject.SetActive(true);
+            if (!itemIcon.gameObject.activeSelf)
+            {
+                itemIcon.gameObject.SetActive(true);
+            }
         }
     }
     public void RemoveSlot()
     {
         item = null;
-        itemIcon.gameObject.SetActive(false);
-
-        itemStack.gameObject.SetActive(false);
-        modifyStack.gameObject.SetActive(false);
+        if (itemIcon != null)
+        {
+            itemIcon.gameObject.SetActive(false);
+        }
+        if (itemStack != null)
+        {
+            itemStack.gameObject.SetActive(false);
+        }
+        if (modifyStack != null)
+        {
+            modifyStack.gameObject.SetActive(false);
+        }
     }
     public void CallGUISlot()
     {
@@ -199,6 +210,9 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         modifyStack.text = "0";
         modifyStack.gameObject.SetActive(false);
-
+    }
+    public void SetSlotItem(Item _item)
+    {
+        item = _item;
     }
 }

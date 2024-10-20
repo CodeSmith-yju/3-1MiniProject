@@ -63,17 +63,19 @@ public class AudioManager : MonoBehaviour
 
         switch (_enemyIndex)
         {
+            //Slime 0
             case 0:
                 sfxPlayers[partyIndex].clip = slime_sfxClip[sfx_Index];
                 sfxPlayers[partyIndex].Play();
                 break;
+            //gobline 1
             case 1:
                 if (sfx_Index == 0)
                 {
                     // ÇöÀç º¼·ý ÀúÀå
                     float originalVolume = sfxPlayers[partyIndex].volume;
 
-                    // º¼·ýÀ» 25%·Î ÁÙÀÓ
+                    // º¼·ýÀ» 12%·Î ÁÙÀÓ
                     sfxPlayers[partyIndex].volume = originalVolume * 0.12f;
 
                     // Å¬¸³ ¼³Á¤ ¹× Àç»ý
@@ -89,10 +91,12 @@ public class AudioManager : MonoBehaviour
                     sfxPlayers[partyIndex].Play();
                 }
                 break;
+            //mimic 2
             case 2:
                 sfxPlayers[partyIndex].clip = mimic_sfxClip[sfx_Index];
                 sfxPlayers[partyIndex].Play();
                 break;
+            //skellotone-worrior 3
             case 3:
                 if (sfx_Index == 0)
                 {
@@ -114,6 +118,21 @@ public class AudioManager : MonoBehaviour
                     sfxPlayers[partyIndex].clip = skelletone_sfxClip[sfx_Index];
                     sfxPlayers[partyIndex].Play();
                 }
+                break;
+            //ÇØ°ñ¹ý»ç 4
+            case 4:
+                sfxPlayers[partyIndex].clip = skeletonWizard_sfxClip[sfx_Index];
+                sfxPlayers[partyIndex].Play();
+                break;
+            //ÆÛÇÍ 5
+            case 5:
+                sfxPlayers[partyIndex].clip = puppetHuman_sfxClip[sfx_Index];
+                sfxPlayers[partyIndex].Play();
+                break;
+            //°ñ·½ 6
+            case 6:
+                sfxPlayers[partyIndex].clip = Golem_sfxClip[sfx_Index];
+                sfxPlayers[partyIndex].Play();
                 break;
             default:
                 break;
