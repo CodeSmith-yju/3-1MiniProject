@@ -474,14 +474,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     private void Update()
     {
-        /*if (nowSlot.itemIcon != null)
-        {
-            Debug.Log("이게어케있노 시ㅣ발말이되나");
-        }
-        else
-        {
-            Debug.Log("겠냐고 ㅋㅋ");
-        }*/
         // Minimap 
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -515,42 +507,35 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             else
             {*/
             ToggleSubButtons();
-
+            if (objSubButtonFrame.activeSelf)
+            {
+                ToggleSubButtons();
+            }
             if (inventory_panel.activeSelf)
             {
                 ActiveInventory();
                 tooltip.gameObject.SetActive(false);
-                if (objSubButtonFrame.activeSelf)
-                {
-                    ToggleSubButtons();
-                }
             }
-            else if (panelPartyBoard.activeSelf)
+            if (panelPartyBoard.activeSelf)
             {
                 ActiveParty();
-                if (objSubButtonFrame.activeSelf)
-                {
-                    ToggleSubButtons();
-                }
             }
-            else if (shopMgr.gameObject.activeSelf)
+            if (shopMgr.gameObject.activeSelf)
             {
                 ActiveShop();
-                if (objSubButtonFrame.activeSelf)
-                {
-                    ToggleSubButtons();
-                }
             }
-            else if (blacksmith.gameObject.activeSelf)
+            if (blacksmith.gameObject.activeSelf)
             {
-
+                ActiveBlackSmith();
             }
+            
+            
             /*else
             {
                 menuSet.SetActive(true);
                 uiEventCk = false;
             }*/
-    }
+        }
 
         //Inventory
         if (Input.GetKeyDown(KeyCode.I))
@@ -581,10 +566,20 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             {
                 panelPartyBoard.SetActive(false);
             }
-            else if (activeInventory == true)
+            if (activeInventory == true)
             {
                 inventory_panel.SetActive(false);
             }
+            if (blacksmith.gameObject.activeSelf)
+            {
+                blacksmith.gameObject.SetActive(false);
+            }
+            if (shopMgr.gameObject.activeSelf)
+            {
+                shopMgr.gameObject.SetActive(false);
+            }
+
+            uiEventCk = false;
         }
 
 
@@ -806,9 +801,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             }
             if (scanObj_ID == 4000)
             {
-                if (quest_Id >= 50)
+                Debug.Log("상점 npc와 대화종료되면 상점/대장간 ui오픈");
+                if (questMgr.questId >= 50)
                 {
-                    Debug.Log("상점 npc와 대화종료되면 상점/대장간 ui오픈");
                     SnB.SetActive(true);
                     move_doit = false;
                 }
