@@ -237,6 +237,22 @@ public class BattleManager : MonoBehaviour
             case BattlePhase.Deploy:
                 if (ui.out_Portal.activeSelf)
                     ui.out_Portal.GetComponent<FadeEffect>().fadein = true;
+
+                if (event_Stack != 0)
+                {
+                    float event_Chance = event_Stack * 5f;
+
+                    event_Chance = Mathf.Clamp(event_Chance, 0f, 50f);
+
+                    float random_Event = UnityEngine.Random.Range(0, event_Chance);
+
+                    if (random_Event < event_Chance)
+                    {
+                        event_Trigger = true;
+                        event_Stack = 0;
+                    }
+                }
+
                 StartCoroutine(BattleReady());
                 break;
             case BattlePhase.Battle:
@@ -365,6 +381,7 @@ public class BattleManager : MonoBehaviour
                 playerData.base_atk_Dmg = stats.temp_Dmg;
                 playerData.max_Player_Hp = stats.temp_MaxHp;
                 playerData.max_Player_Mp = stats.temp_MaxMp;
+                playerData.atk_Speed = stats.temp_AtkSpd;
 
                 player.cur_Hp = Mathf.Clamp(healthRatio * stats.temp_MaxHp, 0, stats.temp_MaxHp);
 
@@ -569,21 +586,7 @@ public class BattleManager : MonoBehaviour
 
         if (room.cur_Room.tag == "Battle")
         {
-            if (event_Stack != 0)
-            {
-                float event_Chance = event_Stack * 5f;
-
-                event_Chance = Mathf.Clamp(event_Chance, 0f, 50f);
-
-                float random_Event = UnityEngine.Random.Range(0, event_Chance);
-
-                if (random_Event < event_Chance)
-                {
-                    event_Trigger = true;
-                    event_Stack = 0;
-                }
-            }
-            
+           
             Debug.Log("전투 방입니다.");
 
             if (room.FindRoom(room.cur_Room.gameObject).isBoss)

@@ -7863,6 +7863,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Attribute_Popup
       objectReference: {fileID: 0}
+    - target: {fileID: 1318914031649177477, guid: 6740593570f0b3340a3ba875ba5fb7f5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8406690550808243673, guid: 6740593570f0b3340a3ba875ba5fb7f5, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
