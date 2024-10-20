@@ -37,7 +37,10 @@ public class PlayerAction : MonoBehaviour
             ObjectData obj = scanRayObjcet.GetComponent<ObjectData>();
             if (obj.id == 4000)
             {
-                rigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+                if (GameUiMgr.single.questMgr.questId >= 50)
+                {
+                    rigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+                }
             }
             else if (obj.id == 9000)
             {

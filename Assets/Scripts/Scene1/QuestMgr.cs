@@ -184,7 +184,7 @@ public class QuestMgr : MonoBehaviour
                 if (questActionIndex == 0)
                 {
                     Debug.Log("Case 50");
-                    
+                    GameUiMgr.single.questDesc.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(false);
                 }
 
                 if (questActionIndex == 1)

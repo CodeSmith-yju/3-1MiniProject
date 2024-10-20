@@ -76,7 +76,7 @@ public class AudioManager : MonoBehaviour
                     float originalVolume = sfxPlayers[partyIndex].volume;
 
                     // 볼륨을 12%로 줄임
-                    sfxPlayers[partyIndex].volume = originalVolume * 0.12f;
+                    sfxPlayers[partyIndex].volume = originalVolume * 0.5f;
 
                     // 클립 설정 및 재생
                     sfxPlayers[partyIndex].clip = gobline_sfxClip[sfx_Index];
@@ -222,6 +222,11 @@ public class AudioManager : MonoBehaviour
 
     public void PlayBgmClipChange(int _index)
     {
+        for(int i= 0; i < sfxPlayers.Length; i++)
+        {
+            sfxPlayers[i].Stop();
+        }
+
         bgmPlayer.clip = bgmClips[_index];
         bgmPlayer.Play();
     }
@@ -289,7 +294,7 @@ public class AudioManager : MonoBehaviour
     {
         Debug.Log("설정 전_sfxPlayers[0]의 볼륨: " + sfxPlayers[0].volume);
         float baseVolume = sfxPlayers[0].volume;  // sfxPlayers[0]의 볼륨을 기준으로
-        float newVolume = baseVolume * 0.3f;  // 30%로 설정
+        float newVolume = baseVolume * 0.7f;  // 30%로 설정
 
         // sfxPlayers[1]부터 나머지 채널들의 볼륨을 30%로 설정
         for (int i = 1; i < sfxPlayers.Length; i++)

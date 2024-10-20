@@ -134,6 +134,13 @@ public class UIManager : MonoBehaviour
         {
             item_Bar.SetActive(false);
             log_View.SetActive(true);
+            if (!item_Bar.gameObject.activeSelf)
+            {
+                if (BattleManager.Instance.ui.tooltip.gameObject.activeSelf)
+                {
+                    BattleManager.Instance.ui.tooltip.gameObject.SetActive(false);
+                }
+            }
         }
         else
         {

@@ -806,9 +806,13 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             }
             if (scanObj_ID == 4000)
             {
-                Debug.Log("상점 npc와 대화종료되면 상점/대장간 ui오픈");
-                SnB.SetActive(true);
-                move_doit = false;
+                if (quest_Id >= 50)
+                {
+                    Debug.Log("상점 npc와 대화종료되면 상점/대장간 ui오픈");
+                    SnB.SetActive(true);
+                    move_doit = false;
+                }
+                
             }
             //Debug.Log("NulltalkData // ToosTalkData: " + scanObj_ID); // 04 -23 Debug
             /*if (AllEquipChek())
