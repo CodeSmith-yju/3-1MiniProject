@@ -277,6 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items: []
+  equips: []
   typeIconRS:
   - {fileID: 21300000, guid: 75775466038dda847a172af7d20c2a46, type: 3}
   - {fileID: 21300000, guid: 4e160a9b9390d9c4e9f56f4ffc06197b, type: 3}
@@ -3193,6 +3194,7 @@ MonoBehaviour:
   tutorial: 0
   selectedResolution: 0
   input_Name: 
+  saveState: 0
   popUp: {fileID: 1316948235189082396}
 --- !u!4 &1338712243
 Transform:

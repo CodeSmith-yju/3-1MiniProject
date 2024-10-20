@@ -1650,5 +1650,5 @@ MonoBehaviour:
   name_Text: {fileID: 7052925329166281012}
   player_Icon: {fileID: 3969597601013937456}
   dead_Check: {fileID: 4702590250720055946}
-  attribute_Icon: {fileID: 0}
+  attribute_Icon: {fileID: 4588719478506700520}
   isDead: 0

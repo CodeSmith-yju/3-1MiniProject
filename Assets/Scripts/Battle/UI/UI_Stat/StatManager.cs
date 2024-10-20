@@ -30,7 +30,7 @@ public class StatManager : MonoBehaviour
     {
         this.player = player;
         player_Icon.sprite = portrait;
-        //attribute_Icon.sprite = GameUiMgr.single.entityIconRS.dictn_ElementIcon[player.attribute];
+        attribute_Icon.sprite = GameUiMgr.single.entityIconRS.dictn_ElementIcon[player.playerAttribute];
 
         this.level_Text.text = level.ToString();
         this.name_Text.text = name;

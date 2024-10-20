@@ -74,7 +74,7 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
 
         playerAttribute = BaseEntity.Attribute.Normal;
     }
-    public PlayerData(int index, float hp, float mp, float atk_spd, float atk_range, float atkDmg, int lv, string name, bool skil_able, bool melee, Ally.JobClass job)
+    public PlayerData(int index, float hp, float mp, float atk_spd, float atk_range, float atkDmg, int lv, string name, bool skil_able, bool melee, Ally.JobClass job, BaseEntity.Attribute attribute)
     {
         playerIndex = index;
 
@@ -94,6 +94,7 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
         isMelee = melee;
 
         this.job = job;
+        playerAttribute = attribute;
     }
 
     public string GetPlayerName()

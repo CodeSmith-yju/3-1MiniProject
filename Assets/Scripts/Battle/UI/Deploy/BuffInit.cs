@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static BattleManager;
 
 public class BuffInit : MonoBehaviour
 {
@@ -10,12 +9,11 @@ public class BuffInit : MonoBehaviour
     private int buff_Index;
     private Dictionary<int, PlayerData> playerDataMapping = new Dictionary<int, PlayerData>();
     [SerializeField] private GameObject[] players;
-/*    private Dictionary<Ally, PlayerStats> temp_Stats = new Dictionary<Ally, PlayerStats>();
-    private HashSet<Ally> buffedPlayers = new HashSet<Ally>();*/
+    private HashSet<Ally> buffedPlayers = new HashSet<Ally>();
 
     // 툴팁 오브젝트 참조 (씬에 존재하는 툴팁 오브젝트에 연결)
     [SerializeField] private BuffTooltip buffTooltip;
-    private bool buff_Check = false;
+    //private bool buff_Check = false;
 
 
     private void Start()
@@ -29,7 +27,7 @@ public class BuffInit : MonoBehaviour
             playerDataMapping[data.playerIndex] = data;
         }
 
-        buff_Check = false;
+        //buff_Check = false;
     }
 
     public void Init(int index)
@@ -44,10 +42,7 @@ public class BuffInit : MonoBehaviour
     {
         if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy)
         {
-            if (buff_Check == false) 
-            {
-                CheckPlayerDistances();
-            }
+            CheckPlayerDistances();
         }
 
         if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Battle)
@@ -73,21 +68,21 @@ public class BuffInit : MonoBehaviour
 
                 if (distance < 0.1f) // 플레이어가 버프 타일 위에 있을 때
                 {
-                    if (!Instance.buffedPlayers.Contains(player))
+                    if (!buffedPlayers.Contains(player))
                     {
-                        buff_Check = true;
                         Buff(buff_Index, player, playerStat);
-                        Instance.buffedPlayers.Add(player);
+                        buffedPlayers.Add(player);
+                        //buff_Check = true;
                         break;
                     }
                 }
                 else // 플레이어가 타일에서 벗어났을 때
                 {
-                    if (Instance.buffedPlayers.Contains(player))
+                    if (buffedPlayers.Contains(player))
                     {
-                        buff_Check = false;
+                        //buff_Check = false;
                         RemoveBuff(player, playerStat);
-                        Instance.buffedPlayers.Remove(player);
+                        buffedPlayers.Remove(player);
                         break;
                     }
                 }
@@ -97,11 +92,6 @@ public class BuffInit : MonoBehaviour
 
     private void Buff(int index, Ally player, PlayerData player_Data)
     {
-/*        if (!temp_Stats.ContainsKey(player))
-        {
-            temp_Stats[player] = new PlayerStats(player_Data.base_atk_Dmg, player_Data.max_Player_Hp, player_Data.max_Player_Mp);
-        }*/
-
 
         switch (index) 
         {
@@ -129,10 +119,8 @@ public class BuffInit : MonoBehaviour
 
     private void RemoveBuff(Ally player, PlayerData player_Data)
     {
-        if (Instance.temp_Stats.ContainsKey(player_Data))
+        if (BattleManager.Instance.temp_Stats.TryGetValue(player_Data, out BattleManager.PlayerStats stats))
         {
-            PlayerStats stats = Instance.temp_Stats[player_Data];
-
             float healthRatio = (player.max_Hp > 0) ? player.cur_Hp / player.max_Hp : 1;
 
             player.atkDmg = stats.temp_Dmg;
@@ -142,14 +130,14 @@ public class BuffInit : MonoBehaviour
             // 체력 비율에 따라 현재 체력 조정 및 클램핑
             player.cur_Hp = Mathf.Clamp(healthRatio * stats.temp_MaxHp, 0, stats.temp_MaxHp);
 
-            player_Data.base_atk_Dmg = player.atkDmg;
+            player_Data.base_atk_Dmg = stats.temp_Dmg;
             player_Data.max_Player_Mp = stats.temp_MaxMp;
-            player_Data.max_Player_Hp = player.max_Hp;
+            player_Data.max_Player_Hp = stats.temp_MaxHp;
             player_Data.cur_Player_Hp = player.cur_Hp;
-            
+
 
             //temp_Stats.Remove(player);
-            BattleManager.Instance.temp_Stats.Remove(player_Data);
+            //BattleManager.Instance.temp_Stats.Remove(player_Data);
         }
     }
 

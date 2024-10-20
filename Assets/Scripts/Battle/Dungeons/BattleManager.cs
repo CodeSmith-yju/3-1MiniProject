@@ -39,7 +39,6 @@ public class BattleManager : MonoBehaviour
     [Header("BuffTile")]
     private Dictionary<PlayerData, PlayerStats> base_Stats = new Dictionary<PlayerData, PlayerStats>();
     public Dictionary<PlayerData, PlayerStats> temp_Stats = new Dictionary<PlayerData, PlayerStats>();
-    public HashSet<Ally> buffedPlayers = new HashSet<Ally>();
     public bool buff_On = false;
 
     [Header("Stage")]
@@ -356,7 +355,7 @@ public class BattleManager : MonoBehaviour
 
             PlayerData playerData = GameMgr.playerData[player.entity_index];
 
-            // temp_Stats에서 해당 플레이어의 원래 스탯 찾기
+            // base_Stats에서 해당 플레이어의 원래 스탯 찾기
             if (base_Stats.TryGetValue(playerData, out PlayerStats stats))
             {
                 // 원래 스탯 복원
@@ -371,11 +370,25 @@ public class BattleManager : MonoBehaviour
 
                 playerData.cur_Player_Hp = player.cur_Hp;
 
-                // temp_Stats.Remove(playerData); // 스탯 초기화
+                // temp_Stats 초기화
+                ResetTempStats(playerData);
             }
         }
+    }
 
-        buffedPlayers.Clear();
+    private void ResetTempStats(PlayerData playerData)
+    {
+        if (base_Stats.TryGetValue(playerData, out PlayerStats baseStats))
+        {
+            // base_Stats 값을 temp_Stats로 복사
+            if (temp_Stats.ContainsKey(playerData))
+            {
+                temp_Stats[playerData].temp_Dmg = baseStats.temp_Dmg;
+                temp_Stats[playerData].temp_MaxHp = baseStats.temp_MaxHp;
+                temp_Stats[playerData].temp_MaxMp = baseStats.temp_MaxMp;
+                temp_Stats[playerData].temp_AtkSpd = baseStats.temp_AtkSpd;
+            }
+        }
     }
 
     private IEnumerator EndBattle()
@@ -556,7 +569,7 @@ public class BattleManager : MonoBehaviour
 
         if (room.cur_Room.tag == "Battle")
         {
-            if (event_Stack > 0)
+            if (event_Stack != 0)
             {
                 float event_Chance = event_Stack * 5f;
 
@@ -617,7 +630,9 @@ public class BattleManager : MonoBehaviour
                         if (temp_Stats.TryGetValue(playerData, out PlayerStats stats))
                         {
                             player_Ally.atkDmg *= 0.9f;
-                            stats.temp_Dmg = player_Ally.atkDmg;
+                            playerData.base_atk_Dmg = player_Ally.atkDmg;
+
+                            stats.temp_Dmg = playerData.base_atk_Dmg;
                         }
                         
                     }
@@ -631,12 +646,18 @@ public class BattleManager : MonoBehaviour
                 {
                     Ally player_Ally = player.GetComponent<Ally>();
 
-                    if (player_Ally != null)
+                    if (player_Ally != null && player_Ally.cur_Hp > 0)
                     {
-                        if (player_Ally.cur_Hp > 0)
+                        PlayerData playerData = GameMgr.playerData[player_Ally.entity_index];
+
+                        if (temp_Stats.TryGetValue(playerData, out PlayerStats stats))
                         {
                             player_Ally.atkSpd *= 0.9f;
+                            playerData.atk_Speed = player_Ally.atkSpd;
+
+                            stats.temp_AtkSpd = playerData.atk_Speed;
                         }
+
                     }
                 }
 
@@ -650,12 +671,18 @@ public class BattleManager : MonoBehaviour
                 {
                     Ally player_Ally = player.GetComponent<Ally>();
 
-                    if (player_Ally != null)
+                    if (player_Ally != null && player_Ally.cur_Hp > 0)
                     {
-                        if (player_Ally.cur_Hp > 0)
+                        PlayerData playerData = GameMgr.playerData[player_Ally.entity_index];
+
+                        if (temp_Stats.TryGetValue(playerData, out PlayerStats stats))
                         {
                             player_Ally.max_Mp += 2;
+                            playerData.max_Player_Mp = player_Ally.max_Mp;
+
+                            stats.temp_MaxMp = playerData.max_Player_Mp;
                         }
+
                     }
                 }
                 break;

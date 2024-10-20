@@ -72,6 +72,7 @@ public class PartyData
                 strPartyName = GameUiMgr.single.partyNameSetting.GetRandomName(GameUiMgr.single.partyNameSetting.archerNames);
                 isMelee = false;//false 일때 원거리공격
                 able_Skill = true;
+                Elemental = GetRandomElement(rangerAttributes);
                 break;
             case Ally.JobClass.Wizard:
                 //Debug.Log("Type wizard, Generate Code: " + _Code);
@@ -84,6 +85,7 @@ public class PartyData
                 strPartyName = GameUiMgr.single.partyNameSetting.GetRandomName(GameUiMgr.single.partyNameSetting.mageNames);
                 isMelee = false;
                 able_Skill = true;
+                Elemental = GetRandomElement(wizardAttributes);
                 break;
             case Ally.JobClass.Knight:
                 //Debug.Log("Type 3, Generate Code: " + _Code);
@@ -96,6 +98,7 @@ public class PartyData
                 strPartyName = GameUiMgr.single.partyNameSetting.GetRandomName(GameUiMgr.single.partyNameSetting.knightNames);
                 isMelee = true;
                 able_Skill = true;
+                Elemental = GetRandomElement(knightAttributes);
                 break;
 /*            case 0://Player
                 break;*/
@@ -127,7 +130,6 @@ public class PartyData
         switch (_jobClass)
         {
             case Ally.JobClass.Ranger:
-                Elemental = GetRandomElement(rangerAttributes);
                 jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[_jobClass];
                 ElementalIcon = GameUiMgr.single.entityIconRS.dictn_ElementIcon[Elemental];
                 break;

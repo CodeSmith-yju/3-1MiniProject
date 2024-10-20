@@ -34,7 +34,7 @@ public class DBConnector : MonoBehaviour
                 try
                 {
                     //string formatSql = $"Server={single.IP}; Port={single.PORT}; Database={single.DB_NAME}; UserId={single.ID}; Password={single.PW}";
-                    string formatSql = $"Server={single.IP}; Port={single.PORT}; Database={single.DB_NAME}; UserId={single.ID}; Password={single.PW}; Charset=utf8mb4";
+                    string formatSql = $"host={single.IP}; Port={single.PORT}; Database={single.DB_NAME}; UserId={single.ID}; Password={single.PW}; Charset=utf8mb4";
                     _connection = new MySqlConnection(formatSql);
                 }
                 catch (MySqlException e)
