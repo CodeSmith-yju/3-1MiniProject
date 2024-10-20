@@ -67,7 +67,6 @@ public class ShopMgr : MonoBehaviour
             int randomIndex = GetRandomNumber();
             if (i == 0)
                 randomIndex = 0;
-
             Item originalItem = ItemResources.instance.itemRS[randomIndex];
             
 
@@ -121,6 +120,7 @@ public class ShopMgr : MonoBehaviour
         {
             foreach (var slot in shopSlots)
             {
+                slot.gameObject.SetActive(false);
                 Destroy(slot.gameObject);
             }
             shopSlots.Clear();
@@ -266,6 +266,10 @@ public class ShopMgr : MonoBehaviour
 
         if (_state == ShopState.BUY)
         {
+            for (int i = 0; i < shopSlots.Count; i++)
+            {
+                shopSlots[i].UseImgSet(false);
+            }
             buyTab.interactable = false;
             sellTab.interactable = true;
 
@@ -278,6 +282,7 @@ public class ShopMgr : MonoBehaviour
         }
         else if (_state == ShopState.SELL)
         {
+
             buyTab.interactable = true;
             sellTab.interactable = false;
 
