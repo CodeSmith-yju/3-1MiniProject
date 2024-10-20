@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1520578292165910075}
   - component: {fileID: 5807492705677822695}
   m_Layer: 7
-  m_Name: Map_Mark
+  m_Name: Map_None
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

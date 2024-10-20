@@ -8,11 +8,22 @@ using UnityEngine.UI;
 [System.Serializable]
 public class Cell
 {
+    public enum RoomType
+    {
+        None,
+        RestRoom,
+        BattleRoom,
+        ChestRoom,
+        BossRoom
+    }
+
+
     [Header("Room")]
     public GameObject cellObject;  // 셀에 해당하는 오브젝트 (방 오브젝트)
     public bool isClear;           // 방 클리어 여부
     public bool isBlocked;         // 이 셀이 막혀 있는지 여부
     public bool isBoss;            // 방이 보스방인지 여부
+    public RoomType roomType; 
 
     [Header("Minimap")]
     public GameObject minimap_Obj;
@@ -58,6 +69,7 @@ public class MapManager : MonoBehaviour
     public Camera map_Camera_Big;
     [SerializeField] GameObject map_Mark_Prefab;
     [SerializeField] Transform map_Tf;
+    [SerializeField] GameObject[] map_Mark_Icon_Prefabs;
 
 
     public bool isMoveDone = false;
@@ -83,6 +95,21 @@ public class MapManager : MonoBehaviour
 
 
     private Vector3 velocity = Vector3.zero;
+
+
+    private struct RoomInfo
+    {
+        public GameObject roomPrefab;
+        public Cell.RoomType roomType;
+
+        public RoomInfo(GameObject prefab, Cell.RoomType type)
+        {
+            roomPrefab = prefab;
+            roomType = type;
+        }
+    }
+
+
 
     private void Awake()
     {
@@ -185,7 +212,7 @@ public class MapManager : MonoBehaviour
         // 시작지점 미리 할당
         Vector2Int startPos = random_Start_Pos[Random.Range(0, random_Start_Pos.Count)];
         player_Pos = startPos;
-        SetRoomValue(player_Pos, startPrefab);
+        SetRoomValue(player_Pos, startPrefab, Cell.RoomType.None);
 
         // 이후 필요한 방들 배치 (필수 방 및 나머지 방들)
         PlaceMandatoryRooms();
@@ -200,28 +227,28 @@ public class MapManager : MonoBehaviour
         for (int i = 0; i < maxBlockedRooms; i++)
         {
             Vector2Int randomPos = GetRandomPosition(availablePositions);
-            SetRoomValue(randomPos, blockedRoomPrefab, isBlocked: true);
+            SetRoomValue(randomPos, blockedRoomPrefab, Cell.RoomType.None, isBlocked: true);
         }
 
         // 상자 방 1개 배치
         for (int i = 0; i < minChestRooms; i++)
         {
             Vector2Int randomPos = GetRandomPosition(availablePositions);
-            SetRoomValue(randomPos, chestRoomPrefab);
+            SetRoomValue(randomPos, chestRoomPrefab, Cell.RoomType.ChestRoom);
         }
 
         // 휴식 방 1개 배치
         for (int i = 0; i < minRestRooms; i++)
         {
             Vector2Int randomPos = GetRandomPosition(availablePositions);
-            SetRoomValue(randomPos, restRoomPrefab);
+            SetRoomValue(randomPos, restRoomPrefab, Cell.RoomType.RestRoom);
         }
 
         // 전투 방 3개 배치
         for (int i = 0; i < minBattleRooms; i++)
         {
             Vector2Int randomPos = GetRandomPosition(availablePositions);
-            SetRoomValue(randomPos, DungeondifficultyLevel(GameUiMgr.single.dungeon_Level));
+            SetRoomValue(randomPos, DungeondifficultyLevel(GameUiMgr.single.dungeon_Level), Cell.RoomType.BattleRoom);
         }
 
         int reservedEmptyRooms = 1;
@@ -229,8 +256,8 @@ public class MapManager : MonoBehaviour
         while (availablePositions.Count > reservedEmptyRooms)
         {
             Vector2Int randomPos = GetRandomPosition(availablePositions);
-            GameObject randomRoom = GetRandomRoomPrefab();
-            SetRoomValue(randomPos, randomRoom);
+            RoomInfo randomRoom = GetRandomRoomPrefab();
+            SetRoomValue(randomPos, randomRoom.roomPrefab, randomRoom.roomType);
         }
 
         // 보스방 배치 체크 (상자방이나 휴식방의 최소 갯수에 맞추도록)
@@ -253,7 +280,7 @@ public class MapManager : MonoBehaviour
                 if (availablePositions.Count > 0)
                 {
                     Vector2Int randomPos = GetRandomPosition(availablePositions);
-                    SetRoomValue(randomPos, chestRoomPrefab);
+                    SetRoomValue(randomPos, chestRoomPrefab, Cell.RoomType.ChestRoom);
                 }
             }
             else if (bossRoomCell.cellObject.name.Contains(restRoomPrefab.name))
@@ -261,7 +288,7 @@ public class MapManager : MonoBehaviour
                 if (availablePositions.Count > 0)
                 {
                     Vector2Int randomPos = GetRandomPosition(availablePositions);
-                    SetRoomValue(randomPos, restRoomPrefab);
+                    SetRoomValue(randomPos, restRoomPrefab, Cell.RoomType.RestRoom);
                 }
             }
             else
@@ -270,14 +297,14 @@ public class MapManager : MonoBehaviour
                 if (availablePositions.Count > 0)
                 {
                     Vector2Int randomPos = GetRandomPosition(availablePositions);
-                    GameObject randomRoom = GetRandomRoomPrefab();
-                    SetRoomValue(randomPos, randomRoom);
+                    RoomInfo randomRoom = GetRandomRoomPrefab();
+                    SetRoomValue(randomPos, randomRoom.roomPrefab, randomRoom.roomType);
                 }
             }
         }
 
         // 보스방 배치
-        SetRoomValue(bossRoomPos, bossRoomPrefab, isBoss: true);
+        SetRoomValue(bossRoomPos, bossRoomPrefab, Cell.RoomType.BossRoom, isBoss: true);
     }
 
 
@@ -331,21 +358,21 @@ public class MapManager : MonoBehaviour
     }
 
     // 랜덤으로 방 종류를 선택하는 함수 (막힌 방 제외)
-    private GameObject GetRandomRoomPrefab()
+    private RoomInfo GetRandomRoomPrefab()
     {
         int randomValue = Random.Range(0, 100);
 
         if (randomValue < 85)  // 85% 확률로 전투 방 배치
         {
-            return DungeondifficultyLevel(GameUiMgr.single.dungeon_Level);
+            return new RoomInfo(DungeondifficultyLevel(GameUiMgr.single.dungeon_Level), Cell.RoomType.BattleRoom);
         }
         else if (randomValue < 90)  // 5% 확률로 상자 방
         {
-            return chestRoomPrefab;
+            return new RoomInfo(chestRoomPrefab, Cell.RoomType.ChestRoom);
         }
         else  // 10% 확률로 휴식 방
         {
-            return restRoomPrefab;
+            return new RoomInfo(restRoomPrefab, Cell.RoomType.RestRoom);
         }
     }
 
@@ -728,13 +755,14 @@ public class MapManager : MonoBehaviour
     }
 
     // 실제로 방 생성 전 정보를 임시로 할당
-    private void SetRoomValue(Vector2Int pos, GameObject roomPrefab, bool isBlocked = false, bool isBoss = false)
+    private void SetRoomValue(Vector2Int pos, GameObject roomPrefab, Cell.RoomType roomType, bool isBlocked = false, bool isBoss = false)
     {
         // 현재 셀에 복제된 오브젝트를 저장
         Cell cell = mapRows[pos.y].cells[pos.x];
         cell.cellObject = roomPrefab;
         cell.isBlocked = isBlocked;
         cell.isBoss = isBoss;
+        cell.roomType = roomType;
     }
 
     // 현재 할당된 정보를 바탕으로 방 생성
@@ -751,16 +779,16 @@ public class MapManager : MonoBehaviour
                 {
                     if (cell.isBlocked)
                     {
-                        PlaceRoom(pos, blockedRoomPrefab, isBlocked: true);
+                        PlaceRoom(pos, blockedRoomPrefab, cell.roomType, isBlocked: true);
                     }
                     else if (cell.isBoss)
                     {
-                        PlaceRoom(pos, bossRoomPrefab, isBoss: true);
+                        PlaceRoom(pos, bossRoomPrefab, cell.roomType, isBoss: true);
                     }
                     else
                     {
                         GameObject roomPrefab = cell.cellObject;  // 미리 저장된 방 프리팹 사용
-                        PlaceRoom(pos, roomPrefab);
+                        PlaceRoom(pos, roomPrefab, cell.roomType);
                     }
                 }
             }
@@ -768,7 +796,7 @@ public class MapManager : MonoBehaviour
     }
 
     // 방을 배치하는 함수
-    private void PlaceRoom(Vector2Int pos, GameObject roomPrefab, bool isBlocked = false, bool isBoss = false, bool isVisit = false)
+    private void PlaceRoom(Vector2Int pos, GameObject roomPrefab, Cell.RoomType roomType, bool isBlocked = false, bool isBoss = false, bool isVisit = false)
     {
         // 방 오브젝트를 복제하여 씬에 배치하고, 그 인스턴스를 cellObject로 저장
         GameObject roomInstance = Instantiate(roomPrefab, new Vector3(pos.x * roomSpacing, pos.y * -roomSpacing, 0), Quaternion.identity);
@@ -779,17 +807,18 @@ public class MapManager : MonoBehaviour
         cell.cellObject = roomInstance;  // 복제된 인스턴스를 저장
         cell.isBlocked = isBlocked;
         cell.isBoss = isBoss;
-        cell.minimap_Obj = PlaceMinimap(map_Tf, map_Mark_Prefab, pos, isBlocked);
+        cell.roomType = roomType;
+        cell.minimap_Obj = PlaceMinimap(map_Tf, cell.roomType, pos, isBlocked);
         cell.isVisit = isVisit;
     }
 
     // 던전에 맞춰서 미니맵 생성 메서드
-    private GameObject PlaceMinimap(Transform parent, GameObject prefab, Vector2Int pos, bool isBlocked)
+    private GameObject PlaceMinimap(Transform parent, Cell.RoomType roomType, Vector2Int pos, bool isBlocked)
     {
         if (!isBlocked)
         {
             // 미니맵 생성 및 부모 설정
-            GameObject miniMaps = Instantiate(prefab);
+            GameObject miniMaps = Instantiate(GetRoomTypeMinimapIcons(roomType));
 
             // miniMaps를 map_Tf의 자식으로 설정
             miniMaps.transform.SetParent(parent);
@@ -804,6 +833,23 @@ public class MapManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    private GameObject GetRoomTypeMinimapIcons(Cell.RoomType roomType)
+    {
+        switch (roomType) 
+        {
+            case Cell.RoomType.RestRoom:
+                return map_Mark_Icon_Prefabs[1];
+            case Cell.RoomType.ChestRoom:
+                return map_Mark_Icon_Prefabs[2];
+            case Cell.RoomType.BattleRoom:
+                return map_Mark_Icon_Prefabs[3];
+            case Cell.RoomType.BossRoom:
+                return map_Mark_Icon_Prefabs[4];
+            default:
+                return map_Mark_Icon_Prefabs[0];
+        }
     }
 
 
