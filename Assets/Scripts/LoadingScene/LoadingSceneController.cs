@@ -77,7 +77,7 @@ public class LoadingSceneController : MonoBehaviour
     [SerializeField] Image progressBar;
     [SerializeField] TextMeshProUGUI loadingText;
     public static string nextScene;
-    bool FirstGameStart = false;//∫ÙµÂ«“∂ß true∑Œ πŸ≤„¡‡æﬂ«‘
+    bool FirstGameStart = true;//∫ÙµÂ«“∂ß true∑Œ πŸ≤„¡‡æﬂ«‘
     public static void LoadScene(string _sceneName)
     {
         //Debug.Log($"Run LoadScene: {_sceneName}");
