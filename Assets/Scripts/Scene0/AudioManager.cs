@@ -40,6 +40,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] skelletone_sfxClip;//skelleton
     public AudioClip[] skeletonWizard_sfxClip;// Boss
     public AudioClip[] puppetHuman_sfxClip;// hero
+    public AudioClip[] Golem_sfxClip;// Gollem
 
     #endregion
     public enum Sfx

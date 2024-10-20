@@ -3993,23 +3993,30 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bdefa0a9a39357e4d96daece64a004f9, type: 3}
   - {fileID: 8300000, guid: b1d310eb3ea759a4abcf5a40ed07b0b8, type: 3}
   - {fileID: 8300000, guid: 6eb44c41a6ac2ca459917ab6dd740676, type: 3}
+  - {fileID: 8300000, guid: 6e36424f4d1ac8c4fa2116baf5842c55, type: 3}
+  - {fileID: 8300000, guid: 78f91413ec670004897efc49c79953d1, type: 3}
   sfxVolume: 0.5
   channels: 10
   hero_sfxClip:
   - {fileID: 8300000, guid: b41fa360e9f59dd419dd7f5bc06c78b9, type: 3}
   - {fileID: 8300000, guid: 18824bdfa5e909945bfcdc5f4a222e46, type: 3}
+  - {fileID: 8300000, guid: eedc69e8db3c5d1478996fe89480072b, type: 3}
   ranger_sfxClip:
   - {fileID: 8300000, guid: 1ccf3bcc0cd839248bb63b9e59fae1d3, type: 3}
   - {fileID: 8300000, guid: dd6ea05d5575f6f469f325508bde4bd1, type: 3}
+  - {fileID: 8300000, guid: eb5f9a6de029d994d92557a5108b8e38, type: 3}
   wizard_sfxClip:
   - {fileID: 8300000, guid: 139cbd61740e76a4ab74374ed5cd6056, type: 3}
-  - {fileID: 8300000, guid: a7118615720f5524db1da501eb424028, type: 3}
+  - {fileID: 8300000, guid: 5a6528935cd54344eaa6a773caa461aa, type: 3}
+  - {fileID: 8300000, guid: 81cec9512f6789845bc5137eb8a2d37d, type: 3}
   knight_sfxClip:
   - {fileID: 8300000, guid: ffe1c74f24fed26458290c2985178832, type: 3}
   - {fileID: 8300000, guid: 8dc100f7d5f93074ebd848ec82a42df7, type: 3}
+  - {fileID: 8300000, guid: 3f061a78320dfab4d94949e4cd8615ea, type: 3}
   slime_sfxClip:
   - {fileID: 8300000, guid: e5dd7fae7a9011445baf0196fbfcf489, type: 3}
   - {fileID: 8300000, guid: b6dc1bde3092be94281b0ea4b2b2b3ed, type: 3}
+  - {fileID: 8300000, guid: 2a5c0dbd7fa9c5c45ac37f5091103191, type: 3}
   gobline_sfxClip:
   - {fileID: 8300000, guid: 525d534c4aeb54542b5aa0664f586f00, type: 3}
   - {fileID: 8300000, guid: 7bdb0c319df7ca34a9583d771cda2214, type: 3}
@@ -4019,8 +4026,17 @@ MonoBehaviour:
   skelletone_sfxClip:
   - {fileID: 8300000, guid: 1a5395130b6beed4d8cce71ff4a5af43, type: 3}
   - {fileID: 8300000, guid: 46893be0329284d488cfea35a52cbf91, type: 3}
-  skeletonWizard_sfxClip: []
-  puppetHuman_sfxClip: []
+  skeletonWizard_sfxClip:
+  - {fileID: 8300000, guid: b882d14c555550940bf46e49776b4394, type: 3}
+  - {fileID: 8300000, guid: 8fb4f94f4d5173f4a898fbf4df862f93, type: 3}
+  - {fileID: 8300000, guid: af243e34d0983c44eb484ee678c11fa1, type: 3}
+  puppetHuman_sfxClip:
+  - {fileID: 8300000, guid: b41fa360e9f59dd419dd7f5bc06c78b9, type: 3}
+  - {fileID: 8300000, guid: 0390e75a951a38842bd99fe9ee96ac19, type: 3}
+  Golem_sfxClip:
+  - {fileID: 8300000, guid: f24365f781fc18d489ef054017301574, type: 3}
+  - {fileID: 8300000, guid: 8515f49ec12aca54797ac5956cc9bd6c, type: 3}
+  - {fileID: 8300000, guid: f716820cbc59d1d45aeea2a6f0baed53, type: 3}
 --- !u!4 &1750171242
 Transform:
   m_ObjectHideFlags: 0
