@@ -166,6 +166,10 @@ public class TutorialManager : MonoBehaviour
                 battle_Start.additionalShaderChannels = AdditionalCanvasShaderChannels.TexCoord1;
                 battle_Start.overrideSorting = true;
                 battle_Start.sortingOrder = 1;
+                BattleManager.Instance.ui.battleStart.GetComponent<Button>().interactable = false;
+
+
+                BattleManager.Instance.ui.ui_Tutorial_Deploy.SetActive(true);
 
                 if (BattleManager.Instance.ui.ui_Tutorial_Deploy.activeSelf)
                 {
@@ -254,6 +258,19 @@ public class TutorialManager : MonoBehaviour
                 BattleManager.Instance.ui.dialogue_Bg.SetActive(false);
                 BattleManager.Instance.dialogue.ONOFF(false);
                 break;
+            case 22: // 상성 튜토리얼 시작
+                BattleManager.Instance.ui.ui_Tutorial_Deploy.SetActive(true);
+                if (BattleManager.Instance.ui.ui_Tutorial_Deploy.activeSelf)
+                {
+                    BattleManager.Instance.ui.ui_Tutorial_Deploy.transform.GetChild((quest_cnt - quest_cnt) + 5).gameObject.SetActive(true);
+                }
+
+                BattleManager.Instance.dialogue.ONOFF(true);
+                BattleManager.Instance.dialogue.NextDialogue();
+                break;
+            case 23: // 끝
+                EndTutorial(quest_cnt);
+                break;
             default:
                 Debug.Log("아직 구현안함");
                 break;
@@ -335,7 +352,9 @@ public class TutorialManager : MonoBehaviour
                 Debug.Log("전투 시작 버튼 튜토리얼 끝");
                 Destroy(BattleManager.Instance.ui.battleStart.GetComponent<Canvas>());
                 BattleManager.Instance.ui.dialogue_Box.transform.position = new Vector3(BattleManager.Instance.ui.dialogue_Box.transform.position.x, 10f, 0);
+                BattleManager.Instance.ui.ui_Tutorial_Deploy.SetActive(false);
                 BattleManager.Instance.ui.ui_Tutorial_Deploy.transform.GetChild((quest_cnt - quest_cnt) + 3).gameObject.SetActive(false);
+                BattleManager.Instance.ui.battleStart.GetComponent<Button>().interactable = true;
                 break;
             case 14:
                 // 사용하지 않는 튜토리얼
@@ -394,6 +413,14 @@ public class TutorialManager : MonoBehaviour
                 BattleManager.Instance.ui.dialogue_Bg.SetActive(true);
                 BattleManager.Instance.ui.ui_Tutorial_Rest.SetActive(false);
                 BattleManager.Instance.ui.ui_Tutorial_Rest.transform.GetChild((quest_cnt - quest_cnt) + 6).gameObject.SetActive(false);
+
+                BattleManager.Instance.dialogue.ONOFF(true);
+                BattleManager.Instance.dialogue.NextDialogue();
+                break;
+            case 23: // 상성 튜토리얼 끝
+                BattleManager.Instance.ui.dialogue_Bg.SetActive(true);
+                BattleManager.Instance.ui.ui_Tutorial_Deploy.SetActive(false);
+                BattleManager.Instance.ui.ui_Tutorial_Deploy.transform.GetChild((quest_cnt - quest_cnt) + 5).gameObject.SetActive(false);
 
                 BattleManager.Instance.dialogue.ONOFF(true);
                 BattleManager.Instance.dialogue.NextDialogue();

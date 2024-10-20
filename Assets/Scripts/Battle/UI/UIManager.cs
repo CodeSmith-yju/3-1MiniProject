@@ -95,6 +95,14 @@ public class UIManager : MonoBehaviour
             {
                 if (BattleManager.Instance.dialogue != null && dialogue_Box.activeSelf)
                     return;
+                else if (attribute_Popup.activeSelf)
+                    CancelPopup(attribute_Popup);
+                else if (alert_Popup.activeSelf)
+                    CancelPopup(alert_Popup);
+                else if (event_Alert_Popup.activeSelf)
+                    CancelPopup(event_Alert_Popup);
+                else if (event_Popup.activeSelf)
+                    CancelPopup(event_Popup);
                 else
                 {
                     OpenPopup(option_UI);

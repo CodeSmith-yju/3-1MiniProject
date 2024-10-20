@@ -144,13 +144,24 @@ public class BuffInit : MonoBehaviour
     // 마우스가 해당 오브젝트에 들어왔을 때
     private void OnMouseEnter()
     {
-        ShowTooltip();
+        if (BattleManager.Instance.dialogue != null) 
+        {
+            if (!BattleManager.Instance.ui.popup_Bg.activeSelf && !BattleManager.Instance.ui.dialogue_Bg.activeSelf && !BattleManager.Instance.ui.item_Use_UI.activeSelf)
+                ShowTooltip();
+        }
+        else
+        {
+            if (!BattleManager.Instance.ui.popup_Bg.activeSelf && !BattleManager.Instance.ui.item_Use_UI.activeSelf)
+                ShowTooltip();
+        }
+        
     }
 
     // 마우스가 해당 오브젝트에서 나갔을 때
     private void OnMouseExit()
     {
-        HideTooltip();
+        if (buffTooltip.transform.GetChild(0).gameObject.activeSelf)
+            HideTooltip();
     }
 
     private void OnMouseOver()

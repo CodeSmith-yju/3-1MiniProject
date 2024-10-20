@@ -110,7 +110,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -384833619, guid: 986ea523ba2469646b8ecf36617b8b27, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -260,16 +260,15 @@ MonoBehaviour:
   atkDmg: 0
   atkSpd: 0
   atkRange: 0
+  able_Skill: 0
+  isMelee: 0
+  _curstate: 0
+  attribute: 0
   isAttack: 0
   isAtkDone: 0
   isDie: 0
-  isMelee: 0
-  able_Skill: 0
-  agent: {fileID: 0}
   ani: {fileID: 6863927674413737960}
-  _curstate: 0
   player_Name: 
   level: 0
-  class_Icon: {fileID: 21300000, guid: 02ff976d39577774bb44b83610e61dec, type: 3}
   class_Portrait: {fileID: 21300000, guid: 9cf8bc35907895d43ab4103cf476f1bc, type: 3}
   job: 3

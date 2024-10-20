@@ -110,7 +110,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d4f6da26d0c22f4459aa3f2d6c45b951, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -207,13 +207,13 @@ MonoBehaviour:
   able_Skill: 0
   isMelee: 0
   _curstate: 0
+  attribute: 0
   isAttack: 0
   isAtkDone: 0
   isDie: 0
   ani: {fileID: 1876938298027869184}
   player_Name: Ranger
   level: 5
-  class_Icon: {fileID: 21300000, guid: bbf8638a8a75d9c42b93639213c92c9b, type: 3}
   class_Portrait: {fileID: 21300000, guid: af25818ea151a16429ceef809d355f55, type: 3}
   job: 2
 --- !u!70 &1185456871789358827

@@ -221,7 +221,7 @@ public class MapManager : MonoBehaviour
         for (int i = 0; i < minBattleRooms; i++)
         {
             Vector2Int randomPos = GetRandomPosition(availablePositions);
-            SetRoomValue(randomPos, battleRoomPrefabs[Random.Range(0, battleRoomPrefabs.Length)]);
+            SetRoomValue(randomPos, DungeondifficultyLevel(GameUiMgr.single.dungeon_Level));
         }
 
         int reservedEmptyRooms = 1;
@@ -337,7 +337,7 @@ public class MapManager : MonoBehaviour
 
         if (randomValue < 85)  // 85% È®·ü·Î ÀüÅõ ¹æ ¹èÄ¡
         {
-            return battleRoomPrefabs[Random.Range(0, battleRoomPrefabs.Length)];
+            return DungeondifficultyLevel(GameUiMgr.single.dungeon_Level);
         }
         else if (randomValue < 90)  // 5% È®·ü·Î »óÀÚ ¹æ
         {
@@ -346,6 +346,51 @@ public class MapManager : MonoBehaviour
         else  // 10% È®·ü·Î ÈÞ½Ä ¹æ
         {
             return restRoomPrefab;
+        }
+    }
+
+    private GameObject DungeondifficultyLevel(int level)
+    {
+        int randomValue = Random.Range(0, 100);
+        switch (level)
+        {
+            case 0: // ½¬¿ò
+                if (randomValue < 90) // 95ÇÁ·Î È®·ü·Î °íºí¸°, ÆÛÇÃ ½½¶óÀÓ, ½½¶óÀÓ Á¶ÇÕ ¹æ
+                {
+                    return battleRoomPrefabs[Random.Range(0, 3)];
+                }
+                else // 10ÇÁ·Î È®·ü·Î ½ºÄÌ·¹Åæ, °ñ·½ ¹æ
+                {
+                    return battleRoomPrefabs[Random.Range(3, 6)];
+                }
+            case 1: // º¸Åë
+                if (randomValue < 30) // 30ÇÁ·Î È®·ü·Î °íºí¸°, ÆÛÇÃ ½½¶óÀÓ, ÀÏ¹Ý ½½¶óÀÓ Á¶ÇÕ ¹æ
+                {
+                    return battleRoomPrefabs[Random.Range(0, 3)];
+                }
+                else if (randomValue < 90) // 60ÇÁ·Î È®·ü·Î ½ºÄÌ·¹Åæ, °ñ·½ ¹æ
+                {
+                    return battleRoomPrefabs[Random.Range(3, 6)];
+                }
+                else // 10ÇÁ·Î È®·ü·Î ¾ÆÀÌ½º °ñ·½, ÆÄÀÌ¾î °ñ·½, ÆÛÆê ÈÞ¸Õ Á¶ÇÕ ¹æ
+                {
+                    return battleRoomPrefabs[Random.Range(6, battleRoomPrefabs.Length)];
+                }
+            case 2: // ¾î·Á¿ò
+                if (randomValue < 20) // 20ÇÁ·Î È®·ü·Î °íºí¸°, ÆÛÇÃ ½½¶óÀÓ, ÀÏ¹Ý ½½¶óÀÓ Á¶ÇÕ ¹æ
+                {
+                    return battleRoomPrefabs[Random.Range(0, 3)];
+                }
+                else if (randomValue < 50) // 30ÇÁ·Î È®·ü·Î ½ºÄÌ·¹Åæ, °ñ·½ ¹æ
+                {
+                    return battleRoomPrefabs[Random.Range(3, 6)];
+                }
+                else // 30ÇÁ·Î È®·ü·Î ¾ÆÀÌ½º °ñ·½, ÆÄÀÌ¾î °ñ·½, ÆÛÆê ÈÞ¸Õ Á¶ÇÕ ¹æ
+                {
+                    return battleRoomPrefabs[Random.Range(6, battleRoomPrefabs.Length)];
+                }
+            default:
+                return battleRoomPrefabs[Random.Range(0, battleRoomPrefabs.Length)];
         }
     }
 
