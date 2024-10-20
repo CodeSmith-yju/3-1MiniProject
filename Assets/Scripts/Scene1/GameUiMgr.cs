@@ -693,17 +693,38 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         this.player_Cur_EXP = GameMgr.playerData[0].player_cur_Exp;
         
 
-        s_HP.value = this.player_Cur_HP / this.player_Max_HP;
-        s_SN.value = this.player_Cur_SN / this.player_Max_SN;
-        s_EXP.value = this.player_Cur_EXP / this.player_Max_EXP;
+        //s_HP.value = this.player_Cur_HP / this.player_Max_HP;
+        //s_SN.value = this.player_Cur_SN / this.player_Max_SN;
+        //s_EXP.value = this.player_Cur_EXP / this.player_Max_EXP;
 
         SliderChange();
     }
     public void SliderChange()
     {
-        s_HP.value = this.player_Cur_HP / this.player_Max_HP;
-        s_SN.value = this.player_Cur_SN / this.player_Max_SN;
-        s_EXP.value = this.player_Cur_EXP / this.player_Max_EXP;
+        s_HP.value = GameMgr.playerData[0].cur_Player_Hp / GameMgr.playerData[0].max_Player_Hp;//this.player_Cur_HP / this.player_Max_HP;
+        s_SN.value = GameMgr.playerData[0].cur_Player_Sn / GameMgr.playerData[0].max_Player_Sn;
+        s_EXP.value = GameMgr.playerData[0].player_cur_Exp / GameMgr.playerData[0].player_max_Exp;
+
+        if (GameMgr.playerData[0].cur_Player_Sn < 15)
+        {
+            string hexColor = "#D26100";
+            Image fillImage = s_SN.fillRect.GetComponent<Image>();
+            if (ColorUtility.TryParseHtmlString(hexColor, out Color color))
+            {
+                fillImage.color = color; // 이미지 색상 변경
+            }
+        }
+        else
+        {
+            string hexColor = "#22D200";
+            Image fillImage = s_SN.fillRect.GetComponent<Image>();
+            if (ColorUtility.TryParseHtmlString(hexColor, out Color color))
+            {
+                fillImage.color = color; // 이미지 색상 변경
+            }
+
+        }
+
         GoldChanger();
     }
     public void GoldChanger()
