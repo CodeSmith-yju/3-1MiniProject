@@ -104,7 +104,12 @@ public class Ally : BaseEntity
 
     public void DieSound(int index)
     {
-       AudioManager.single.EnemySound(index, index, 0);
+       AudioManager.single.PlayerSound(index, index, 0);
+    }
+
+    public void SkillSound(int index)
+    {
+        AudioManager.single.PlayerSound(index, index, 2);
     }
 
 }
