@@ -340,18 +340,23 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             GameLoad();
             SetPlayerDatas();
-            Debug.Log("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-            Debug.Log("게임데이터를 불러온 다음입니다.");
 
-            Debug.Log("PlayerData - QID: " + GameUiMgr.single.questMgr.questId);
-            Debug.Log("PlayerData - AID: " + GameUiMgr.single.questMgr.questActionIndex);
-            Debug.Log("NowGold: " + GameMgr.playerData[0].player_Gold);
-            Debug.Log("Now_SN" + GameMgr.playerData[0].cur_Player_Sn);
-            Debug.Log("Now_HP" + GameMgr.playerData[0].cur_Player_Hp);
+            TargetSlotsRefresh();
+            GameUiMgr.single.slots = GameUiMgr.single.slotHolder.GetComponentsInChildren<Slot>();
+            Inventory.Single.onChangeItem += RedrawSlotUI;
 
-            Debug.Log("Now_Lv" + GameMgr.playerData[0].player_level);
-            Debug.Log("Now_cur - exp" + GameMgr.playerData[0].player_cur_Exp);
-            Debug.Log("Now_max - exp" + GameMgr.playerData[0].player_max_Exp);
+            /*//Debug.Log("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+            //Debug.Log("게임데이터를 불러온 다음입니다.");
+
+            //Debug.Log("PlayerData - QID: " + GameUiMgr.single.questMgr.questId);
+            //Debug.Log("PlayerData - AID: " + GameUiMgr.single.questMgr.questActionIndex);
+            //Debug.Log("NowGold: " + GameMgr.playerData[0].player_Gold);
+            //Debug.Log("Now_SN" + GameMgr.playerData[0].cur_Player_Sn);
+            //Debug.Log("Now_HP" + GameMgr.playerData[0].cur_Player_Hp);
+
+            //Debug.Log("Now_Lv" + GameMgr.playerData[0].player_level);
+            //Debug.Log("Now_cur - exp" + GameMgr.playerData[0].player_cur_Exp);
+            //Debug.Log("Now_max - exp" + GameMgr.playerData[0].player_max_Exp);*/
 
             Debug.Log("Load Type: " + GameMgr.single.LoadChecker());
         }
@@ -405,7 +410,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         TutorialDungeonClear();
         //Tooltip
         SetTooltip();
-
 
     }
 
@@ -1208,10 +1212,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             Debug.Log("Run SoundEffect: Equip On/Off");
 
             TakeOffItem(ref nowSlot);
-            addEquipPanel.gameObject.SetActive(false);
 
             AllEquipChek();
             RedrawSlotUI();
+            addEquipPanel.gameObject.SetActive(false);
             return;
         }
 
@@ -1226,6 +1230,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             questMgr.questActionIndex = 1;
         }
+        addEquipPanel.gameObject.SetActive(false);
     }
     public void OnNoButtonClick()
     {
@@ -1259,6 +1264,19 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             }
         }
     } 
+    void TargetSlotsRefresh()
+    {
+        for (int i = 0; i < targetSlots.Length; i++)
+        {
+            if (targetSlots[i].item.itemName == string.Empty)
+            {
+                if (targetSlots[i].item.modifyStack > 1)
+                {
+                    targetSlots[i].modifyStack.gameObject.SetActive(true);
+                }
+            }
+        }
+    }
     /*
      public void WearEquipment()
     {
@@ -1403,7 +1421,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         nowSlot = null;
 
-        addEquipPanel.gameObject.SetActive(false);
+        //addEquipPanel.gameObject.SetActive(false);
     }
     public void TakeOffItem(ref Slot _Slot)
     {

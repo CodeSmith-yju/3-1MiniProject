@@ -391,7 +391,7 @@ public class ShopMgr : MonoBehaviour
                     continue;
                 }
 
-                if (baskets[i].stack == playerShopItems[baskets[i].BasketShopIndex()].GetItem().itemStack)
+                if (baskets[i].stack == playerShopItems[baskets[i].BasketShopIndex()].GetItem().itemStack)// && baskets[i].stack > 1)
                 {
                     //인벤토리의 아이템이 제거되어야 하는 상황
                     foreach (var _item in Inventory.Single.items)
@@ -401,6 +401,10 @@ public class ShopMgr : MonoBehaviour
                             baskets[i].GetBasketShopSlot().gameObject.SetActive(false);
                             //Inventory.Single.RemoveItem(_item);
                             RemoveItems.Add(_item);
+                            /*for (int j = 0; j < baskets[i].GetBasketShopSlot().GetItem().itemStack; j++)
+                            {
+                                RemoveItems.Add(_item);
+                            }*/
                             Debug.Log("Remove Item :"+_item.itemName);
                             continue;
                         }
@@ -420,20 +424,30 @@ public class ShopMgr : MonoBehaviour
                         }
                     }
                     baskets[i].GetBasketShopSlot().SoldNow(baskets[i].stack); // 구매된만큼의 stack 차감
-                }
+                }//이새끼있는데까지 아마 안올거임
             }
+            
             for (int i = 0; i < RemoveItems.Count; i++)
             {
-                Inventory.Single.RemoveItem(RemoveItems[i]);
+                int _stack = 0;
+                if (RemoveItems[i].itemStack > 1)
+                {
+                    _stack = RemoveItems[i].itemStack;
+                    for (int j = 0; j < _stack; j++)
+                    {
+                        Inventory.Single.RemoveItem(RemoveItems[i]);
+                    }
+                }
+                else
+                    Inventory.Single.RemoveItem(RemoveItems[i]);
             }
             RemoveItems.Clear();
             //판매가 성공적으로 종료된 상황.
             GameMgr.playerData[0].player_Gold += basketsPrice;
-
             RefeshBaskets();
         }
 
-
+        GameUiMgr.single.RedrawSlotUI();
         //거래가 종료되면 결과가 반영되어야 함.
         Debug.Log("거래 종료 후 골드: " + GameMgr.playerData[0].player_Gold);
         GameUiMgr.single.SliderChange();
