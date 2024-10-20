@@ -164,6 +164,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     [SerializeField] ShopMgr shopMgr;
     [SerializeField] Blacksmith blacksmith;
     public GameObject SnB;
+    public bool shopCleaner = false;
 
     [Header("PopUp")]
     public PopUp popUp;
@@ -339,6 +340,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         if (GameMgr.single.LoadChecker() == true)
         {
             GameLoad();
+
             SetPlayerDatas();
 
             //TargetSlotsRefresh();
@@ -411,6 +413,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         //Tooltip
         SetTooltip();
         TargetSlotsRefresh();
+        if (GameUiMgr.single.shopCleaner == true)
+        {
+            GameUiMgr.single.shopCleaner = false;
+            shopMgr.RefreshShopItems();
+        }
     }
 
     //03-31 Method Inventory - try.4
@@ -474,14 +481,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     private void Update()
     {
-        /*if (nowSlot.itemIcon != null)
-        {
-            Debug.Log("이게어케있노 시ㅣ발말이되나");
-        }
-        else
-        {
-            Debug.Log("겠냐고 ㅋㅋ");
-        }*/
         // Minimap 
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -515,42 +514,35 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             else
             {*/
             ToggleSubButtons();
-
+            if (objSubButtonFrame.activeSelf)
+            {
+                ToggleSubButtons();
+            }
             if (inventory_panel.activeSelf)
             {
                 ActiveInventory();
                 tooltip.gameObject.SetActive(false);
-                if (objSubButtonFrame.activeSelf)
-                {
-                    ToggleSubButtons();
-                }
             }
-            else if (panelPartyBoard.activeSelf)
+            if (panelPartyBoard.activeSelf)
             {
                 ActiveParty();
-                if (objSubButtonFrame.activeSelf)
-                {
-                    ToggleSubButtons();
-                }
             }
-            else if (shopMgr.gameObject.activeSelf)
+            if (shopMgr.gameObject.activeSelf)
             {
                 ActiveShop();
-                if (objSubButtonFrame.activeSelf)
-                {
-                    ToggleSubButtons();
-                }
             }
-            else if (blacksmith.gameObject.activeSelf)
+            if (blacksmith.gameObject.activeSelf)
             {
-
+                ActiveBlackSmith();
             }
+            
+            
             /*else
             {
                 menuSet.SetActive(true);
                 uiEventCk = false;
             }*/
-    }
+        }
 
         //Inventory
         if (Input.GetKeyDown(KeyCode.I))
@@ -581,10 +573,20 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             {
                 panelPartyBoard.SetActive(false);
             }
-            else if (activeInventory == true)
+            if (activeInventory == true)
             {
                 inventory_panel.SetActive(false);
             }
+            if (blacksmith.gameObject.activeSelf)
+            {
+                blacksmith.gameObject.SetActive(false);
+            }
+            if (shopMgr.gameObject.activeSelf)
+            {
+                shopMgr.gameObject.SetActive(false);
+            }
+
+            uiEventCk = false;
         }
 
 
@@ -806,9 +808,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             }
             if (scanObj_ID == 4000)
             {
-                if (quest_Id >= 50)
+                Debug.Log("상점 npc와 대화종료되면 상점/대장간 ui오픈");
+                if (questMgr.questId >= 50)
                 {
-                    Debug.Log("상점 npc와 대화종료되면 상점/대장간 ui오픈");
                     SnB.SetActive(true);
                     move_doit = false;
                 }
@@ -1736,11 +1738,17 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             if (_items[i] != null && _items[i].itemType == targetSlots[i].item?.itemType)
             {
-                //DBConnector.LoadItemByCodeFromDB(_items[i].itemCode, ref _items[i].itemImage, ref _items[i].typeIcon);
-                
-                targetSlots[i].item = _items[i]; 
-                targetSlots[i].itemIcon.sprite = _items[i].itemImage;
-                targetSlots[i].itemIcon.gameObject.SetActive(true);
+                targetSlots[i].item = _items[i];
+                if (targetSlots[i].itemIcon != null)
+                {
+                    if (_items[i].itemImage != null)
+                    {
+                        DBConnector.LoadItemByCodeFromDB(_items[i].itemCode, ref _items[i].itemImage, ref _items[i].typeIcon);
+                        targetSlots[i].itemIcon.sprite = _items[i].itemImage;
+                        targetSlots[i].itemIcon.gameObject.SetActive(true);
+                    }
+                }
+
                 //targetSlots[i].UpdateSloutUI();
                 targetSlots[i].wearChek = true;
 

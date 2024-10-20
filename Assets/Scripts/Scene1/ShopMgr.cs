@@ -37,12 +37,12 @@ public class ShopMgr : MonoBehaviour
 
     private void Awake()
     {
-        shopSlots = new();
+        shopSlots ??= new();
+        playerShopItems ??= new();
     }
     private void Start()
     {
-        if (baskets == null)
-            baskets = new List<BasketBox>();
+        baskets ??= new List<BasketBox>();
 
         shopState = ShopState.BUY;
         OpenTap(shopState);
@@ -256,6 +256,7 @@ public class ShopMgr : MonoBehaviour
 
     public void OpenTap(ShopState _state)// isOpen == true '판매'탭 활성, isOpen == false '구매'탭 활성
     {
+        Debug.Log("OpenTab");
         shopState = _state;
 
         basketsPrice = 0;
@@ -263,13 +264,24 @@ public class ShopMgr : MonoBehaviour
         {
             baskets[i].gameObject.SetActive(false);
         }
-
         if (_state == ShopState.BUY)
         {
+            Debug.Log("Buy Tab");
             for (int i = 0; i < shopSlots.Count; i++)
             {
-                shopSlots[i].UseImgSet(false);
+                if (shopSlots[i].GetItem().itemStack > 0)
+                {
+                    shopSlots[i].UseImgSet(false);
+                }
             }
+            /*for (int i = 0; i < baskets.Count; i++)
+            {
+                if (baskets[i].GetBasketItem().itemCode == shopSlots)
+                {
+
+                }
+            }*/
+
             buyTab.interactable = false;
             sellTab.interactable = true;
 
@@ -456,6 +468,7 @@ public class ShopMgr : MonoBehaviour
         //거래가 종료되면 결과가 반영되어야 함.
         Debug.Log("거래 종료 후 골드: " + GameMgr.playerData[0].player_Gold);
         GameUiMgr.single.SliderChange();
+        AudioManager.single.PlaySfxClipChange(3);
         GoldSet();
         GameUiMgr.single.GoldChanger();
     }

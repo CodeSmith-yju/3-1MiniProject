@@ -867,6 +867,7 @@ GameObject:
   m_Component:
   - component: {fileID: 335027878754977375}
   - component: {fileID: 6246576304902855406}
+  - component: {fileID: 5327723216627103771}
   m_Layer: 5
   m_Name: XSmallIconButton (1)
   m_TagString: Untagged
@@ -950,6 +951,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5327723216627103771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3218855643547321840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de5fb5a34ac2aa449f332e348bedda9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3275382833655103421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,6 +1328,7 @@ GameObject:
   - component: {fileID: 2384828865698610438}
   - component: {fileID: 3735538630462974762}
   - component: {fileID: 6695278246505580161}
+  - component: {fileID: 1391988672117085249}
   m_Layer: 5
   m_Name: Btn_Renovate
   m_TagString: Untagged
@@ -1451,6 +1465,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 4, y: 4}
   m_UseGraphicAlpha: 1
+--- !u!114 &1391988672117085249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5115403215609822975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de5fb5a34ac2aa449f332e348bedda9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6066600413232083264
 GameObject:
   m_ObjectHideFlags: 0
@@ -2611,6 +2637,7 @@ GameObject:
   - component: {fileID: 951753896883631648}
   - component: {fileID: 2114266736998637704}
   - component: {fileID: 2040522610456082332}
+  - component: {fileID: 6780860278152434267}
   m_Layer: 5
   m_Name: Btn_Upgrade
   m_TagString: Untagged
@@ -2747,6 +2774,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 4, y: 4}
   m_UseGraphicAlpha: 1
+--- !u!114 &6780860278152434267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9026262199063565416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de5fb5a34ac2aa449f332e348bedda9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9046813085556099483
 GameObject:
   m_ObjectHideFlags: 0
