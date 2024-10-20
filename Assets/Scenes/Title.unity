@@ -4033,6 +4033,10 @@ MonoBehaviour:
   puppetHuman_sfxClip:
   - {fileID: 8300000, guid: b41fa360e9f59dd419dd7f5bc06c78b9, type: 3}
   - {fileID: 8300000, guid: 0390e75a951a38842bd99fe9ee96ac19, type: 3}
+  Golem_sfxClip:
+  - {fileID: 8300000, guid: f24365f781fc18d489ef054017301574, type: 3}
+  - {fileID: 8300000, guid: 8515f49ec12aca54797ac5956cc9bd6c, type: 3}
+  - {fileID: 8300000, guid: f716820cbc59d1d45aeea2a6f0baed53, type: 3}
 --- !u!4 &1750171242
 Transform:
   m_ObjectHideFlags: 0
