@@ -335,13 +335,13 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         Inventory.Single.onSlotCountChange += SlotChange;
         slots = slotHolder.GetComponentsInChildren<Slot>();
         Inventory.Single.onChangeItem += RedrawSlotUI;
-
+        shopMgr.RefreshShopItems();
         if (GameMgr.single.LoadChecker() == true)
         {
             GameLoad();
             SetPlayerDatas();
 
-            TargetSlotsRefresh();
+            //TargetSlotsRefresh();
             GameUiMgr.single.slots = GameUiMgr.single.slotHolder.GetComponentsInChildren<Slot>();
             Inventory.Single.onChangeItem += RedrawSlotUI;
 
@@ -362,7 +362,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
         else
         {
-            shopMgr.RefreshShopItems();
+            //shopMgr.RefreshShopItems();
             Debug.Log("지금은 게임 로드중이 아닙니다.");
         }
 
@@ -410,7 +410,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         TutorialDungeonClear();
         //Tooltip
         SetTooltip();
-
+        TargetSlotsRefresh();
     }
 
     //03-31 Method Inventory - try.4
@@ -800,6 +800,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             {
                 Debug.Log("ID : " + scanObj_ID);
             }
+            if (scanObj_ID == 1000 && questMgr.questId == 10)//대화 끝났으면 가이드제거
+            {
+                talkMgr.guideUi.ChangeGuideImg(GuideState.None);
+            }
             if (scanObj_ID == 4000)
             {
                 Debug.Log("상점 npc와 대화종료되면 상점/대장간 ui오픈");
@@ -844,6 +848,27 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         isActionTalk = true;
         uiEventCk = false;
         talkIndex++;
+
+        if (scanObj_ID == 1000 && questMgr.questId == 10)// 튜토리얼 가이드 팝업 활성화
+        {
+            switch (talkIndex)
+            {
+                case 3:
+                    talkMgr.guideUi.ChangeGuideImg(GuideState.Stamina);
+                    break;
+                case 5:
+                    talkMgr.guideUi.ChangeGuideImg(GuideState.Shop);
+                    break;
+                case 8:
+                    talkMgr.guideUi.ChangeGuideImg(GuideState.Renovate);
+                    break;
+                case 10:
+                    talkMgr.guideUi.ChangeGuideImg(GuideState.Upgrade);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
     //06- 11 Add
     private void SetTalkName(Sprite _sp)
@@ -1708,10 +1733,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             if (_items[i] != null && _items[i].itemType == targetSlots[i].item?.itemType)
             {
                 //DBConnector.LoadItemByCodeFromDB(_items[i].itemCode, ref _items[i].itemImage, ref _items[i].typeIcon);
-                /*targetSlots[i].itemIcon.sprite = _items[i].itemImage;
-                targetSlots[i].itemIcon.gameObject.SetActive(true);*/
-                targetSlots[i].item = _items[i];
-                targetSlots[i].UpdateSloutUI();
+                
+                targetSlots[i].item = _items[i]; 
+                targetSlots[i].itemIcon.sprite = _items[i].itemImage;
+                targetSlots[i].itemIcon.gameObject.SetActive(true);
+                //targetSlots[i].UpdateSloutUI();
                 targetSlots[i].wearChek = true;
 
                 //Debug.Log($"Equipment Loaded: {_items[i].itemName}");

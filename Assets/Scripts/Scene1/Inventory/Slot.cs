@@ -161,7 +161,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                     if (item.itemCode == 0)
                     {
                         GameUiMgr.single.nowSlot = this;
-                        GameUiMgr.single.popUp.SetPopUp(item.itemName+"을 사용 하시겠습니까?",PopUpState.SnPotion);
+                        GameUiMgr.single.popUp.SetPopUp(item.itemName+"을 \n 사용 하시겠습니까?",PopUpState.SnPotion);
                         GameUiMgr.single.popUp.gameObject.SetActive(true);
                     }
                     break;
