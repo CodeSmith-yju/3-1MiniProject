@@ -2004,7 +2004,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                             //_pd.partySlotData = _slot.partyData;// 06-05 수정
 
                             GameMgr.playerData.Add(_pd);
-
+                            _pd.playerAttribute = _slot.partyData.Elemental;
                             //_slot.partyData.obj_Data.GetComponent<Ally>().Init(_pd.playerIndex, _pd);
                             Debug.Log("최종파티원LV: " + _slot.partyData.level + ", 파티인덱스 :" + _slot.partyData.partyJobIndex);
                         }
@@ -2221,11 +2221,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
                     _slot.partyData.jobType
                     );
-
-                _pd.playerAttribute = _slot.partyData.Elemental;
                 //_pd.partySlotData = _slot.partyData;// 06-05 수정
 
                 GameMgr.playerData.Add(_pd);
+                _pd.playerAttribute = _slot.partyData.Elemental;
 
                 //_slot.partyData.obj_Data.GetComponent<Ally>().Init(_pd.playerIndex, _pd);
                 Debug.Log("최종파티원LV: " + _slot.partyData.level + ", 파티인덱스 :" + _slot.partyData.partyJobIndex);
