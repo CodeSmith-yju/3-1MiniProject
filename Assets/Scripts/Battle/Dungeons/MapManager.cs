@@ -10,7 +10,7 @@ public class Cell
 {
     public enum RoomType
     {
-        None,
+        NoneType,
         RestRoom,
         BattleRoom,
         ChestRoom,
@@ -211,7 +211,7 @@ public class MapManager : MonoBehaviour
         // 시작지점 미리 할당
         Vector2Int startPos = random_Start_Pos[Random.Range(0, random_Start_Pos.Count)];
         player_Pos = startPos;
-        SetRoomValue(player_Pos, startPrefab, Cell.RoomType.None);
+        SetRoomValue(player_Pos, startPrefab, Cell.RoomType.NoneType);
 
         // 이후 필요한 방들 배치 (필수 방 및 나머지 방들)
         PlaceMandatoryRooms();
@@ -226,7 +226,7 @@ public class MapManager : MonoBehaviour
         for (int i = 0; i < maxBlockedRooms; i++)
         {
             Vector2Int randomPos = GetRandomPosition(availablePositions);
-            SetRoomValue(randomPos, blockedRoomPrefab, Cell.RoomType.None, isBlocked: true);
+            SetRoomValue(randomPos, blockedRoomPrefab, Cell.RoomType.NoneType, isBlocked: true);
         }
 
         // 상자 방 1개 배치
@@ -468,7 +468,6 @@ public class MapManager : MonoBehaviour
 
     public void OpenMap(bool isOpen)
     {
-
         map_Camera_Big.gameObject.SetActive(isOpen);
         BattleManager.Instance.ui.mini_Map_Big.SetActive(isOpen);
         BattleManager.Instance.ui.mini_Map.SetActive(!isOpen);
@@ -486,7 +485,7 @@ public class MapManager : MonoBehaviour
             {
                 foreach (Cell cell in row.cells)
                 {
-                    if (cell.isVisit)
+                    if (cell.isVisit && cell.minimap_Obj != null)
                     {
                         cell.minimap_Obj.SetActive(true);
 
@@ -501,7 +500,8 @@ public class MapManager : MonoBehaviour
                     }
                     else
                     {
-                        cell.minimap_Obj.SetActive(false);
+                        if (cell.minimap_Obj != null)
+                            cell.minimap_Obj.SetActive(false);
                     }
                 }
             }
@@ -514,7 +514,8 @@ public class MapManager : MonoBehaviour
             {
                 foreach (Cell cell in row.cells)
                 {
-                    cell.minimap_Obj.SetActive(false);
+                    if (cell.minimap_Obj != null)
+                        cell.minimap_Obj.SetActive(false);
                 }
             }
 
@@ -846,8 +847,10 @@ public class MapManager : MonoBehaviour
                 return map_Mark_Icon_Prefabs[3];
             case Cell.RoomType.BossRoom:
                 return map_Mark_Icon_Prefabs[4];
-            default:
+            case Cell.RoomType.NoneType:
                 return map_Mark_Icon_Prefabs[0];
+            default:
+                return null;
         }
     }
 
@@ -865,6 +868,7 @@ public class MapManager : MonoBehaviour
                     if (cell.isClear == false)
                     {
                         cell.isClear = true;
+                        cell.isVisit = true;
                     }
                 }
             }

@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 4526574222029308080}
   m_Layer: 0
   m_Name: Puppet_Human
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -538,6 +538,7 @@ MonoBehaviour:
   exp_Cnt: 0
   gold_Cnt: 0
   item_Drop_Check: 0
+  sfx_Index: 0
 --- !u!114 &4526574222029308080
 MonoBehaviour:
   m_ObjectHideFlags: 0
