@@ -88,5 +88,8 @@ public class BasketBox : MonoBehaviour
     {
         return mySlot;
     }
-
+    public Item GetBasketItem()
+    {
+        return myItem;
+    }
 }

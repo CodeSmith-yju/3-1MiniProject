@@ -37,12 +37,12 @@ public class ShopMgr : MonoBehaviour
 
     private void Awake()
     {
-        shopSlots = new();
+        shopSlots ??= new();
+        playerShopItems ??= new();
     }
     private void Start()
     {
-        if (baskets == null)
-            baskets = new List<BasketBox>();
+        baskets ??= new List<BasketBox>();
 
         shopState = ShopState.BUY;
         OpenTap(shopState);
@@ -256,6 +256,7 @@ public class ShopMgr : MonoBehaviour
 
     public void OpenTap(ShopState _state)// isOpen == true 'ÆÇ¸Å'ÅÇ È°¼º, isOpen == false '±¸¸Å'ÅÇ È°¼º
     {
+        Debug.Log("OpenTab");
         shopState = _state;
 
         basketsPrice = 0;
@@ -263,13 +264,24 @@ public class ShopMgr : MonoBehaviour
         {
             baskets[i].gameObject.SetActive(false);
         }
-
         if (_state == ShopState.BUY)
         {
+            Debug.Log("Buy Tab");
             for (int i = 0; i < shopSlots.Count; i++)
             {
-                shopSlots[i].UseImgSet(false);
+                if (shopSlots[i].GetItem().itemStack > 0)
+                {
+                    shopSlots[i].UseImgSet(false);
+                }
             }
+            /*for (int i = 0; i < baskets.Count; i++)
+            {
+                if (baskets[i].GetBasketItem().itemCode == shopSlots)
+                {
+
+                }
+            }*/
+
             buyTab.interactable = false;
             sellTab.interactable = true;
 

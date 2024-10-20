@@ -294,7 +294,7 @@ public class AudioManager : MonoBehaviour
     {
         Debug.Log("설정 전_sfxPlayers[0]의 볼륨: " + sfxPlayers[0].volume);
         float baseVolume = sfxPlayers[0].volume;  // sfxPlayers[0]의 볼륨을 기준으로
-        float newVolume = baseVolume * 0.7f;  // 30%로 설정
+        float newVolume = baseVolume * 0.6f;  // 60%로 설정
 
         // sfxPlayers[1]부터 나머지 채널들의 볼륨을 30%로 설정
         for (int i = 1; i < sfxPlayers.Length; i++)
