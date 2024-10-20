@@ -67,7 +67,6 @@ public class MapManager : MonoBehaviour
     [Header("MiniMaps")]
     public Camera map_Camera;
     public Camera map_Camera_Big;
-    [SerializeField] GameObject map_Mark_Prefab;
     [SerializeField] Transform map_Tf;
     [SerializeField] GameObject[] map_Mark_Icon_Prefabs;
 
