@@ -10,7 +10,7 @@ public class AudioManager : MonoBehaviour
     [Header("#BGM")]
     public AudioClip[] bgmClips;// 배경음으로 사용될 음성파일 에셋을 담아둘 변수
     [HideInInspector] public AudioSource bgmPlayer;// 배경음성을 출력하는데 필요한 변수, private로 쓰고싶은데 왜인지안되서 일단이걸로
-    
+
     public float bgmVolume;//배경음 크기를 조절할 변수
 
 
@@ -45,7 +45,7 @@ public class AudioManager : MonoBehaviour
     #endregion
     public enum Sfx
     {
-         
+
     }
 
     public void EnemySound(int partyIndex, int _enemyIndex, int sfx_Index)
@@ -63,17 +63,19 @@ public class AudioManager : MonoBehaviour
 
         switch (_enemyIndex)
         {
+            //Slime
             case 0:
                 sfxPlayers[partyIndex].clip = slime_sfxClip[sfx_Index];
                 sfxPlayers[partyIndex].Play();
                 break;
+            //gobline
             case 1:
                 if (sfx_Index == 0)
                 {
                     // 현재 볼륨 저장
                     float originalVolume = sfxPlayers[partyIndex].volume;
 
-                    // 볼륨을 25%로 줄임
+                    // 볼륨을 12%로 줄임
                     sfxPlayers[partyIndex].volume = originalVolume * 0.12f;
 
                     // 클립 설정 및 재생
@@ -89,10 +91,12 @@ public class AudioManager : MonoBehaviour
                     sfxPlayers[partyIndex].Play();
                 }
                 break;
+            //mimic
             case 2:
                 sfxPlayers[partyIndex].clip = mimic_sfxClip[sfx_Index];
                 sfxPlayers[partyIndex].Play();
                 break;
+            //skellotone-worrior
             case 3:
                 if (sfx_Index == 0)
                 {
@@ -115,6 +119,22 @@ public class AudioManager : MonoBehaviour
                     sfxPlayers[partyIndex].Play();
                 }
                 break;
+            //해골법사
+            case 4:
+                sfxPlayers[partyIndex].clip = skeletonWizard_sfxClip[sfx_Index];
+                sfxPlayers[partyIndex].Play();
+                break;
+            //퍼핏
+            case 5:
+                sfxPlayers[partyIndex].clip = puppetHuman_sfxClip[sfx_Index];
+                sfxPlayers[partyIndex].Play();
+                break;
+            //골렘
+            case 6:
+                sfxPlayers[partyIndex].clip = Golem_sfxClip[sfx_Index];
+                sfxPlayers[partyIndex].Play();
+                break;
+
             default:
                 break;
         }
@@ -124,14 +144,14 @@ public class AudioManager : MonoBehaviour
     {
         // sfx_Index : 0 Die, 1 Attack, 2 Skill
 
-/*        if (sfx_Index != 0)
-        {
-            PlaySfxVolumeChange(partyIndex, 0.2f);
-        }
-        else
-        {
-            PlaySfxVolumeChange(partyIndex, 0.5f);
-        }*/
+        /*        if (sfx_Index != 0)
+                {
+                    PlaySfxVolumeChange(partyIndex, 0.2f);
+                }
+                else
+                {
+                    PlaySfxVolumeChange(partyIndex, 0.5f);
+                }*/
 
         switch (_enemyIndex)
         {
@@ -184,18 +204,18 @@ public class AudioManager : MonoBehaviour
         bgmPlayer.loop = true;// 음성이 반복되는가? Yes
         bgmPlayer.volume = bgmVolume;
         bgmPlayer.Play();
-        
+
 
         //효과음 플레이어 초기화
         GameObject sfxObject = new GameObject("SfxPlayer");
         sfxObject.transform.parent = transform;//AudioManager스크립트가 부착된 오브젝트의 자식오브젝트로 sfxPlayer오브젝트를 생성
         sfxPlayers = new AudioSource[channels];// 효과음 플레이어를 채널 개수만큼 초기화
 
-        for(int index = 0; index < sfxPlayers.Length; index++)
+        for (int index = 0; index < sfxPlayers.Length; index++)
         {
             //반복문을 통해 모든 효과음 오디오소스를 생성하면서 저장
             sfxPlayers[index] = sfxObject.AddComponent<AudioSource>();
-            sfxPlayers[index].playOnAwake=false;
+            sfxPlayers[index].playOnAwake = false;
             sfxPlayers[index].volume = sfxVolume;
         }
 
@@ -209,7 +229,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayBgmVolumeChange(float _val)
     {
-        Debug.Log(" Input val :" +_val);
+        Debug.Log(" Input val :" + _val);
         bgmPlayer.volume = _val / 1.5f;
         Debug.Log(" output val :" + bgmPlayer.volume);
         if (bgmPlayer.volume == 0)
@@ -221,7 +241,7 @@ public class AudioManager : MonoBehaviour
             bgmPlayer.mute = false;
         }
     }
-    
+
     public void PlaySfxClipChange(int _index)
     {
         sfxPlayers[0].clip = sfxClips[_index];
@@ -237,8 +257,9 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySfx(Sfx sfx)
     {
-        for(int i = 0; i< sfxPlayers.Length; i++){
-            int loopIndex = ( i + channelIndex) % sfxPlayers.Length;
+        for (int i = 0; i < sfxPlayers.Length; i++)
+        {
+            int loopIndex = (i + channelIndex) % sfxPlayers.Length;
 
             if (sfxPlayers[loopIndex].isPlaying)
                 continue;
