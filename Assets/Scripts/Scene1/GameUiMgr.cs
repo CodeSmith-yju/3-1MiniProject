@@ -341,7 +341,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             GameLoad();
             SetPlayerDatas();
 
-            TargetSlotsRefresh();
+            //TargetSlotsRefresh();
             GameUiMgr.single.slots = GameUiMgr.single.slotHolder.GetComponentsInChildren<Slot>();
             Inventory.Single.onChangeItem += RedrawSlotUI;
 
@@ -410,7 +410,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         TutorialDungeonClear();
         //Tooltip
         SetTooltip();
-
+        TargetSlotsRefresh();
     }
 
     //03-31 Method Inventory - try.4
@@ -1733,10 +1733,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             if (_items[i] != null && _items[i].itemType == targetSlots[i].item?.itemType)
             {
                 //DBConnector.LoadItemByCodeFromDB(_items[i].itemCode, ref _items[i].itemImage, ref _items[i].typeIcon);
-                /*targetSlots[i].itemIcon.sprite = _items[i].itemImage;
-                targetSlots[i].itemIcon.gameObject.SetActive(true);*/
-                targetSlots[i].item = _items[i];
-                targetSlots[i].UpdateSloutUI();
+                
+                targetSlots[i].item = _items[i]; 
+                targetSlots[i].itemIcon.sprite = _items[i].itemImage;
+                targetSlots[i].itemIcon.gameObject.SetActive(true);
+                //targetSlots[i].UpdateSloutUI();
                 targetSlots[i].wearChek = true;
 
                 //Debug.Log($"Equipment Loaded: {_items[i].itemName}");
