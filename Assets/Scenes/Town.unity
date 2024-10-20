@@ -12552,7 +12552,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c8625e6d62666342816f694ae079342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotnum: -1
   item:
     itemType: 1
     itemName: 
@@ -13032,9 +13031,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1560980201}
     m_Modifications:
+    - target: {fileID: 253074118794275502, guid: 88383d6125d45c544b627869867a36b3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 480
+      objectReference: {fileID: 0}
+    - target: {fileID: 253074118794275502, guid: 88383d6125d45c544b627869867a36b3, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 132
+      objectReference: {fileID: 0}
     - target: {fileID: 1677702293770183551, guid: 88383d6125d45c544b627869867a36b3, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4115353569711031683, guid: 88383d6125d45c544b627869867a36b3, type: 3}
+      propertyPath: m_text
+      value: "\uCCA0\uB85C \uB41C \uD2BC\uD2BC\uD55C \uAC11\uC637\uC774\uB2E4."
+      objectReference: {fileID: 0}
+    - target: {fileID: 4137509261521956819, guid: 88383d6125d45c544b627869867a36b3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 340
+      objectReference: {fileID: 0}
+    - target: {fileID: 4137509261521956819, guid: 88383d6125d45c544b627869867a36b3, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4137509261521956819, guid: 88383d6125d45c544b627869867a36b3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -36
       objectReference: {fileID: 0}
     - target: {fileID: 4853855108700221225, guid: 88383d6125d45c544b627869867a36b3, type: 3}
       propertyPath: m_Name
@@ -17262,7 +17285,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.6760595
+      m_AnimationSpeed: 1.706466
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -17273,7 +17296,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.1153834
+      m_AnimationSpeed: 2.3663049
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -17284,7 +17307,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.8818738
+      m_AnimationSpeed: 2.1918824
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -17295,7 +17318,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.8695176
+      m_AnimationSpeed: 1.0988841
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -17306,7 +17329,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.4618413
+      m_AnimationSpeed: 1.7974937
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -32041,7 +32064,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c8625e6d62666342816f694ae079342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotnum: -1
   item:
     itemType: 3
     itemName: 
@@ -41962,7 +41984,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.5649208
+      m_AnimationSpeed: 1.3274829
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -41973,7 +41995,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.4263849
+      m_AnimationSpeed: 2.306823
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -41984,7 +42006,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.9074199
+      m_AnimationSpeed: 1.0808437
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -41995,7 +42017,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.0356965
+      m_AnimationSpeed: 1.2557671
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -42006,7 +42028,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.6349325
+      m_AnimationSpeed: 1.4345775
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -52981,7 +53003,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.8680377
+      m_AnimationSpeed: 2.5749526
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -52992,7 +53014,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.7874863
+      m_AnimationSpeed: 2.9182248
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -53003,7 +53025,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.027168
+      m_AnimationSpeed: 1.9074562
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -53014,7 +53036,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.7379916
+      m_AnimationSpeed: 2.667892
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -53025,7 +53047,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.3563008
+      m_AnimationSpeed: 2.5992126
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -53411,7 +53433,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c8625e6d62666342816f694ae079342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotnum: -1
   item:
     itemType: 0
     itemName: 
@@ -57437,7 +57458,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c8625e6d62666342816f694ae079342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotnum: -1
   item:
     itemType: 2
     itemName: 

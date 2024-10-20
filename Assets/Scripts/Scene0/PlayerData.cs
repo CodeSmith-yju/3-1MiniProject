@@ -27,6 +27,7 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
     public bool isMelee;
 
     public Ally.JobClass job;
+    public BaseEntity.Attribute playerAttribute;
 
     public List<Item> listInventory;
     public List<Item> listEquipment;
@@ -70,6 +71,8 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
         
         listPartyDatas = new List<PartyData>();
         listPartyDeparture = new List<PartyData>();
+
+        playerAttribute = BaseEntity.Attribute.Normal;
     }
     public PlayerData(int index, float hp, float mp, float atk_spd, float atk_range, float atkDmg, int lv, string name, bool skil_able, bool melee, Ally.JobClass job)
     {

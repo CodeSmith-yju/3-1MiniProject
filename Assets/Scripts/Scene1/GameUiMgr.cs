@@ -274,7 +274,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
             Debug.Log("Make A New Test Item Code: " + _item.itemCode);
         }*/
-        for (int i = 7; i < 20; i++)
+        for (int i = 0; i < 20; i++)
         {
             Item _item = new Item().GenerateRandomItem(i);
 
@@ -470,6 +470,14 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     private void Update()
     {
+        /*if (nowSlot.itemIcon != null)
+        {
+            Debug.Log("이게어케있노 시ㅣ발말이되나");
+        }
+        else
+        {
+            Debug.Log("겠냐고 ㅋㅋ");
+        }*/
         // Minimap 
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -1097,8 +1105,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         GameMgr.playerData[0].listPartyDeparture = loadData.listPartyDeparture;
         // 인벤토리 및 장비 데이터 로드
         LoadInventory(loadData.listInven);
+        RedrawSlotUI();
         LoadEquipment(loadData.listEquip);
-
+        RedrawSlotUI();
         // 퀘스트 데이터 로드
         GameMgr.single.tutorial = loadData.tutorialClear;
 
@@ -1652,9 +1661,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 Debug.LogWarning("Null item found in inventory list.");
             }
         }
-
-        RedrawSlotUI();
-
         /*for (int i = 0; i < Inventory.Single.items.Count; i++)
         {
             DBConnector.LoadItemByCodeFromDB(Inventory.Single.items[i].itemCode, ref Inventory.Single.items[i].itemImage, ref Inventory.Single.items[i].typeIcon);
@@ -1681,10 +1687,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             if (_items[i] != null && _items[i].itemType == targetSlots[i].item?.itemType)
             {
-                DBConnector.LoadItemByCodeFromDB(_items[i].itemCode, ref _items[i].itemImage, ref _items[i].typeIcon);
-                targetSlots[i].itemIcon.sprite = _items[i].itemImage;
-                targetSlots[i].itemIcon.gameObject.SetActive(true);
+                //DBConnector.LoadItemByCodeFromDB(_items[i].itemCode, ref _items[i].itemImage, ref _items[i].typeIcon);
+                /*targetSlots[i].itemIcon.sprite = _items[i].itemImage;
+                targetSlots[i].itemIcon.gameObject.SetActive(true);*/
                 targetSlots[i].item = _items[i];
+                targetSlots[i].UpdateSloutUI();
                 targetSlots[i].wearChek = true;
 
                 //Debug.Log($"Equipment Loaded: {_items[i].itemName}");
@@ -1694,8 +1701,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 Debug.LogWarning($"Item in slot {i} is null or type mismatch.");
             }
         }
-
-        RedrawSlotUI();
     }
 
     /*public void LoadInventory(List<Item> _items)
@@ -2216,6 +2221,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
                     _slot.partyData.jobType
                     );
+
+                _pd.playerAttribute = _slot.partyData.Elemental;
                 //_pd.partySlotData = _slot.partyData;// 06-05 수정
 
                 GameMgr.playerData.Add(_pd);

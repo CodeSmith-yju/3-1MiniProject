@@ -35,7 +35,10 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             }
         }
 
-        itemIcon.gameObject.SetActive(true);
+        if (!itemIcon.gameObject.activeSelf)
+        {
+            itemIcon.gameObject.SetActive(true);
+        }
     }
     public void RemoveSlot()
     {
