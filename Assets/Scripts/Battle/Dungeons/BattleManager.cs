@@ -181,9 +181,13 @@ public class BattleManager : MonoBehaviour
             drag.enabled = true;
         }
 
+        int sfx_StartIndex = party_List.Count;
 
         foreach (Enemy obj in entity)
         {
+            obj.sfx_Index = sfx_StartIndex;
+            sfx_StartIndex++;
+
             NavMeshAgent nav = obj.GetComponent<NavMeshAgent>();
 
             if (obj.gameObject != null)
@@ -311,10 +315,13 @@ public class BattleManager : MonoBehaviour
                 // 배틀 시작 시 방 안에 있는 적들의 정보의 경험치량, 골드, 드랍 유무를 계산해서 임시변수에 넣음;
                 foreach (GameObject enemy in deploy_Enemy_List)
                 {
-                    float enemy_Exp = enemy.GetComponent<Enemy>().exp_Cnt;
-                    int enemy_gold = enemy.GetComponent<Enemy>().gold_Cnt;
-                    bool enemy_Item_Drop = enemy.GetComponent<Enemy>().item_Drop_Check;
+                    Enemy enemy_Obj = enemy.GetComponent<Enemy>();
 
+                    float enemy_Exp = enemy_Obj.exp_Cnt;
+                    int enemy_gold = enemy_Obj.gold_Cnt;
+                    bool enemy_Item_Drop = enemy_Obj.item_Drop_Check;
+
+                   
                     exp_Cnt += enemy_Exp;
                     gold_Cnt += enemy_gold;
 

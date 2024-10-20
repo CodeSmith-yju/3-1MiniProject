@@ -12,6 +12,10 @@ public class Enemy : BaseEntity
 
     private Item drop_Item;
 
+    [Header("Enemy_Sound")]
+    public int sfx_Index;
+
+
     protected override void Start()
     {
         base.Start();
@@ -69,17 +73,17 @@ public class Enemy : BaseEntity
     // 사운드 수정 예정
     public void AttackSound(int index)
     {
-        AudioManager.single.EnemySound(index, index, 1);
+        AudioManager.single.EnemySound(sfx_Index, index, 1);
     }
 
     public void DieSound(int index)
     {
-        AudioManager.single.EnemySound(index, index, 0);
+        AudioManager.single.EnemySound(sfx_Index, index, 0);
     }
 
     public void SkillSound(int index)
     {
-        AudioManager.single.EnemySound(index, index, 2);
+        AudioManager.single.EnemySound(sfx_Index, index, 2);
     }
 
 }
