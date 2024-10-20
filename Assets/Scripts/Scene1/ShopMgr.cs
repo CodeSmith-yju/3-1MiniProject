@@ -468,6 +468,7 @@ public class ShopMgr : MonoBehaviour
         //거래가 종료되면 결과가 반영되어야 함.
         Debug.Log("거래 종료 후 골드: " + GameMgr.playerData[0].player_Gold);
         GameUiMgr.single.SliderChange();
+        AudioManager.single.PlaySfxClipChange(3);
         GoldSet();
         GameUiMgr.single.GoldChanger();
     }

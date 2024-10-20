@@ -784,7 +784,7 @@ public class BattleManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "Tutorial")
             GameMgr.single.tutorial = true;
-
+        GameUiMgr.single.shopCleaner = true;
         GameUiMgr.single.GameSave();
         GameMgr.single.IsGameLoad(true);
         Debug.Log("Load Type: " + GameMgr.single.LoadChecker());

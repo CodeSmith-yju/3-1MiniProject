@@ -164,6 +164,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     [SerializeField] ShopMgr shopMgr;
     [SerializeField] Blacksmith blacksmith;
     public GameObject SnB;
+    public bool shopCleaner = false;
 
     [Header("PopUp")]
     public PopUp popUp;
@@ -339,6 +340,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         if (GameMgr.single.LoadChecker() == true)
         {
             GameLoad();
+
             SetPlayerDatas();
 
             //TargetSlotsRefresh();
@@ -411,6 +413,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         //Tooltip
         SetTooltip();
         TargetSlotsRefresh();
+        if (GameUiMgr.single.shopCleaner == true)
+        {
+            GameUiMgr.single.shopCleaner = false;
+            shopMgr.RefreshShopItems();
+        }
     }
 
     //03-31 Method Inventory - try.4
@@ -1731,11 +1738,17 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             if (_items[i] != null && _items[i].itemType == targetSlots[i].item?.itemType)
             {
-                //DBConnector.LoadItemByCodeFromDB(_items[i].itemCode, ref _items[i].itemImage, ref _items[i].typeIcon);
-                
-                targetSlots[i].item = _items[i]; 
-                targetSlots[i].itemIcon.sprite = _items[i].itemImage;
-                targetSlots[i].itemIcon.gameObject.SetActive(true);
+                targetSlots[i].item = _items[i];
+                if (targetSlots[i].itemIcon != null)
+                {
+                    if (_items[i].itemImage != null)
+                    {
+                        DBConnector.LoadItemByCodeFromDB(_items[i].itemCode, ref _items[i].itemImage, ref _items[i].typeIcon);
+                        targetSlots[i].itemIcon.sprite = _items[i].itemImage;
+                        targetSlots[i].itemIcon.gameObject.SetActive(true);
+                    }
+                }
+
                 //targetSlots[i].UpdateSloutUI();
                 targetSlots[i].wearChek = true;
 

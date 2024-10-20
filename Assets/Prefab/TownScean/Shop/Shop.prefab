@@ -748,6 +748,7 @@ GameObject:
   m_Component:
   - component: {fileID: 895821316067014388}
   - component: {fileID: 8547629445853935636}
+  - component: {fileID: 9173766585461252927}
   m_Layer: 5
   m_Name: XSmallIconButton (1)
   m_TagString: Untagged
@@ -831,6 +832,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &9173766585461252927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4996102744400694755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de5fb5a34ac2aa449f332e348bedda9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5481193341248150128
 GameObject:
   m_ObjectHideFlags: 0
@@ -1534,6 +1547,7 @@ GameObject:
   - component: {fileID: 8770247845202674212}
   - component: {fileID: 3068387360049695827}
   - component: {fileID: 5593163685799682760}
+  - component: {fileID: 6552517298329954616}
   m_Layer: 5
   m_Name: Sell_Tab
   m_TagString: Untagged
@@ -1670,6 +1684,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 4, y: 4}
   m_UseGraphicAlpha: 1
+--- !u!114 &6552517298329954616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7998071815798686020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de5fb5a34ac2aa449f332e348bedda9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8005483827687909409
 GameObject:
   m_ObjectHideFlags: 0

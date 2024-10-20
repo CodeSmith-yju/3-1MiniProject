@@ -73,7 +73,7 @@ public class Blacksmith : MonoBehaviour
         Refresh();
         OpenUpgrade();
         btn_Commit.interactable = false;
-
+        AudioManager.single.PlaySfxClipChange(3);
         yield break;
     }
 
