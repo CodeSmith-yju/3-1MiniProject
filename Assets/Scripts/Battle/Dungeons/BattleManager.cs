@@ -37,6 +37,7 @@ public class BattleManager : MonoBehaviour
     //public bool isMapDone = false;
 
     [Header("BuffTile")]
+    private Dictionary<PlayerData, PlayerStats> base_Stats = new Dictionary<PlayerData, PlayerStats>();
     public Dictionary<PlayerData, PlayerStats> temp_Stats = new Dictionary<PlayerData, PlayerStats>();
     public HashSet<Ally> buffedPlayers = new HashSet<Ally>();
     public bool buff_On = false;
@@ -122,11 +123,19 @@ public class BattleManager : MonoBehaviour
         {
             party_List.Add(GameUiMgr.single.lastDeparture[i].partyData.obj_Data);
 
-            temp_Stats[GameMgr.playerData[i]] = new PlayerStats(GameMgr.playerData[i].base_atk_Dmg, 
+            // 캐릭터가 가지고 있는 원래 스텟 데이터 (유동이 있는 스텟만 저장함)
+            base_Stats[GameMgr.playerData[i]] = new PlayerStats(GameMgr.playerData[i].base_atk_Dmg, 
                 GameMgr.playerData[i].max_Player_Hp, 
                 GameMgr.playerData[i].max_Player_Mp, 
                 GameMgr.playerData[i].atk_Speed);
-            // temp_Stats.Add(GameMgr.playerData[i], temp_Stats[GameMgr.playerData[i]]);
+
+            // 디버프, 버프로 유동적으로 이용하는 플레이어 스텟 데이터
+            temp_Stats.Add(GameMgr.playerData[i], new PlayerStats(
+            base_Stats[GameMgr.playerData[i]].temp_Dmg,
+            base_Stats[GameMgr.playerData[i]].temp_MaxHp,
+            base_Stats[GameMgr.playerData[i]].temp_MaxMp,
+            base_Stats[GameMgr.playerData[i]].temp_AtkSpd
+            ));
         }
 
         if (GameUiMgr.single.questMgr.questId == 40)
@@ -339,26 +348,28 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void ResetBuffs()
+    private void ResetStats()
     {
-        foreach (Ally buff_Player in buffedPlayers)
+        foreach (GameObject player_Obj in deploy_Player_List)
         {
-            PlayerData playerData = GameMgr.playerData[buff_Player.entity_index];
+            Ally player = player_Obj.GetComponent<Ally>();
+
+            PlayerData playerData = GameMgr.playerData[player.entity_index];
 
             // temp_Stats에서 해당 플레이어의 원래 스탯 찾기
-            if (temp_Stats.TryGetValue(playerData, out PlayerStats stats))
+            if (base_Stats.TryGetValue(playerData, out PlayerStats stats))
             {
                 // 원래 스탯 복원
-                float healthRatio = (buff_Player.max_Hp > 0) ? buff_Player.cur_Hp / buff_Player.max_Hp : 1;
+                float healthRatio = (player.max_Hp > 0) ? player.cur_Hp / player.max_Hp : 1;
 
 
                 playerData.base_atk_Dmg = stats.temp_Dmg;
                 playerData.max_Player_Hp = stats.temp_MaxHp;
                 playerData.max_Player_Mp = stats.temp_MaxMp;
 
-                buff_Player.cur_Hp = Mathf.Clamp(healthRatio * stats.temp_MaxHp, 0, stats.temp_MaxHp);
+                player.cur_Hp = Mathf.Clamp(healthRatio * stats.temp_MaxHp, 0, stats.temp_MaxHp);
 
-                playerData.cur_Player_Hp = buff_Player.cur_Hp;
+                playerData.cur_Player_Hp = player.cur_Hp;
 
                 // temp_Stats.Remove(playerData); // 스탯 초기화
             }
@@ -373,7 +384,7 @@ public class BattleManager : MonoBehaviour
         {
             poison_Check = false;
             StopCoroutine(Poison());
-            ResetBuffs(); // 버프 타일로 증가되기 전 스텟으로 리셋
+            ResetStats(); // 버프 타일로 증가되기 전 스텟으로 리셋
             if (deploy_Player_List.Count == 0)
             {
                 AudioManager.single.PlaySfxClipChange(10);
@@ -545,20 +556,21 @@ public class BattleManager : MonoBehaviour
 
         if (room.cur_Room.tag == "Battle")
         {
-            float event_Chance = event_Stack * 5f;
-
-            event_Chance = Mathf.Clamp(event_Chance, 0f, 50f);
-
-            float random_Event = UnityEngine.Random.Range(0, event_Chance);
-
-
-            if (random_Event < event_Chance)
+            if (event_Stack > 0)
             {
-                event_Trigger = true;
-                event_Stack = 0;
+                float event_Chance = event_Stack * 5f;
+
+                event_Chance = Mathf.Clamp(event_Chance, 0f, 50f);
+
+                float random_Event = UnityEngine.Random.Range(0, event_Chance);
+
+                if (random_Event < event_Chance)
+                {
+                    event_Trigger = true;
+                    event_Stack = 0;
+                }
             }
             
-
             Debug.Log("전투 방입니다.");
 
             if (room.FindRoom(room.cur_Room.gameObject).isBoss)
@@ -598,12 +610,16 @@ public class BattleManager : MonoBehaviour
                 {
                     Ally player_Ally = player.GetComponent<Ally>();
 
-                    if (player_Ally != null)
+                    if (player_Ally != null && player_Ally.cur_Hp > 0)
                     {
-                        if (player_Ally.cur_Hp > 0)
+                        PlayerData playerData = GameMgr.playerData[player_Ally.entity_index];
+
+                        if (temp_Stats.TryGetValue(playerData, out PlayerStats stats))
                         {
                             player_Ally.atkDmg *= 0.9f;
+                            stats.temp_Dmg = player_Ally.atkDmg;
                         }
+                        
                     }
                 }
                 break;

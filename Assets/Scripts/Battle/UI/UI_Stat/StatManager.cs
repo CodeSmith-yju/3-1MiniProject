@@ -22,6 +22,7 @@ public class StatManager : MonoBehaviour
     [Header("Image")]
     public Image player_Icon;
     public GameObject dead_Check;
+    public Image attribute_Icon;
 
     public bool isDead;
 
@@ -29,6 +30,7 @@ public class StatManager : MonoBehaviour
     {
         this.player = player;
         player_Icon.sprite = portrait;
+        //attribute_Icon.sprite = GameUiMgr.single.entityIconRS.dictn_ElementIcon[player.attribute];
 
         this.level_Text.text = level.ToString();
         this.name_Text.text = name;

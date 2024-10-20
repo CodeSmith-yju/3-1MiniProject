@@ -10,13 +10,14 @@ public class EnemyStatManager : MonoBehaviour
     public Slider hp;
     public TMP_Text hp_Text;
     bool hp_Check = false;
-    //public Slider mp;
-    //public TMP_Text mp_Text;
+    public Image attribute_Icon;
 
     private void Start()
     {
         enemy = GetComponent<Enemy>();
         hp_Check = true;
+
+        attribute_Icon.sprite = GameUiMgr.single.entityIconRS.dictn_ElementIcon[enemy.attribute];
     }
 
     private void Update()
