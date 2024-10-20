@@ -59,7 +59,7 @@ public class ShopMgr : MonoBehaviour
     }
     public void RefreshShopItems()
     {
-        Debug.Log("Make Shop Items");
+        //Debug.Log("Make Shop Items");
         //이 아래의 for문 생성로직은 GameUIMgr로 빼내야할거같음 여기서관리하기엔조금? 연계된 기능이많은듯
         for (int i = 0; i < 4; i++)
         {
@@ -438,6 +438,7 @@ public class ShopMgr : MonoBehaviour
         Debug.Log("거래 종료 후 골드: " + GameMgr.playerData[0].player_Gold);
         GameUiMgr.single.SliderChange();
         GoldSet();
+        GameUiMgr.single.GoldChanger();
     }
 
     void RefeshBaskets()

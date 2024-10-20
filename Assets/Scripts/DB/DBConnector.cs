@@ -483,8 +483,8 @@ public class DBConnector : MonoBehaviour
             item.typeIcon = ConvertBytesToSprite(typeIconBytes);
 
             // 불러온 바이트 길이 로그로 확인
-            Debug.Log("Item Image Bytes Length (After Loading): " + (itemImgBytes != null ? itemImgBytes.Length : 0));
-            Debug.Log("Type Icon Bytes Length (After Loading): " + (typeIconBytes != null ? typeIconBytes.Length : 0));
+            //Debug.Log("Item Image Bytes Length (After Loading): " + (itemImgBytes != null ? itemImgBytes.Length : 0));
+            //Debug.Log("Type Icon Bytes Length (After Loading): " + (typeIconBytes != null ? typeIconBytes.Length : 0));
 
             connection.Close();
             return item;

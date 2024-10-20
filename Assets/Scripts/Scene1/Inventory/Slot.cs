@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler/*, IBeginDragHandler, IDragHandler, IEndDragHandler*/
 {
-    public int slotnum;
+    //public int slotnum;
     public Item item;
     public Image itemIcon;
     public bool wearChek = false;

@@ -246,6 +246,7 @@ public class Blacksmith : MonoBehaviour
             Debug.Log("제작된 아이템: " + Inventory.Single.items[Inventory.Single.items.Count - 1].itemPower);
         }
         CommitAnimation();
+        GameUiMgr.single.GoldChanger();
     }
     public void OpenBlacksmith()
     {

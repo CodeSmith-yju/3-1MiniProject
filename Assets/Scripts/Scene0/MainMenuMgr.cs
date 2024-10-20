@@ -98,7 +98,7 @@ public class MainMenuMgr : MonoBehaviour
         if (GameMgr.single.popUp.gameObject.activeSelf == false)
         {
             GameMgr.single.popUp.gameObject.SetActive(true);
-            Debug.Log("Run if");
+            //Debug.Log("Run if");
         }
     }
 
@@ -114,36 +114,36 @@ public class MainMenuMgr : MonoBehaviour
         {
             // 오전 6시부터 오후 2시까지
             DoMorningWork();
-            Debug.Log(currentHour);
+            //Debug.Log(currentHour);
         }
         else if (currentHour >= 14 && currentHour < 20)
         {
             // 오후 2시부터 오후 8시까지
             DoEveningWork();
-            Debug.Log(currentHour);
+            //Debug.Log(currentHour);
         }
         else
         {
             // 그 외의 시간대 (오후 8시부터 다음 날 오전 6시까지)
             DoNightWork();
-            Debug.Log(currentHour);
+            //Debug.Log(currentHour);
         }
     }
     private void DoMorningWork()
     {
-        Debug.Log("현재는 오전 시간대입니다. 아침 작업을 수행합니다.");
+        //Debug.Log("현재는 오전 시간대입니다. 아침 작업을 수행합니다.");
         // 아침 작업 수행 코드 작성
     }
     private void DoEveningWork()
     {
-        Debug.Log("현재는 오후 시간대입니다. 저녁 작업을 수행합니다.");
+        //Debug.Log("현재는 오후 시간대입니다. 저녁 작업을 수행합니다.");
         // 저녁 작업 수행 코드 작성
         imgMenuBG.sprite = imgListBG[0];
 
     }
     private void DoNightWork()
     {
-        Debug.Log("현재는 밤 시간대입니다. 야간 작업을 수행합니다.");
+        //Debug.Log("현재는 밤 시간대입니다. 야간 작업을 수행합니다.");
         // 야간 작업 수행 코드 작성
     }
     /*public void RefreshTitleBtns()

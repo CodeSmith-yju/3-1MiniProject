@@ -416,7 +416,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             for (int i = 0; i < slots.Length; i++)
             {
-                slots[i].slotnum = i;
+                //slots[i].slotnum = i;
 
                 if (i < Inventory.Single.items.Count) // 인벤토리에 아이템이 있을 때만 버튼을 활성화
                     slots[i].GetComponent<Button>().interactable = true;
@@ -706,7 +706,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         s_EXP.value = this.player_Cur_EXP / this.player_Max_EXP;
         GoldChanger();
     }
-    private void GoldChanger()
+    public void GoldChanger()
     {
         tmp_PlayerGold.text = GameMgr.playerData[0].player_Gold.ToString();
         tmp_PlayerPartyTabGold.text = GameMgr.playerData[0].player_Gold.ToString();
@@ -1608,15 +1608,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         Inventory.Single.items.Clear();
         for (int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].slotnum > -1)
-            {
-                slots[i].RemoveSlot();  // 슬롯 초기화
-            }
-            else
-            {
-                Debug.Log("예외처리추가");
-            }
-            
+            slots[i].RemoveSlot();  // 슬롯 초기화
         }
 
         if (_items == null || _items.Count == 0)

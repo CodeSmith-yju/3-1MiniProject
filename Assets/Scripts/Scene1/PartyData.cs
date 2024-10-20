@@ -62,7 +62,7 @@ public class PartyData
         switch (jobType)
         {
             case Ally.JobClass.Ranger:
-                Debug.Log("Type Ranger, Generate Code: "+_Code);
+                //Debug.Log("Type Ranger, Generate Code: "+_Code);
                 partyHp = 15f + (_Lvel * 2f);
                 partyMp = 5f;
                 partyAtk = 2f + (_Lvel * 0.5f);
@@ -74,7 +74,7 @@ public class PartyData
                 able_Skill = true;
                 break;
             case Ally.JobClass.Wizard:
-                Debug.Log("Type wizard, Generate Code: " + _Code);
+                //Debug.Log("Type wizard, Generate Code: " + _Code);
                 partyHp = 15f + (_Lvel * 1f);
                 partyMp = 3f;
                 partyAtk = 3f + (_Lvel * 0.5f);
@@ -86,7 +86,7 @@ public class PartyData
                 able_Skill = true;
                 break;
             case Ally.JobClass.Knight:
-                Debug.Log("Type 3, Generate Code: " + _Code);
+                //Debug.Log("Type 3, Generate Code: " + _Code);
                 partyHp = 50f + (_Lvel * 5f);
                 partyMp = 5f;
                 partyAtk = 2f + (_Lvel * 0.3f);
@@ -100,11 +100,10 @@ public class PartyData
 /*            case 0://Player
                 break;*/
             default:
-                Debug.Log("플레이어캐릭터를위한 파티데이터가 생성될때 동작함");
-                type = "Default";
-                Debug.Log("Type d, Generate Code: " + _Code);
+                //Debug.Log("플레이어캐릭터를위한 파티데이터가 생성될때 동작함");
+                //type = "Default";
+                //Debug.Log("Type d, Generate Code: " + _Code);
                 // 스텟 상한 설정
-                
                 partyHp = GameMgr.playerData[0].max_Player_Hp + (_Lvel * 3f);
                 partyMp = GameMgr.playerData[0].max_Player_Mp - (_Lvel * 0.5f);
                 partyAtk = GameMgr.playerData[0].base_atk_Dmg + (_Lvel * 0.6f);

@@ -828,11 +828,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c8625e6d62666342816f694ae079342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotnum: 0
   item:
     itemType: 0
     itemName: 
-    itemStack: 1
+    itemStack: 0
     modifyStack: 0
     itemImage: {fileID: 0}
     typeIcon: {fileID: 0}

@@ -34,7 +34,7 @@ public class ItemResources : MonoBehaviour
         for (int i = 0; i < itemRS.Count; i++)
         {
             itemRS[i].PrimaryCode = itemRS[i].GetNewPK(12);
-            Debug.Log("===================================================\n" + itemRS[i].itemType);
+            //Debug.Log("===================================================" + itemRS[i].itemType);
             IconSet(itemRS[i]);
         }
     }

@@ -89,7 +89,7 @@ public class Inventory : MonoBehaviour
             Debug.LogWarning("아이템 이미지가 비어있습니다: " + _item.itemName);
             return false;
         }
-
+        Debug.Log("Loading item: " + _item.itemName); // 여기에 추가
         if (items.Count < slotCnt)//소유하고있는 아이템들의 개수가, 인벤토리 최대슬롯보다 작을때
         {
             // TODO: _item의 Tpye이 Consumer || Ect 일때, 뒤로 돌아가는 for문을 돌려서 현재 가진 가장아랫부분의, 동일한 itemCode인 item의 stack을 확인하여 stack이 9미만이면 stack ++ 9라면 add _item 하는 코드
