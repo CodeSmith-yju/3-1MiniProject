@@ -59,7 +59,7 @@ public class PlayerAction : MonoBehaviour
                 Debug.Log("스태미나가좀이상한데 못들어가야되는데 팝업넣었는데?");
                 Debug.Log("현재 스태미나: " + GameMgr.playerData[0].max_Player_Sn);
                 Debug.Log("현재 스태미나: " + GameMgr.playerData[0].cur_Player_Sn);
-                if (GameMgr.playerData[0].cur_Player_Sn <= 15)
+                if (GameMgr.playerData[0].cur_Player_Sn < 15)
                 {
                     GameUiMgr.single.popUp.SetPopUp("기력이 부족합니다.\n소지금을 10%잃고 회복합니다.", PopUpState.NoStamina);
                     return;
