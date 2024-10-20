@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -192,6 +193,16 @@ public class QuestMgr : MonoBehaviour
                     Debug.Log("Case 51");
                 }
                 break;
+        }
+
+        if (questId >= 50)
+        {
+            for (int i = 0; i < questIcons.Length; i++)
+            {
+                questIcons[i].SetActive(false);
+                GameUiMgr.single.questDesc.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(false);
+                GameUiMgr.single.tmp_PlayerRating.text = "9급 모험가";
+            }
         }
     }
     /*    Item questItem2;

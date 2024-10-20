@@ -41,6 +41,10 @@ public class PlayerAction : MonoBehaviour
                 {
                     rigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
                 }
+                else
+                {
+                    return;
+                }
             }
             else if (obj.id == 9000)
             {
