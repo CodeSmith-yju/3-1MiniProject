@@ -84,6 +84,14 @@ public class MapManager : MonoBehaviour
         new Vector2Int(3, 3),   // 우하단
     };
 
+    private List<Vector2Int> random_Start_Pos_Hard = new List<Vector2Int>
+    {
+        new Vector2Int(0, 0),   // 좌상단
+        new Vector2Int(0, 4),   // 좌하단
+        new Vector2Int(4, 0),   // 우상단
+        new Vector2Int(4, 4),   // 우하단
+    };
+
     Vector2Int[] directions = new Vector2Int[] // 방향 배열
     {
             new Vector2Int(0, -1),  // 위
@@ -209,8 +217,19 @@ public class MapManager : MonoBehaviour
                 mapRows.Add(row);
             }
         }
+
+        Vector2Int startPos;
+
         // 시작지점 미리 할당
-        Vector2Int startPos = random_Start_Pos[Random.Range(0, random_Start_Pos.Count)];
+        if (SetLevel(GameUiMgr.single.dungeon_Level) == 0)
+        {
+            startPos = random_Start_Pos[Random.Range(0, random_Start_Pos.Count)];
+        }
+        else
+        {
+            startPos = random_Start_Pos_Hard[Random.Range(0, random_Start_Pos.Count)];
+        }
+        
         player_Pos = startPos;
         SetRoomValue(player_Pos, startPrefab, Cell.RoomType.NoneType);
 
@@ -362,15 +381,15 @@ public class MapManager : MonoBehaviour
     {
         int randomValue = Random.Range(0, 100);
 
-        if (randomValue < 85)  // 85% 확률로 전투 방 배치
+        if (randomValue < 70)  // 70% 확률로 전투 방 배치
         {
             return new RoomInfo(DungeondifficultyLevel(GameUiMgr.single.dungeon_Level), Cell.RoomType.BattleRoom);
         }
-        else if (randomValue < 90)  // 5% 확률로 상자 방
+        else if (randomValue < 80)  // 10% 확률로 상자 방
         {
             return new RoomInfo(chestRoomPrefab, Cell.RoomType.ChestRoom);
         }
-        else  // 10% 확률로 휴식 방
+        else  // 20% 확률로 휴식 방
         {
             return new RoomInfo(restRoomPrefab, Cell.RoomType.RestRoom);
         }
@@ -382,7 +401,7 @@ public class MapManager : MonoBehaviour
         switch (level)
         {
             case 0: // 쉬움
-                if (randomValue < 90) // 95프로 확률로 고블린, 퍼플 슬라임, 슬라임 조합 방
+                if (randomValue < 90) // 90프로 확률로 고블린, 퍼플 슬라임, 슬라임 조합 방
                 {
                     return battleRoomPrefabs[Random.Range(0, 3)];
                 }

@@ -242,7 +242,7 @@ public class BattleManager : MonoBehaviour
 
                 if (event_Stack != 0)
                 {
-                    float event_Chance = event_Stack * 5f;
+                    float event_Chance = event_Stack * 3f;
 
                     event_Chance = Mathf.Clamp(event_Chance, 0f, 50f);
 
@@ -470,6 +470,8 @@ public class BattleManager : MonoBehaviour
                 {
                     ChangePhase(BattlePhase.Rest);
                 }
+
+                event_Stack++;
             }
 
 

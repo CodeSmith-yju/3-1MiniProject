@@ -105,8 +105,7 @@ public class UIManager : MonoBehaviour
                     CancelPopup(event_Popup);
                 else
                 {
-                    OpenPopup(option_UI);
-                    Time.timeScale = 0;
+                    OpenOption();
                 }
             }
             else if (check_Popup.activeSelf)
@@ -119,9 +118,7 @@ public class UIManager : MonoBehaviour
             }
             else
             {
-                CancelPopup(option_UI);
-                Time.timeScale = 1;
-                
+                CancelOption();    
             }
         }
 
@@ -163,6 +160,22 @@ public class UIManager : MonoBehaviour
         popup_Bg.SetActive(true);
         popup.SetActive(true);
         isOpenUI = true;
+    }
+
+    public void OpenOption()
+    {
+        popup_Bg.SetActive(true);
+        option_UI.SetActive(true);
+        Time.timeScale = 0;
+        isOpenUI = true;
+    }
+
+    public void CancelOption()
+    {
+        popup_Bg.SetActive(false);
+        option_UI.SetActive(false);
+        Time.timeScale = 1;
+        isOpenUI = false;
     }
 
     public void CheckPopup(int value)
