@@ -1738,20 +1738,20 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             if (_items[i] != null && _items[i].itemType == targetSlots[i].item?.itemType)
             {
+                targetSlots[i].item = _items[i];
                 if (targetSlots[i].itemIcon != null)
                 {
                     if (_items[i].itemImage != null)
                     {
                         DBConnector.LoadItemByCodeFromDB(_items[i].itemCode, ref _items[i].itemImage, ref _items[i].typeIcon);
-                        targetSlots[i].item = _items[i];
-                        targetSlots[i].UpdateSloutUI();
-
                         targetSlots[i].itemIcon.sprite = _items[i].itemImage;
-
-                        targetSlots[i].wearChek = true;
+                        targetSlots[i].itemIcon.gameObject.SetActive(true);
                     }
                 }
+
                 //targetSlots[i].UpdateSloutUI();
+                targetSlots[i].wearChek = true;
+
                 //Debug.Log($"Equipment Loaded: {_items[i].itemName}");
             }
             else
