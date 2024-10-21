@@ -57,7 +57,7 @@ public class InSlot : MonoBehaviour
         if (!isInventory)
         {
             ParentBtn.interactable = true;
-            ChildBtn.interactable = false;
+            ChildBtn.interactable = true;
         }
     }
 
@@ -93,7 +93,7 @@ public class InSlot : MonoBehaviour
                 //현재 항목 선택
                 selectedPanel.SetActive(true);
                 ParentBtn.interactable = true;
-                ChildBtn.interactable = false;
+                ChildBtn.interactable = true;
 
                 // sacrificeList에 선택된 항목 업데이트
                 blacksmith.sacrificeList.ChangeInspectionsVlue(myItem);
@@ -147,7 +147,7 @@ public class InSlot : MonoBehaviour
                 //현재 항목 활성
                 selectedPanel.SetActive(true);
                 ParentBtn.interactable = true;
-                ChildBtn.interactable = false;
+                ChildBtn.interactable = true;
 
                 blacksmith.ShowPreView(myItem);
 
@@ -171,7 +171,7 @@ public class InSlot : MonoBehaviour
                 Debug.Log("active True");
                 selectedPanel.SetActive(false);
                 blacksmith.btn_Commit.interactable = false;//10-20 대일밴드 
-                ParentBtn.interactable = false;
+                ParentBtn.interactable = true;
                 ChildBtn.interactable = true;
             }
         }
@@ -182,7 +182,7 @@ public class InSlot : MonoBehaviour
                 selectedPanel.SetActive(false);
                 Debug.Log("초기화");
 
-                ParentBtn.interactable = false;
+                ParentBtn.interactable = true;
                 ChildBtn.interactable = true;
             }
         }
