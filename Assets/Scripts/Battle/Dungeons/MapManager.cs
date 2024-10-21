@@ -69,6 +69,7 @@ public class MapManager : MonoBehaviour
     public Camera map_Camera_Big;
     [SerializeField] Transform map_Tf;
     [SerializeField] GameObject[] map_Mark_Icon_Prefabs;
+    [SerializeField] Sprite map_What_Mark;
 
 
     public bool isMoveDone = false;
@@ -537,9 +538,41 @@ public class MapManager : MonoBehaviour
             if (IsValid(newPos) && !IsBlock(newPos))
             {
                 map_Icon[i].SetActive(true);
+
+                if (GetRoom(newPos).isVisit)
+                {
+                    Sprite icon = null; // 초기화
+
+                    // roomType이 NoneType이 아닐 때만 자식을 참조
+                    if (GetRoom(newPos).roomType != Cell.RoomType.NoneType)
+                    {
+                        GameObject minimapObj = GetRoom(newPos).minimap_Obj;
+
+                        // minimapObj가 유효하고 자식을 가지고 있는지 확인
+                        if (minimapObj != null && minimapObj.transform.childCount > 0)
+                        {
+                            icon = minimapObj.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+                        }
+
+                        map_Icon[i].transform.GetChild(0).gameObject.SetActive(true);
+                        map_Icon[i].transform.GetChild(0).GetComponent<Image>().sprite = icon;
+                    }
+                    else
+                    {
+                        map_Icon[i].transform.GetChild(0).gameObject.SetActive(false);
+                    }
+
+               
+                }
+                else
+                {
+                    map_Icon[i].transform.GetChild(0).gameObject.SetActive(true);
+                    map_Icon[i].transform.GetChild(0).gameObject.GetComponent<Image>().sprite = map_What_Mark;
+                }
             }
             else
             {
+                map_Icon[i].transform.GetChild(0).gameObject.SetActive(false);
                 map_Icon[i].SetActive(false); // 이동 불가능한 경우 비활성화
             }
         }

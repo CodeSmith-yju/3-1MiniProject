@@ -144,17 +144,23 @@ public class BuffInit : MonoBehaviour
     // 마우스가 해당 오브젝트에 들어왔을 때
     private void OnMouseEnter()
     {
-        if (BattleManager.Instance.dialogue != null) 
+        if (BattleManager.Instance._curphase != BattleManager.BattlePhase.Battle)
         {
-            if (!BattleManager.Instance.ui.popup_Bg.activeSelf && !BattleManager.Instance.ui.dialogue_Bg.activeSelf && !BattleManager.Instance.ui.item_Use_UI.activeSelf)
-                ShowTooltip();
+            if (BattleManager.Instance.dialogue != null)
+            {
+                if (!BattleManager.Instance.ui.popup_Bg.activeSelf && !BattleManager.Instance.ui.dialogue_Bg.activeSelf && !BattleManager.Instance.ui.item_Use_UI.activeSelf)
+                    ShowTooltip();
+            }
+            else
+            {
+                if (!BattleManager.Instance.ui.popup_Bg.activeSelf && !BattleManager.Instance.ui.item_Use_UI.activeSelf)
+                    ShowTooltip();
+            }
         }
         else
         {
-            if (!BattleManager.Instance.ui.popup_Bg.activeSelf && !BattleManager.Instance.ui.item_Use_UI.activeSelf)
-                ShowTooltip();
+            return;
         }
-        
     }
 
     // 마우스가 해당 오브젝트에서 나갔을 때

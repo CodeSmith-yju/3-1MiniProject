@@ -3804,7 +3804,6 @@ MonoBehaviour:
   cur_Room: {fileID: 0}
   map_Camera: {fileID: 1403373301}
   map_Camera_Big: {fileID: 900251648}
-  map_Mark_Prefab: {fileID: 2842157926020722523, guid: 78cfd38566d38ca4881aad0180d4ff69, type: 3}
   map_Tf: {fileID: 1331576661}
   map_Mark_Icon_Prefabs:
   - {fileID: 2842157926020722523, guid: 78cfd38566d38ca4881aad0180d4ff69, type: 3}
@@ -3812,6 +3811,7 @@ MonoBehaviour:
   - {fileID: 2842157926020722523, guid: f9baa549ebdf54b4f83a84d9ae8d4b62, type: 3}
   - {fileID: 2842157926020722523, guid: 2e7b523440e14de439fd81d42a5348f5, type: 3}
   - {fileID: 2842157926020722523, guid: 97a7141bef98a9e47993a0b36df82ccc, type: 3}
+  map_What_Mark: {fileID: 21300000, guid: 271e3aa574e3c344c9c3523bf9271de8, type: 3}
   isMoveDone: 0
   map_Icon:
   - {fileID: 1856662393}
@@ -7847,6 +7847,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3388687880478339518, guid: 6740593570f0b3340a3ba875ba5fb7f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 379160249}
+    - target: {fileID: 3388687880478339518, guid: 6740593570f0b3340a3ba875ba5fb7f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CancelPopup
+      objectReference: {fileID: 0}
     - target: {fileID: 8406690550808243673, guid: 6740593570f0b3340a3ba875ba5fb7f5, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -8221,18 +8229,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1390437427}
     m_Modifications:
-    - target: {fileID: 229525005674841947, guid: e9e1ddd294ad86340b936fed5f824c48, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 974505485673650211, guid: e9e1ddd294ad86340b936fed5f824c48, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1279310980942683183, guid: e9e1ddd294ad86340b936fed5f824c48, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1611821877193047563, guid: e9e1ddd294ad86340b936fed5f824c48, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -8241,10 +8237,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1017482776}
-    - target: {fileID: 2434246152270384503, guid: e9e1ddd294ad86340b936fed5f824c48, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3433349210604623068, guid: e9e1ddd294ad86340b936fed5f824c48, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

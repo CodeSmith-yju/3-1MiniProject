@@ -11,17 +11,24 @@ public class ObjectManager : MonoBehaviour
     [Header("Enemy_Projectile")]
     public GameObject[] enemy_Prefabs;
 
-    public List<GameObject>[] pools;
+    public List<GameObject>[] player_Pools;
+    public List<GameObject>[] enemy_Pools;
 
     public Transform obj_Parent;
 
     private void Awake()
     {
-        pools = new List<GameObject>[(player_Prefabs.Length + enemy_Prefabs.Length)];
+        player_Pools = new List<GameObject>[player_Prefabs.Length];
+        enemy_Pools = new List<GameObject>[enemy_Prefabs.Length];
 
-        for (int i = 0; i < pools.Length; i++) 
+        for (int i = 0; i < player_Pools.Length; i++) 
         {
-            pools[i] = new List<GameObject>();
+            player_Pools[i] = new List<GameObject>();
+        }
+
+        for (int i = 0; i < enemy_Pools.Length; i++)
+        {
+            enemy_Pools[i] = new List<GameObject>();
         }
     }
 
@@ -31,15 +38,31 @@ public class ObjectManager : MonoBehaviour
 
         // 선택한 풀의 비활성화 된(놀고 있는)게임 오브젝트 접근
             // 발견하면 select 변수에 할당
-        foreach(GameObject item in pools[index])
+        if (isPlayer) 
         {
-            if(!item.activeSelf)
+            foreach (GameObject item in player_Pools[index])
             {
-                select = item;
-                select.SetActive(true);
-                break;
+                if (!item.activeSelf)
+                {
+                    select = item;
+                    select.SetActive(true);
+                    break;
+                }
             }
         }
+        else
+        {
+            foreach (GameObject item in enemy_Pools[index])
+            {
+                if (!item.activeSelf)
+                {
+                    select = item;
+                    select.SetActive(true);
+                    break;
+                }
+            }
+        }
+        
 
         // 못 찾으면
         if (!select)
@@ -48,13 +71,14 @@ public class ObjectManager : MonoBehaviour
             if (isPlayer)
             {
                 select = Instantiate(player_Prefabs[index], obj_Parent);
+                player_Pools[index].Add(select);
             }  
             else
             {
                 select = Instantiate(enemy_Prefabs[index], obj_Parent);
+                enemy_Pools[index].Add(select);
             }
-                
-            pools[index].Add(select);
+               
         }
 
         return select;
@@ -62,7 +86,12 @@ public class ObjectManager : MonoBehaviour
     
     public void Poolclear()
     {
-        foreach (List<GameObject> item in pools)
+        foreach (List<GameObject> item in player_Pools)
+        {
+            item.Clear();
+        }
+
+        foreach (List<GameObject> item in enemy_Pools)
         {
             item.Clear();
         }

@@ -15,12 +15,13 @@ public class Enemy : BaseEntity
     [Header("Enemy_Sound")]
     public int sfx_Index;
 
-
     protected override void Start()
     {
         base.Start();
         isPlayer = false;
     }
+
+
 
     // 최대 체력, 최대 마나, 공격력, 공격속도, 사거리, 근접유무, 스킬유무, 경험치, 골드, 드랍아이템
     public void InitStat(float max_Hp, float max_Mp, float atkDmg, float atkSpd, float atkRange, bool isMelee, bool able_Skill, float exp, int gold, Item item)

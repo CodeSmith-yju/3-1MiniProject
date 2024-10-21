@@ -758,7 +758,7 @@ Animator:
   m_GameObject: {fileID: 6912212797854093243}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b0fb9069ad1e641459cab0078d3699fe, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5fb7e7c46cff5184da0c506938562824, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -816,6 +816,7 @@ MonoBehaviour:
   exp_Cnt: 0
   gold_Cnt: 0
   item_Drop_Check: 0
+  sfx_Index: 0
 --- !u!1 &7781164804875822698
 GameObject:
   m_ObjectHideFlags: 0
