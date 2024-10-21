@@ -1299,10 +1299,15 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     {
         for (int i = 0; i < targetSlots.Length; i++)
         {
-            if (targetSlots[i].item.itemName == string.Empty)
+            //Debug.Log("장착슬롯이있습니다.");
+            if (targetSlots[i].item.itemName != string.Empty)
             {
-                if (targetSlots[i].item.modifyStack > 1)
+                //Debug.Log("Item 있습니다");
+                if (targetSlots[i].item.modifyStack > 0)
                 {
+                    targetSlots[i].itemIcon.sprite = targetSlots[i].item.itemImage;
+                    //Debug.Log("강화수치가있는데왜 안뜨는건데 시ㅣ발아");
+                    targetSlots[i].modifyStack.text = "+"+targetSlots[i].item.modifyStack.ToString();
                     targetSlots[i].modifyStack.gameObject.SetActive(true);
                 }
             }
