@@ -11,7 +11,7 @@ public class Skeleton_Wizard : Enemy
     {
         base.Start();
         // 최대 체력, 최대 마나, 공격력, 공격속도, 사거리, 근접유무, 스킬유무, 경험치, 골드, 아이템 드랍
-        InitStat(200, 10, 5, 0.7f, 50f, false, true, 20, SetRandomGold(400), ItemResources.instance.itemRS[15]);
+        InitStat(200, 7, 5, 0.7f, 50f, false, true, 20, SetRandomGold(400), ItemResources.instance.itemRS[15]);
         // 아이템 바꿔야됨
 
         if (BattleManager.Instance.dialogue != null && BattleManager.Instance.dialogue.isTutorial)
@@ -27,7 +27,7 @@ public class Skeleton_Wizard : Enemy
     public override void RangeAttack(BaseEntity target)
     {
         base.RangeAttack(target);
-        GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(1, !isPlayer);
+        GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(1, isPlayer);
         obj_Arrow.transform.position = transform.GetChild(0).position;
         Arrow arrow = obj_Arrow.GetComponent<Arrow>();
         arrow.Shoot(this, target, atkDmg);
@@ -51,7 +51,9 @@ public class Skeleton_Wizard : Enemy
 
                     if (enemy._curstate != State.Death)
                     {
-                        Instantiate(skill_Eff, enemy.transform);
+                        GameObject skill = Instantiate(skill_Eff, enemy.transform);
+                        //skill.transform.position = new Vector3(0, 1.4f, 0);
+                        skill.transform.localPosition = new Vector3(0, 1.4f, 0);
                         enemy.cur_Hp -= 10f;
                     }
                 }

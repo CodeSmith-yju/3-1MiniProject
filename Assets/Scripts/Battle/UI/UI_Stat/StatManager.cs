@@ -16,6 +16,8 @@ public class StatManager : MonoBehaviour
     public Slider mp;
 
     [Header("Player_Text")]
+    public TMP_Text hp_Text;
+    public TMP_Text mp_Text;
     public TMP_Text level_Text;
     public TMP_Text name_Text;
 
@@ -64,7 +66,9 @@ public class StatManager : MonoBehaviour
         {
             // 실시간으로 HP, MP 업데이트
             hp.value = player.cur_Player_Hp / player.max_Player_Hp;
+            hp_Text.text = $"{player.cur_Player_Hp.ToString("0.##")}/{player.max_Player_Hp.ToString("0.##")}";
             mp.value = player.cur_Player_Mp / player.max_Player_Mp;
+            mp_Text.text = $"{player.cur_Player_Mp}/{player.max_Player_Mp}";
 
             if (player.cur_Player_Hp > 0)
             {

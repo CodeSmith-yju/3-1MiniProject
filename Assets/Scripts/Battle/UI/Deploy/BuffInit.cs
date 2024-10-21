@@ -148,12 +148,12 @@ public class BuffInit : MonoBehaviour
         {
             if (BattleManager.Instance.dialogue != null)
             {
-                if (!BattleManager.Instance.ui.popup_Bg.activeSelf && !BattleManager.Instance.ui.dialogue_Bg.activeSelf && !BattleManager.Instance.ui.item_Use_UI.activeSelf)
+                if (!BattleManager.Instance.ui.popup_Bg.activeSelf && !BattleManager.Instance.ui.dialogue_Bg.activeSelf && !BattleManager.Instance.ui.item_Use_UI.activeSelf && !BattleManager.Instance.ui.isOpenUI)
                     ShowTooltip();
             }
             else
             {
-                if (!BattleManager.Instance.ui.popup_Bg.activeSelf && !BattleManager.Instance.ui.item_Use_UI.activeSelf)
+                if (!BattleManager.Instance.ui.popup_Bg.activeSelf && !BattleManager.Instance.ui.item_Use_UI.activeSelf && !BattleManager.Instance.ui.isOpenUI)
                     ShowTooltip();
             }
         }

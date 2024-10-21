@@ -246,7 +246,7 @@ public class BattleManager : MonoBehaviour
 
                     event_Chance = Mathf.Clamp(event_Chance, 0f, 50f);
 
-                    float random_Event = UnityEngine.Random.Range(0, event_Chance);
+                    float random_Event = UnityEngine.Random.Range(0, 100f);
 
                     if (random_Event < event_Chance)
                     {
@@ -591,7 +591,6 @@ public class BattleManager : MonoBehaviour
 
         if (room.cur_Room.tag == "Battle")
         {
-           
             Debug.Log("전투 방입니다.");
 
             if (room.FindRoom(room.cur_Room.gameObject).isBoss)
