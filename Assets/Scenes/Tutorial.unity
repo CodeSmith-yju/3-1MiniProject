@@ -3059,28 +3059,28 @@ MonoBehaviour:
       isClear: 0
       isBlocked: 0
       isBoss: 0
-      roomType: 0
+      roomType: 1
       minimap_Obj: {fileID: 121699627}
       isVisit: 0
     - cellObject: {fileID: 8840138731365461204}
       isClear: 0
       isBlocked: 0
       isBoss: 0
-      roomType: 0
+      roomType: 2
       minimap_Obj: {fileID: 1828594653}
       isVisit: 0
     - cellObject: {fileID: 5549726582770880353}
       isClear: 0
       isBlocked: 0
       isBoss: 0
-      roomType: 0
+      roomType: 3
       minimap_Obj: {fileID: 1215145661}
       isVisit: 0
     - cellObject: {fileID: 3867297896314237158}
       isClear: 0
       isBlocked: 0
       isBoss: 1
-      roomType: 0
+      roomType: 4
       minimap_Obj: {fileID: 1707019872}
       isVisit: 0
   nav_Surface: {fileID: 0}
