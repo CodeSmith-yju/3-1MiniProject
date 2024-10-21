@@ -78,6 +78,7 @@ public class ShopMgr : MonoBehaviour
                 itemType = originalItem.itemType,
                 itemImage = originalItem.itemImage,
                 itemPrice = originalItem.itemPrice,
+                itemTitle = originalItem.itemTitle,
                 itemPower = originalItem.itemPower,
                 itemDesc = originalItem.itemDesc,
                 itemStack = originalItem.itemStack,
