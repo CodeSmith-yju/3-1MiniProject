@@ -11,7 +11,7 @@ public class Skeleton_Wizard : Enemy
     {
         base.Start();
         // 최대 체력, 최대 마나, 공격력, 공격속도, 사거리, 근접유무, 스킬유무, 경험치, 골드, 아이템 드랍
-        InitStat(200, 7, 5, 0.7f, 50f, false, true, 20, SetRandomGold(400), new Item().GenerateRandomItem(15));
+        InitStat(250, 6, 5, 0.85f, 99f, false, true, 20, SetRandomGold(400), new Item().GenerateRandomItem(15));
         // 아이템 바꿔야됨
 
         if (BattleManager.Instance.dialogue != null && BattleManager.Instance.dialogue.isTutorial)
@@ -44,7 +44,8 @@ public class Skeleton_Wizard : Enemy
             if (isAttack)
             {
                 List<GameObject> players = BattleManager.Instance.deploy_Player_List;
-                
+
+                ani.SetBool("isSkill", true); // 스킬 애니메이션
                 foreach (GameObject enemys in players)
                 {
                     Ally enemy = enemys.GetComponent<Ally>();
@@ -58,7 +59,6 @@ public class Skeleton_Wizard : Enemy
                     }
                 }
                 cur_Mp = 0;
-                ani.SetBool("isSkill", true); // 스킬 애니메이션
             }
             else
             {
