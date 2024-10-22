@@ -74,6 +74,12 @@ public class UIManager : MonoBehaviour
         player_Statbar.SetActive(true);
         item_Bar.SetActive(true);
         tooltip.TooltipSetting(cv.GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f, tooltip.GetComponent<RectTransform>());
+
+        if (BattleManager.Instance.dialogue != null && BattleManager.Instance.dialogue.isTutorial) // 분수대 클릭 방지용
+            isOpenUI = true;
+        else
+            isOpenUI = false;
+
     }
     private void Update()
     {

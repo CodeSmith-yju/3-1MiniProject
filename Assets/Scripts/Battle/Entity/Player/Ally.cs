@@ -39,13 +39,19 @@ public class Ally : BaseEntity
         if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Rest)
         {
             cur_Hp = GameMgr.playerData[entity_index].cur_Player_Hp;
-            cur_Mp = 0;
+            UpdateResetMp();
         }
     }
 
     public void UpdateCurrentHPMPToSingle()
     {
         GameMgr.playerData[entity_index].cur_Player_Hp = cur_Hp;
+        GameMgr.playerData[entity_index].cur_Player_Mp = cur_Mp;
+    }
+
+    private void UpdateResetMp()
+    {
+        cur_Mp = 0;
         GameMgr.playerData[entity_index].cur_Player_Mp = cur_Mp;
     }
 

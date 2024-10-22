@@ -57,29 +57,27 @@ public class StatManager : MonoBehaviour
 
     private void Update()
     {
-        UpdateStatus();
+        if (player != null && !isDead)
+            UpdateStatus();
     }
 
     public void UpdateStatus()
     {
-        if (player != null)
-        {
-            // 실시간으로 HP, MP 업데이트
-            hp.value = player.cur_Player_Hp / player.max_Player_Hp;
-            hp_Text.text = $"{player.cur_Player_Hp.ToString("0.##")}/{player.max_Player_Hp.ToString("0.##")}";
-            mp.value = player.cur_Player_Mp / player.max_Player_Mp;
-            mp_Text.text = $"{player.cur_Player_Mp}/{player.max_Player_Mp}";
+        // 실시간으로 HP, MP 업데이트
+        hp.value = player.cur_Player_Hp / player.max_Player_Hp;
+        hp_Text.text = $"{player.cur_Player_Hp.ToString("0.##")}/{player.max_Player_Hp.ToString("0.##")}";
+        mp.value = player.cur_Player_Mp / player.max_Player_Mp;
+        mp_Text.text = $"{player.cur_Player_Mp}/{player.max_Player_Mp}";
 
-            if (player.cur_Player_Hp > 0)
-            {
-                dead_Check.SetActive(false);
-                isDead = false;
-            }
-            else
-            {
-                dead_Check.SetActive(true);
-                isDead = true;
-            }
+        if (player.cur_Player_Hp > 0)
+        {
+            dead_Check.SetActive(false);
+            isDead = false;
+        }
+        else
+        {
+            dead_Check.SetActive(true);
+            isDead = true;
         }
     }
 }

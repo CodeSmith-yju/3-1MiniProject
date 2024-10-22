@@ -260,6 +260,8 @@ public class BattleManager : MonoBehaviour
             case BattlePhase.Battle:
                 break;
             case BattlePhase.End:
+                
+
                 StartCoroutine(EndBattle());
                 break;
         }
@@ -370,7 +372,7 @@ public class BattleManager : MonoBehaviour
 
     private void ResetStats()
     {
-        foreach (GameObject player_Obj in deploy_Player_List)
+        foreach (GameObject player_Obj in party_List)
         {
             Ally player = player_Obj.GetComponent<Ally>();
 
@@ -386,6 +388,8 @@ public class BattleManager : MonoBehaviour
                 playerData.base_atk_Dmg = stats.temp_Dmg;
                 playerData.max_Player_Hp = stats.temp_MaxHp;
                 playerData.max_Player_Mp = stats.temp_MaxMp;
+                player.cur_Mp = 0;
+                playerData.cur_Player_Mp = player.cur_Mp;
                 playerData.atk_Speed = stats.temp_AtkSpd;
 
                 player.cur_Hp = Mathf.Clamp(healthRatio * stats.temp_MaxHp, 0, stats.temp_MaxHp);
@@ -420,6 +424,7 @@ public class BattleManager : MonoBehaviour
             poison_Check = false;
             StopCoroutine(Poison());
             ResetStats(); // 버프 타일로 증가되기 전 스텟으로 리셋
+
             if (deploy_Player_List.Count == 0)
             {
                 AudioManager.single.PlaySfxClipChange(10);
@@ -483,7 +488,9 @@ public class BattleManager : MonoBehaviour
                     ui.out_Portal.GetComponent<FadeEffect>().fadeout = true;
                 }
 
-               
+                if (AudioManager.single.GetBgmPlayer().isPlaying)
+                    AudioManager.single.GetBgmPlayer().Stop();
+
                 Debug.Log("버튼 생성");
                 DestroyImmediate(ui.out_Portal.GetComponent<Button>());
                 ui.out_Portal.AddComponent<Button>().onClick.AddListener(() => TotalReward());
@@ -584,6 +591,9 @@ public class BattleManager : MonoBehaviour
                 }
             }
         }
+
+        if (AudioManager.single.GetSfxPlayer(9).isPlaying)
+            AudioManager.single.GetSfxPlayer(9).Stop();
 
         deploy_Player_List.Clear();
         deploy_Enemy_List.Clear();

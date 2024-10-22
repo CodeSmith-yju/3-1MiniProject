@@ -236,6 +236,8 @@ public class TutorialManager : MonoBehaviour
                 break;
             case 20:
                 // 분수대 이벤트 튜토리얼
+                BattleManager.Instance.ui.isOpenUI = false; // 클릭 방지
+
                 BattleManager.Instance.ui.ui_Tutorial_Rest.SetActive(true);
                 if (BattleManager.Instance.ui.ui_Tutorial_Rest.activeSelf)
                 {
@@ -246,7 +248,6 @@ public class TutorialManager : MonoBehaviour
                 BattleManager.Instance.ui.dialogue_Bg.SetActive(false);
                 BattleManager.Instance.dialogue.ONOFF(false);
 
-                BattleManager.Instance.ui.CancelOption();//여기 내가수정함 10-23 00:30
                 break;
             case 21:
                 // 분수대 이벤트 선택지 튜토리얼
@@ -320,9 +321,12 @@ public class TutorialManager : MonoBehaviour
             case 6:
                 Debug.Log("아이템 튜토리얼 끝");
                 isItem_Tutorial = false;
-                Destroy(BattleManager.Instance.ui.item_Bar.GetComponent<GraphicRaycaster>());
-                Destroy(BattleManager.Instance.ui.item_Bar.GetComponent<Canvas>());
-
+                if (BattleManager.Instance.ui.item_Bar.GetComponent<GraphicRaycaster>() != null && BattleManager.Instance.ui.item_Bar.GetComponent<Canvas>() != null)
+                {
+                    Destroy(BattleManager.Instance.ui.item_Bar.GetComponent<GraphicRaycaster>());
+                    Destroy(BattleManager.Instance.ui.item_Bar.GetComponent<Canvas>());
+                }
+                
                 BattleManager.Instance.ui.item_Tutorial.SetActive(false);
 
                 BattleManager.Instance.dialogue.ONOFF(true);
@@ -362,8 +366,12 @@ public class TutorialManager : MonoBehaviour
                 // 사용하지 않는 튜토리얼
                 Debug.Log("유닛 배치 튜토리얼 끝");
                 isDeploy_Tutorial = false;
-                Destroy(BattleManager.Instance.ui.party_List.GetComponent<GraphicRaycaster>());
-                Destroy(BattleManager.Instance.ui.party_List.GetComponent<Canvas>());
+                if (BattleManager.Instance.ui.party_List.GetComponent<GraphicRaycaster>() != null && BattleManager.Instance.ui.party_List.GetComponent<Canvas>() != null)
+                {
+                    Destroy(BattleManager.Instance.ui.party_List.GetComponent<GraphicRaycaster>());
+                    Destroy(BattleManager.Instance.ui.party_List.GetComponent<Canvas>());
+                }
+                
 
                 BattleManager.Instance.ui.ui_Tutorial_Deploy.transform.GetChild((quest_cnt - quest_cnt) + 4).gameObject.SetActive(false);
 

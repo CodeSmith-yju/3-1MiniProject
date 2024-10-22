@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,6 +31,10 @@ public class Dialogue : MonoBehaviour
     public int cnt = 0;
 
     [SerializeField] private dialogue[] dialogues;
+
+    private float temp_InputTime = 0f;
+    private float input_Cooldown = 0.15f;
+
 
     private void Awake()
     {
@@ -144,19 +149,24 @@ public class Dialogue : MonoBehaviour
         //spacebar 누를 때마다 대사가 진행되도록. 
         if (isDialogue) //활성화가 되었을 때만 대사가 진행되도록
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+            if (Time.time - temp_InputTime >= input_Cooldown) // 대화 상호작용을 0.2초 쿨타임 주도록 하여 튜토리얼이 꼬이지 않게 함.
             {
-                if (isQuest && text_Done)
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
                 {
-                    Debug.Log("튜토리얼 시작");
-                    BattleManager.Instance.tutorial.Tutorial(dialogues[cnt - 1].quest_cnt); // 튜토리얼 시작
+                    temp_InputTime = Time.time;
+                    if (isQuest && text_Done)
+                    {
+                        Debug.Log("튜토리얼 시작");
+                        BattleManager.Instance.tutorial.Tutorial(dialogues[cnt - 1].quest_cnt); // 튜토리얼 시작
+                    }
+                    else
+                    {
+                        NextDialogue();
+                    }
+
                 }
-                else
-                {
-                    NextDialogue();
-                }
-               
             }
+            
         }
     }
 }
