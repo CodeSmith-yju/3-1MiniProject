@@ -18,6 +18,7 @@ public class GameMgr : MonoBehaviour
     public int selectedResolution;
     public string input_Name = "";
     public SaveState saveState = SaveState.None;
+    public bool firstStart = true;
     [Header("PopUp")]
     public PopUp popUp;
 

@@ -21,13 +21,13 @@ public class ItemResources : MonoBehaviour
             DBItems.Add(DBConnector.LoadItemFromDB(i));
         }
         setTypeIcons();
-        /*itemRS.Clear();
+        itemRS.Clear();
         itemRS.AddRange(DBItems);
 
         for (int i = 0; i < itemRS.Count; i++)
         {
             itemRS[i].itemImage = itemSpriteRS[i];
-        }*/
+        }
     }
     void setTypeIcons()//Local_Icon_Set
     {

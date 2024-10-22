@@ -58,10 +58,10 @@ public class Tooltip : MonoBehaviour
         switch (_item.itemType)
         {
             case Item.ItemType.Equipment_Arrmor:
-                _text = "공격사거리 + " + (_item.itemPower).ToString();
+                _text = "공격사거리 + " + (_item.itemPower *100).ToString();
                 break;
             case Item.ItemType.Equipment_Boots:
-                _text = "공격속도 + " + (_item.itemPower).ToString();
+                _text = "공격속도 + " + (_item.itemPower *100).ToString();
                 break;
             case Item.ItemType.Equipment_Helmet:
                 _text = "체력 + " + (_item.itemPower).ToString();

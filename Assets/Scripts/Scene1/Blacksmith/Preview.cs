@@ -21,10 +21,17 @@ public class Preview : MonoBehaviour
         text_modify_stack.gameObject.SetActive(true);
         text_modify_stack.text = "+"+ (myItem.modifyStack + 1).ToString();
 
-        float _f = myItem.GetPreViewPower(myItem);
         string str = SetUpStatText(myItem);
-
-        text_pre_stat.text = str+myItem.itemPower.ToString()+" -> " + _f.ToString() + "(<color=red> +"+ (_f - myItem.itemPower).ToString() + "</color>)";
+        if (_item.itemType == Item.ItemType.Equipment_Arrmor || _item.itemType == Item.ItemType.Equipment_Boots)
+        {
+            float _f = (myItem.GetPreViewPower(myItem) * 100);
+            text_pre_stat.text = str + (myItem.itemPower * 100).ToString() + " -> " + _f + "(<color=red> +" + (_f - myItem.itemPower * 100).ToString("F0") + "</color>)";
+        }
+        else
+        {
+            float _f = myItem.GetPreViewPower(myItem);
+            text_pre_stat.text = str + myItem.itemPower.ToString() + " -> " + _f.ToString() + "(<color=red> +" + (_f - myItem.itemPower).ToString() + "</color>)";
+        }
     }
     string SetUpStatText(Item _item)
     {

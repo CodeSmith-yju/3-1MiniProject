@@ -101,7 +101,6 @@ public class Item
         if (_item.modifyStack > -1)
         {
             _item.modifyStack++;
-            //_item.itemPower = ItemResources.instance.itemRS[_item.itemCode].itemPower + (ItemResources.instance.itemRS[_item.itemCode].itemPower) * 0.5f * _item.modifyStack;
             _item.itemPower = _f;
             _item.itemPrice = ItemResources.instance.itemRS[_item.itemCode].itemPrice + (int)((ItemResources.instance.itemRS[_item.itemCode].itemPrice * 0.1) * _item.modifyStack);
             /*switch (_item.modifyStack)
@@ -119,18 +118,29 @@ public class Item
     }
     public float GetPreViewPower(Item _item)
     {
-        float _i = _item.modifyStack; // _item.modifyStack을 바로 사용
-        if (_i < 1)
+        //float _i = _item.modifyStack; // _item.modifyStack을 바로 사용
+        Item tmp = ItemResources.instance.itemRS[_item.itemCode - 4];
+        float power = _item.itemPower;
+        /*switch (_item.itemType)
         {
-            _i = 2;
-        }
-        else
-        {
-            _i += 2;
-        }
-        float power = _item.itemPower + _item.itemPower * 0.5f * _i;
-        Debug.Log("Before: " + _item.itemPower + " / After: " + power + " | _i: " + _i);
-        return power;
+            case ItemType.Equipment_Arrmor:
+                power += tmp.itemPower;
+                break;
+            case ItemType.Equipment_Boots:
+                power += tmp.itemPower;
+                break;
+            default:
+                power += tmp.itemPower / 2;
+                break;
+        }*/
+        power += tmp.itemPower;
+
+        Debug.Log("Before: " + _item.itemPower + " / After: " + power + " | _i: ");
+        return RoundToTwoDecimalPlaces(power);
+    }
+    public float RoundToTwoDecimalPlaces(float value)
+    {
+        return (float)Math.Round(value, 3); // 소수점 두 자리로 반올림
     }
     public void IconSet(Item _item)
     {
