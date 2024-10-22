@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static Unity.Collections.AllocatorManager;
 
 public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndDragHandler*/
 {
@@ -1305,9 +1304,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 //Debug.Log("Item 있습니다");
                 if (targetSlots[i].item.modifyStack > 0)
                 {
+                    DBConnector.LoadItemByCodeFromDB(targetSlots[i].item.itemCode,ref targetSlots[i].item.itemImage,ref targetSlots[i].item.typeIcon);
                     targetSlots[i].itemIcon.sprite = targetSlots[i].item.itemImage;
                     //Debug.Log("강화수치가있는데왜 안뜨는건데 시ㅣ발아");
-                    targetSlots[i].modifyStack.text = "+"+targetSlots[i].item.modifyStack.ToString();
+                    targetSlots[i].modifyStack.text = "+" + targetSlots[i].item.modifyStack.ToString();
                     targetSlots[i].modifyStack.gameObject.SetActive(true);
                 }
             }

@@ -71,7 +71,14 @@ public class Blacksmith : MonoBehaviour
         btn_Commit.interactable = false;
         AllInvenUnSelect();
         Refresh();
-        OpenUpgrade();
+        if (blacksmithState == BlacksmithState.Renovate)
+        {
+            OpenBlacksmith();
+        }
+        else if (blacksmithState == BlacksmithState.Upgrade)
+        {
+            OpenUpgrade();
+        }
         btn_Commit.interactable = false;
         AudioManager.single.PlaySfxClipChange(3);
         yield break;
