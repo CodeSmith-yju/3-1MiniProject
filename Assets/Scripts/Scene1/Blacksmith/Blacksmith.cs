@@ -254,6 +254,13 @@ public class Blacksmith : MonoBehaviour
         CommitAnimation();
         GameUiMgr.single.GoldChanger();
     }
+
+    bool ShouldDrop(int value)
+    {
+        int randomDrop = Random.Range(0, 100);
+        return randomDrop < (int)(value);
+    }
+
     public void OpenBlacksmith()
     {
         btn_Upgrade.interactable = true;

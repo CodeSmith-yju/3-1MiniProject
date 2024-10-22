@@ -76,7 +76,9 @@ public class LoadingSceneController : MonoBehaviour
 {
     [SerializeField] Image progressBar;
     [SerializeField] TextMeshProUGUI loadingText;
+    [SerializeField] RandomGuideUI randomGuideUI;
     public static string nextScene;
+    public Image spRandomGuide;
     bool FirstGameStart = false;//∫ÙµÂ«“∂ß true∑Œ πŸ≤„¡‡æﬂ«‘
     public static void LoadScene(string _sceneName)
     {
@@ -97,15 +99,15 @@ public class LoadingSceneController : MonoBehaviour
 
     void Start()
     {
-        if (FirstGameStart)
-        {
-            nextScene = "Title";
-            StartCoroutine(LoadSceneProcess());
-        }
-        else
-            StartCoroutine(LoadSceneProcess());
+        StartCoroutine(LoadSceneProcess());
+        SetLoadingGuideImage();
     }
 
+    void SetLoadingGuideImage()
+    {
+
+        spRandomGuide.sprite = randomGuideUI.SetGuidImages();
+    }
     IEnumerator LoadSceneProcess()
     {
         if (FirstGameStart)

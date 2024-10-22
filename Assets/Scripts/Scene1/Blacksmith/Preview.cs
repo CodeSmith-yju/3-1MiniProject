@@ -22,7 +22,31 @@ public class Preview : MonoBehaviour
         text_modify_stack.text = "+"+ (myItem.modifyStack + 1).ToString();
 
         float _f = myItem.GetPreViewPower(myItem);
-        text_pre_stat.text = myItem.itemPower.ToString()+" -> " + _f.ToString() + "(<color=red> +"+ (_f - myItem.itemPower).ToString() + "</color>)";
-    }
+        string str = SetUpStatText(myItem);
 
+        text_pre_stat.text = str+myItem.itemPower.ToString()+" -> " + _f.ToString() + "(<color=red> +"+ (_f - myItem.itemPower).ToString() + "</color>)";
+    }
+    string SetUpStatText(Item _item)
+    {
+        string _text = "";
+        switch (_item.itemType)
+        {
+            case Item.ItemType.Equipment_Arrmor:
+                _text = "공격사거리 +";
+                break;
+            case Item.ItemType.Equipment_Boots:
+                _text = "공격속도 +";
+                break;
+            case Item.ItemType.Equipment_Helmet:
+                _text = "체력 +";
+                break;
+            case Item.ItemType.Equipment_Weapon:
+                _text = "공격력 +";
+                break;
+            default:
+                _text = _item.itemDesc;
+                break;
+        }
+        return _text;
+    }
 }

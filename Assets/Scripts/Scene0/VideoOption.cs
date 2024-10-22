@@ -16,6 +16,8 @@ public class VideoOption : MonoBehaviour
     public Toggle btnFullScreen;
     private int dropdwonOptionValue;// 처음 시작했을 때 드롭다운의 선택된 값이 초기화되어있지 않으니 현재 해상도의 값과 해상도 목록을 비교해서 드롭다운의 벨류값을 변경해준다.
 
+    public GameObject KeyGuide;
+
     [Header("#Sound Sliders")]
     public Slider bgmSlider;
     public Slider sfxSlider;
@@ -215,6 +217,7 @@ public class VideoOption : MonoBehaviour
         Debug.Log("*******************\nGameMgr.single.selectedResolution : "+GameMgr.single.selectedResolution+ "resolutionNum: "+ resolutionNum);
         // 볼륨 설정 저장
         ComitSliderVolume();
+        QuiteVideoOptins();
     }
     void ChangeBGMVolume(float value)
     {
@@ -298,4 +301,17 @@ public class VideoOption : MonoBehaviour
     }
     #endregion
 
+    public void OpenKeyGuide()
+    {
+        KeyGuide.SetActive(true);
+    }
+
+    public void QuiteVideoOptins()
+    {
+        gameObject.SetActive(false);
+        if (KeyGuide.activeSelf)
+        {
+            KeyGuide.SetActive(true);
+        }
+    }
 }
