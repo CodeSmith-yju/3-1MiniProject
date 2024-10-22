@@ -48,7 +48,7 @@ public class ShopMgr : MonoBehaviour
         OpenTap(shopState);
         //RefreshShopItems();
     }
-    private int[] numbers = { 0, 6, 8, 9, 10, 11 };
+    private int[] numbers = { 0, 1, 6, 8, 9, 10, 11 };
 
     // 랜덤 숫자 출력 함수
     public int GetRandomNumber()
