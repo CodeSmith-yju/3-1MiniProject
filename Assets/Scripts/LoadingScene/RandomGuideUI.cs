@@ -6,11 +6,13 @@ using UnityEngine;
 public class RandomGuideUI : MonoBehaviour
 {
     public Sprite[] spRandomGuids;
-    string[] strGuideDesc = {"기본 키 사용법을 안내해드립니다.",
-        "장비 개조 방법을 안내해드립니다.",
+    string[] strGuideDesc = {
+        "방향키로도 이동이 가능합니다.",
+        "장비를 개조하려면 장착을 해제해야합니다.",
         "상점 이용 방법을 안내해드립니다.",
-        "스태미나 관리 방법을 안내해드립니다.",
+        "스태미나 잔량에 주의하세요.",
         "장비 강화 방법을 안내해드립니다.",
+        "일부 기능은 튜토리얼을 완료해야 열립니다.",
     };
 
     public TextMeshProUGUI txtGuideDesc;
@@ -22,7 +24,7 @@ public class RandomGuideUI : MonoBehaviour
         if (GameMgr.single.firstStart)
         {
             GameMgr.single.firstStart = false;
-            randomIndex = 0;
+            randomIndex = 5;
         }
         txtGuideDesc.text = strGuideDesc[randomIndex];
         return spRandomGuids[randomIndex];
