@@ -876,10 +876,13 @@ public class BattleManager : MonoBehaviour
     {
         for (int i = _index; i < Inventory.Single.items.Count; i++)
         {
-            if (Inventory.Single.items[i].itemType == Item.ItemType.Consumables && Inventory.Single.items[i].itemCode == 6)
+            if (Inventory.Single.items[i].itemType == Item.ItemType.Consumables)
             {
-                _index = i + 1;
-                return Inventory.Single.items[i];
+                if (Inventory.Single.items[i].itemCode == 6 || Inventory.Single.items[i].itemCode == 1)
+                {
+                    _index = i + 1;
+                    return Inventory.Single.items[i];
+                }
             }
         }
         return null;

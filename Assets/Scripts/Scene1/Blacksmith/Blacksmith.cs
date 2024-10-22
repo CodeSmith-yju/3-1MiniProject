@@ -678,4 +678,19 @@ public class Blacksmith : MonoBehaviour
     {
         //upgradesMaterials.inspections.refresh();
     }
+    public void Blacksmith_ActiveOFF()
+    {
+        BlacksmithState tmpState = blacksmithState;
+
+        blacksmithState = BlacksmithState.Renovate;
+        AllInvenUnSelect();
+
+        blacksmithState = BlacksmithState.Upgrade;
+        AllInvenUnSelect();
+
+        tmpState = blacksmithState;
+
+        gameObject.SetActive(false);
+        GameUiMgr.single.MoveDoitCk(true);
+    }
 }

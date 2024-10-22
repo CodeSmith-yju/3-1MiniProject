@@ -858,16 +858,16 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             switch (talkIndex)
             {
-                case 3:
+                case 4:
                     talkMgr.guideUi.ChangeGuideImg(GuideState.Stamina);
                     break;
-                case 5:
+                case 6:
                     talkMgr.guideUi.ChangeGuideImg(GuideState.Shop);
                     break;
-                case 8:
+                case 9:
                     talkMgr.guideUi.ChangeGuideImg(GuideState.Renovate);
                     break;
-                case 10:
+                case 11:
                     talkMgr.guideUi.ChangeGuideImg(GuideState.Upgrade);
                     break;
                 default:

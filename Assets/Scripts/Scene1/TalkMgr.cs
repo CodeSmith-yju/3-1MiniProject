@@ -87,7 +87,7 @@ public class TalkMgr : MonoBehaviour // 대화 데이터를 관리할 매니저 
 
         // QestRange-30, NPC-1000
         dictTalkData.Add(30 + 1000, new string[] {
-            "모험가님 오른쪽의 게시판이나 키보드의 P 키를 통해 \n파티원을 모집할 수 있습니다.:0",
+            "모험가님 오른쪽의 게시판이나 키보드의 P 키를 통해 \n파티원을 모집할 수 있으며, 파티원은 최대 3명 입니다.:0",
             " (게시판으로 이동해서 파티원을 모집하고 돌아오자.) :1"
         });
         dictTalkData.Add(31 + 1000, new string[] {

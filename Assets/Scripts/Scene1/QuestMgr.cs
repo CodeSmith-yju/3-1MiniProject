@@ -167,11 +167,13 @@ public class QuestMgr : MonoBehaviour
                 if (questActionIndex == 1)
                 {
                     Debug.Log("Case 41");
+                    SetQuestICon(0, 1);
                 }
                 else if (questActionIndex == 2)
                 {
                     Debug.Log("Case 42");
                     GameUiMgr.single.tmp_PlayerRating.text = "9급 모험가";
+                    SetQuestICon(1, 0);
                     /*GameMgr.single.IsGameLoad(true);
                     GameUiMgr.single.GameSave();
                     SceneManager.LoadScene("Title");*/
@@ -239,6 +241,11 @@ public class QuestMgr : MonoBehaviour
         Inventory.Single.AddItem(ItemResources.instance.itemRS[5]);
 
         GameUiMgr.single.RedrawSlotUI();
+    }
+    public void SetQuestICon(int _index, int _spIndex)
+    {
+        // 0 = !, 1 = ... 
+        questIcons[_index].GetComponent<SpriteRenderer>().sprite = spQuestIcons[_spIndex];
     }
 
 }
