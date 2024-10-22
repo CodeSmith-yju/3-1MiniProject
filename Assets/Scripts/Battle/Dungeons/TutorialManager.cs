@@ -245,6 +245,8 @@ public class TutorialManager : MonoBehaviour
 
                 BattleManager.Instance.ui.dialogue_Bg.SetActive(false);
                 BattleManager.Instance.dialogue.ONOFF(false);
+
+                BattleManager.Instance.ui.CancelOption();//여기 내가수정함 10-23 00:30
                 break;
             case 21:
                 // 분수대 이벤트 선택지 튜토리얼

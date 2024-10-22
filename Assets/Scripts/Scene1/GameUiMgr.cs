@@ -147,6 +147,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     public List<PartySlot> lastDeparture;
 
     public GameObject blockedPartyBord;
+    public Button btn_PartyCommit;
 
     public PartyNameSetting partyNameSetting;
 
@@ -1920,6 +1921,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     public void RefreshiPartyBord()
     {
         blockedPartyBord.SetActive(false);
+        btn_PartyCommit.interactable = true;
         //활성화된 슬롯 비 활성화
         foreach (var _slot in poolPartySlot)
         {
@@ -2038,6 +2040,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                     if (questMgr.questId == 30 && questMgr.questActionIndex == 1)
                         Receptionist_1();
                     blockedPartyBord.SetActive(true);
+                    btn_PartyCommit.interactable = false;
                     int battleIndex = 1;
                     foreach (PartySlot _slot in poolMoveInSlot)
                     {
@@ -2255,6 +2258,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
 
         blockedPartyBord.SetActive(true);
+        btn_PartyCommit.interactable = false;
         AudioManager.single.PlaySfxClipChange(3);
         GameMgr.playerData[0].player_Gold -= partyPrice;
         GoldChanger();
