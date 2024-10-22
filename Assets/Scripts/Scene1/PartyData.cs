@@ -65,9 +65,9 @@ public class PartyData
                 //Debug.Log("Type Ranger, Generate Code: "+_Code);
                 partyHp = 15f + (_Lvel * 2f);
                 partyMp = 5f;
-                partyAtk = 2f + (_Lvel * 0.5f);
-                partyAtkSpd = 1.0f;
-                partyAtkRange = 7f +(_Lvel * 0.1f);
+                partyAtk = 2f + (_Lvel * 0.2f);
+                partyAtkSpd = 1.0f +(_Lvel * 0.05f);
+                partyAtkRange = 5f;
                 //strPartyName = "Ranger";
                 strPartyName = GameUiMgr.single.partyNameSetting.GetRandomName(GameUiMgr.single.partyNameSetting.archerNames);
                 isMelee = false;//false 일때 원거리공격
@@ -76,11 +76,11 @@ public class PartyData
                 break;
             case Ally.JobClass.Wizard:
                 //Debug.Log("Type wizard, Generate Code: " + _Code);
-                partyHp = 15f + (_Lvel * 1f);
+                partyHp = 20f + (_Lvel * 1f);
                 partyMp = 3f;
                 partyAtk = 3f + (_Lvel * 0.5f);
-                partyAtkSpd = 0.75f;
-                partyAtkRange = 7f + (_Lvel * 0.1f);
+                partyAtkSpd = 0.7f +(_Lvel * 0.015f);
+                partyAtkRange = 7f;
                 //strPartyName = "Wizard";
                 strPartyName = GameUiMgr.single.partyNameSetting.GetRandomName(GameUiMgr.single.partyNameSetting.mageNames);
                 isMelee = false;
@@ -92,8 +92,8 @@ public class PartyData
                 partyHp = 50f + (_Lvel * 5f);
                 partyMp = 5f;
                 partyAtk = 2f + (_Lvel * 0.3f);
-                partyAtkSpd = 1.0f;
-                partyAtkRange = 1.1f;
+                partyAtkSpd = 1.0f +(_Lvel * 0.025f);
+                partyAtkRange = 1.2f;
                 //strPartyName = "Knight";
                 strPartyName = GameUiMgr.single.partyNameSetting.GetRandomName(GameUiMgr.single.partyNameSetting.knightNames);
                 isMelee = true;

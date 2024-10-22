@@ -6,7 +6,7 @@ public class FountainEvent : MonoBehaviour
 {
     public bool event_Check = false;
 
-    private void OnEnable()
+    private void Awake()
     {
         event_Check = true;    
     }

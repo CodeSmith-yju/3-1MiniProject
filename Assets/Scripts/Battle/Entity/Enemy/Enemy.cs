@@ -48,8 +48,8 @@ public class Enemy : BaseEntity
         this.atkRange = stat.atkRange;
         this.isMelee = stat.isMelee;
         this.able_Skill = stat.able_Skill;
-        exp_Cnt = stat.exp * BattleManager.Instance.dungeon_Level_Scale;
-        gold_Cnt = (int)(stat.gold * BattleManager.Instance.dungeon_Level_Scale);
+        exp_Cnt = stat.exp;
+        gold_Cnt = stat.gold;
         drop_Item = stat.item;
     }
 
@@ -67,7 +67,12 @@ public class Enemy : BaseEntity
     protected int SetRandomGold(int count)
     {
         int randomDrop = Random.Range(count, count + 20);
-        return randomDrop;
+        return (int)(randomDrop * BattleManager.Instance.dungeon_Level_Scale);
+    }
+
+    protected float GetExp(float exp)
+    {
+        return exp * BattleManager.Instance.dungeon_Level_Scale;
     }
 
 

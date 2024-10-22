@@ -3573,7 +3573,7 @@ Camera:
   far clip plane: 1000
   field of view: 18
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 19
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -3802,11 +3802,12 @@ MonoBehaviour:
   map_Camera_Big: {fileID: 900251648}
   map_Tf: {fileID: 1331576661}
   map_Mark_Icon_Prefabs:
-  - {fileID: 2842157926020722523, guid: 78cfd38566d38ca4881aad0180d4ff69, type: 3}
+  - {fileID: 2842157926020722523, guid: 22bcc37091623ad43b281c004f1d695a, type: 3}
   - {fileID: 2842157926020722523, guid: abb4a7ffd0cee3f41abeceab985c8707, type: 3}
   - {fileID: 2842157926020722523, guid: f9baa549ebdf54b4f83a84d9ae8d4b62, type: 3}
   - {fileID: 2842157926020722523, guid: 2e7b523440e14de439fd81d42a5348f5, type: 3}
   - {fileID: 2842157926020722523, guid: 97a7141bef98a9e47993a0b36df82ccc, type: 3}
+  - {fileID: 2842157926020722523, guid: 78cfd38566d38ca4881aad0180d4ff69, type: 3}
   map_What_Mark: {fileID: 21300000, guid: 271e3aa574e3c344c9c3523bf9271de8, type: 3}
   isMoveDone: 0
   map_Icon:
@@ -5670,7 +5671,7 @@ Camera:
   far clip plane: 1000
   field of view: 18
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 5.3
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2

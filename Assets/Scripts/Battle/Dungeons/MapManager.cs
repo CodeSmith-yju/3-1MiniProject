@@ -10,6 +10,7 @@ public class Cell
 {
     public enum RoomType
     {
+        StartRoom,
         NoneType,
         RestRoom,
         BattleRoom,
@@ -67,7 +68,7 @@ public class MapManager : MonoBehaviour
     [Header("MiniMaps")]
     public Camera map_Camera;
     public Camera map_Camera_Big;
-    [SerializeField] Transform map_Tf;
+    [SerializeField] public Transform map_Tf;
     [SerializeField] GameObject[] map_Mark_Icon_Prefabs;
     [SerializeField] Sprite map_What_Mark;
 
@@ -231,7 +232,7 @@ public class MapManager : MonoBehaviour
         }
         
         player_Pos = startPos;
-        SetRoomValue(player_Pos, startPrefab, Cell.RoomType.NoneType);
+        SetRoomValue(player_Pos, startPrefab, Cell.RoomType.StartRoom);
 
         // 이후 필요한 방들 배치 (필수 방 및 나머지 방들)
         PlaceMandatoryRooms();
@@ -489,12 +490,52 @@ public class MapManager : MonoBehaviour
     public void OpenMap(bool isOpen)
     {
         map_Camera_Big.gameObject.SetActive(isOpen);
+        
+        if (isOpen) 
+        {
+            CenterMapCamera();
+        }
+
         BattleManager.Instance.ui.mini_Map_Big.SetActive(isOpen);
         BattleManager.Instance.ui.mini_Map.SetActive(!isOpen);
         map_Camera.gameObject.SetActive(!isOpen);
         BattleManager.Instance.ui.isOpenUI = isOpen;
 
         OpenMapUpdate(isOpen);
+    }
+
+
+    private void CenterMapCamera()
+    {
+        // 미니맵 아이콘들의 위치를 저장할 리스트
+        List<Vector3> iconPositions = new List<Vector3>();
+
+        // 모든 Row와 Cell을 순회하며 미니맵 아이콘의 위치를 수집
+        foreach (Row row in mapRows)
+        {
+            foreach (Cell cell in row.cells)
+            {
+                if (cell.minimap_Obj != null)
+                {
+                    iconPositions.Add(cell.minimap_Obj.transform.position);
+                }
+            }
+        }
+
+        // 아이콘들이 존재하지 않을 경우에는 카메라 위치를 변경하지 않음
+        if (iconPositions.Count == 0)
+            return;
+
+        // 모든 아이콘 위치의 합을 구하고, 평균을 계산하여 중심점 구하기
+        Vector3 centerPosition = Vector3.zero;
+        foreach (Vector3 pos in iconPositions)
+        {
+            centerPosition += pos;
+        }
+        centerPosition /= iconPositions.Count;
+
+        // 중심점에 미니맵 카메라 위치를 설정
+        map_Camera_Big.transform.position = new Vector3(centerPosition.x, centerPosition.y, map_Camera_Big.transform.position.z);
     }
 
     private void OpenMapUpdate(bool updateMap)
@@ -860,37 +901,34 @@ public class MapManager : MonoBehaviour
         cell.isBlocked = isBlocked;
         cell.isBoss = isBoss;
         cell.roomType = roomType;
-        cell.minimap_Obj = PlaceMinimap(map_Tf, cell.roomType, pos, isBlocked);
+        cell.minimap_Obj = PlaceMinimap(map_Tf, cell.roomType, pos);
         cell.isVisit = isVisit;
     }
 
     // 던전에 맞춰서 미니맵 생성 메서드
-    private GameObject PlaceMinimap(Transform parent, Cell.RoomType roomType, Vector2Int pos, bool isBlocked)
+    private GameObject PlaceMinimap(Transform parent, Cell.RoomType roomType, Vector2Int pos)
     {
-        if (!isBlocked)
-        {
-            // 미니맵 생성 및 부모 설정
-            GameObject miniMaps = Instantiate(GetRoomTypeMinimapIcons(roomType));
+        // 미니맵 생성 및 부모 설정
+        GameObject miniMaps = Instantiate(GetRoomTypeMinimapIcons(roomType));
 
-            // miniMaps를 map_Tf의 자식으로 설정
-            miniMaps.transform.SetParent(parent);
+        // miniMaps를 map_Tf의 자식으로 설정
+        miniMaps.transform.SetParent(parent);
 
-            // 부모의 위치를 기준으로 간격을 적용 (로컬 위치로 설정)
-            miniMaps.transform.localPosition = new Vector3(pos.x * 7, pos.y * -7, 0);
+        // 부모의 위치를 기준으로 간격을 적용 (로컬 위치로 설정)
+        miniMaps.transform.localPosition = new Vector3(pos.x * 7, pos.y * -7, 0);
 
-            // 각도를 유지하기 위해 로컬 회전 값을 초기화
-            miniMaps.transform.localRotation = Quaternion.identity;
+        // 각도를 유지하기 위해 로컬 회전 값을 초기화
+        miniMaps.transform.localRotation = Quaternion.identity;
 
-            return miniMaps;
-        }
-
-        return null;
+        return miniMaps;
     }
 
     private GameObject GetRoomTypeMinimapIcons(Cell.RoomType roomType)
     {
         switch (roomType) 
         {
+            case Cell.RoomType.StartRoom:
+                return map_Mark_Icon_Prefabs[0];
             case Cell.RoomType.RestRoom:
                 return map_Mark_Icon_Prefabs[1];
             case Cell.RoomType.ChestRoom:
@@ -898,11 +936,9 @@ public class MapManager : MonoBehaviour
             case Cell.RoomType.BattleRoom:
                 return map_Mark_Icon_Prefabs[3];
             case Cell.RoomType.BossRoom:
-                return map_Mark_Icon_Prefabs[4];
-            case Cell.RoomType.NoneType:
-                return map_Mark_Icon_Prefabs[0];
+                return map_Mark_Icon_Prefabs[4];          
             default:
-                return null;
+                return map_Mark_Icon_Prefabs[5];
         }
     }
 

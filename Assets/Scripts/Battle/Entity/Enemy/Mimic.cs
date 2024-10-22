@@ -8,7 +8,7 @@ public class Mimic : Enemy
     {
         base.Start();
         // 최대 체력, 최대 마나, 공격력, 공격속도, 사거리, 근접유무, 스킬유무, 경험치, 골드, 아이템드랍
-        InitStat(80, 0, 3, 0.75f, 1.5f, true, false, 5, SetRandomGold(150), new Item().GenerateRandomItem(18));
+        InitStat(80, 0, 4, 0.75f, 1.2f, true, false, GetExp(5), SetRandomGold(150), new Item().GenerateRandomItem(18));
 
         if (BattleManager.Instance.dialogue != null && BattleManager.Instance.dialogue.isTutorial)
             item_Drop_Check = false;
