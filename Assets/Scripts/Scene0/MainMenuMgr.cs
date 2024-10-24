@@ -82,7 +82,7 @@ public class MainMenuMgr : MonoBehaviour
 
     public void OnClickedSelectQuite()
     {
-        mainMenu.SetActive(true);
+        //mainMenu.SetActive(true);
         addUserName.gameObject.SetActive(false);
 
     }
