@@ -173,7 +173,6 @@ public class QuestMgr : MonoBehaviour
                 {
                     Debug.Log("Case 42");
                     GameUiMgr.single.tmp_PlayerRating.text = "9급 모험가";
-                    SetQuestICon(1, 0);
                     /*GameMgr.single.IsGameLoad(true);
                     GameUiMgr.single.GameSave();
                     SceneManager.LoadScene("Title");*/
@@ -188,6 +187,7 @@ public class QuestMgr : MonoBehaviour
                 {
                     Debug.Log("Case 50");
                     GameUiMgr.single.questDesc.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(false);
+                    SetQuestICon(0, 0);
                 }
 
                 if (questActionIndex == 1)
