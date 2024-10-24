@@ -370,7 +370,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void ResetStats()
+    private void PlayingResetStats()
     {
         foreach (GameObject player_Obj in party_List)
         {
@@ -379,7 +379,7 @@ public class BattleManager : MonoBehaviour
             PlayerData playerData = GameMgr.playerData[player.entity_index];
 
             // base_Stats에서 해당 플레이어의 원래 스탯 찾기
-            if (base_Stats.TryGetValue(playerData, out PlayerStats stats))
+            if (base_Stats.TryGetValue(playerData, out PlayerStats stats) && playerData.cur_Player_Hp > 0)
             {
                 // 원래 스탯 복원
                 float healthRatio = (player.max_Hp > 0) ? player.cur_Hp / player.max_Hp : 1;
@@ -398,6 +398,29 @@ public class BattleManager : MonoBehaviour
 
                 // temp_Stats 초기화
                 ResetTempStats(playerData);
+            }
+        }
+    }
+
+    private void EndResetStats()
+    {
+        foreach (GameObject player_Obj in party_List)
+        {
+            Ally player = player_Obj.GetComponent<Ally>();
+
+            PlayerData playerData = GameMgr.playerData[player.entity_index];
+
+            // base_Stats에서 해당 플레이어의 원래 스탯 찾기
+            if (base_Stats.TryGetValue(playerData, out PlayerStats stats))
+            {
+
+                playerData.base_atk_Dmg = stats.temp_Dmg;
+                playerData.max_Player_Hp = stats.temp_MaxHp;
+                playerData.cur_Player_Hp = playerData.max_Player_Hp;
+                playerData.max_Player_Mp = stats.temp_MaxMp;
+                player.cur_Mp = 0;
+                playerData.cur_Player_Mp = player.cur_Mp;
+                playerData.atk_Speed = stats.temp_AtkSpd;
             }
         }
     }
@@ -423,10 +446,12 @@ public class BattleManager : MonoBehaviour
         {
             poison_Check = false;
             StopCoroutine(Poison());
-            ResetStats(); // 버프 타일로 증가되기 전 스텟으로 리셋
+             
 
             if (deploy_Player_List.Count == 0)
             {
+                // 던전 종료 시 원래 스텟으로 리셋
+                EndResetStats();
                 AudioManager.single.PlaySfxClipChange(10);
                 ui.OpenPopup(ui.def_Banner);
                 yield return StartCoroutine(ui.Def_Banner());
@@ -435,6 +460,8 @@ public class BattleManager : MonoBehaviour
             }
             else if (deploy_Enemy_List.Count == 0)
             {
+                // 게임 중 버프 타일로 증가되기 전 스텟으로 리셋
+                PlayingResetStats();
                 AudioManager.single.PlaySfxClipChange(9);
                 ui.OpenPopup(ui.vic_Banner);
                 yield return StartCoroutine(ui.StartBanner(ui.vic_Banner));
@@ -532,6 +559,9 @@ public class BattleManager : MonoBehaviour
             Debug.Log("실행됨");
             if (deploy_Enemy_List.Count == 0 && room.FindRoom(room.cur_Room.gameObject).isBoss)
             {
+                // 던전 종료 시 원래 스텟으로 리셋
+                EndResetStats();
+
                 if (!ui.out_Portal.activeSelf)
                 {
                     ui.out_Portal.SetActive(true);

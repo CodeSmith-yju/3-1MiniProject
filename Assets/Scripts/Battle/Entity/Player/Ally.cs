@@ -100,6 +100,7 @@ public class Ally : BaseEntity
         atkRange = stat.atkRange;
         isMelee = stat.isMelee;
         able_Skill = stat.able_Skill;
+
     }
 
     // 사운드 수정 예정

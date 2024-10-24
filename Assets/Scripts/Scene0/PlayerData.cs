@@ -92,7 +92,6 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
 
         skill_Able = skil_able;
         isMelee = melee;
-
         this.job = job;
         playerAttribute = attribute;
     }
