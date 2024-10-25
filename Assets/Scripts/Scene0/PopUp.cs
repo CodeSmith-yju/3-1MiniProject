@@ -62,7 +62,7 @@ public class PopUp : MonoBehaviour
 
                     GameMgr.single.IsGameLoad(true);
                     GameUiMgr.single.GameSave();
-
+                    GameMgr.single.SetShopClean(true);
                     LoadingSceneController.LoadScene("Town");
 
                     Debug.Log("None Btn Clicked");

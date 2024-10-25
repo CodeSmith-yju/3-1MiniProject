@@ -59,6 +59,17 @@ public class ShopMgr : MonoBehaviour
     }
     public void RefreshShopItems()
     {
+        if (shopSlots.Count > 0)
+        {
+            for (int i = 0; i < shopSlots.Count; i++)
+            {
+                shopSlots[i].gameObject.SetActive(false);
+                Destroy(shopSlots[i]);
+            }
+            shopSlots.Clear();
+        }
+        
+
         //Debug.Log("Make Shop Items");
         //이 아래의 for문 생성로직은 GameUIMgr로 빼내야할거같음 여기서관리하기엔조금? 연계된 기능이많은듯
         for (int i = 0; i < 4; i++)

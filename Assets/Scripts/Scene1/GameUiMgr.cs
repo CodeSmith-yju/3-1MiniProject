@@ -164,7 +164,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     [SerializeField] ShopMgr shopMgr;
     [SerializeField] Blacksmith blacksmith;
     public GameObject SnB;
-    public bool shopCleaner = false;
 
     [Header("PopUp")]
     public PopUp popUp;
@@ -347,6 +346,14 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             GameUiMgr.single.slots = GameUiMgr.single.slotHolder.GetComponentsInChildren<Slot>();
             Inventory.Single.onChangeItem += RedrawSlotUI;
 
+            /*if (GameUiMgr.single.shopCleaner)
+            {
+                Debug.Log("상점 새로고침 ing...");
+                GameUiMgr.single.shopCleaner = false;
+                GameUiMgr.single.shopMgr.RefreshShopItems();
+                GameUiMgr.single.GameSave();
+            }*/
+
             /*//Debug.Log("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
             //Debug.Log("게임데이터를 불러온 다음입니다.");
 
@@ -413,10 +420,15 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         //Tooltip
         SetTooltip();
         TargetSlotsRefresh();
-        if (GameUiMgr.single.shopCleaner == true)
+        if (GameMgr.single.GetShopClean())
         {
-            GameUiMgr.single.shopCleaner = false;
-            shopMgr.RefreshShopItems();
+            Debug.Log("---------------------------상점 새로고침중인ㄷ ㅔ스 *----------");
+            GameMgr.single.SetShopClean (false);
+            GameUiMgr.single.shopMgr.RefreshShopItems();
+        }
+        else
+        {
+            Debug.Log("---------------------------상점 새로고침이 안되는 ㄷ ㅔ스 *----------");
         }
     }
 

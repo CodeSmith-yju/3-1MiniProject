@@ -13,6 +13,7 @@ public class GameMgr : MonoBehaviour
 {
     public static GameMgr single { get; private set; }
     public static List<PlayerData> playerData { get; private set; }//여기 수정함 06-02
+    public bool shopCleaner;
     public bool tutorial = false;
     private bool loadChecker = false;
     public int selectedResolution;
@@ -29,6 +30,7 @@ public class GameMgr : MonoBehaviour
         {
             playerData = new();
             selectedResolution = -1;
+            shopCleaner = false;
         }
         else
         {
@@ -68,6 +70,16 @@ public class GameMgr : MonoBehaviour
     public bool LoadChecker()
     {
         return this.loadChecker;
+    }
+
+    public bool SetShopClean(bool _bool)
+    {
+        shopCleaner = _bool;
+        return shopCleaner;
+    }
+    public bool GetShopClean()
+    {
+        return shopCleaner;
     }
 
 }
