@@ -46,6 +46,7 @@ public class QuestMgr : MonoBehaviour
         //dict_questList.Add(40, new QuestData("체력이 줄었다. 받은 물약을 먹자.", new int[] { 1000, 2000 }));
         dict_questList.Add(40, new QuestData("모의 전투에서 승리하자", new int[] { 1000, 2000 }));
         dict_questList.Add(50, new QuestData("모험가 등록 완료", new int[] { 1000, 2000 }));
+        dict_questList.Add(60, new QuestData("이게없어서 버그가나는거였네", new int[] { 1000, 2000 }));
 
         //dict_questList.Add(30, new QuestData("마을의 전설 듣기 퀘스트 클리어!", new int[] { 10000, 4000 }));
     }
@@ -89,6 +90,10 @@ public class QuestMgr : MonoBehaviour
 
     public void ControlQuestObejct()
     {
+        if (questId > 50 )
+        {
+            return;
+        }
         //Item questItem;
         switch (questId)
         {
@@ -194,6 +199,9 @@ public class QuestMgr : MonoBehaviour
                 {
                     Debug.Log("Case 51");
                 }
+                break;
+            default:
+                Debug.Log("After Quest ID:"+questId);
                 break;
         }
 
