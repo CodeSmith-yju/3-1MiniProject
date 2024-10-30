@@ -3191,10 +3191,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197bafb6ec38ce14799f618b9f5d67d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopCleaner: 0
   tutorial: 0
   selectedResolution: 0
   input_Name: 
   saveState: 0
+  firstStart: 1
   popUp: {fileID: 1316948235189082396}
 --- !u!4 &1338712243
 Transform:
@@ -4545,6 +4547,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1638594989}
     m_Modifications:
+    - target: {fileID: 832425110641130414, guid: e0914615030abfd4ebc8ba579461e0d4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 832425110641130414, guid: e0914615030abfd4ebc8ba579461e0d4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 832425110641130414, guid: e0914615030abfd4ebc8ba579461e0d4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 285
+      objectReference: {fileID: 0}
     - target: {fileID: 3409367286619602800, guid: e0914615030abfd4ebc8ba579461e0d4, type: 3}
       propertyPath: m_Name
       value: PopUp
@@ -4552,6 +4566,18 @@ PrefabInstance:
     - target: {fileID: 3409367286619602800, guid: e0914615030abfd4ebc8ba579461e0d4, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3722948438314127834, guid: e0914615030abfd4ebc8ba579461e0d4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3722948438314127834, guid: e0914615030abfd4ebc8ba579461e0d4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3722948438314127834, guid: e0914615030abfd4ebc8ba579461e0d4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 95
       objectReference: {fileID: 0}
     - target: {fileID: 6628884965592339110, guid: e0914615030abfd4ebc8ba579461e0d4, type: 3}
       propertyPath: m_Name
