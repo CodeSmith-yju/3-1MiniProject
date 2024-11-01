@@ -123,6 +123,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     private bool wearEquipment = false;
 
     //05-12 PartyList
+    [Header("PartyDetails")]
+    public PartyDetails partyDetails;
     [Header("Party Bord")]
     public GameObject panelPartyBoard;// 파티 게시판오브젝트
     public PartyIconRS entityIconRS;
@@ -2312,6 +2314,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             }
             
         }
+
+        //여기수정중
+        partyDetails.Init(lastDeparture);
     }
 
     public GameObject GetPlayerPrefab()

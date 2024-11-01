@@ -36,6 +36,7 @@ public class PartyData
     public Ally player;
 
     public Ally.JobClass jobType;
+    public Sprite portraitIcon;
     public Sprite jobIcon;
     public Sprite ElementalIcon;
 
@@ -131,21 +132,25 @@ public class PartyData
         {
             case Ally.JobClass.Ranger:
                 jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[_jobClass];
+                portraitIcon = GameUiMgr.single.entityIconRS.dictn_portratiIcon[_jobClass];
                 ElementalIcon = GameUiMgr.single.entityIconRS.dictn_ElementIcon[Elemental];
                 break;
             case Ally.JobClass.Wizard:
                 Elemental = GetRandomElement(wizardAttributes);
                 jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[_jobClass];
+                portraitIcon = GameUiMgr.single.entityIconRS.dictn_portratiIcon[_jobClass];
                 ElementalIcon = GameUiMgr.single.entityIconRS.dictn_ElementIcon[Elemental];
                 break;
             case Ally.JobClass.Knight:
                 Elemental = GetRandomElement(knightAttributes);
                 jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[_jobClass];
+                portraitIcon = GameUiMgr.single.entityIconRS.dictn_portratiIcon[_jobClass];
                 ElementalIcon = GameUiMgr.single.entityIconRS.dictn_ElementIcon[Elemental];
                 break;
             default:
                 Elemental = BaseEntity.Attribute.Normal;
                 jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[Ally.JobClass.Hero];
+                portraitIcon = GameUiMgr.single.entityIconRS.dictn_portratiIcon[Ally.JobClass.Hero];
                 ElementalIcon = GameUiMgr.single.entityIconRS.dictn_ElementIcon[Elemental];
                 break;
         }
