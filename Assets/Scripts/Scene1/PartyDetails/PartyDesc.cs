@@ -7,7 +7,7 @@ public class PartyDesc : MonoBehaviour
 {
     [SerializeField] PartyDetails partyDetails;
     [SerializeField] Button btnMy;
-    int descIndex;
+    [SerializeField] int descIndex;
 
     [Header("My Icon")]
     public Image myPortrait;
@@ -78,11 +78,13 @@ public class PartyDesc : MonoBehaviour
         str_Atk = _partyData.partyAtk.ToString();
         str_AtkRange = _partyData.partyAtkRange.ToString();
         str_AtkSpd = _partyData.partyAtkSpd.ToString();
-
     }
     public void SetIndex(int _index)
     {
+        Debug.Log("@@@@@@@@@@@@@@@@@@@@@ Run SetIndex Index: " + _index);
         descIndex = _index;
+        Debug.Log("@@@@@@@@@@@@@@@@@@@@@ Run SetIndex Index: " + descIndex);
     }
+    public int GetIndex() { return  descIndex; }
 
 }

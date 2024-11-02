@@ -2091,6 +2091,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                         }
 
                     }
+
+                    partyDetails.Init(lastDeparture);
                 }
             }
             else

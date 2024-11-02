@@ -44,7 +44,8 @@ public class PartyDetails : MonoBehaviour
                 PartyDetailDescs[i].gameObject.SetActive(false);
             }
         }
-        PartyDetailDescs[0].OK();
+
+        ShowDetals(PartyDetailDescs[0]);
     }
 
     public void ShowDetals(PartyDesc _desc)
@@ -53,11 +54,11 @@ public class PartyDetails : MonoBehaviour
         job.sprite = _desc.img_Job;
         attribute.sprite = _desc.img_Attribute;
 
-        txtHp.text = _desc.str_Hp;
-        txtMp.text = _desc.str_Mp;
-        txtAtk.text = _desc.str_Atk ;
-        txtAtkSpd.text = _desc.str_AtkSpd;
-        txtAtkRange.text = _desc.str_AtkRange;
+        txtHp.text = "HP: " + GameMgr.playerData[_desc.GetIndex()].max_Player_Hp; //_desc.str_Hp;
+        txtMp.text = "MP: " + GameMgr.playerData[_desc.GetIndex()].max_Player_Mp;//_desc.str_Mp;
+        txtAtk.text = "Atk: " + GameMgr.playerData[_desc.GetIndex()].base_atk_Dmg;//_desc.str_Atk ;
+        txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_desc.GetIndex()].atk_Speed;//_desc.str_AtkSpd;
+        txtAtkRange.text = "AtkRng: " + GameMgr.playerData[_desc.GetIndex()].atk_Range;//_desc.str_AtkRange;
     }
 
     /*void SetDetail(PartyData _pd)
