@@ -520,6 +520,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         // Sub Menu Set
         if (Input.GetButtonDown("Cancel"))
         {
+            //여기에이제 파티상태창 끄고, 뭐끄고 끄고끄고
             /*if (menuSet.activeSelf)
             {
                 menuSet.SetActive(false);
