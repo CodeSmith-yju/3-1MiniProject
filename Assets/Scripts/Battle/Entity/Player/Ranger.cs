@@ -9,7 +9,7 @@ public class Ranger : Ally
     protected override void Start()
     {
         base.Start();
-        job = JobClass.Ranger;
+        job = Job.Ranger;
         Debug.Log("Ranger »ý¼º");
     }
 

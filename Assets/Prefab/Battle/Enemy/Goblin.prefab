@@ -624,6 +624,7 @@ MonoBehaviour:
   exp_Cnt: 0
   gold_Cnt: 0
   item_Drop_Check: 0
+  sfx_Index: 0
 --- !u!1 &4978114080343244431
 GameObject:
   m_ObjectHideFlags: 0

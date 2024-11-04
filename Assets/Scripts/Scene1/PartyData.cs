@@ -35,7 +35,8 @@ public class PartyData
     public GameObject obj_Data;
     public Ally player;
 
-    public Ally.JobClass jobType;
+    public Ally.Job jobType;
+    public Ally.Class jobClass;
     public Sprite portraitIcon;
     public Sprite jobIcon;
     public Sprite ElementalIcon;
@@ -48,7 +49,6 @@ public class PartyData
         level = _Lvel;
         GenerateStat(player.job, _Lvel);//플레이어 프리펩이 선천적으로 지니고있는(수동으로 지정해줌) 플레이어 직업정보와, 레벨에 따라서 스텟을 생성
         //str name = RandomGenerateName();  
-
         type = prefab.name;// 프리펩오브젝트의 이름, JobClass enum값과 큰 차이는 없음.
         cost = (150 + (_Lvel * 20)) + Random.Range(0, _Lvel * 10);
         //Debug.Log("cost: "+cost);
@@ -57,12 +57,13 @@ public class PartyData
     }
 
 
-    public void GenerateStat(Ally.JobClass _Code, int _Lvel)
+    public void GenerateStat(Ally.Job _Code, int _Lvel)
     {
         jobType = _Code;
         switch (jobType)
         {
-            case Ally.JobClass.Ranger:
+            case Ally.Job.Ranger:
+                jobClass = Ally.Class.Range;
                 //Debug.Log("Type Ranger, Generate Code: "+_Code);
                 partyHp = 15f + (_Lvel * 2f);
                 partyMp = 5f;
@@ -75,8 +76,9 @@ public class PartyData
                 able_Skill = true;
                 Elemental = GetRandomElement(rangerAttributes);
                 break;
-            case Ally.JobClass.Wizard:
+            case Ally.Job.Wizard:
                 //Debug.Log("Type wizard, Generate Code: " + _Code);
+                jobClass = Ally.Class.Range;
                 partyHp = 20f + (_Lvel * 1f);
                 partyMp = 3f;
                 partyAtk = 3f + (_Lvel * 0.5f);
@@ -88,7 +90,8 @@ public class PartyData
                 able_Skill = true;
                 Elemental = GetRandomElement(wizardAttributes);
                 break;
-            case Ally.JobClass.Knight:
+            case Ally.Job.Knight:
+                jobClass = Ally.Class.Tank;
                 //Debug.Log("Type 3, Generate Code: " + _Code);
                 partyHp = 50f + (_Lvel * 5f);
                 partyMp = 5f;
@@ -108,6 +111,7 @@ public class PartyData
                 //type = "Default";
                 //Debug.Log("Type d, Generate Code: " + _Code);
                 // 스텟 상한 설정
+                jobClass = Ally.Class.Melee;
                 partyHp = GameMgr.playerData[0].max_Player_Hp + (_Lvel * 3f);
                 partyMp = GameMgr.playerData[0].max_Player_Mp - (_Lvel * 0.5f);
                 partyAtk = GameMgr.playerData[0].base_atk_Dmg + (_Lvel * 0.6f);
@@ -126,31 +130,32 @@ public class PartyData
         //Debug.Log("party Name: " + strPartyName);
     }
     
-    void SetClassAndAttributeIcon(Ally.JobClass _jobClass)
+    void SetClassAndAttributeIcon(Ally.Job _job)
     {
-        switch (_jobClass)
+        jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[this.jobClass];
+        switch (_job)
         {
-            case Ally.JobClass.Ranger:
-                jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[_jobClass];
-                portraitIcon = GameUiMgr.single.entityIconRS.dictn_portratiIcon[_jobClass];
+            case Ally.Job.Ranger:
+                //jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[_job];
+                portraitIcon = GameUiMgr.single.entityIconRS.dictn_portratiIcon[_job];
                 ElementalIcon = GameUiMgr.single.entityIconRS.dictn_ElementIcon[Elemental];
                 break;
-            case Ally.JobClass.Wizard:
+            case Ally.Job.Wizard:
                 Elemental = GetRandomElement(wizardAttributes);
-                jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[_jobClass];
-                portraitIcon = GameUiMgr.single.entityIconRS.dictn_portratiIcon[_jobClass];
+                //jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[_job];
+                portraitIcon = GameUiMgr.single.entityIconRS.dictn_portratiIcon[_job];
                 ElementalIcon = GameUiMgr.single.entityIconRS.dictn_ElementIcon[Elemental];
                 break;
-            case Ally.JobClass.Knight:
+            case Ally.Job.Knight:
                 Elemental = GetRandomElement(knightAttributes);
-                jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[_jobClass];
-                portraitIcon = GameUiMgr.single.entityIconRS.dictn_portratiIcon[_jobClass];
+                //jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[_job];
+                portraitIcon = GameUiMgr.single.entityIconRS.dictn_portratiIcon[_job];
                 ElementalIcon = GameUiMgr.single.entityIconRS.dictn_ElementIcon[Elemental];
                 break;
             default:
                 Elemental = BaseEntity.Attribute.Normal;
-                jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[Ally.JobClass.Hero];
-                portraitIcon = GameUiMgr.single.entityIconRS.dictn_portratiIcon[Ally.JobClass.Hero];
+                jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[Ally.Class.Melee];
+                portraitIcon = GameUiMgr.single.entityIconRS.dictn_portratiIcon[Ally.Job.Hero];
                 ElementalIcon = GameUiMgr.single.entityIconRS.dictn_ElementIcon[Elemental];
                 break;
         }
@@ -166,13 +171,13 @@ public class PartyData
         int _index = -1;
         switch (jobType)
         {
-            case Ally.JobClass.Ranger:
+            case Ally.Job.Ranger:
                 _index = 0;
                 break;
-            case Ally.JobClass.Knight:
+            case Ally.Job.Knight:
                 _index = 1;
                 break;
-            case Ally.JobClass.Wizard:
+            case Ally.Job.Wizard:
                 _index = 2;
                 break;
         }

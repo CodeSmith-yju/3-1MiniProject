@@ -9,16 +9,27 @@ public class Ally : BaseEntity
     //public Sprite class_Icon;
     public Sprite class_Portrait;
 
+    public enum Class
+    {
+        Tank, // 아이콘 - 방패 (탱커)
+        Melee, // 아이콘 - 검 (근거리 딜러)
+        Range, // 아이콘 - 활 (원거리 딜러)
+        Support // 아이콘 -   (버퍼, 디버퍼, 힐러)
+    }
 
-    public enum JobClass
+
+    public enum Job
     {
         Hero,
         Knight,
         Ranger,
-        Wizard
+        Wizard,
+        Priest,
+        Demon
     }
 
-    public JobClass job;
+    public Job job;
+    public Class type;
 
     protected override void Start()
     {

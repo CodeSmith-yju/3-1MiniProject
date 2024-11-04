@@ -113,23 +113,31 @@ public class PartyTooltip : MonoBehaviour
     void ViewClassTip(PartyData _partyData)
     {
         class_icon.sprite = _partyData.jobIcon;
-        switch (_partyData.jobType)
+        switch (_partyData.jobClass)
         {
-            case Ally.JobClass.Ranger:
-                class_Icon_text.text = "빠른 공격 속도로 먼 거리에서 적을 제압하는 원거리 공격 클래스";
-                class_name_text.text = "궁수";
+            case Ally.Class.Range:
+                //class_Icon_text.text = "빠른 공격 속도로 먼 거리에서 적을 제압하는 원거리 공격 클래스";
+                class_Icon_text.text = "먼 거리에서 적을 제압하는 원거리 공격 클래스";
+                class_name_text.text = "원거리 딜러";
                 break;
-            case Ally.JobClass.Wizard:
-                class_Icon_text.text = "낮은 체력을 지녔지만 강력한 스킬을 자주 사용할 수 있는 마법 클래스";
-                class_name_text.text = "마법사";
-                break;
-            case Ally.JobClass.Knight:
+            /*
+        case Ally.Job.Wizard:
+            //class_Icon_text.text = "낮은 체력을 지녔지만 강력한 스킬을 자주 사용할 수 있는 마법 클래스";
+            class_Icon_text.text = "먼 거리에서 적을 제압하는 원거리 공격 클래스";
+            class_name_text.text = "마법사";
+            break;
+             */
+            case Ally.Class.Tank:
                 class_Icon_text.text = "공격력이 약하지만 체력이 높은 근접 전투 클래스";
-                class_name_text.text = "기사";
+                class_name_text.text = "탱커";
                 break;
-            case Ally.JobClass.Hero:
+            case Ally.Class.Melee:
                 class_Icon_text.text = "적절한 체력과 공격력을 지닌 균형 잡힌 클래스";
-                class_name_text.text = "전사";
+                class_name_text.text = "근접 딜러";
+                break;
+            case Ally.Class.Support:
+                class_Icon_text.text = "동료를 지원하거나 적을 약화시키는 보조 클래스";
+                class_name_text.text = "서포터";
                 break;
             default:
                 break;

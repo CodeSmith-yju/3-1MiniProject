@@ -99,6 +99,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     [Header("ToolTip")]
     public Tooltip tooltip;
     public PartyTooltip partytooltip;
+    public DungeonTooltip dungeonTooltip;
     public Canvas cv;
     //Vector3 lodingPosition;// player Position
 
@@ -392,6 +393,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         bigMap.gameObject.SetActive(false);
         popUp.gameObject.SetActive(false);
         PlayerDesc.gameObject.SetActive(true);
+        dungeonTooltip.gameObject.SetActive(false);
         DescCheck = true;
 
 
@@ -401,8 +403,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         //05-21 
         partyNameSetting.RefreshiNameList();
-        entityIconRS.SetElement();
-        entityIconRS.SetJob();
+        entityIconRS.SetAllIcons();
         RefreshiPartyBord();
 
         //04-22
@@ -2339,6 +2340,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         poolMoveInSlot[0].partyIcon.sprite = playerPrefab.GetComponent<SpriteRenderer>().sprite;
         poolMoveInSlot[0].text_Name.text = GameMgr.playerData[0].GetPlayerName();
         poolMoveInSlot[0].text_Lv.text = "Lv"+GameMgr.playerData[0].player_level.ToString();
+        poolMoveInSlot[0].classIcon.sprite = GameUiMgr.single.entityIconRS.dictn_jobIcon[Ally.Class.Melee];
 
         listPartyData.Add(poolMoveInSlot[0].partyData);
         lastDeparture.Add(poolMoveInSlot[0]);

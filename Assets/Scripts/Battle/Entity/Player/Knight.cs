@@ -11,7 +11,7 @@ public class Knight : Ally
     {
         base.Start();
         Debug.Log("Knight »ý¼º");
-        job = JobClass.Knight;
+        job = Job.Knight;
     }
 
     protected override void Skill()
