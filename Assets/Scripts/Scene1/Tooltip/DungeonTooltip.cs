@@ -46,8 +46,7 @@ public class DungeonTooltip : MonoBehaviour
                 title.text = "튜토리얼";
                 desc.text = "모의 전투를 통해 기본적인 전투를 체험할 수 있습니다.";
                 //desc_elemnet.text = "이 난이도에서는 바람, 물 속성의 고블린, 슬라임이 등장하며, 근거리/원거리 공격을 합니다. 기본적인 전투를 경험할 수 있습니다.";
-                //icon_enemy1.sprite = ;
-
+                //icon_enemy1.sprite = GameUiMgr.single.entityIconRS;
                 break;
         }
     }

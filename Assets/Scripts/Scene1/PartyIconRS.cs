@@ -2,6 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum IconEnemy
+{
+    Goblin,
+    Slime,
+    Purple_Slime,
+    Golem,
+    Skeleton,
+    Puppet_Human,
+    FireGolem,
+    IceGolem
+}
 public class PartyIconRS : MonoBehaviour
 {
     [Header("Elemnetal, JobClass, Poartrait Icons")]
@@ -18,7 +29,7 @@ public class PartyIconRS : MonoBehaviour
     public Dictionary<Ally.Class, Sprite> dictn_jobIcon = new();
     public Dictionary<Ally.Job, Sprite> dictn_portratiIcon = new();
 
-    public Dictionary<string, Sprite> dictn_enemyIcon = new();
+    public Dictionary<IconEnemy, Sprite> dictn_enemyIcon = new();
     public Dictionary<Ally.Job, Sprite> dictn_attackIcon = new();
     public Dictionary<Ally.Job, Sprite> dictn_skillIcon = new();
 
@@ -62,7 +73,15 @@ public class PartyIconRS : MonoBehaviour
     void SetEnemyIcon()
     {
         dictn_enemyIcon ??= new();
-        dictn_enemyIcon.Add("gobline", spEnemyIcon[0]);
+        dictn_enemyIcon.Add(IconEnemy.Goblin, spEnemyIcon[0]);
+        dictn_enemyIcon.Add(IconEnemy.Slime, spEnemyIcon[1]);
+        dictn_enemyIcon.Add(IconEnemy.Purple_Slime, spEnemyIcon[2]);
+
+        dictn_enemyIcon.Add(IconEnemy.Golem, spEnemyIcon[3]);
+        dictn_enemyIcon.Add(IconEnemy.Skeleton, spEnemyIcon[4]);
+        dictn_enemyIcon.Add(IconEnemy.Puppet_Human, spEnemyIcon[5]);
+        dictn_enemyIcon.Add(IconEnemy.FireGolem, spEnemyIcon[6]);
+        dictn_enemyIcon.Add(IconEnemy.IceGolem, spEnemyIcon[7]);
     }
     void SetAttack()
     {
@@ -79,5 +98,31 @@ public class PartyIconRS : MonoBehaviour
         dictn_skillIcon.Add(Ally.Job.Knight, spAttackIcon[1]);
         dictn_skillIcon.Add(Ally.Job.Ranger, spAttackIcon[2]);
         dictn_skillIcon.Add(Ally.Job.Wizard, spAttackIcon[3]);
+    }
+
+    public Sprite GetElementIcon(BaseEntity.Attribute _elemnental)
+    {
+        return dictn_ElementIcon[_elemnental];
+    }
+    public Sprite GetJobIcon(Ally.Class _classType)
+    {
+        return dictn_jobIcon[_classType];
+    }
+    public Sprite GetPortraitIcon(Ally.Job _job)
+    {
+        return dictn_portratiIcon[_job];
+    }
+
+    public Sprite GetEnemyIcon(IconEnemy _enemyIcon)
+    {
+        return dictn_enemyIcon[_enemyIcon];
+    }
+    public Sprite GetAttackIcon(Ally.Job _job)
+    {
+        return dictn_attackIcon[_job];
+    }
+    public Sprite GetSkillIcon(Ally.Job _job)
+    {
+        return dictn_skillIcon[_job];
     }
 }

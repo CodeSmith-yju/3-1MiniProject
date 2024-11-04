@@ -53,7 +53,7 @@ public class PartyData
         cost = (150 + (_Lvel * 20)) + Random.Range(0, _Lvel * 10);
         //Debug.Log("cost: "+cost);
         spPartyIcon = player.GetComponent<SpriteRenderer>().sprite;
-        SetClassAndAttributeIcon(player.job);
+        SetIcons();
     }
 
 
@@ -125,40 +125,17 @@ public class PartyData
                     partyAtkSpd = 4f;
 
                 isMelee = true;
+                Elemental = BaseEntity.Attribute.Normal;
                 break;
         }
         //Debug.Log("party Name: " + strPartyName);
     }
     
-    void SetClassAndAttributeIcon(Ally.Job _job)
+    void SetIcons()
     {
-        jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[this.jobClass];
-        switch (_job)
-        {
-            case Ally.Job.Ranger:
-                //jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[_job];
-                portraitIcon = GameUiMgr.single.entityIconRS.dictn_portratiIcon[_job];
-                ElementalIcon = GameUiMgr.single.entityIconRS.dictn_ElementIcon[Elemental];
-                break;
-            case Ally.Job.Wizard:
-                Elemental = GetRandomElement(wizardAttributes);
-                //jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[_job];
-                portraitIcon = GameUiMgr.single.entityIconRS.dictn_portratiIcon[_job];
-                ElementalIcon = GameUiMgr.single.entityIconRS.dictn_ElementIcon[Elemental];
-                break;
-            case Ally.Job.Knight:
-                Elemental = GetRandomElement(knightAttributes);
-                //jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[_job];
-                portraitIcon = GameUiMgr.single.entityIconRS.dictn_portratiIcon[_job];
-                ElementalIcon = GameUiMgr.single.entityIconRS.dictn_ElementIcon[Elemental];
-                break;
-            default:
-                Elemental = BaseEntity.Attribute.Normal;
-                jobIcon = GameUiMgr.single.entityIconRS.dictn_jobIcon[Ally.Class.Melee];
-                portraitIcon = GameUiMgr.single.entityIconRS.dictn_portratiIcon[Ally.Job.Hero];
-                ElementalIcon = GameUiMgr.single.entityIconRS.dictn_ElementIcon[Elemental];
-                break;
-        }
+        portraitIcon = GameUiMgr.single.entityIconRS.GetPortraitIcon(jobType);
+        jobIcon = GameUiMgr.single.entityIconRS.GetJobIcon(jobClass);
+        ElementalIcon = GameUiMgr.single.entityIconRS.GetElementIcon(Elemental);
     }
     BaseEntity.Attribute GetRandomElement(List<BaseEntity.Attribute> attributes)
     {

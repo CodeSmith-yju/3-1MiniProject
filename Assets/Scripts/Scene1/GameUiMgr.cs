@@ -2340,7 +2340,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         poolMoveInSlot[0].partyIcon.sprite = playerPrefab.GetComponent<SpriteRenderer>().sprite;
         poolMoveInSlot[0].text_Name.text = GameMgr.playerData[0].GetPlayerName();
         poolMoveInSlot[0].text_Lv.text = "Lv"+GameMgr.playerData[0].player_level.ToString();
-        poolMoveInSlot[0].classIcon.sprite = GameUiMgr.single.entityIconRS.dictn_jobIcon[Ally.Class.Melee];
+        poolMoveInSlot[0].classIcon.sprite = GameUiMgr.single.entityIconRS.GetJobIcon(Ally.Class.Melee);
 
         listPartyData.Add(poolMoveInSlot[0].partyData);
         lastDeparture.Add(poolMoveInSlot[0]);

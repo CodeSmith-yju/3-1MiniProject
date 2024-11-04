@@ -17,7 +17,7 @@ public class EnemyStatManager : MonoBehaviour
         enemy = GetComponent<Enemy>();
         hp_Check = true;
 
-        attribute_Icon.sprite = GameUiMgr.single.entityIconRS.dictn_ElementIcon[enemy.attribute];
+        attribute_Icon.sprite = GameUiMgr.single.entityIconRS.GetElementIcon(enemy.attribute);
     }
 
     private void Update()
