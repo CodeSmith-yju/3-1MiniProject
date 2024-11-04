@@ -11,6 +11,7 @@ public class Knight : Ally
     {
         base.Start();
         Debug.Log("Knight »ý¼º");
+        type = Class.Tank;
         job = Job.Knight;
     }
 

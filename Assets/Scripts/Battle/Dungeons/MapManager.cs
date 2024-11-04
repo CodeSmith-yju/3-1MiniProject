@@ -432,7 +432,7 @@ public class MapManager : MonoBehaviour
                 {
                     return battleRoomPrefabs[Random.Range(3, 6)];
                 }
-                else // 30ÇÁ·Î È®·ü·Î ¾ÆÀÌ½º °ñ·½, ÆÄÀÌ¾î °ñ·½, ÆÛÆê ÈÞ¸Õ Á¶ÇÕ ¹æ
+                else // 50ÇÁ·Î È®·ü·Î ¾ÆÀÌ½º °ñ·½, ÆÄÀÌ¾î °ñ·½, ÆÛÆê ÈÞ¸Õ Á¶ÇÕ ¹æ
                 {
                     return battleRoomPrefabs[Random.Range(6, battleRoomPrefabs.Length)];
                 }

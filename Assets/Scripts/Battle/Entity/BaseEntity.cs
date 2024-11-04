@@ -35,7 +35,8 @@ public class BaseEntity : MonoBehaviour
     private bool isDieInProgress = false;
     protected bool using_Skill = false;
     protected bool isPlayer = true;
-    protected bool isInvulnerable = false;
+    protected bool isInvulnerable = false; // 골렘 특수 버프 (무적 상태)
+    protected bool isMadness = false; // 데몬 직업 특수 디버프 (받는 피해 증가)
     private float atk_CoolTime;
     private float cur_atk_CoolTime;
 
@@ -444,7 +445,7 @@ public class BaseEntity : MonoBehaviour
         }
     }
 
-    private void MeleeAttack(BaseEntity target)
+    protected virtual void MeleeAttack(BaseEntity target)
     {
         ani.SetTrigger("isAtk");
         Debug.Log("공격함 ( " + name + " -> " + target.name + " )");
@@ -493,7 +494,12 @@ public class BaseEntity : MonoBehaviour
                 break;
         }
 
-        if (!target.isInvulnerable)
+        if (target.isMadness)
+        {
+            getDmgHp = getDmgHp + (atkDmg * 0.15f); // 15% 추가 데미지
+        }
+
+        if (!target.isInvulnerable) // 골렘 특수 상태 버프가 아닐 때
             target.cur_Hp = getDmgHp;
         else
             target.cur_Hp -= 0f;
@@ -553,7 +559,12 @@ public class BaseEntity : MonoBehaviour
                 break;
         }
 
-        if (!target.isInvulnerable)
+        if (target.isMadness)
+        {
+            getDmgHp = getDmgHp + (dmg * 0.15f); // 15% 추가 데미지
+        }
+
+        if (!target.isInvulnerable) // 골렘 특수 상태가 아닐 때
             target.cur_Hp = getDmgHp;
         else
             target.cur_Hp -= 0f;

@@ -10,6 +10,7 @@ public class Wizard : Ally
     {
         base.Start();
         Debug.Log("Wizard »ý¼º");
+        type = Class.Range;
         job = Job.Wizard;
     }
 

@@ -6,6 +6,6 @@ public class Skeleton_Wizard_Skill : MonoBehaviour
 {
     public void SkillEffAniDone()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }
