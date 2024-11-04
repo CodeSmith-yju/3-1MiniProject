@@ -12,7 +12,8 @@ public class Hero : Ally
     {
         base.Start();
         Debug.Log("Hero »ý¼º");
-        job = JobClass.Hero;
+        type = Class.Melee;
+        job = Job.Hero;
     }
 
 

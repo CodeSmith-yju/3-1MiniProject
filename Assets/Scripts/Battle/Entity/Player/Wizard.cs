@@ -10,7 +10,8 @@ public class Wizard : Ally
     {
         base.Start();
         Debug.Log("Wizard »ý¼º");
-        job = JobClass.Wizard;
+        type = Class.Range;
+        job = Job.Wizard;
     }
 
     public override void RangeAttack(BaseEntity target)

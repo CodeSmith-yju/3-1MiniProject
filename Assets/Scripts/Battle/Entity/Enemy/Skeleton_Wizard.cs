@@ -53,7 +53,6 @@ public class Skeleton_Wizard : Enemy
                     if (enemy._curstate != State.Death)
                     {
                         GameObject skill = Instantiate(skill_Eff, enemy.transform);
-                        //skill.transform.position = new Vector3(0, 1.4f, 0);
                         skill.transform.localPosition = new Vector3(0, 1.4f, 0);
                         enemy.cur_Hp -= 10f;
                     }
