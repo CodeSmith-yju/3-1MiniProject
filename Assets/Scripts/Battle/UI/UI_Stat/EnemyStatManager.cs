@@ -27,7 +27,6 @@ public class EnemyStatManager : MonoBehaviour
             Debug.Log(name + " Ã¼·Â Ã¼Å©µÊ");
             hp_Text.text = $"{enemy.cur_Hp.ToString("0.##")}/{enemy.max_Hp.ToString("0.##")}";
             hp_Check = false;
-            
         }
 
         if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Battle)

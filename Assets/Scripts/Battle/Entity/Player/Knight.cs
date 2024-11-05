@@ -23,13 +23,13 @@ public class Knight : Ally
             StopCoroutine(SetAttack());
             if (isAttack)
             {
-
+                // 방어력 올리는 버프 스킬로 하는 건 어떨까?
                 BattleManager.Instance.ui.GenerateLog(class_Portrait, "돌진 찌르기");
 
                 ani.SetBool("isSkill", true);
                 BaseEntity target = FindTarget().GetComponent<BaseEntity>();
-                Debug.Log("타겟의 적에게 1.3배의 데미지로 공격" + " " + (atkDmg * 1.3) + "데미지");
-                target.cur_Hp -= atkDmg * 1.3f;
+                Debug.Log("타겟의 적에게 1.3배의 데미지로 공격" + " " + (DamageCalc(target, atkDmg) * 1.3) + "데미지");
+                target.cur_Hp -= DamageCalc(target, atkDmg) * 1.3f;
                 cur_Mp = 0;
                 Debug.Log("스킬 사용 ( " + name + " -> " + target.name + " )");
 

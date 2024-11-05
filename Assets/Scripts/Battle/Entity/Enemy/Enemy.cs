@@ -24,11 +24,12 @@ public class Enemy : BaseEntity
 
 
     // 최대 체력, 최대 마나, 공격력, 공격속도, 사거리, 근접유무, 스킬유무, 경험치, 골드, 드랍아이템
-    public void InitStat(float max_Hp, float max_Mp, float atkDmg, float atkSpd, float atkRange, bool isMelee, bool able_Skill, float exp, int gold, Item item)
+    public void InitStat(float max_Hp, float max_Mp, int def_Point, float atkDmg, float atkSpd, float atkRange, bool isMelee, bool able_Skill, float exp, int gold, Item item)
     {
         stat = new(
             max_Hp,
             max_Mp,
+            def_Point,
             atkDmg,
             atkSpd,
             atkRange,
@@ -41,6 +42,7 @@ public class Enemy : BaseEntity
 
         this.max_Hp = stat.max_Hp * BattleManager.Instance.dungeon_Level_Scale;
         this.cur_Hp = this.max_Hp;
+        this.def_Point = stat.def_Point;
         this.max_Mp = stat.max_Mp;
         this.cur_Mp = 0f;
         this.atkDmg = stat.atkDmg * BattleManager.Instance.dungeon_Level_Scale;
