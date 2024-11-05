@@ -90,7 +90,7 @@ public class Ally : BaseEntity
             GameMgr.playerData[index].player_level,
             GameMgr.playerData[index].max_Player_Hp,
             GameMgr.playerData[index].cur_Player_Hp,
-            10,
+            GameMgr.playerData[index].defensePoint,
             GameMgr.playerData[index].max_Player_Mp,
             GameMgr.playerData[index].base_atk_Dmg,
             GameMgr.playerData[index].atk_Speed,
