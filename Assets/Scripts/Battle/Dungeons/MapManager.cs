@@ -203,7 +203,7 @@ public class MapManager : MonoBehaviour
     // 그리드를 생성하고 그리드에 랜덤으로 방의 정보를 할당
     private void GenerateDungeonGrid()
     {
-        // 4x4 그리드를 초기화하고 방 배치
+        // 그리드를 초기화하고 방 배치
 
         if (mapRows.Count <= 0)
         {

@@ -9,6 +9,7 @@ public class EntityStat : MonoBehaviour
     public int level;
     public float max_Hp;
     public float cur_hp;
+    public int def_Point;
     public float max_Mp;
     public float atkDmg;
     public float atkSpd;
@@ -19,13 +20,14 @@ public class EntityStat : MonoBehaviour
     public int gold;
     public Item item;
 
-    public EntityStat(int index, string entity_name, int level, float max_Hp, float cur_hp, float max_Mp, float atkDmg, float atkSpd, float atkRange, bool isMelee, bool able_Skill)
+    public EntityStat(int index, string entity_name, int level, float max_Hp, float cur_hp, int def_Point, float max_Mp, float atkDmg, float atkSpd, float atkRange, bool isMelee, bool able_Skill)
     {
         this.index = index;
         this.entity_name = entity_name;
         this.level = level;
         this.max_Hp = max_Hp;
         this.cur_hp = cur_hp;  
+        this.def_Point = def_Point;
         this.max_Mp = max_Mp;
         this.atkDmg = atkDmg;
         this.atkSpd = atkSpd;
@@ -35,10 +37,11 @@ public class EntityStat : MonoBehaviour
     }
 
 
-    public EntityStat(float max_Hp, float max_Mp, float atkDmg, float atkSpd, float atkRange, bool isMelee, bool able_Skill, float exp, int gold, Item item)
+    public EntityStat(float max_Hp, float max_Mp, int def_Point, float atkDmg, float atkSpd, float atkRange, bool isMelee, bool able_Skill, float exp, int gold, Item item)
     {
         this.max_Hp = max_Hp;
         this.max_Mp = max_Mp;
+        this.def_Point = def_Point;  
         this.atkDmg = atkDmg;
         this.atkSpd = atkSpd;
         this.atkRange = atkRange;

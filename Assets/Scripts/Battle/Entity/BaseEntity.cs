@@ -16,6 +16,7 @@ public class BaseEntity : MonoBehaviour
     public float max_Mp;
     public float cur_Mp;
     public float atkDmg;
+    public int def_Point;
     public float atkSpd;
     public float atkRange;
     public bool able_Skill = false;
@@ -450,71 +451,7 @@ public class BaseEntity : MonoBehaviour
         ani.SetTrigger("isAtk");
         Debug.Log("공격함 ( " + name + " -> " + target.name + " )");
         float getDmgHp;
-
-        switch (attribute)
-        {
-            case Attribute.Fire:
-                if (target.attribute == Attribute.Water)
-                    getDmgHp = target.cur_Hp - (atkDmg * 0.75f);
-                else if (target.attribute == Attribute.Wind)
-                    getDmgHp = target.cur_Hp - (atkDmg * 1.5f);
-                else
-                     getDmgHp = target.cur_Hp - (atkDmg * 1f);
-                break;
-            case Attribute.Water:   
-                if (target.attribute == Attribute.Wind)
-                    getDmgHp = target.cur_Hp - (atkDmg * 0.75f);
-                else if (target.attribute == Attribute.Fire)
-                    getDmgHp = target.cur_Hp - (atkDmg * 1.5f);
-                else
-                    getDmgHp = target.cur_Hp - (atkDmg * 1f);
-                break;
-            case Attribute.Wind:
-                if (target.attribute == Attribute.Fire)
-                    getDmgHp = target.cur_Hp - (atkDmg * 0.75f);
-                else if (target.attribute == Attribute.Water)
-                    getDmgHp = target.cur_Hp - (atkDmg * 1.5f);
-                else
-                    getDmgHp = target.cur_Hp - (atkDmg * 1f);
-                break;
-            case Attribute.Light:
-                if (target.attribute == Attribute.Dark)
-                    getDmgHp = target.cur_Hp - (atkDmg * 1.25f);
-                else
-                    getDmgHp = target.cur_Hp - (atkDmg * 1f);
-                break;
-            case Attribute.Dark:
-                if (target.attribute == Attribute.Light)
-                    getDmgHp = target.cur_Hp - (atkDmg * 1.25f);
-                else
-                    getDmgHp = target.cur_Hp - (atkDmg * 1f);
-                break;
-            default: // 주인공일 경우 (속성이 없을 경우)
-                getDmgHp = target.cur_Hp - (atkDmg * 1f);
-                break;
-        }
-
-        if (target.isMadness)
-        {
-            getDmgHp = getDmgHp + (atkDmg * 0.15f); // 15% 추가 데미지
-        }
-
-        if (!target.isInvulnerable) // 골렘 특수 상태 버프가 아닐 때
-            target.cur_Hp = getDmgHp;
-        else
-            target.cur_Hp -= 0f;
-        Debug.Log(target.cur_Hp + " " + target.name);
-    }
-
-    public virtual void RangeAttack(BaseEntity target) 
-    {
-        Debug.Log("공격함 ( " + name + " -> " + target.name + " )");
-        ani.SetTrigger("isAtk");
-    }
-
-    public void RangeHit(BaseEntity target, float dmg)
-    {
-        float getDmgHp;
+        float dmg = DamageCalc(target, atkDmg);
 
         switch (attribute)
         {
@@ -524,9 +461,9 @@ public class BaseEntity : MonoBehaviour
                 else if (target.attribute == Attribute.Wind)
                     getDmgHp = target.cur_Hp - (dmg * 1.5f);
                 else
-                    getDmgHp = target.cur_Hp - (dmg * 1f);
+                     getDmgHp = target.cur_Hp - (dmg * 1f);
                 break;
-            case Attribute.Water:
+            case Attribute.Water:   
                 if (target.attribute == Attribute.Wind)
                     getDmgHp = target.cur_Hp - (dmg * 0.75f);
                 else if (target.attribute == Attribute.Fire)
@@ -562,6 +499,78 @@ public class BaseEntity : MonoBehaviour
         if (target.isMadness)
         {
             getDmgHp = getDmgHp + (dmg * 0.15f); // 15% 추가 데미지
+        }
+
+        if (!target.isInvulnerable) // 골렘 특수 상태 버프가 아닐 때
+            target.cur_Hp = getDmgHp;
+        else
+            target.cur_Hp -= 0f;
+        Debug.Log(target.cur_Hp + " " + target.name);
+    }
+
+    private float DamageCalc(BaseEntity target, float atkDmg)
+    {
+        float reduction = Mathf.Min(0.6f, (target.def_Point / 5) * 0.02f);
+        return atkDmg * (1 - reduction);
+    }
+
+    public virtual void RangeAttack(BaseEntity target) 
+    {
+        Debug.Log("공격함 ( " + name + " -> " + target.name + " )");
+        ani.SetTrigger("isAtk");
+    }
+
+    public void RangeHit(BaseEntity target, float dmg)
+    {
+        float getDmgHp;
+        float calcDmg = DamageCalc(target, dmg);
+
+        switch (attribute)
+        {
+            case Attribute.Fire:
+                if (target.attribute == Attribute.Water)
+                    getDmgHp = target.cur_Hp - (calcDmg * 0.75f);
+                else if (target.attribute == Attribute.Wind)
+                    getDmgHp = target.cur_Hp - (calcDmg * 1.5f);
+                else
+                    getDmgHp = target.cur_Hp - (calcDmg * 1f);
+                break;
+            case Attribute.Water:
+                if (target.attribute == Attribute.Wind)
+                    getDmgHp = target.cur_Hp - (calcDmg * 0.75f);
+                else if (target.attribute == Attribute.Fire)
+                    getDmgHp = target.cur_Hp - (calcDmg * 1.5f);
+                else
+                    getDmgHp = target.cur_Hp - (calcDmg * 1f);
+                break;
+            case Attribute.Wind:
+                if (target.attribute == Attribute.Fire)
+                    getDmgHp = target.cur_Hp - (calcDmg * 0.75f);
+                else if (target.attribute == Attribute.Water)
+                    getDmgHp = target.cur_Hp - (calcDmg * 1.5f);
+                else
+                    getDmgHp = target.cur_Hp - (calcDmg * 1f);
+                break;
+            case Attribute.Light:
+                if (target.attribute == Attribute.Dark)
+                    getDmgHp = target.cur_Hp - (calcDmg * 1.25f);
+                else
+                    getDmgHp = target.cur_Hp - (calcDmg * 1f);
+                break;
+            case Attribute.Dark:
+                if (target.attribute == Attribute.Light)
+                    getDmgHp = target.cur_Hp - (calcDmg * 1.25f);
+                else
+                    getDmgHp = target.cur_Hp - (calcDmg * 1f);
+                break;
+            default: // 주인공일 경우 (속성이 없을 경우)
+                getDmgHp = target.cur_Hp - (calcDmg * 1f);
+                break;
+        }
+
+        if (target.isMadness)
+        {
+            getDmgHp = getDmgHp + (calcDmg * 0.15f); // 15% 추가 데미지
         }
 
         if (!target.isInvulnerable) // 골렘 특수 상태가 아닐 때

@@ -10,8 +10,8 @@ public class Skeleton_Wizard : Enemy
     protected override void Start()
     {
         base.Start();
-        // 최대 체력, 최대 마나, 공격력, 공격속도, 사거리, 근접유무, 스킬유무, 경험치, 골드, 아이템 드랍
-        InitStat(250, 6, 7, 0.85f, 99f, false, true, GetExp(20), SetRandomGold(400), new Item().GenerateRandomItem(15));
+        // 최대 체력, 최대 마나, 방어력, 공격력, 공격속도, 사거리, 근접유무, 스킬유무, 경험치, 골드, 아이템 드랍
+        InitStat(250, 6, 30, 7, 0.85f, 99f, false, true, GetExp(20), SetRandomGold(400), new Item().GenerateRandomItem(15));
         // 아이템 바꿔야됨
 
         if (BattleManager.Instance.dialogue != null && BattleManager.Instance.dialogue.isTutorial)

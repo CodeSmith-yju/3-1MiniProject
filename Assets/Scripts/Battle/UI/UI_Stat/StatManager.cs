@@ -31,8 +31,8 @@ public class StatManager : MonoBehaviour
     public void InitStat(PlayerData player, Sprite portrait, int level, string name)
     {
         this.player = player;
-        player_Icon.sprite = portrait;
-        attribute_Icon.sprite = GameUiMgr.single.entityIconRS.GetElementIcon(player.playerAttribute);
+        player_Icon.sprite = portrait; // 상태창의 초상화
+        attribute_Icon.sprite = GameUiMgr.single.entityIconRS.GetElementIcon(player.playerAttribute); // 속성 아이콘
 
         this.level_Text.text = level.ToString();
         this.name_Text.text = name;

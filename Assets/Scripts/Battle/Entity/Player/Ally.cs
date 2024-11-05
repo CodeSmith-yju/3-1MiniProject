@@ -6,7 +6,6 @@ public class Ally : BaseEntity
 {
     public string player_Name;
     public int level;
-    //public Sprite class_Icon;
     public Sprite class_Portrait;
 
     public enum Class
@@ -91,6 +90,7 @@ public class Ally : BaseEntity
             GameMgr.playerData[index].player_level,
             GameMgr.playerData[index].max_Player_Hp,
             GameMgr.playerData[index].cur_Player_Hp,
+            10,
             GameMgr.playerData[index].max_Player_Mp,
             GameMgr.playerData[index].base_atk_Dmg,
             GameMgr.playerData[index].atk_Speed,
