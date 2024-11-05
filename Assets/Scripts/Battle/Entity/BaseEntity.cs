@@ -508,7 +508,7 @@ public class BaseEntity : MonoBehaviour
         Debug.Log(target.cur_Hp + " " + target.name);
     }
 
-    private float DamageCalc(BaseEntity target, float atkDmg)
+    protected float DamageCalc(BaseEntity target, float atkDmg)
     {
         float reduction = Mathf.Min(0.6f, (target.def_Point / 5) * 0.02f);
         return atkDmg * (1 - reduction);

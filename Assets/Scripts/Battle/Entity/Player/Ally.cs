@@ -107,9 +107,12 @@ public class Ally : BaseEntity
         max_Mp = stat.max_Mp;
         cur_Mp = 0f;
         atkDmg = stat.atkDmg;
-        SetAttackSpeed(stat.atkSpd);
-        atkRange = stat.atkRange;
+        SetAttackSpeed(Mathf.Clamp(stat.atkSpd, 0.1f, 2f)); // 0.1 ~ 2 까지 제한
         isMelee = stat.isMelee;
+        if (isMelee)
+            atkRange = Mathf.Clamp(stat.atkRange, 0.5f, 2.5f); // 근접 유닛은 0.5 ~ 2.5까지 제한
+        else
+            atkRange = Mathf.Clamp(stat.atkRange, 0.5f, 10f); // 원거리 유닛은 0.5 ~ 10까지 제한
         able_Skill = stat.able_Skill;
 
     }

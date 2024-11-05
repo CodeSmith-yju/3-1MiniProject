@@ -39,11 +39,11 @@ public class Ranger : Ally
 
                 ani.SetBool("isSkill", true);
                 BaseEntity target = FindTarget().GetComponent<BaseEntity>();
-                Debug.Log("타겟의 적에게 1.2배의 데미지로 공격" + " " + (atkDmg * 1.2) + "데미지");
+                Debug.Log("타겟의 적에게 1.2배의 데미지로 공격" + " " + (DamageCalc(target, atkDmg) * 1.2) + "데미지");
                 GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(1, isPlayer);
                 obj_Arrow.transform.position = transform.GetChild(0).position;
                 Arrow arrow = obj_Arrow.GetComponent<Arrow>();
-                arrow.Shoot(this, target, atkDmg * 1.2f);
+                arrow.Shoot(this, target, DamageCalc(target, atkDmg) * 1.2f);
                 cur_Mp = 0;
                 Debug.Log("스킬 사용 ( " + name + " -> " + target.name + " )");
 
