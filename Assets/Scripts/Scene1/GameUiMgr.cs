@@ -1056,7 +1056,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         SaveData gameSaveData = new SaveData(GameMgr.playerData[0].GetPlayerName(), GameMgr.playerData[0].player_level, GameMgr.playerData[0].player_Gold, GameUiMgr.single.questMgr.questId, GameUiMgr.single.questMgr.questActionIndex,
                 GameMgr.playerData[0].max_Player_Hp, GameMgr.playerData[0].cur_Player_Hp, GameMgr.playerData[0].max_Player_Sn, GameMgr.playerData[0].cur_Player_Sn, GameMgr.playerData[0].max_Player_Mp, GameMgr.playerData[0].cur_Player_Mp,
                 GameMgr.playerData[0].atk_Speed, GameMgr.playerData[0].atk_Range, GameMgr.playerData[0].base_atk_Dmg,
-                GameMgr.playerData[0].player_max_Exp, GameMgr.playerData[0].player_cur_Exp, GameMgr.single.tutorial,
+                GameMgr.playerData[0].player_max_Exp, GameMgr.playerData[0].player_cur_Exp, GameMgr.single.tutorial, GameMgr.playerData[0].defensePoint,
                 saveInventoryItem, saveWearItem, saveShopItems,
                 GameMgr.playerData[0].listPartyDatas, GameMgr.playerData[0].listPartyDeparture
                 );
@@ -1152,8 +1152,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         GameMgr.playerData[0].atk_Speed = loadData.p_atk_speed;
         GameMgr.playerData[0].atk_Range = loadData.p_atk_range;
         GameMgr.playerData[0].base_atk_Dmg = loadData.p_base_atk_Dmg;
-        GameMgr.playerData[0].listPartyDatas = loadData.listPartyData;
-        GameMgr.playerData[0].listPartyDeparture = loadData.listPartyDeparture;
+        GameMgr.playerData[0].listPartyDatas.AddRange(loadData.listPartyData);
+        GameMgr.playerData[0].listPartyDeparture.AddRange(loadData.listPartyDeparture);
+
+        GameMgr.playerData[0].defensePoint = loadData.p_defensePoint;
         // 인벤토리 및 장비 데이터 로드
         LoadInventory(loadData.listInven);
         RedrawSlotUI();
@@ -1996,7 +1998,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnClickCreateParty()// 모집가능파티원리스트 생성 메서드
     {
-        
         if (GameMgr.playerData[0].listPartyDatas.Count == 0)//l || GameMgr.playerData[0].listPartyDatas!= null && GameMgr.playerData[0].listPartyDatas.Count < 2)
         {
             Debug.Log("---------------------------저장해놓은 파티원목록이 없습니다.");
@@ -2035,6 +2036,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 {
                     //Debug.Log("i: " + i);
                     PartyData newParty = new (objListPlayable[GameMgr.playerData[0].listPartyDatas[i].GetPlayerbleObjIndex()], GameMgr.playerData[0].listPartyDatas[i].level);
+                    newParty.LoadAttribute(GameMgr.playerData[0].listPartyDatas[i]);
                     newParty.SetPartyCost(GameMgr.playerData[0].listPartyDatas[i].cost);
                     newParty.moveInCk = GameMgr.playerData[0].listPartyDatas[i].moveInCk;
                     listPartyData.Add(newParty);
@@ -2077,9 +2079,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
                                 _slot.partyData.level,
                                 _slot.partyData.strPartyName,
-
                                 _slot.partyData.able_Skill,
                                 _slot.partyData.isMelee,
+
+                                _slot.partyData.partyDefense,
 
                                 _slot.partyData.jobType,
                                 _slot.partyData.Elemental
@@ -2103,6 +2106,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 for (int i = 0; i < GameMgr.playerData[0].listPartyDatas.Count; i++)
                 {
                     PartyData newParty = new(objListPlayable[GameMgr.playerData[0].listPartyDatas[i].GetPlayerbleObjIndex()], GameMgr.playerData[0].listPartyDatas[i].level);
+                    newParty.LoadAttribute(GameMgr.playerData[0].listPartyDatas[i]);
                     newParty.SetPartyCost(GameMgr.playerData[0].listPartyDatas[i].cost);
                     listPartyData.Add(newParty);
                     CreatePartySlot(newParty);
@@ -2304,7 +2308,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
                     _slot.partyData.able_Skill,
                     _slot.partyData.isMelee,
-
+                    _slot.partyData.partyDefense,
                     _slot.partyData.jobType,
                     _slot.partyData.Elemental
                     );

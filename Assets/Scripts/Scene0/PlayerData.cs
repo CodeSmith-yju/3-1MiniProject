@@ -26,6 +26,8 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
     public bool skill_Able;
     public bool isMelee;
 
+    public int defensePoint;
+    public float limitAttackSpeed;
     public Ally.Job job;
     public BaseEntity.Attribute playerAttribute;
 
@@ -59,7 +61,8 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
         atk_Range = 1.2f;
         base_atk_Dmg = 3f;
         player_level = 1;
-        
+        defensePoint = 10;
+
         skill_Able = true;
         isMelee = true;
 
@@ -74,7 +77,7 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
 
         playerAttribute = BaseEntity.Attribute.Normal;
     }
-    public PlayerData(int index, float hp, float mp, float atk_spd, float atk_range, float atkDmg, int lv, string name, bool skil_able, bool melee, Ally.Job job, BaseEntity.Attribute attribute)
+    public PlayerData(int index, float hp, float mp, float atk_spd, float atk_range, float atkDmg, int lv, string name, bool skil_able, bool melee, int defense, Ally.Job job, BaseEntity.Attribute attribute)
     {
         playerIndex = index;
 
@@ -89,7 +92,7 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
 
         player_level = lv;
         this.NAME = name;
-
+        defensePoint = defense;
         skill_Able = skil_able;
         isMelee = melee;
         this.job = job;
@@ -114,26 +117,29 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
             Debug.Log("계산 후 경험치: "+_exp);
 
             GetPlayerExp(_exp);
+            //레벨업 발생
+            AddLvelUpStats();
         }
         else
         {
             this.player_cur_Exp += _exp;
-            //SetLevelUpStats(player_level);
         }
-
     }
-    public void SetLevelUpStats(int _nowLevel)//현재 레벨에 따라 스텟 새롭게 설정하는 메서드 추가
+
+    public void AddLvelUpStats()//현재 레벨에 따라 스탯 새롭게 설정하는 메서드 추가
     {
-        max_Player_Hp = 40f + (_nowLevel * 3f);     // 체력: 플레이어가 전투에서 생존할 수 있도록 기본 체력을 높게 설정하고 레벨에 따라 체력이 증가
-        max_Player_Mp = 5f - (_nowLevel * 0.5f);    // MP: 스킬 사용 빈도를 고려해 기본 MP를 조금 높게 설정
+        //Mathf.Clamp는 주어진 value가 min과 max 사이에 있는지를 확인하고,
+        //만약 value가 min보다 작으면 min을 반환하고, max보다 크면 max를 반환합니다. 그렇지 않으면 value를 그대로 반환합니다.
+
+        /*max_Player_Hp = 40f + (_nowLevel * 3f);     // 체력: 플레이어가 전투에서 생존할 수 있도록 기본 체력을 높게 설정하고 레벨에 따라 체력이 증가
         base_atk_Dmg = 3f + (_nowLevel * 0.6f);     // 공격력: 플레이어의 공격력을 중간 수준으로 설정하고 레벨에 따른 상승폭을 조정
-        atk_Speed = 1.0f + (_nowLevel * 0.05f);     // 공격 속도: 중간 속도로 설정하며 레벨업 시 약간 증가
-        
-        // 스텟 상한 설정
-        if (max_Player_Mp < 2)
-            max_Player_Mp = 2f;
-        if (atk_Speed > 4f)
-            atk_Speed = 4f;
+        //atk_Speed = 1.0f + (_nowLevel * 0.05f);     // 공격 속도: 중간 속도로 설정하며 레벨업 시 약간 증가
+        atk_Speed = Mathf.Clamp((1.0f + (_nowLevel * 0.05f)), 1.0f, 2f);//*/
+
+        max_Player_Hp += 3f;
+        base_atk_Dmg += 0.6f;
+        atk_Speed += 0.05f;
+        defensePoint += 3;
     }
     public void GetPlayerstamina(float _sn)
     {
@@ -179,6 +185,7 @@ public class SaveData
     public float p_cur_Exp;
 
     public bool tutorialClear;
+    public int p_defensePoint;
 
     public List<Item> listInven;
     public List<Item> listEquip;
@@ -190,7 +197,7 @@ public class SaveData
     public SaveData(string name, int level, int gold, int qID, int qActID, 
         float max_hp, float cur_hp, float max_sn, float cur_sn, float max_mp, float cur_mp, 
         float a_spd, float a_range, float a_dmg, 
-        float max_exp, float cur_exp, bool _tutorialClear,
+        float max_exp, float cur_exp, bool _tutorialClear, int _defensePoint,
         List<Item> _invenItem, List<Item> _invenEquip, List<Item> _shopSlots,
         List<PartyData> _party, List<PartyData> _departure
         )
@@ -213,6 +220,7 @@ public class SaveData
         this.p_cur_mp = cur_mp;
 
         this.tutorialClear = _tutorialClear;
+        this.p_defensePoint = _defensePoint;
 
         this.p_atk_speed = a_spd;
         this.p_atk_range = a_range;
@@ -254,7 +262,7 @@ public static class SaveSystem
         if (!File.Exists(saveFilePath))
         {
             Debug.LogWarning("No such saveFile exists. Creating a new one...");
-            SaveData noneSave = new SaveData("", 0,0,0,0, 0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f, false, null, null, null, null, null);
+            SaveData noneSave = new SaveData("", 0,0,0,0, 0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f, false, 0, null, null, null, null, null);
             Save(noneSave, saveFileName);  // Create a new save file
             return noneSave;
         }

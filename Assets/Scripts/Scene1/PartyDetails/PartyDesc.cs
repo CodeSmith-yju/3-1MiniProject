@@ -35,6 +35,9 @@ public class PartyDesc : MonoBehaviour
     public string str_AtkSpd;
     public string str_AtkRange;
 
+    public List<float> tempDefaultStats;
+    public List<float> tempWeightStats;
+
     public void Init(PartyData _partyData, PartyDetails _partyDetails)
     {
         btnMy = GetComponent<Button>();
@@ -44,6 +47,9 @@ public class PartyDesc : MonoBehaviour
 
         myPortrait.sprite = img_Portrait;
         myAttribute.sprite = img_Attribute;
+
+        tempDefaultStats.AddRange(_partyData.defaultStats);
+        tempWeightStats.AddRange(_partyData.weightPerLevelStats);
     }
 
     public void OK()
@@ -69,7 +75,8 @@ public class PartyDesc : MonoBehaviour
         // img
         img_Portrait = _partyData.portraitIcon;
         img_Attribute = _partyData.ElementalIcon;
-        img_Job = _partyData.jobIcon; 
+        img_Job = _partyData.jobIcon;
+        img_Skill = GameUiMgr.single.entityIconRS.GetSkillIcon(_partyData.jobType);
 
         // str
         str_Lv = _partyData.level.ToString();
@@ -81,9 +88,9 @@ public class PartyDesc : MonoBehaviour
     }
     public void SetIndex(int _index)
     {
-        Debug.Log("@@@@@@@@@@@@@@@@@@@@@ Run SetIndex Index: " + _index);
+        //Debug.Log("@@@@@@@@@@@@@@@@@@@@@ Run SetIndex Index: " + _index);
         descIndex = _index;
-        Debug.Log("@@@@@@@@@@@@@@@@@@@@@ Run SetIndex Index: " + descIndex);
+        //Debug.Log("@@@@@@@@@@@@@@@@@@@@@ Run SetIndex Index: " + descIndex);
     }
     public int GetIndex() { return  descIndex; }
 

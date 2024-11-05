@@ -72,8 +72,10 @@ public class PlayerAction : MonoBehaviour
                     return;
                 }
 
-                if (GameUiMgr.single.questMgr.questId >= 40 && GameUiMgr.single.questMgr.questId < 50)
+                if (GameUiMgr.single.questMgr.questId >= 40 && GameUiMgr.single.questMgr.questId < 50)//튜토리얼던전입장퀘스트
                 {
+                    //튜토리얼던전깨고나와서 던전팝업 open한뒤에 닫고 말걸어서 50넘기고와서 던전팝업열면 튜토리얼던전다시깨야됨
+
                     GameUiMgr.single.isDungeon = true;
                     GameUiMgr.single.OpenDungeonUi();
                     //GameUiMgr.single.textEquipPanel.text = "던전에 입장하시겠습니까?";//OK버튼 클릭했을때 다른효과가 나와야하는데 생각조금 더 해봐야함

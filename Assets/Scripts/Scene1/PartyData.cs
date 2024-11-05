@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 
 [System.Serializable]
@@ -30,6 +31,8 @@ public class PartyData
     public float partyAtkSpd;
     public float partyAtkRange;
 
+    public int partyDefense;
+
     public bool able_Skill;
     public bool isMelee;
     public GameObject obj_Data;
@@ -40,6 +43,9 @@ public class PartyData
     public Sprite portraitIcon;
     public Sprite jobIcon;
     public Sprite ElementalIcon;
+
+    public List<float> defaultStats;//Hp, Mp, atk, atkspd, atkrng
+    public List<float> weightPerLevelStats;//hp, mp, atk, atkspd, atkrng
 
     public PartyData(GameObject prefab, int _Lvel)
     {
@@ -69,12 +75,16 @@ public class PartyData
                 partyMp = 5f;
                 partyAtk = 2f + (_Lvel * 0.2f);
                 partyAtkSpd = 1.0f +(_Lvel * 0.05f);
+                //partyAtkSpd = Mathf.Clamp((1f + (_Lvel * 0.05f)), 1.0f, 2f);
                 partyAtkRange = 5f;
                 //strPartyName = "Ranger";
                 strPartyName = GameUiMgr.single.partyNameSetting.GetRandomName(GameUiMgr.single.partyNameSetting.archerNames);
                 isMelee = false;//false 일때 원거리공격
                 able_Skill = true;
                 Elemental = GetRandomElement(rangerAttributes);
+                partyDefense = 5 + (_Lvel * 2);
+                SetDefaultStats(15f, 5f, 2f, 1.0f, 5f);
+                SetWeightPerLevelStats(2f, 0f, 0.2f, 0.05f, 0f);
                 break;
             case Ally.Job.Wizard:
                 //Debug.Log("Type wizard, Generate Code: " + _Code);
@@ -83,12 +93,16 @@ public class PartyData
                 partyMp = 3f;
                 partyAtk = 3f + (_Lvel * 0.5f);
                 partyAtkSpd = 0.7f +(_Lvel * 0.015f);
+                //partyAtkSpd = Mathf.Clamp((0.7f + (_Lvel * 0.015f)), 0.7f, 1.4f);
                 partyAtkRange = 7f;
                 //strPartyName = "Wizard";
                 strPartyName = GameUiMgr.single.partyNameSetting.GetRandomName(GameUiMgr.single.partyNameSetting.mageNames);
                 isMelee = false;
                 able_Skill = true;
                 Elemental = GetRandomElement(wizardAttributes);
+                partyDefense = 0 + (_Lvel * 1);
+                SetDefaultStats(20f, 3f, 3f, 0.7f, 7f);
+                SetWeightPerLevelStats(1f, 0f, 0.5f, 0.015f, 0f);
                 break;
             case Ally.Job.Knight:
                 jobClass = Ally.Class.Tank;
@@ -97,12 +111,17 @@ public class PartyData
                 partyMp = 5f;
                 partyAtk = 2f + (_Lvel * 0.3f);
                 partyAtkSpd = 1.0f +(_Lvel * 0.025f);
+                //partyAtkRange = 1.2f;
+                //partyAtkSpd = Mathf.Clamp( (1.0f+(_Lvel * 0.025f)),1.0f, 2f);
                 partyAtkRange = 1.2f;
                 //strPartyName = "Knight";
                 strPartyName = GameUiMgr.single.partyNameSetting.GetRandomName(GameUiMgr.single.partyNameSetting.knightNames);
                 isMelee = true;
                 able_Skill = true;
                 Elemental = GetRandomElement(knightAttributes);
+                partyDefense = 20 + (_Lvel * 4);
+                SetDefaultStats(50f, 5f, 2f, 1.0f, 1.2f);
+                SetWeightPerLevelStats(5f, 0f, 0.3f, 0.025f, 0f);
                 break;
 /*            case 0://Player
                 break;*/
@@ -112,23 +131,23 @@ public class PartyData
                 //Debug.Log("Type d, Generate Code: " + _Code);
                 // 스텟 상한 설정
                 jobClass = Ally.Class.Melee;
-                partyHp = GameMgr.playerData[0].max_Player_Hp + (_Lvel * 3f);
-                partyMp = GameMgr.playerData[0].max_Player_Mp - (_Lvel * 0.5f);
-                partyAtk = GameMgr.playerData[0].base_atk_Dmg + (_Lvel * 0.6f);
-                partyAtkSpd = GameMgr.playerData[0].atk_Speed + (_Lvel * 0.05f);   
-                partyAtkRange = GameMgr.playerData[0].atk_Range;
+                partyHp = 40f + (_Lvel * 3f);
+                partyMp = 5f;
+                partyAtk = 3f + (_Lvel * 0.6f);
+                partyAtkSpd = 1.0f + (_Lvel * 0.05f);
+                //partyAtkSpd = Mathf.Clamp((1.0f + (_Lvel * 0.05f)), 1.0f, 2f);
+                partyAtkRange = 1.2f;
                 strPartyName = GameMgr.playerData[0].GetPlayerName();
-
-                if (partyMp < 2)
-                    partyMp = 2f;
-                if (partyAtkSpd > 4f)
-                    partyAtkSpd = 4f;
-
                 isMelee = true;
                 Elemental = BaseEntity.Attribute.Normal;
+                partyDefense = 10 + (_Lvel * 3);
+                SetDefaultStats(40f, 5f, 3f, 1.0f, 1.2f);
+                SetWeightPerLevelStats(3f, 0f, 0.6f, 0.05f, 0f);
                 break;
         }
         //Debug.Log("party Name: " + strPartyName);
+
+        partyAtkSpd = Mathf.Clamp(partyAtkSpd, 0.7f, 2f);
     }
     
     void SetIcons()
@@ -168,5 +187,35 @@ public class PartyData
     {
         //Debug.Log("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG Run SetPartyCost: Befor:"+cost +"/ After: "+_cost);
         cost = _cost;
+    }
+
+    void SetDefaultStats(float Hp, float Mp, float Atk, float AtkSpd, float AtkRng)//Hp, Mp, atk, atkspd, atkrng
+    {
+        defaultStats ??= new();
+        defaultStats.Clear();
+
+        defaultStats.Add(Hp);
+        defaultStats.Add(Mp);
+        defaultStats.Add(Atk);
+        defaultStats.Add(AtkSpd);
+        defaultStats.Add(AtkRng);
+    }
+
+    void SetWeightPerLevelStats(float Hp, float Mp, float Atk, float AtkSpd, float AtkRng)//Hp, Mp, atk, atkspd, atkrng
+    {
+        weightPerLevelStats ??= new();
+        weightPerLevelStats.Clear();
+
+        weightPerLevelStats.Add(Hp);
+        weightPerLevelStats.Add(Mp);
+        weightPerLevelStats.Add(Atk);
+        weightPerLevelStats.Add(AtkSpd);
+        weightPerLevelStats.Add(AtkRng);
+    }
+
+    public void LoadAttribute(PartyData _pd)
+    {
+        Elemental = _pd.Elemental;
+        ElementalIcon = _pd.ElementalIcon;
     }
 }

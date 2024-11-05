@@ -12,6 +12,7 @@ public class PartyDetails : MonoBehaviour
     public Image portrait;
     public Image job;
     public Image attribute;
+    public Image skill;
 
     [Header("Text")]
     public TextMeshProUGUI txtHp;
@@ -27,17 +28,14 @@ public class PartyDetails : MonoBehaviour
             return;
         }
         PartyDetailDescs ??= new();
-        int cnt = _partySlots.Count;//2ÀÌµé¾î°¬¾î
-        
-        //¿©±â¼­ 0ÀÌ¶û 1ÀÌ µ¹¾Æ°¬°í ¾ÕÀ¸·Î 2¶û 3Àº ²¨Á®¾ßÇØ.
+        int cnt = _partySlots.Count;
         for (int i = 0; i < _partySlots.Count; i++)
         {
             PartyDetailDescs[i].Init(_partySlots[i].partyData, this);
             PartyDetailDescs[i].SetIndex(i);
             PartyDetailDescs[i].gameObject.SetActive(true);
         }
-
-        if (cnt < 4)//2°³ÀÝ¾Æ
+        if (cnt < 4)
         {
             for (int i = cnt; i < 4; i++)
             {
@@ -53,12 +51,43 @@ public class PartyDetails : MonoBehaviour
         portrait.sprite = _desc.img_Portrait;
         job.sprite = _desc.img_Job;
         attribute.sprite = _desc.img_Attribute;
+        skill.sprite = _desc.img_Skill;
 
-        txtHp.text = "HP: " + GameMgr.playerData[_desc.GetIndex()].max_Player_Hp; //_desc.str_Hp;
-        txtMp.text = "MP: " + GameMgr.playerData[_desc.GetIndex()].max_Player_Mp;//_desc.str_Mp;
-        txtAtk.text = "Atk: " + GameMgr.playerData[_desc.GetIndex()].base_atk_Dmg;//_desc.str_Atk ;
-        txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_desc.GetIndex()].atk_Speed;//_desc.str_AtkSpd;
-        txtAtkRange.text = "AtkRng: " + GameMgr.playerData[_desc.GetIndex()].atk_Range;//_desc.str_AtkRange;
+        string hp = (GameMgr.playerData[_desc.GetIndex()].max_Player_Hp - _desc.tempDefaultStats[0]).ToString("F3");
+        string atk = (GameMgr.playerData[_desc.GetIndex()].base_atk_Dmg - _desc.tempDefaultStats[2]).ToString("F3");
+        string atkspd = (GameMgr.playerData[_desc.GetIndex()].atk_Speed - _desc.tempDefaultStats[3]).ToString("F3");
+        TextSetting(ref hp, ref atk, ref atkspd);
+
+        txtHp.text = "HP: " + GameMgr.playerData[_desc.GetIndex()].max_Player_Hp + "( +" + hp + ")"; //_desc.str_Hp;
+        txtMp.text = "MP: " + GameMgr.playerData[_desc.GetIndex()].max_Player_Mp;
+        txtAtk.text = "Atk: " + GameMgr.playerData[_desc.GetIndex()].base_atk_Dmg + "( +" + atk + ")";//_desc.str_Atk ;
+        txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_desc.GetIndex()].atk_Speed + "( +" + atkspd + ")";//_desc.str_AtkSpd;
+        txtAtkRange.text = "AtkRng: " + GameMgr.playerData[_desc.GetIndex()].atk_Range;
+
+
+    }
+
+    void TextSetting(ref string hp, ref string atk, ref string atkspd)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (hp.EndsWith("0"))
+                hp = hp.Substring(0, hp.Length - 1);
+
+            if (atk.EndsWith("0"))
+                atk = atk.Substring(0, atk.Length - 1);
+
+            if (atkspd.EndsWith("0"))
+                atkspd = atkspd.Substring(0, atkspd.Length - 1);
+        }
+        if (hp.EndsWith("."))
+            hp = hp.Substring(0, hp.Length - 1);
+
+        if (atk.EndsWith("."))
+            atk = atk.Substring(0, atk.Length - 1);
+
+        if (atkspd.EndsWith("."))
+            atkspd = atkspd.Substring(0, atkspd.Length - 1);
     }
 
     /*void SetDetail(PartyData _pd)
