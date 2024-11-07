@@ -86,18 +86,18 @@ public class PartyIconRS : MonoBehaviour
     void SetAttack()
     {
         dictn_attackIcon ??= new();
-        dictn_attackIcon.Add(Ally.Job.Hero, spSkillIcon[0]);
-        dictn_attackIcon.Add(Ally.Job.Knight, spSkillIcon[1]);
-        dictn_attackIcon.Add(Ally.Job.Ranger, spSkillIcon[2]);
-        dictn_attackIcon.Add(Ally.Job.Wizard, spSkillIcon[3]);
+        dictn_attackIcon.Add(Ally.Job.Hero, spAttackIcon[0]);
+        dictn_attackIcon.Add(Ally.Job.Knight, spAttackIcon[1]);
+        dictn_attackIcon.Add(Ally.Job.Ranger, spAttackIcon[2]);
+        dictn_attackIcon.Add(Ally.Job.Wizard, spAttackIcon[3]);
     }
     void SetSkill()
     {
         dictn_skillIcon ??= new();
-        dictn_skillIcon.Add(Ally.Job.Hero, spAttackIcon[0]);
-        dictn_skillIcon.Add(Ally.Job.Knight, spAttackIcon[1]);
-        dictn_skillIcon.Add(Ally.Job.Ranger, spAttackIcon[2]);
-        dictn_skillIcon.Add(Ally.Job.Wizard, spAttackIcon[3]);
+        dictn_skillIcon.Add(Ally.Job.Hero, spSkillIcon[0]);
+        dictn_skillIcon.Add(Ally.Job.Knight, spSkillIcon[1]);
+        dictn_skillIcon.Add(Ally.Job.Ranger, spSkillIcon[2]);
+        dictn_skillIcon.Add(Ally.Job.Wizard, spSkillIcon[3]);
     }
 
     public Sprite GetElementIcon(BaseEntity.Attribute _elemnental)

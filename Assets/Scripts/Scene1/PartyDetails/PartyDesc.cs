@@ -74,7 +74,8 @@ public class PartyDesc : MonoBehaviour
 
         // img
         img_Portrait = _partyData.portraitIcon;
-        img_Attribute = _partyData.ElementalIcon;
+        //img_Attribute = _partyData.ElementalIcon;
+        img_Attribute = GameUiMgr.single.entityIconRS.GetElementIcon(_partyData.Elemental);
         img_Job = _partyData.jobIcon;
         img_Skill = GameUiMgr.single.entityIconRS.GetSkillIcon(_partyData.jobType);
 
