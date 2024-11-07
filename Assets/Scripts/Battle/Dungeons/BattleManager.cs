@@ -503,7 +503,10 @@ public class BattleManager : MonoBehaviour
                     ChangePhase(BattlePhase.Rest);
                 }
 
-                event_Stack++;
+                if (dialogue == null && tutorial == null) // 튜토리얼 전투에서는 이벤트 스택이 오르지 않음
+                {
+                    event_Stack++;
+                }
             }
 
 

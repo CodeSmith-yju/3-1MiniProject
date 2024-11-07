@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 328f639a3bb376c4aacd1066c7d11707, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.74509805}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -134,6 +134,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 328f639a3bb376c4aacd1066c7d11707, type: 3}
   - {fileID: 21300000, guid: 2a9a2894d31d53744a805c45fb91f3fc, type: 3}
   - {fileID: 21300000, guid: 2f00d8e672ce08f478f6a8612ac0f3ee, type: 3}
+  players: []
   buffTooltip: {fileID: 0}
 --- !u!61 &8793911764649681470
 BoxCollider2D:
