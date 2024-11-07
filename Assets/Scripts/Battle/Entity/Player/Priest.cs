@@ -38,11 +38,11 @@ public class Priest : Ally
 
                 ani.SetBool("isSkill", true);
                 Ally ally = FindMinCurHpPlayer(); // 현재 체력이 가장 낮은 플레이어 가져옴
+                GameObject eff = Instantiate(SkillEff, ally.transform);
+                eff.transform.localPosition = Vector3.zero;
 
-                ally.cur_Hp += (5f + atkDmg * 0.5f);
-                Debug.Log("현재 체력이 가장 낮은 플레이어에게 기본 회복력 5 + 공격력의 50%만큼 회복합니다.");
-
-                // 여기에 치유 이펙트를 생성하는 방향으로 할까? 애니메이션 재생이 끝나면 파괴 되도록 하고
+                ally.cur_Hp += (5f + max_Hp * 0.1f);
+                Debug.Log("현재 체력이 가장 낮은 플레이어에게 기본 회복력 5 + 최대 체력의 10%만큼 회복합니다.");
 
             }
             else

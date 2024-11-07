@@ -300,7 +300,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!114 &579680385031206035
 MonoBehaviour:
@@ -926,6 +926,7 @@ MonoBehaviour:
   max_Mp: 0
   cur_Mp: 0
   atkDmg: 0
+  def_Point: 0
   atkSpd: 0
   atkRange: 0
   able_Skill: 0
@@ -939,6 +940,7 @@ MonoBehaviour:
   exp_Cnt: 0
   gold_Cnt: 0
   item_Drop_Check: 0
+  sfx_Index: 0
   skill_Eff: {fileID: 4006068870176481699, guid: 38a4554eded837a43941fa5e23947dd2, type: 3}
 --- !u!1 &8089259560416906593
 GameObject:
