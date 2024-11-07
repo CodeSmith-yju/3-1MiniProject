@@ -96,7 +96,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!114 &6258085662929525872
 MonoBehaviour:
@@ -878,6 +878,7 @@ MonoBehaviour:
   max_Mp: 0
   cur_Mp: 0
   atkDmg: 0
+  def_Point: 0
   atkSpd: 0
   atkRange: 0
   able_Skill: 0
@@ -891,6 +892,7 @@ MonoBehaviour:
   exp_Cnt: 0
   gold_Cnt: 0
   item_Drop_Check: 0
+  sfx_Index: 0
 --- !u!1 &9101621495221056930
 GameObject:
   m_ObjectHideFlags: 0
