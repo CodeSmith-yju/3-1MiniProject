@@ -14,12 +14,15 @@ public class PartyDetails : MonoBehaviour
     public Image attribute;
     public Image skill;
 
-    [Header("Text")]
-    public TextMeshProUGUI txtHp;
-    public TextMeshProUGUI txtMp;
-    public TextMeshProUGUI txtAtk;
+    [Header("Desc")]
+    public TextMeshProUGUI textStatsDesc;
+
+    [Header("ViewStats")]
+    public TextMeshProUGUI txtHp;public TextMeshProUGUI txtMp;
+    public TextMeshProUGUI txtAtk; public TextMeshProUGUI txtAtkRange;
+    public TextMeshProUGUI textDef; public TextMeshProUGUI textSpeed;
     public TextMeshProUGUI txtAtkSpd;
-    public TextMeshProUGUI txtAtkRange;
+
     public void Init(List<PartySlot> _partySlots)//GuiMgr의 List<PartySlot>인 lastDefartual의 partyData를통해 목록을만들것.
     {
         if (_partySlots == null)
@@ -46,8 +49,9 @@ public class PartyDetails : MonoBehaviour
         ShowDetals(PartyDetailDescs[0]);
     }
 
-    public void ShowDetals(PartyDesc _desc)
+    public void ShowDetals(PartyDesc _desc)//Hp, Mp, atk, atkspd, def, spd, atkrng
     {
+        textStatsDesc.text = "최대 체력(+레벨로 인한 추가스탯)\n"+ "스탯은 소모 아이템, 던전 내 버프/디버프, 장비 및 레벨업을 통해 변동될 수 있습니다.";
         portrait.sprite = _desc.img_Portrait;
         job.sprite = _desc.img_Job;
         attribute.sprite = _desc.img_Attribute;
@@ -58,13 +62,16 @@ public class PartyDetails : MonoBehaviour
         string atkspd = (GameMgr.playerData[_desc.GetIndex()].atk_Speed - _desc.tempDefaultStats[3]).ToString("F3");
         TextSetting(ref hp, ref atk, ref atkspd);
 
-        txtHp.text = "HP: " + GameMgr.playerData[_desc.GetIndex()].max_Player_Hp + "( +" + hp + ")"; //_desc.str_Hp;
+        txtHp.text = "HP: " + GameMgr.playerData[_desc.GetIndex()].max_Player_Hp + "\n(+" + hp + ")"; //_desc.str_Hp;
         txtMp.text = "MP: " + GameMgr.playerData[_desc.GetIndex()].max_Player_Mp;
-        txtAtk.text = "Atk: " + GameMgr.playerData[_desc.GetIndex()].base_atk_Dmg + "( +" + atk + ")";//_desc.str_Atk ;
-        txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_desc.GetIndex()].atk_Speed + "( +" + atkspd + ")";//_desc.str_AtkSpd;
+        txtAtk.text = "Atk: " + GameMgr.playerData[_desc.GetIndex()].base_atk_Dmg + "\n(+" + atk + ")";//_desc.str_Atk ;
+        txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_desc.GetIndex()].atk_Speed + "\n(+" + atkspd + ")";//_desc.str_AtkSpd;
         txtAtkRange.text = "AtkRng: " + GameMgr.playerData[_desc.GetIndex()].atk_Range;
 
-
+        if (_desc.GetIndex() == 0)
+        {
+            textStatsDesc.text = "최대 체력(+레벨과 장비로 인한 추가스탯\n"+ "스탯은 소모 아이템, 던전 내 버프/디버프, 장비 및 레벨업을 통해 변동될 수 있습니다.";
+        }
     }
 
     void TextSetting(ref string hp, ref string atk, ref string atkspd)
@@ -120,7 +127,8 @@ public class PartyDetails : MonoBehaviour
 
     public void Test()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        GameUiMgr.single.partyDetails.gameObject.SetActive(false);
         Debug.Log("외부영역 클릭");
     }
 }

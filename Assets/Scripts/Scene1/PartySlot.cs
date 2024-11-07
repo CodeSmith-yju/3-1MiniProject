@@ -46,9 +46,11 @@ public class PartySlot : MonoBehaviour
         this.text_Cost.text = intPartyCost.ToString();
 
         this.text_Lv.text = "Lv "+_data.level.ToString();
-
-        this.classIcon.sprite = _data.jobIcon;
-        this.attributeIcon.sprite = _data.ElementalIcon;
+        
+        //this.classIcon.sprite = _data.jobIcon;
+        //this.attributeIcon.sprite = _data.ElementalIcon;
+        this.classIcon.sprite = GameUiMgr.single.entityIconRS.GetJobIcon(_data.jobClass);
+        this.attributeIcon.sprite = GameUiMgr.single.entityIconRS.GetElementIcon(_data.Elemental);
     }
 
     public void OnClick()

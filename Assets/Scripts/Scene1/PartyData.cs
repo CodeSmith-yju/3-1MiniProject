@@ -44,7 +44,7 @@ public class PartyData
     public Sprite jobIcon;
     public Sprite ElementalIcon;
 
-    public List<float> defaultStats;//Hp, Mp, atk, atkspd, atkrng
+    public List<float> defaultStats;//Hp, Mp, atk, atkspd, atkrng, dp,
     public List<float> weightPerLevelStats;//hp, mp, atk, atkspd, atkrng
 
     public PartyData(GameObject prefab, int _Lvel)
@@ -83,7 +83,7 @@ public class PartyData
                 able_Skill = true;
                 Elemental = GetRandomElement(rangerAttributes);
                 partyDefense = 5 + (_Lvel * 2);
-                SetDefaultStats(15f, 5f, 2f, 1.0f, 5f);
+                SetDefaultStats(15f, 5f, 2f, 1.0f, 5f, 5);
                 SetWeightPerLevelStats(2f, 0f, 0.2f, 0.05f, 0f);
                 break;
             case Ally.Job.Wizard:
@@ -101,7 +101,7 @@ public class PartyData
                 able_Skill = true;
                 Elemental = GetRandomElement(wizardAttributes);
                 partyDefense = 0 + (_Lvel * 1);
-                SetDefaultStats(20f, 3f, 3f, 0.7f, 7f);
+                SetDefaultStats(20f, 3f, 3f, 0.7f, 7f, 0);
                 SetWeightPerLevelStats(1f, 0f, 0.5f, 0.015f, 0f);
                 break;
             case Ally.Job.Knight:
@@ -120,7 +120,7 @@ public class PartyData
                 able_Skill = true;
                 Elemental = GetRandomElement(knightAttributes);
                 partyDefense = 20 + (_Lvel * 4);
-                SetDefaultStats(50f, 5f, 2f, 1.0f, 1.2f);
+                SetDefaultStats(50f, 5f, 2f, 1.0f, 1.2f, 20);
                 SetWeightPerLevelStats(5f, 0f, 0.3f, 0.025f, 0f);
                 break;
 /*            case 0://Player
@@ -141,7 +141,7 @@ public class PartyData
                 isMelee = true;
                 Elemental = BaseEntity.Attribute.Normal;
                 partyDefense = 10 + (_Lvel * 3);
-                SetDefaultStats(40f, 5f, 3f, 1.0f, 1.2f);
+                SetDefaultStats(40f, 5f, 3f, 1.0f, 1.2f, 10);
                 SetWeightPerLevelStats(3f, 0f, 0.6f, 0.05f, 0f);
                 break;
         }
@@ -189,7 +189,7 @@ public class PartyData
         cost = _cost;
     }
 
-    void SetDefaultStats(float Hp, float Mp, float Atk, float AtkSpd, float AtkRng)//Hp, Mp, atk, atkspd, atkrng
+    void SetDefaultStats(float Hp, float Mp, float Atk, float AtkSpd, float AtkRng, int Dp)//Hp, Mp, atk, atkspd, atkrng, dp
     {
         defaultStats ??= new();
         defaultStats.Clear();
@@ -199,6 +199,7 @@ public class PartyData
         defaultStats.Add(Atk);
         defaultStats.Add(AtkSpd);
         defaultStats.Add(AtkRng);
+        defaultStats.Add(Dp);
     }
 
     void SetWeightPerLevelStats(float Hp, float Mp, float Atk, float AtkSpd, float AtkRng)//Hp, Mp, atk, atkspd, atkrng
