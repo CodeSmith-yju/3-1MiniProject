@@ -60,7 +60,7 @@ public class PartyIconRS : MonoBehaviour
         dictn_jobIcon.Add(Ally.Class.Melee, spJobIcon[0]);
         dictn_jobIcon.Add(Ally.Class.Tank, spJobIcon[1]);
         dictn_jobIcon.Add(Ally.Class.Range, spJobIcon[2]);
-        //dictn_jobIcon.Add(Ally.Class.Support, spJobIcon[3]);
+        dictn_jobIcon.Add(Ally.Class.Support, spJobIcon[3]);
     }
     void SetPortrait()
     {
@@ -69,6 +69,7 @@ public class PartyIconRS : MonoBehaviour
         dictn_portratiIcon.Add(Ally.Job.Knight, spPortraitIcon[1]);
         dictn_portratiIcon.Add(Ally.Job.Ranger, spPortraitIcon[2]);
         dictn_portratiIcon.Add(Ally.Job.Wizard, spPortraitIcon[3]);
+        dictn_portratiIcon.Add(Ally.Job.Priest, spPortraitIcon[4]);
     }
     void SetEnemyIcon()
     {
@@ -90,6 +91,7 @@ public class PartyIconRS : MonoBehaviour
         dictn_attackIcon.Add(Ally.Job.Knight, spAttackIcon[1]);
         dictn_attackIcon.Add(Ally.Job.Ranger, spAttackIcon[2]);
         dictn_attackIcon.Add(Ally.Job.Wizard, spAttackIcon[3]);
+        //dictn_attackIcon.Add(Ally.Job.Priest, spAttackIcon[4]);
     }
     void SetSkill()
     {
@@ -98,6 +100,8 @@ public class PartyIconRS : MonoBehaviour
         dictn_skillIcon.Add(Ally.Job.Knight, spSkillIcon[1]);
         dictn_skillIcon.Add(Ally.Job.Ranger, spSkillIcon[2]);
         dictn_skillIcon.Add(Ally.Job.Wizard, spSkillIcon[3]);
+        dictn_skillIcon.Add(Ally.Job.Priest, spSkillIcon[4]);
+        Debug.Log("스킬아이콘추가해!!!!!!!!!!!!");
     }
 
     public Sprite GetElementIcon(BaseEntity.Attribute _elemnental)

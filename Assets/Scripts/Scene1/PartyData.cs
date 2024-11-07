@@ -123,6 +123,20 @@ public class PartyData
                 SetDefaultStats(50f, 5f, 2f, 1.0f, 1.2f, 20, 1.8f);
                 SetWeightPerLevelStats(5f, 0f, 0.3f, 0.025f, 0f);
                 break;
+            case Ally.Job.Priest:
+                jobClass = Ally.Class.Support;
+                partyHp = 35f + (_Lvel + 3f);
+                partyMp = 3f;
+                partyAtk = 1f + (_Lvel * 0.2f);
+                partyAtkSpd = 0.85f +(_Lvel * 0.015f);
+                partyAtkRange = 5f;
+                isMelee = true;
+                able_Skill = true;
+                Elemental = BaseEntity.Attribute.Light;
+                partyDefense = 2 + (_Lvel * 1);
+                SetDefaultStats(35f, 3f, 1f, 0.85f, 5f, 2, 2.0f);
+                SetWeightPerLevelStats(3f, 0f, 0.2f, 0.015f, 0f);
+                break;
 /*            case 0://Player
                 break;*/
             default:

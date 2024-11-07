@@ -2001,7 +2001,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         if (GameMgr.playerData[0].listPartyDatas.Count == 0)//l || GameMgr.playerData[0].listPartyDatas!= null && GameMgr.playerData[0].listPartyDatas.Count < 2)
         {
             Debug.Log("---------------------------저장해놓은 파티원목록이 없습니다.");
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < objListPlayable.Count; i++)
             {
                 int ran = Random.Range(1, 10);
                 PartyData newParty = new(objListPlayable[i], ran);
