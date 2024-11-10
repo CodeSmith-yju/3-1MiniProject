@@ -7,7 +7,8 @@ public enum PartyIconState
 {
     None,
     Attribute,
-    Class
+    Class,
+    Skill
 }
 public class PartyTooltip : MonoBehaviour
 {
@@ -85,6 +86,10 @@ public class PartyTooltip : MonoBehaviour
                     lightdark_Icon_text.gameObject.SetActive(true);
                 }
             }
+        }
+        else if (_iconState == PartyIconState.None)
+        {
+
         }
     }
     void VeiwToolTip(int _veiwIndex)

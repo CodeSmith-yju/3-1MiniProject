@@ -75,8 +75,9 @@ GameObject:
   - component: {fileID: 4558668985869197142}
   - component: {fileID: 199136654911448367}
   - component: {fileID: 3101335997868927728}
+  - component: {fileID: 5927362885841659189}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Skill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,6 +140,46 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5927362885841659189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812019129814195609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca66a4dabcb60a4a9c110ebf943a105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partyIconState: 3
+  partyData:
+    strPartyName: 
+    Elemental: 0
+    type: 
+    moveInCk: 0
+    cost: 0
+    index: 0
+    level: 0
+    spPartyIcon: {fileID: 0}
+    partyJobIndex: 0
+    partyHp: 0
+    partyMp: 0
+    partyAtk: 0
+    partyAtkSpd: 0
+    partyAtkRange: 0
+    partyDefense: 0
+    able_Skill: 0
+    isMelee: 0
+    obj_Data: {fileID: 0}
+    player: {fileID: 0}
+    jobType: 0
+    jobClass: 0
+    portraitIcon: {fileID: 0}
+    jobIcon: {fileID: 0}
+    ElementalIcon: {fileID: 0}
+    defaultStats: []
+    weightPerLevelStats: []
 --- !u!1 &894121527076244994
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,6 +191,7 @@ GameObject:
   - component: {fileID: 1301944681009490626}
   - component: {fileID: 6634198411348849936}
   - component: {fileID: 2638795299491335603}
+  - component: {fileID: 6386514892099691079}
   m_Layer: 5
   m_Name: Job
   m_TagString: Untagged
@@ -214,6 +256,46 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6386514892099691079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894121527076244994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca66a4dabcb60a4a9c110ebf943a105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partyIconState: 2
+  partyData:
+    strPartyName: 
+    Elemental: 0
+    type: 
+    moveInCk: 0
+    cost: 0
+    index: 0
+    level: 0
+    spPartyIcon: {fileID: 0}
+    partyJobIndex: 0
+    partyHp: 0
+    partyMp: 0
+    partyAtk: 0
+    partyAtkSpd: 0
+    partyAtkRange: 0
+    partyDefense: 0
+    able_Skill: 0
+    isMelee: 0
+    obj_Data: {fileID: 0}
+    player: {fileID: 0}
+    jobType: 0
+    jobClass: 0
+    portraitIcon: {fileID: 0}
+    jobIcon: {fileID: 0}
+    ElementalIcon: {fileID: 0}
+    defaultStats: []
+    weightPerLevelStats: []
 --- !u!1 &896977306548149347
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,6 +307,7 @@ GameObject:
   - component: {fileID: 7272013553879951041}
   - component: {fileID: 8186582789922000760}
   - component: {fileID: 8285042221536424881}
+  - component: {fileID: 2958782879991802657}
   m_Layer: 5
   m_Name: Spd_Icon
   m_TagString: Untagged
@@ -290,6 +373,46 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2958782879991802657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896977306548149347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca66a4dabcb60a4a9c110ebf943a105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partyIconState: 0
+  partyData:
+    strPartyName: 
+    Elemental: 0
+    type: 
+    moveInCk: 0
+    cost: 0
+    index: 0
+    level: 0
+    spPartyIcon: {fileID: 0}
+    partyJobIndex: 0
+    partyHp: 0
+    partyMp: 0
+    partyAtk: 0
+    partyAtkSpd: 0
+    partyAtkRange: 0
+    partyDefense: 0
+    able_Skill: 0
+    isMelee: 0
+    obj_Data: {fileID: 0}
+    player: {fileID: 0}
+    jobType: 0
+    jobClass: 0
+    portraitIcon: {fileID: 0}
+    jobIcon: {fileID: 0}
+    ElementalIcon: {fileID: 0}
+    defaultStats: []
+    weightPerLevelStats: []
 --- !u!1 &1415798219684183434
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,10 +812,14 @@ MonoBehaviour:
   - {fileID: 4075848440331671824}
   - {fileID: 4581819738688722308}
   - {fileID: 5850168754683708685}
+  setPartyTooltips:
+  - {fileID: 6183990076608490196}
+  - {fileID: 6386514892099691079}
+  - {fileID: 5927362885841659189}
   detailTooltip: {fileID: 4789335310609956777}
   portrait: {fileID: 7187334224220493545}
-  job: {fileID: 1305087993857204816}
-  attribute: {fileID: 2638795299491335603}
+  job: {fileID: 2638795299491335603}
+  attribute: {fileID: 1305087993857204816}
   skill: {fileID: 3101335997868927728}
   textStatsDesc: {fileID: 3345562661266834800}
   txtHp: {fileID: 8934393387784806569}
@@ -847,6 +974,7 @@ GameObject:
   - component: {fileID: 6948995638860788234}
   - component: {fileID: 9153664646925031055}
   - component: {fileID: 1702588713422829302}
+  - component: {fileID: 2775283296249366619}
   m_Layer: 5
   m_Name: AtkSpd_Icon
   m_TagString: Untagged
@@ -912,6 +1040,46 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2775283296249366619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844178085586100779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca66a4dabcb60a4a9c110ebf943a105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partyIconState: 0
+  partyData:
+    strPartyName: 
+    Elemental: 0
+    type: 
+    moveInCk: 0
+    cost: 0
+    index: 0
+    level: 0
+    spPartyIcon: {fileID: 0}
+    partyJobIndex: 0
+    partyHp: 0
+    partyMp: 0
+    partyAtk: 0
+    partyAtkSpd: 0
+    partyAtkRange: 0
+    partyDefense: 0
+    able_Skill: 0
+    isMelee: 0
+    obj_Data: {fileID: 0}
+    player: {fileID: 0}
+    jobType: 0
+    jobClass: 0
+    portraitIcon: {fileID: 0}
+    jobIcon: {fileID: 0}
+    ElementalIcon: {fileID: 0}
+    defaultStats: []
+    weightPerLevelStats: []
 --- !u!1 &1985279195614977525
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,6 +1091,7 @@ GameObject:
   - component: {fileID: 4995810502528266332}
   - component: {fileID: 1343206146746831947}
   - component: {fileID: 6105385917065946367}
+  - component: {fileID: 6389719181899036399}
   m_Layer: 5
   m_Name: MP_Icon
   m_TagString: Untagged
@@ -988,6 +1157,46 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6389719181899036399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985279195614977525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca66a4dabcb60a4a9c110ebf943a105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partyIconState: 0
+  partyData:
+    strPartyName: 
+    Elemental: 0
+    type: 
+    moveInCk: 0
+    cost: 0
+    index: 0
+    level: 0
+    spPartyIcon: {fileID: 0}
+    partyJobIndex: 0
+    partyHp: 0
+    partyMp: 0
+    partyAtk: 0
+    partyAtkSpd: 0
+    partyAtkRange: 0
+    partyDefense: 0
+    able_Skill: 0
+    isMelee: 0
+    obj_Data: {fileID: 0}
+    player: {fileID: 0}
+    jobType: 0
+    jobClass: 0
+    portraitIcon: {fileID: 0}
+    jobIcon: {fileID: 0}
+    ElementalIcon: {fileID: 0}
+    defaultStats: []
+    weightPerLevelStats: []
 --- !u!1 &2057569303227161560
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,6 +1208,7 @@ GameObject:
   - component: {fileID: 8649456208241039924}
   - component: {fileID: 5430443644764096913}
   - component: {fileID: 1305087993857204816}
+  - component: {fileID: 6183990076608490196}
   m_Layer: 5
   m_Name: Attribute
   m_TagString: Untagged
@@ -1063,6 +1273,46 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6183990076608490196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057569303227161560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca66a4dabcb60a4a9c110ebf943a105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partyIconState: 1
+  partyData:
+    strPartyName: 
+    Elemental: 0
+    type: 
+    moveInCk: 0
+    cost: 0
+    index: 0
+    level: 0
+    spPartyIcon: {fileID: 0}
+    partyJobIndex: 0
+    partyHp: 0
+    partyMp: 0
+    partyAtk: 0
+    partyAtkSpd: 0
+    partyAtkRange: 0
+    partyDefense: 0
+    able_Skill: 0
+    isMelee: 0
+    obj_Data: {fileID: 0}
+    player: {fileID: 0}
+    jobType: 0
+    jobClass: 0
+    portraitIcon: {fileID: 0}
+    jobIcon: {fileID: 0}
+    ElementalIcon: {fileID: 0}
+    defaultStats: []
+    weightPerLevelStats: []
 --- !u!1 &2149807839811880625
 GameObject:
   m_ObjectHideFlags: 0
@@ -1116,13 +1366,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
+    m_Left: 12
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 7
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
+  m_ChildAlignment: 6
+  m_Spacing: 12
+  m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
@@ -1140,6 +1390,7 @@ GameObject:
   - component: {fileID: 5896560383172249946}
   - component: {fileID: 5650034766311700866}
   - component: {fileID: 4138128141113564848}
+  - component: {fileID: 7936297104076648357}
   m_Layer: 5
   m_Name: AtkRng_Icon
   m_TagString: Untagged
@@ -1205,6 +1456,46 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7936297104076648357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2397749615718508993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca66a4dabcb60a4a9c110ebf943a105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partyIconState: 0
+  partyData:
+    strPartyName: 
+    Elemental: 0
+    type: 
+    moveInCk: 0
+    cost: 0
+    index: 0
+    level: 0
+    spPartyIcon: {fileID: 0}
+    partyJobIndex: 0
+    partyHp: 0
+    partyMp: 0
+    partyAtk: 0
+    partyAtkSpd: 0
+    partyAtkRange: 0
+    partyDefense: 0
+    able_Skill: 0
+    isMelee: 0
+    obj_Data: {fileID: 0}
+    player: {fileID: 0}
+    jobType: 0
+    jobClass: 0
+    portraitIcon: {fileID: 0}
+    jobIcon: {fileID: 0}
+    ElementalIcon: {fileID: 0}
+    defaultStats: []
+    weightPerLevelStats: []
 --- !u!1 &2648857980327666460
 GameObject:
   m_ObjectHideFlags: 0
@@ -2064,7 +2355,7 @@ GameObject:
   - component: {fileID: 6217377526327342631}
   - component: {fileID: 7201108665462500376}
   m_Layer: 5
-  m_Name: Skill
+  m_Name: SkillBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2625,6 +2916,7 @@ GameObject:
   - component: {fileID: 337933155375115970}
   - component: {fileID: 7273779287479896285}
   - component: {fileID: 5496246324610855517}
+  - component: {fileID: 7531613536707071083}
   m_Layer: 5
   m_Name: Atk_Icon
   m_TagString: Untagged
@@ -2690,6 +2982,46 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7531613536707071083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7057932528773252885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca66a4dabcb60a4a9c110ebf943a105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partyIconState: 0
+  partyData:
+    strPartyName: 
+    Elemental: 0
+    type: 
+    moveInCk: 0
+    cost: 0
+    index: 0
+    level: 0
+    spPartyIcon: {fileID: 0}
+    partyJobIndex: 0
+    partyHp: 0
+    partyMp: 0
+    partyAtk: 0
+    partyAtkSpd: 0
+    partyAtkRange: 0
+    partyDefense: 0
+    able_Skill: 0
+    isMelee: 0
+    obj_Data: {fileID: 0}
+    player: {fileID: 0}
+    jobType: 0
+    jobClass: 0
+    portraitIcon: {fileID: 0}
+    jobIcon: {fileID: 0}
+    ElementalIcon: {fileID: 0}
+    defaultStats: []
+    weightPerLevelStats: []
 --- !u!1 &7217505238797527932
 GameObject:
   m_ObjectHideFlags: 0
@@ -2900,6 +3232,7 @@ GameObject:
   - component: {fileID: 3890404700940361503}
   - component: {fileID: 5720384787831647108}
   - component: {fileID: 5156665640333172830}
+  - component: {fileID: 1812740380229587709}
   m_Layer: 5
   m_Name: HP_Icon
   m_TagString: Untagged
@@ -2965,6 +3298,46 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1812740380229587709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8058925054493842869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca66a4dabcb60a4a9c110ebf943a105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partyIconState: 0
+  partyData:
+    strPartyName: 
+    Elemental: 0
+    type: 
+    moveInCk: 0
+    cost: 0
+    index: 0
+    level: 0
+    spPartyIcon: {fileID: 0}
+    partyJobIndex: 0
+    partyHp: 0
+    partyMp: 0
+    partyAtk: 0
+    partyAtkSpd: 0
+    partyAtkRange: 0
+    partyDefense: 0
+    able_Skill: 0
+    isMelee: 0
+    obj_Data: {fileID: 0}
+    player: {fileID: 0}
+    jobType: 0
+    jobClass: 0
+    portraitIcon: {fileID: 0}
+    jobIcon: {fileID: 0}
+    ElementalIcon: {fileID: 0}
+    defaultStats: []
+    weightPerLevelStats: []
 --- !u!1 &8891009716247669160
 GameObject:
   m_ObjectHideFlags: 0
@@ -2976,6 +3349,7 @@ GameObject:
   - component: {fileID: 5133379243800448043}
   - component: {fileID: 1632262897483165024}
   - component: {fileID: 2625701856969861852}
+  - component: {fileID: 1057185763765247981}
   m_Layer: 5
   m_Name: Def_Icon
   m_TagString: Untagged
@@ -3041,6 +3415,46 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1057185763765247981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8891009716247669160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca66a4dabcb60a4a9c110ebf943a105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partyIconState: 0
+  partyData:
+    strPartyName: 
+    Elemental: 0
+    type: 
+    moveInCk: 0
+    cost: 0
+    index: 0
+    level: 0
+    spPartyIcon: {fileID: 0}
+    partyJobIndex: 0
+    partyHp: 0
+    partyMp: 0
+    partyAtk: 0
+    partyAtkSpd: 0
+    partyAtkRange: 0
+    partyDefense: 0
+    able_Skill: 0
+    isMelee: 0
+    obj_Data: {fileID: 0}
+    player: {fileID: 0}
+    jobType: 0
+    jobClass: 0
+    portraitIcon: {fileID: 0}
+    jobIcon: {fileID: 0}
+    ElementalIcon: {fileID: 0}
+    defaultStats: []
+    weightPerLevelStats: []
 --- !u!1001 &993337338017169175
 PrefabInstance:
   m_ObjectHideFlags: 0

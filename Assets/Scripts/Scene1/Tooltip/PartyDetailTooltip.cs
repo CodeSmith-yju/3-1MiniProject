@@ -80,6 +80,14 @@ public class PartyDetailTooltip : MonoBehaviour
                 }
             }
         }
+        else if (_iconState == PartyIconState.Skill)//스킬 아이콘
+        {
+
+        }
+        else if (_iconState == PartyIconState.None)//기본 스텟아이콘 
+        {
+
+        }
     }
     void VeiwToolTip(int _veiwIndex)
     {

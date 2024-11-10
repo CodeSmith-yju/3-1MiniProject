@@ -96,5 +96,6 @@ public class PartyDesc : MonoBehaviour
         //Debug.Log("@@@@@@@@@@@@@@@@@@@@@ Run SetIndex Index: " + descIndex);
     }
     public int GetIndex() { return  descIndex; }
+    public PartyData GetPartyData() { return partyData; }
 
 }

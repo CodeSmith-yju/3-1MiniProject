@@ -8,6 +8,7 @@ public class PartyDetails : MonoBehaviour
 {
     public List<PartyDesc> PartyDetailDescs = new();
     List<RectTransform> PartyDetailRects = new();
+    public List<SetPartyDetailTolltip> setPartyTooltips = new();
 
     [Header("ToolTip")]
     [SerializeField] PartyDetailTooltip detailTooltip;
@@ -60,13 +61,20 @@ public class PartyDetails : MonoBehaviour
     {
         ShowDetals(PartyDetailDescs[_index]);
     }
-
+    public void SetTooltipIndex(PartyData _partyData)
+    {
+        for (int i = 0; i < setPartyTooltips.Count; i++)
+        {
+            setPartyTooltips[i].SetPartyData(_partyData);
+        }
+    }
     public void ShowDetals(PartyDesc _desc)//Hp, Mp, atk, atkspd, atkrng, def, spd
     {
         textStatsDesc.text = "최대 체력(+레벨로 인한 추가스탯)\n"+ "스탯은 소모 아이템, 던전 내 버프/디버프, 장비 및 레벨업을 통해 변동될 수 있습니다.";
         portrait.sprite = _desc.img_Portrait;
         job.sprite = _desc.img_Job;
         attribute.sprite = _desc.img_Attribute;
+
         skill.sprite = _desc.img_Skill;
 
         int _index = _desc.GetIndex();
@@ -91,7 +99,9 @@ public class PartyDetails : MonoBehaviour
         {
             textStatsDesc.text = "최대 체력(+레벨과 장비로 인한 추가스탯\n"+ "스탯은 소모 아이템, 던전 내 버프/디버프, 장비 및 레벨업을 통해 변동될 수 있습니다.";
         }
+
         BtnResize(_index);
+        SetTooltipIndex(PartyDetailDescs[_index].GetPartyData());
     }
 
     void TextSetting(ref string hp, ref string atk, ref string atkspd)
