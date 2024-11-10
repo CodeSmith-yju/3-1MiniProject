@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PartyDesc : MonoBehaviour
 {
     [SerializeField] PartyDetails partyDetails;
+    [SerializeField] PartyData partyData;
     [SerializeField] Button btnMy;
     [SerializeField] int descIndex;
 
@@ -41,15 +42,16 @@ public class PartyDesc : MonoBehaviour
     public void Init(PartyData _partyData, PartyDetails _partyDetails)
     {
         btnMy = GetComponent<Button>();
+        partyData = _partyData;
         RefreshDesc();
         this.partyDetails = _partyDetails;
-        SetData(_partyData);
+        SetData(partyData);
 
         myPortrait.sprite = img_Portrait;
         myAttribute.sprite = img_Attribute;
 
-        tempDefaultStats.AddRange(_partyData.defaultStats);
-        tempWeightStats.AddRange(_partyData.weightPerLevelStats);
+        tempDefaultStats.AddRange(partyData.defaultStats);
+        tempWeightStats.AddRange(partyData.weightPerLevelStats);
     }
 
     public void OK()

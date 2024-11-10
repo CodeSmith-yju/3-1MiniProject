@@ -52,7 +52,8 @@ public class PlayerAction : MonoBehaviour
                 {
                     if (GameUiMgr.single.questMgr.questId > 30 || GameUiMgr.single.questMgr.questId == 30 && GameUiMgr.single.questMgr.questActionIndex >= 1)
                     {
-                        GameUiMgr.single.panelPartyBoard.SetActive(true);
+                        //GameUiMgr.single.panelPartyBoard.SetActive(true);
+                        GameUiMgr.single.ActiveParty();
                         Debug.Log("id: " + obj.id);
                         return;
                     }

@@ -18418,7 +18418,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.853678
+      m_AnimationSpeed: 2.5520492
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -18429,7 +18429,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.3060787
+      m_AnimationSpeed: 1.1418264
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -18440,7 +18440,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.6110606
+      m_AnimationSpeed: 2.7321737
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -18451,7 +18451,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.230006
+      m_AnimationSpeed: 1.7336977
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -18462,7 +18462,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.225059
+      m_AnimationSpeed: 2.5133052
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -31236,6 +31236,8 @@ MonoBehaviour:
   knightNames: []
   archerNames: []
   mageNames: []
+  priestNames: []
+  demonNames: []
 --- !u!1 &1159392019
 GameObject:
   m_ObjectHideFlags: 0
@@ -43492,7 +43494,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.1771405
+      m_AnimationSpeed: 1.9865654
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -43503,7 +43505,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.6015733
+      m_AnimationSpeed: 1.5413262
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -43514,7 +43516,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.7051673
+      m_AnimationSpeed: 1.9048536
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -43525,7 +43527,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.9071443
+      m_AnimationSpeed: 2.9836836
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -43536,7 +43538,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.649047
+      m_AnimationSpeed: 1.0386417
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -55758,7 +55760,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.4498928
+      m_AnimationSpeed: 1.3190916
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -55769,7 +55771,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.8083198
+      m_AnimationSpeed: 1.7752411
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -55780,7 +55782,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.7429378
+      m_AnimationSpeed: 2.7342787
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -55791,7 +55793,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.6884704
+      m_AnimationSpeed: 1.3838947
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -55802,7 +55804,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.8325748
+      m_AnimationSpeed: 2.0601928
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -58376,37 +58378,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 831210879}
     m_Modifications:
-    - target: {fileID: 801179721223518877, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 801179721223518877, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 801179721223518877, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 37
-      objectReference: {fileID: 0}
-    - target: {fileID: 801179721223518877, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -25
-      objectReference: {fileID: 0}
     - target: {fileID: 1004080149658542607, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
       propertyPath: m_Name
-      value: Partiy_Icon_Tooltip
-      objectReference: {fileID: 0}
-    - target: {fileID: 2063997248468434267, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2063997248468434267, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2063997248468434267, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -41
+      value: Party_Icon_Tooltip
       objectReference: {fileID: 0}
     - target: {fileID: 5609315682475996980, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
       propertyPath: m_Pivot.x
@@ -58487,38 +58461,6 @@ PrefabInstance:
     - target: {fileID: 5609315682475996980, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7390204609181058655, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7390204609181058655, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7390204609181058655, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -28.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7803543764479036473, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8654097217187738901, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8654097217187738901, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8654097217187738901, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 160
-      objectReference: {fileID: 0}
-    - target: {fileID: 8654097217187738901, guid: f49a56062cc067b448c762fbe5424eb9, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -16.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -8,7 +8,9 @@ public class PartyDetails : MonoBehaviour
 {
     public List<PartyDesc> PartyDetailDescs = new();
     List<RectTransform> PartyDetailRects = new();
-    [SerializeField] HorizontalLayoutGroup horizontalLayoutGroup;
+
+    [Header("ToolTip")]
+    [SerializeField] PartyDetailTooltip detailTooltip;
 
     [Header("Img")]
     public Image portrait;
@@ -53,8 +55,10 @@ public class PartyDetails : MonoBehaviour
                 PartyDetailDescs[i].gameObject.SetActive(false);
             }
         }
-
-        ShowDetals(PartyDetailDescs[0]);
+    }
+    public void OpenPartyDetail(int _index)
+    {
+        ShowDetals(PartyDetailDescs[_index]);
     }
 
     public void ShowDetals(PartyDesc _desc)//Hp, Mp, atk, atkspd, atkrng, def, spd
@@ -147,16 +151,13 @@ public class PartyDetails : MonoBehaviour
         {
             if (i == _index)
             {
-                PartyDetailRects[i].anchoredPosition = new Vector2(150, 80);
+                PartyDetailRects[i].sizeDelta = new Vector2(150, 80);
             }
             else
             {
-                PartyDetailRects[i].anchoredPosition = new Vector2(120, 60);
+                PartyDetailRects[i].sizeDelta = new Vector2(120, 60);
             }
         }
-        //horizontalLayoutGroup.enabled = false; // 비활성화
-        //horizontalLayoutGroup.enabled = true; // 활성화
-        LayoutRebuilder.ForceRebuildLayoutImmediate(horizontalLayoutGroup.GetComponent<RectTransform>());
     }
 
     public void Test()
