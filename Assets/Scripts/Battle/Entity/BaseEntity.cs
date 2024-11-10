@@ -446,7 +446,7 @@ public class BaseEntity : MonoBehaviour
         }
     }
 
-    protected virtual void MeleeAttack(BaseEntity target)
+    protected void MeleeAttack(BaseEntity target)
     {
         ani.SetTrigger("isAtk");
         Debug.Log("공격함 ( " + name + " -> " + target.name + " )");
@@ -514,7 +514,7 @@ public class BaseEntity : MonoBehaviour
         return atkDmg * (1 - reduction);
     }
 
-    public virtual void RangeAttack(BaseEntity target) 
+    protected virtual void RangeAttack(BaseEntity target) 
     {
         Debug.Log("공격함 ( " + name + " -> " + target.name + " )");
         ani.SetTrigger("isAtk");

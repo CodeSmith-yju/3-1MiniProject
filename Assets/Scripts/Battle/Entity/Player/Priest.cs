@@ -16,13 +16,15 @@ public class Priest : Ally
         job = Job.Priest;
     }
 
-    protected override void MeleeAttack(BaseEntity target)
+    protected override void RangeAttack(BaseEntity target)
     {
-        base.MeleeAttack(target);
+        base.RangeAttack(target);
 
         GameObject obj_Eff = BattleManager.Instance.pool.GetObject(4, isPlayer);
         obj_Eff.transform.SetParent(target.transform);
         obj_Eff.transform.localPosition = Vector3.zero;
+
+        RangeHit(target, atkDmg);
     }
 
 
@@ -39,9 +41,9 @@ public class Priest : Ally
                 ani.SetBool("isSkill", true);
                 Ally ally = FindMinCurHpPlayer(); // 현재 체력이 가장 낮은 플레이어 가져옴
                 GameObject eff = Instantiate(SkillEff, ally.transform);
-                eff.transform.localPosition = Vector3.zero;
 
                 ally.cur_Hp += (5f + max_Hp * 0.1f);
+                cur_Mp = 0;
                 Debug.Log("현재 체력이 가장 낮은 플레이어에게 기본 회복력 5 + 최대 체력의 10%만큼 회복합니다.");
 
             }

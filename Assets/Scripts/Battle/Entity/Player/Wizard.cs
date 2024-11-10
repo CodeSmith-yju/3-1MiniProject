@@ -14,7 +14,7 @@ public class Wizard : Ally
         job = Job.Wizard;
     }
 
-    public override void RangeAttack(BaseEntity target)
+    protected override void RangeAttack(BaseEntity target)
     {
         base.RangeAttack(target);
         GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(2, isPlayer); // º¼Æ® ÇÁ¸®ÆÕ

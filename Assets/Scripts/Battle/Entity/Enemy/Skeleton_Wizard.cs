@@ -24,7 +24,7 @@ public class Skeleton_Wizard : Enemy
         Debug.Log("아이템 드랍 유무 설정 : " + item_Drop_Check);
     }
 
-    public override void RangeAttack(BaseEntity target)
+    protected override void RangeAttack(BaseEntity target)
     {
         base.RangeAttack(target);
         GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(1, isPlayer);

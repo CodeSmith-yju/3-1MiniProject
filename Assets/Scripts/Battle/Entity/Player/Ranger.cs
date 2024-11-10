@@ -15,7 +15,7 @@ public class Ranger : Ally
     }
 
 
-    public override void RangeAttack(BaseEntity target)
+    protected override void RangeAttack(BaseEntity target)
     {
         base.RangeAttack(target);
         GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(0, isPlayer);

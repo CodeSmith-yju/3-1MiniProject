@@ -130,7 +130,7 @@ public class PartyData
                 partyAtk = 1f + (_Lvel * 0.2f);
                 partyAtkSpd = 0.85f +(_Lvel * 0.015f);
                 partyAtkRange = 5f;
-                isMelee = true;
+                isMelee = false;
                 able_Skill = true;
                 Elemental = BaseEntity.Attribute.Light;
                 partyDefense = 2 + (_Lvel * 1);
