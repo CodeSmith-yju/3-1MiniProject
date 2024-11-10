@@ -29,20 +29,20 @@ public class PartyTooltip : MonoBehaviour
     private float canvaseWidth;
     private RectTransform tooltipRect;
 
-    public void SetupTooltip(PartyIconState _iconState, PartySlot _data)//(string _name, string _title, string _desc,Sprite _img)
+    public void SetupTooltip(PartyIconState _iconState, PartyData _data)//(string _name, string _title, string _desc,Sprite _img)
     {
         if (_iconState == PartyIconState.Class)
         {
             Debug.Log("파티 아이콘 툴팁 활성화");
             VeiwToolTip(0);
-            ViewClassTip(_data.partyData);
+            ViewClassTip(_data);
         }
         else if (_iconState == PartyIconState.Attribute)
         {
-            if (_data.partyData.Elemental == BaseEntity.Attribute.Fire || _data.partyData.Elemental == BaseEntity.Attribute.Wind || _data.partyData.Elemental == BaseEntity.Attribute.Water)
+            if (_data.Elemental == BaseEntity.Attribute.Fire || _data.Elemental == BaseEntity.Attribute.Wind || _data.Elemental == BaseEntity.Attribute.Water)
             {
                 VeiwToolTip(1);
-                switch (_data.partyData.Elemental)
+                switch (_data.Elemental)
                 {
                     case BaseEntity.Attribute.Fire:
                         attribute_icon1.sprite = GameUiMgr.single.entityIconRS.GetElementIcon(BaseEntity.Attribute.Wind);
@@ -64,7 +64,7 @@ public class PartyTooltip : MonoBehaviour
             else
             {
                 VeiwToolTip(2);
-                if (_data.partyData.Elemental == BaseEntity.Attribute.Normal)//원소 아니면 노멀 아니면 빛/암
+                if (_data.Elemental == BaseEntity.Attribute.Normal)//원소 아니면 노멀 아니면 빛/암
                 {
                     attribute_icon3.sprite = GameUiMgr.single.entityIconRS.GetElementIcon(BaseEntity.Attribute.Normal);
                     nomal_Icon_text.gameObject.SetActive(true);
@@ -72,11 +72,11 @@ public class PartyTooltip : MonoBehaviour
                 }
                 else
                 {
-                    if (_data.partyData.Elemental == BaseEntity.Attribute.Light)
+                    if (_data.Elemental == BaseEntity.Attribute.Light)
                     {
                         attribute_icon3.sprite = GameUiMgr.single.entityIconRS.GetElementIcon(BaseEntity.Attribute.Dark);
                     }
-                    else if (_data.partyData.Elemental == BaseEntity.Attribute.Dark)
+                    else if (_data.Elemental == BaseEntity.Attribute.Dark)
                     {
                         attribute_icon3.sprite = GameUiMgr.single.entityIconRS.GetElementIcon(BaseEntity.Attribute.Light);
                     }
@@ -108,7 +108,7 @@ public class PartyTooltip : MonoBehaviour
                 tooltips[i].SetActive(false);
             }
         }
-        
+
     }
     void ViewClassTip(PartyData _partyData)
     {

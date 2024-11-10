@@ -763,6 +763,7 @@ MonoBehaviour:
   - {fileID: 4075848440331671824}
   - {fileID: 4581819738688722308}
   - {fileID: 5850168754683708685}
+  horizontalLayoutGroup: {fileID: 6014079433027681203}
   portrait: {fileID: 7187334224220493545}
   job: {fileID: 1305087993857204816}
   attribute: {fileID: 2638795299491335603}
@@ -4348,11 +4349,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5686738798215042222, guid: 5c1c3cbea534c254d814d11020486e37, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 150
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 5686738798215042222, guid: 5c1c3cbea534c254d814d11020486e37, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 80
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5686738798215042222, guid: 5c1c3cbea534c254d814d11020486e37, type: 3}
       propertyPath: m_LocalPosition.x
