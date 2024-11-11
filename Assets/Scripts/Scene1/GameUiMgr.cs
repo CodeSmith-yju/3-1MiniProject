@@ -99,6 +99,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     [Header("ToolTip")]
     public Tooltip tooltip;
     public PartyTooltip partytooltip;
+    public PartyDetailTooltip partyDetailTooltip;
+
     public DungeonTooltip dungeonTooltip;
     public Canvas cv;
     //Vector3 lodingPosition;// player Position
@@ -541,7 +543,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             }
             if (panelPartyBoard.activeSelf)
             {
-                ActiveParty();
+                UnActiveParty();
             }
             if (shopMgr.gameObject.activeSelf)
             {
@@ -551,7 +553,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             {
                 ActiveBlackSmith();
             }
-            
+            if (partyDetails.gameObject.activeSelf)
+            {
+                UnActivePartyDetail();
+            }
             
             /*else
             {
@@ -568,18 +573,17 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         //Tooltip
         tooltip.MoveTooltip();
         partytooltip.MoveTooltip();
+        partyDetailTooltip.MoveTooltip();
 
         /*Debug.Log("x:" + player.transform.position.x);시발시발시발
         Debug.Log("y:" + player.transform.position.y);*/
 
         //PartyPanel
-        if (Input.GetKeyDown(KeyCode.P) && questMgr.questId >= 30)
+        if (Input.GetKeyDown(KeyCode.P))// && blockedPartyBord.activeSelf)
         {
-            if (questMgr.questId > 30 || questMgr.questId == 30 && questMgr.questActionIndex >= 1 )
-            {
-
-                ActiveParty();
-            }
+            /*if (questMgr.questId > 30 || questMgr.questId == 30 && questMgr.questActionIndex >= 1 )
+                 ActiveParty();*/
+            ActivePartyDetail();
         }
 
         //Ui Event Action
@@ -587,7 +591,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             if (panelPartyBoard.activeSelf)
             {
-                panelPartyBoard.SetActive(false);
+                //panelPartyBoard.SetActive(false);
+                UnActiveParty();
             }
             if (activeInventory == true)
             {
@@ -601,6 +606,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             {
                 shopMgr.gameObject.SetActive(false);
             }
+            if (partyDetails.gameObject.activeSelf)
+            {
+                UnActivePartyDetail();
+            }
 
             uiEventCk = false;
         }
@@ -611,6 +620,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     {
         tooltip.TooltipSetting(cv.GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f, tooltip.GetComponent<RectTransform>());
         partytooltip.TooltipSetting(cv.GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f, partytooltip.GetComponent<RectTransform>());
+        partyDetailTooltip.TooltipSetting(cv.GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f, partyDetailTooltip.GetComponent<RectTransform>());
     }
     #region MinimapMethod
     private void ChangeRanderTextur()
@@ -1894,11 +1904,38 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             panelPartyBoard.SetActive(true);
             AudioManager.single.PlaySfxClipChange(6);
         }
-        else
+    }
+    public void UnActiveParty()
+    {
+        if (panelPartyBoard.activeSelf == true)
         {
             panelPartyBoard.SetActive(false);
+            //AudioManager.single.PlaySfxClipChange(6);
+            partytooltip.gameObject.SetActive(false);
         }
     }
+    public void ActivePartyDetail()
+    {
+        if (partyDetails.gameObject.activeSelf == false)
+        {
+            partyDetails.gameObject.SetActive(true);
+            partyDetails.OpenPartyDetail(0);
+        }
+        else
+        {
+            UnActivePartyDetail();
+        }
+    }
+    public void UnActivePartyDetail()
+    {
+        if (partyDetails.gameObject.activeSelf == true)
+        {
+            partyDetails.gameObject.SetActive(false);
+            partyDetailTooltip.gameObject.SetActive(false);
+            //파티디테일툴팁.gameObject.Setactive(false);
+        }
+    }
+
     public void ActiveShop()
     {
         if (SnB.activeSelf)
@@ -2350,6 +2387,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         lastDeparture.Add(poolMoveInSlot[0]);
 
         poolMoveInSlot[0].btnMy.interactable = false;
+        partyDetails.Init(lastDeparture);//파티디테일 수정 PartyDetail.Cs에서 플레이어혼자만있을때도 보여지게하기위함.  
     }
 
     public void ChangePlayerPlace(PlaceState _playerState)// 플레이어 스폰 포인트(= arySpawnPoint) 값을 사전에 인스펙터창에서 등록하여 enum값과 통일시켜주어서 State값으로 이동하는기능 

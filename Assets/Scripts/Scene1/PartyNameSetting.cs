@@ -8,12 +8,15 @@ public class PartyNameSetting : MonoBehaviour
     public List<string> knightNames;
     public List<string> archerNames;
     public List<string> mageNames;
+    public List<string> priestNames;
+    public List<string> demonNames;
 
-/* //한국어이름도 일단 만들어뒀음
-    knightNames = new List<string> { "알프레드", "에드먼드", "해럴드", "제프리", "월터", "가이", "레이먼드", "오스윈", "아이보", "휴" };
-    archerNames = new List<string> {"에일린", "길다", "이소벨", "엘레노어", "콜린", "레이놀드", "아델라", "에디스", "오스카", "앨런"};
-    mageNames = new List<string> { "마이클", "리처드", "에드워드", "가브리엘", "토머스", "알렉산더", "제이콥", "크리스토퍼", "필립", "도미닉", };
-*/
+
+    /* //한국어이름도 일단 만들어뒀음
+        knightNames = new List<string> { "알프레드", "에드먼드", "해럴드", "제프리", "월터", "가이", "레이먼드", "오스윈", "아이보", "휴" };
+        archerNames = new List<string> {"에일린", "길다", "이소벨", "엘레노어", "콜린", "레이놀드", "아델라", "에디스", "오스카", "앨런"};
+        mageNames = new List<string> { "마이클", "리처드", "에드워드", "가브리엘", "토머스", "알렉산더", "제이콥", "크리스토퍼", "필립", "도미닉", };
+    */
     public string GetRandomName(List<string> nameList)// 이름 리스트에서 랜덤하게 하나 선택하는 함수
     {
         if (nameList.Count == 0)
@@ -39,6 +42,8 @@ public class PartyNameSetting : MonoBehaviour
         knightNames ??= new List<string> { "Alaric", "Gawain", "Roland", "Lancelot", "Arthas", "Tristan", "Bedivere", "Galahad", "Percival", "Kay" };
         archerNames ??= new List<string> { "Robin", "Elduin", "Faolan", "Nimue", "Ayla", "Vara", "Rylai", "Orin", "Shara", "Elandra" };
         mageNames ??= new List<string> { "Merlin", "Gandalf", "Morgana", "Zatanna", "Aegis", "Althas", "Luna", "Arcanis", "Solara", "Faye" };
+        priestNames ??= new List<string> { "Aldric", "Benedict", "Elspeth", "Ishara", "Tobias", "Lucius", "Cyril", "Anselm", "Seraphine", "Eldora" };
+        demonNames ??= new List<string> { "Garruk", "Thorne", "Drex", "Magnus", "Borin", "Huldan", "Grimnir", "Varg", "Ragnar", "Krogan" };
 
         //knightNames ??= new List<string> { "알프레드", "에드먼드", "해럴드", "제프리", "월터", "가이", "레이먼드", "오스윈", "아이보", "휴" };
         //archerNames ??= new List<string> { "에일린", "길다", "이소벨", "엘레노어", "콜린", "레이놀드", "아델라", "에디스", "오스카", "앨런" };

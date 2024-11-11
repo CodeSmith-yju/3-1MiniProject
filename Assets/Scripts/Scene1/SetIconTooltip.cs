@@ -8,7 +8,7 @@ public class SetIconTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter(PointerEventData eventData)
     {
         GameUiMgr.single.partytooltip.gameObject.SetActive(true);
-        GameUiMgr.single.partytooltip.SetupTooltip(partyIconState, gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.GetComponent<PartySlot>());
+        GameUiMgr.single.partytooltip.SetupTooltip(partyIconState, gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.GetComponent<PartySlot>().partyData);
     }
 
     public void OnPointerExit(PointerEventData eventData)

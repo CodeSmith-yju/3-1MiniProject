@@ -7,6 +7,11 @@ using UnityEngine.UI;
 public class PartyDetails : MonoBehaviour
 {
     public List<PartyDesc> PartyDetailDescs = new();
+    List<RectTransform> PartyDetailRects = new();
+    public List<SetPartyDetailTolltip> setPartyTooltips = new();
+
+    [Header("ToolTip")]
+    [SerializeField] PartyDetailTooltip detailTooltip;
 
     [Header("Img")]
     public Image portrait;
@@ -17,11 +22,16 @@ public class PartyDetails : MonoBehaviour
     [Header("Desc")]
     public TextMeshProUGUI textStatsDesc;
 
-    [Header("ViewStats")]
-    public TextMeshProUGUI txtHp;public TextMeshProUGUI txtMp;
-    public TextMeshProUGUI txtAtk; public TextMeshProUGUI txtAtkRange;
-    public TextMeshProUGUI textDef; public TextMeshProUGUI textSpeed;
+    [Header("LeftViewStats")]
+    public TextMeshProUGUI txtHp;
+    public TextMeshProUGUI txtMp;
+    public TextMeshProUGUI textDef;
+    public TextMeshProUGUI textSpeed;
+
+    [Header("RightViewStats")]
+    public TextMeshProUGUI txtAtk; 
     public TextMeshProUGUI txtAtkSpd;
+    public TextMeshProUGUI txtAtkRange;
 
     public void Init(List<PartySlot> _partySlots)//GuiMgr의 List<PartySlot>인 lastDefartual의 partyData를통해 목록을만들것.
     {
@@ -30,7 +40,8 @@ public class PartyDetails : MonoBehaviour
             Debug.Log("Null Error");
             return;
         }
-        PartyDetailDescs ??= new();
+        SetPartyDetailRect();
+
         int cnt = _partySlots.Count;
         for (int i = 0; i < _partySlots.Count; i++)
         {
@@ -45,33 +56,52 @@ public class PartyDetails : MonoBehaviour
                 PartyDetailDescs[i].gameObject.SetActive(false);
             }
         }
-
-        ShowDetals(PartyDetailDescs[0]);
     }
-
-    public void ShowDetals(PartyDesc _desc)//Hp, Mp, atk, atkspd, def, spd, atkrng
+    public void OpenPartyDetail(int _index)
+    {
+        ShowDetals(PartyDetailDescs[_index]);
+    }
+    public void SetTooltipIndex(PartyData _partyData)
+    {
+        for (int i = 0; i < setPartyTooltips.Count; i++)
+        {
+            setPartyTooltips[i].SetPartyData(_partyData);
+        }
+    }
+    public void ShowDetals(PartyDesc _desc)//Hp, Mp, atk, atkspd, atkrng, def, spd
     {
         textStatsDesc.text = "최대 체력(+레벨로 인한 추가스탯)\n"+ "스탯은 소모 아이템, 던전 내 버프/디버프, 장비 및 레벨업을 통해 변동될 수 있습니다.";
         portrait.sprite = _desc.img_Portrait;
         job.sprite = _desc.img_Job;
         attribute.sprite = _desc.img_Attribute;
+
         skill.sprite = _desc.img_Skill;
 
-        string hp = (GameMgr.playerData[_desc.GetIndex()].max_Player_Hp - _desc.tempDefaultStats[0]).ToString("F3");
-        string atk = (GameMgr.playerData[_desc.GetIndex()].base_atk_Dmg - _desc.tempDefaultStats[2]).ToString("F3");
-        string atkspd = (GameMgr.playerData[_desc.GetIndex()].atk_Speed - _desc.tempDefaultStats[3]).ToString("F3");
+        int _index = _desc.GetIndex();
+
+        string hp = (GameMgr.playerData[_index].max_Player_Hp - _desc.tempDefaultStats[0]).ToString("F3");
+        string mp = (GameMgr.playerData[_index].max_Player_Mp - _desc.tempDefaultStats[1]).ToString("F0");
+        string atk = (GameMgr.playerData[_index].base_atk_Dmg - _desc.tempDefaultStats[2]).ToString("F3");
+        string atkspd = (GameMgr.playerData[_index].atk_Speed - _desc.tempDefaultStats[3]).ToString("F3");
+        string def = (GameMgr.playerData[_index].defensePoint - _desc.tempDefaultStats[5]).ToString("F0");
         TextSetting(ref hp, ref atk, ref atkspd);
 
-        txtHp.text = "HP: " + GameMgr.playerData[_desc.GetIndex()].max_Player_Hp + "\n(+" + hp + ")"; //_desc.str_Hp;
-        txtMp.text = "MP: " + GameMgr.playerData[_desc.GetIndex()].max_Player_Mp;
-        txtAtk.text = "Atk: " + GameMgr.playerData[_desc.GetIndex()].base_atk_Dmg + "\n(+" + atk + ")";//_desc.str_Atk ;
-        txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_desc.GetIndex()].atk_Speed + "\n(+" + atkspd + ")";//_desc.str_AtkSpd;
-        txtAtkRange.text = "AtkRng: " + GameMgr.playerData[_desc.GetIndex()].atk_Range;
+        txtHp.text = "HP: " + GameMgr.playerData[_index].max_Player_Hp + "\n(+" + hp + ")"; //_desc.str_Hp;
+        txtMp.text = "MP: " + GameMgr.playerData[_index].max_Player_Mp + "\n(-"+ mp +")";
+        textDef.text = "Def " + GameMgr.playerData[_index].defensePoint + "\n(+" + def + ")";
+        textSpeed.text = (_desc.tempDefaultStats[6] / 2).ToString("F1");
 
-        if (_desc.GetIndex() == 0)
+        txtAtk.text = "Atk: " + GameMgr.playerData[_index].base_atk_Dmg + "\n(+" + atk + ")";//_desc.str_Atk ;
+        txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_index].atk_Speed + "\n(+" + atkspd + ")";//_desc.str_AtkSpd;
+        txtAtkRange.text = "AtkRng: " + GameMgr.playerData[_index].atk_Range;
+
+        if (_index == 0)
         {
             textStatsDesc.text = "최대 체력(+레벨과 장비로 인한 추가스탯\n"+ "스탯은 소모 아이템, 던전 내 버프/디버프, 장비 및 레벨업을 통해 변동될 수 있습니다.";
         }
+
+        BtnResize(_index);
+        SetTooltipIndex(PartyDetailDescs[_index].GetPartyData());
     }
 
     void TextSetting(ref string hp, ref string atk, ref string atkspd)
@@ -125,10 +155,43 @@ public class PartyDetails : MonoBehaviour
         Debug.Log("Now Details: "+str_Lv + str_Name);
     }*/
 
+    public void BtnResize(int _index)//150,80 / 120,60
+    {
+        for (int i = 0; i < PartyDetailRects.Count; i++)
+        {
+            if (i == _index)
+            {
+                PartyDetailRects[i].sizeDelta = new Vector2(150, 80);
+            }
+            else
+            {
+                PartyDetailRects[i].sizeDelta = new Vector2(120, 60);
+            }
+        }
+    }
+
     public void Test()
     {
         //gameObject.SetActive(false);
         GameUiMgr.single.partyDetails.gameObject.SetActive(false);
         Debug.Log("외부영역 클릭");
+    }
+
+    public void SetPartyDetailRect()
+    {
+        PartyDetailDescs ??= new();
+        PartyDetailRects ??= new();
+
+        if (PartyDetailRects == null)
+        {
+            return;
+        }
+        else if (PartyDetailRects.Count == 0)
+        {
+            for (int i = 0; i < PartyDetailDescs.Count; i++)
+            {
+                PartyDetailRects.Add(PartyDetailDescs[i].gameObject.GetComponent<RectTransform>());
+            }
+        }
     }
 }

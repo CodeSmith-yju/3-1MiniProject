@@ -3,14 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum PartyIconState
-{
-    None,
-    Attribute,
-    Class,
-    Skill
-}
-public class PartyTooltip : MonoBehaviour
+public class PartyDetailTooltip : MonoBehaviour
 {
     [Header("Object")]
     public GameObject[] tooltips;
@@ -87,7 +80,11 @@ public class PartyTooltip : MonoBehaviour
                 }
             }
         }
-        else if (_iconState == PartyIconState.None)
+        else if (_iconState == PartyIconState.Skill)//스킬 아이콘
+        {
+
+        }
+        else if (_iconState == PartyIconState.None)//기본 스텟아이콘 
         {
 
         }

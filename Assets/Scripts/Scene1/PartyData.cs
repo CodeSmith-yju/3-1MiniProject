@@ -130,7 +130,8 @@ public class PartyData
                 partyAtk = 1f + (_Lvel * 0.2f);
                 partyAtkSpd = 0.85f +(_Lvel * 0.015f);
                 partyAtkRange = 5f;
-                isMelee = false;
+                strPartyName = GameUiMgr.single.partyNameSetting.GetRandomName(GameUiMgr.single.partyNameSetting.priestNames);
+                isMelee = true;
                 able_Skill = true;
                 Elemental = BaseEntity.Attribute.Light;
                 partyDefense = 2 + (_Lvel * 1);
@@ -190,6 +191,12 @@ public class PartyData
             case Ally.Job.Wizard:
                 _index = 2;
                 break;
+            case Ally.Job.Priest:
+                _index = 3;
+                break;
+            case Ally.Job.Demon:
+                _index = 4;
+            break;
         }
         return _index;
     }
