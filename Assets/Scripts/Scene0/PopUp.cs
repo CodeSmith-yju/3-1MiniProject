@@ -14,6 +14,7 @@ public enum PopUpState
     Dungeon,
     DungeonExit,
     SnPotion,
+    PartyCommit,
 }
 public class PopUp : MonoBehaviour
 {
@@ -109,6 +110,9 @@ public class PopUp : MonoBehaviour
                 }
 
                 GameUiMgr.single.SliderChange();
+                break;
+            case PopUpState.PartyCommit:
+                GameUiMgr.single.EmploymentCompleted();
                 break;
             default:
                 break;

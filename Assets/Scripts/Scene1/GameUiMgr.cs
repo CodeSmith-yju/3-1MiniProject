@@ -2297,6 +2297,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         partyPrice = sum;
     }
 
+    public void PartyCommitBtn()
+    {
+        popUp.SetPopUp("파티 모집을 \n완료하시겠습니까? \n※ 모집이 완료되면 던전에서 복귀할때까지 편성이 제한됩니다.", PopUpState.PartyCommit);
+    }
     public void EmploymentCompleted()
     {
         PartyListInPlayer(GetPlayerPrefab());
@@ -2362,6 +2366,22 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         //여기수정중
         partyDetails.Init(lastDeparture);
+
+        UnEablePartyBoard();
+    }
+    void EablePartyBoard()//일단만들어만뒀는데 이건쓸일없을듯
+    {
+        for (int i = 0; i < poolPartySlot.Count; i++)
+        {
+            poolPartySlot[i].EnebleBtn();
+        }
+    }
+    void UnEablePartyBoard()
+    {
+        for (int i = 0; i < poolPartySlot.Count; i++)
+        {
+            poolPartySlot[i].UnEnebleBtn();
+        }
     }
 
     public GameObject GetPlayerPrefab()

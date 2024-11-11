@@ -68,7 +68,7 @@ public class PartySlot : MonoBehaviour
             Debug.Log("Generate MoveInSlot");
             block.SetActive(true);
             moveInChek = true;
-            btnMy.interactable = false;
+            //btnMy.interactable = false;
         }
 
     }
@@ -87,12 +87,21 @@ public class PartySlot : MonoBehaviour
         Debug.Log("***********************************Generate Load MoveInSlot");
         block.SetActive(true);
         moveInChek = true;
-        btnMy.interactable = false;
+        //btnMy.interactable = false;
     }
     public void IsLoadSetting()
     {
         block.SetActive(false);
         this.moveInChek = false;
         btnMy.interactable = true;
+    }
+
+    public void EnebleBtn()
+    {
+        btnMy.interactable = true;
+    }
+    public void UnEnebleBtn()
+    {
+        btnMy.interactable = false;
     }
 }
