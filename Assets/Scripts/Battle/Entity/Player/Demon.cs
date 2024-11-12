@@ -28,7 +28,7 @@ public class Demon : Ally
             if (!isMeta)
             {
                 // 변신
-                BattleManager.Instance.ui.GenerateLog(class_Portrait, "메타포모시스");
+                BattleManager.Instance.ui.GenerateLog(class_Portrait, "폭주");
 
                 ani.SetBool("isSkill", true);
             }
@@ -65,7 +65,7 @@ public class Demon : Ally
         atkSpd += 0.1f;
         atkRange += 0.5f;
 
-        max_Mp = 8;
+        max_Mp += 5; // 변신 후 최대 마나가 증가하고 스킬이 바뀐다.
         cur_Mp = 0;
     }
 

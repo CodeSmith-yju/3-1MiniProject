@@ -372,10 +372,9 @@ public class BattleManager : MonoBehaviour
 
     private void PlayingResetStats()
     {
-        foreach (GameObject player_Obj in party_List)
+        foreach (GameObject player_Obj in deploy_Player_List)
         {
             Ally player = player_Obj.GetComponent<Ally>();
-
             PlayerData playerData = GameMgr.playerData[player.entity_index];
 
             // base_Stats에서 해당 플레이어의 원래 스탯 찾기
@@ -383,7 +382,6 @@ public class BattleManager : MonoBehaviour
             {
                 // 원래 스탯 복원
                 float healthRatio = (player.max_Hp > 0) ? player.cur_Hp / player.max_Hp : 1;
-
 
                 playerData.base_atk_Dmg = stats.temp_Dmg;
                 playerData.max_Player_Hp = stats.temp_MaxHp;
@@ -393,8 +391,9 @@ public class BattleManager : MonoBehaviour
                 playerData.atk_Speed = stats.temp_AtkSpd;
 
                 player.cur_Hp = Mathf.Clamp(healthRatio * stats.temp_MaxHp, 0, stats.temp_MaxHp);
-
                 playerData.cur_Player_Hp = player.cur_Hp;
+
+                Debug.Log(player_Obj.name + " 스텟 초기화");
 
                 // temp_Stats 초기화
                 ResetTempStats(playerData);
@@ -404,7 +403,7 @@ public class BattleManager : MonoBehaviour
 
     private void EndResetStats()
     {
-        foreach (GameObject player_Obj in party_List)
+        foreach (GameObject player_Obj in deploy_Player_List)
         {
             Ally player = player_Obj.GetComponent<Ally>();
 
@@ -461,7 +460,7 @@ public class BattleManager : MonoBehaviour
             else if (deploy_Enemy_List.Count == 0)
             {
                 // 게임 중 버프 타일로 증가되기 전 스텟으로 리셋
-                PlayingResetStats();
+                PlayingResetStats();   
                 AudioManager.single.PlaySfxClipChange(9);
                 ui.OpenPopup(ui.vic_Banner);
                 yield return StartCoroutine(ui.StartBanner(ui.vic_Banner));

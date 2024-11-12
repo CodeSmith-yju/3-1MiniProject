@@ -14,6 +14,7 @@ public class Hero : Ally
         Debug.Log("Hero 생성");
         type = Class.Melee;
         job = Job.Hero;
+        isArea_Atk = true;
     }
 
 
@@ -30,7 +31,7 @@ public class Hero : Ally
                 BattleManager.Instance.ui.GenerateLog(class_Portrait, "섬광 베기");
 
                 BaseEntity target = FindTarget().GetComponent<BaseEntity>();
-                Debug.Log("타겟의 적에게 2배의 데미지로 한번 공격" + " " + (DamageCalc(target, atkDmg) * 2) + "데미지");
+                Debug.Log("타겟의 적에게 2배의 데미지로 공격" + " " + (DamageCalc(target, atkDmg) * 2) + "데미지");
                 target.cur_Hp -= DamageCalc(target, atkDmg) * 2;
                 cur_Mp = 0;
                 Debug.Log("스킬 사용 ( " + name + " -> " + target.name + " )");

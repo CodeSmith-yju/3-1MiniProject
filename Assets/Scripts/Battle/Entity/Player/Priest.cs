@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class Priest : Ally
 {
-    [SerializeField] GameObject SkillEff;
+    [SerializeField] GameObject skillEff;
+    [SerializeField] GameObject attackEff;
 
     protected override void Start()
     {
@@ -20,8 +21,7 @@ public class Priest : Ally
     {
         base.RangeAttack(target);
 
-        GameObject obj_Eff = BattleManager.Instance.pool.GetObject(4, isPlayer);
-        obj_Eff.transform.SetParent(target.transform);
+        GameObject obj_Eff = Instantiate(attackEff, target.transform);
         obj_Eff.transform.localPosition = Vector3.zero;
 
         RangeHit(target, atkDmg);
@@ -40,9 +40,15 @@ public class Priest : Ally
 
                 ani.SetBool("isSkill", true);
                 Ally ally = FindMinCurHpPlayer(); // 현재 체력이 가장 낮은 플레이어 가져옴
-                GameObject eff = Instantiate(SkillEff, ally.transform);
+                Instantiate(skillEff, ally.transform);
 
-                ally.cur_Hp += (5f + max_Hp * 0.1f);
+                float heal = 5f + max_Hp * 0.1f;
+
+                if (ally.cur_Hp + heal < ally.max_Hp)
+                    ally.cur_Hp += heal;
+                else if (ally.cur_Hp + heal >= ally.max_Hp)
+                    ally.cur_Hp = ally.max_Hp;
+
                 cur_Mp = 0;
                 Debug.Log("현재 체력이 가장 낮은 플레이어에게 기본 회복력 5 + 최대 체력의 10%만큼 회복합니다.");
 
