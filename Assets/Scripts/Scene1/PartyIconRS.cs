@@ -15,23 +15,27 @@ public enum IconEnemy
 }
 public class PartyIconRS : MonoBehaviour
 {
+
     [Header("Elemnetal, JobClass, Poartrait Icons")]
-    public Sprite[] spElementIcon;
-    public Sprite[] spJobIcon;
-    public Sprite[] spPortraitIcon;
+    [SerializeField] Sprite[] spElementIcon;
+    [SerializeField] Sprite[] spJobIcon;
+    [SerializeField] Sprite[] spPortraitIcon;
     [Header("Enemy, Attack, Skill Icons")]
-    public Sprite[] spEnemyIcon;
-    public Sprite[] spAttackIcon;
-    public Sprite[] spSkillIcon;
+    [SerializeField] Sprite[] spEnemyIcon;
+    [SerializeField] Sprite[] spAttackIcon;
+    [SerializeField] Sprite[] spSkillIcon;
+    [SerializeField] Sprite[] spDoubleSkillIcon;
+    public Sprite[] spStatIcon;//Hp, Mp, atk, atkspd, atkrng, def, spd
 
     [Header("Dictionarys")]
-    public Dictionary<BaseEntity.Attribute, Sprite> dictn_ElementIcon = new();
-    public Dictionary<Ally.Class, Sprite> dictn_jobIcon = new();
-    public Dictionary<Ally.Job, Sprite> dictn_portratiIcon = new();
+    [SerializeField] Dictionary<BaseEntity.Attribute, Sprite> dictn_ElementIcon = new();
+    [SerializeField] Dictionary<Ally.Class, Sprite> dictn_jobIcon = new();
+    [SerializeField] Dictionary<Ally.Job, Sprite> dictn_portratiIcon = new();
 
-    public Dictionary<IconEnemy, Sprite> dictn_enemyIcon = new();
-    public Dictionary<Ally.Job, Sprite> dictn_attackIcon = new();
-    public Dictionary<Ally.Job, Sprite> dictn_skillIcon = new();
+    [SerializeField] Dictionary<IconEnemy, Sprite> dictn_enemyIcon = new();
+    [SerializeField] Dictionary<Ally.Job, Sprite> dictn_attackIcon = new();
+    [SerializeField] Dictionary<Ally.Job, Sprite> dictn_skillIcon = new();
+    [SerializeField] Dictionary<Ally.Job, Sprite> dictn_double_skillIcon = new();
 
     public void SetAllIcons()
     {
@@ -42,6 +46,7 @@ public class PartyIconRS : MonoBehaviour
         SetEnemyIcon();
         SetAttack();
         SetSkill();
+        SetDoubleSkill();
     }
 
     void SetElement()
@@ -101,7 +106,13 @@ public class PartyIconRS : MonoBehaviour
         dictn_skillIcon.Add(Ally.Job.Ranger, spSkillIcon[2]);
         dictn_skillIcon.Add(Ally.Job.Wizard, spSkillIcon[3]);
         dictn_skillIcon.Add(Ally.Job.Priest, spSkillIcon[4]);
+        dictn_skillIcon.Add(Ally.Job.Demon, spSkillIcon[5]);
         Debug.Log("스킬아이콘추가해!!!!!!!!!!!!");
+    }
+    void SetDoubleSkill()
+    {
+        dictn_double_skillIcon ??= new();
+        dictn_double_skillIcon.Add(Ally.Job.Demon, spDoubleSkillIcon[0]);
     }
 
     public Sprite GetElementIcon(BaseEntity.Attribute _elemnental)
@@ -128,5 +139,9 @@ public class PartyIconRS : MonoBehaviour
     public Sprite GetSkillIcon(Ally.Job _job)
     {
         return dictn_skillIcon[_job];
+    }
+    public Sprite GetDoubleSkill(Ally.Job _job)
+    {
+        return dictn_double_skillIcon[_job];
     }
 }

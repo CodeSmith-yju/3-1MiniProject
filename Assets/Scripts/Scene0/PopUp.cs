@@ -114,7 +114,7 @@ public class PopUp : MonoBehaviour
                 break;
             case PopUpState.PartyCommit:
                 GameUiMgr.single.EmploymentCompleted();
-                GameUiMgr.single.popUp.gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 300);
+                GameUiMgr.single.popUp.gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 300);
                 warningPartyCommit.gameObject.SetActive(false);
                 break;
             default:

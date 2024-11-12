@@ -1,5 +1,6 @@
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,24 +8,28 @@ public class PartyDetailTooltip : MonoBehaviour
 {
     [Header("Object")]
     public GameObject[] tooltips;
-
+    public PartyData _data;
     [Header("Text")]
     public TextMeshProUGUI class_name_text;
     public TextMeshProUGUI class_Icon_text;
     public TextMeshProUGUI nomal_Icon_text;
     public TextMeshProUGUI lightdark_Icon_text;
+    public TextMeshProUGUI stat_text;
     //public TextMeshProUGUI textPower;
     [Header("Image")]
     public Image class_icon;
     public Image attribute_icon1;
     public Image attribute_icon2;
     public Image attribute_icon3;
+    public Image stat_Icon;
 
     private float canvaseWidth;
     private RectTransform tooltipRect;
 
-    public void SetupTooltip(PartyIconState _iconState, PartyData _data)//(string _name, string _title, string _desc,Sprite _img)
+    public void SetUpToolTip(PartyIconState _iconState, PartyDesc _desc)//(string _name, string _title, string _desc,Sprite _img)
     {
+        _data = _desc.GetPartyData();
+
         if (_iconState == PartyIconState.Class)
         {
             Debug.Log("파티 아이콘 툴팁 활성화");
@@ -80,14 +85,18 @@ public class PartyDetailTooltip : MonoBehaviour
                 }
             }
         }
-        else if (_iconState == PartyIconState.Skill)//스킬 아이콘
+        else if (_iconState == PartyIconState.Skill || _iconState == PartyIconState.Skill2)//스킬 아이콘
         {
-
+            VeiwToolTip(0);
+            ViewSkillTip(_data, _iconState);
+            Debug.Log("Skill Icon 툴팁 활성");
         }
-        else if (_iconState == PartyIconState.None)//기본 스텟아이콘 
-        {
+    }
+    public void SetUpToolTip(StatIconState _statState)
+    {
+        VeiwToolTip(3);
 
-        }
+        ViewStatTip(_statState);
     }
     void VeiwToolTip(int _veiwIndex)
     {
@@ -98,6 +107,11 @@ public class PartyDetailTooltip : MonoBehaviour
                 if (i == _veiwIndex)
                 {
                     tooltips[i].SetActive(true);
+                    if (_veiwIndex == 3)
+                    {
+                        Debug.Log("now ViewIndex: " + _veiwIndex);
+                    }
+
                     continue;
                 }
                 tooltips[i].SetActive(false);
@@ -145,6 +159,93 @@ public class PartyDetailTooltip : MonoBehaviour
                 break;
         }
     }
+    public void ViewStatTip(StatIconState _stat)//Hp, Mp, atk, atkspd, atkrng, def, spd
+    {
+        Debug.Log("스텟툴팁에 내용을 할당했다");
+        switch (_stat)
+        {
+            case StatIconState.HP:
+                stat_Icon.sprite = GameUiMgr.single.entityIconRS.spStatIcon[0];
+                stat_text.text = "체력\n 체력이 모두 떨어지면 전투에 참여할 수 없습니다.";
+                break;
+            case StatIconState.MP:
+                stat_Icon.sprite = GameUiMgr.single.entityIconRS.spStatIcon[1];
+                stat_text.text = "마나\n 기본 공격 시 1씩 회복되며, 가득 차면 스킬을 사용할 수 있습니다.";
+                break;
+            case StatIconState.Atk:
+                stat_Icon.sprite = GameUiMgr.single.entityIconRS.spStatIcon[2];
+                stat_text.text = "공격력\n 높을수록 적에게 가하는 피해가 증가합니다.";
+                break;
+            case StatIconState.AtkSpd:
+                stat_Icon.sprite = GameUiMgr.single.entityIconRS.spStatIcon[3];
+                stat_text.text = "공격 속도\n 높을수록 적을 더 자주 공격할 수 있습니다.";
+                break;
+            case StatIconState.AtkRng:
+                stat_Icon.sprite = GameUiMgr.single.entityIconRS.spStatIcon[4];
+                stat_text.text = "공격 범위\n 높을수록 멀리 있는 적을 공격할 수 있습니다.";
+                break;
+            case StatIconState.Def:
+                stat_Icon.sprite = GameUiMgr.single.entityIconRS.spStatIcon[5];
+                stat_text.text = "방어력\n 높을수록 받는 피해가 줄어들며, 최대 60%까지 경감됩니다.";
+                break;
+            case StatIconState.Spd:
+                stat_Icon.sprite = GameUiMgr.single.entityIconRS.spStatIcon[6];
+                stat_text.text = "이동 속도\n 높을수록 빠르게 이동할 수 있습니다.";
+                break;
+            default:
+                Debug.Log("족버그 실시간발생중");
+                break;
+        }
+    }
+    void ViewSkillTip(PartyData _partyData, PartyIconState _partyIconState)
+    {
+        class_icon.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(_partyData.jobType);
+        switch (_partyData.jobType)
+        {
+            case Ally.Job.Hero:
+                class_icon.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(Ally.Job.Hero);
+                class_name_text.text = "섬광 베기";
+                class_Icon_text.text = "단일 대상에게 공격력의 2배 대미지(실제숫자)";
+                break;
+            case Ally.Job.Knight:
+                class_icon.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(Ally.Job.Knight);
+                class_name_text.text = "돌진 찌르기";
+                class_Icon_text.text = "단일 대상에게 공격력의 1.3배 대미지(실제숫자)";
+                break;
+            case Ally.Job.Ranger:
+                class_icon.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(Ally.Job.Ranger);
+                class_name_text.text = "가시 화살";
+                class_Icon_text.text = "단일 대상에게 공격력의 1.2배 대미지(실제숫자)";
+                break;
+            case Ally.Job.Wizard:
+                class_icon.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(Ally.Job.Wizard);
+                class_name_text.text = "파이어 볼트";
+                class_Icon_text.text = "단일 대상에게 공격력의 39(13 * 3)피해";
+                break;
+            case Ally.Job.Priest:
+                class_icon.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(Ally.Job.Priest);
+                class_name_text.text = "치유의 빛";
+                class_Icon_text.text = "현재 체력이 가장 낮은 아군에게 15(5 + 10 //자신의 최대 체력의 10%만큼 회복 = 숫자)";
+                break;
+            case Ally.Job.Demon:
+                if (_partyIconState == PartyIconState.Skill)
+                {
+                    class_icon.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(Ally.Job.Demon);
+                    class_name_text.text = "메타포모시스";
+                    class_Icon_text.text = "변신하여 공격력, 공격속도, 사거리가 증가하고, 받는 피해 15% 증가한다.";
+                }
+                else if(_partyIconState == PartyIconState.Skill2)
+                {
+                    class_icon.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(Ally.Job.Demon);
+                    class_name_text.text = "존큰대";
+                    class_Icon_text.text = "겁나쎄게때린다.";
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     public void TooltipSetting(float _canvasWidth, RectTransform _tooltipRect)
     {
         //ItemResources.instance.AfterIconSet();

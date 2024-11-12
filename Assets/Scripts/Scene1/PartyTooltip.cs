@@ -8,7 +8,9 @@ public enum PartyIconState
     None,
     Attribute,
     Class,
-    Skill
+    Skill,
+    Skill2,
+    Stat
 }
 public class PartyTooltip : MonoBehaviour
 {

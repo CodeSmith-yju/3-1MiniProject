@@ -18,6 +18,7 @@ public class PartyDetails : MonoBehaviour
     public Image job;
     public Image attribute;
     public Image skill;
+    public Image DoubleSkill;
 
     [Header("Desc")]
     public TextMeshProUGUI textStatsDesc;
@@ -61,15 +62,24 @@ public class PartyDetails : MonoBehaviour
     {
         ShowDetals(PartyDetailDescs[_index]);
     }
-    public void SetTooltipIndex(PartyData _partyData)
+    public void SetTooltipIndex(PartyDesc _partyDesc)
     {
         for (int i = 0; i < setPartyTooltips.Count; i++)
         {
-            setPartyTooltips[i].SetPartyData(_partyData);
+            setPartyTooltips[i].SetPartyDesc(_partyDesc);
         }
     }
     public void ShowDetals(PartyDesc _desc)//Hp, Mp, atk, atkspd, atkrng, def, spd
     {
+        if (_desc.GetPartyData().jobType == Ally.Job.Demon)
+        {
+            DoubleSkill.gameObject.transform.parent.gameObject.SetActive(true);
+            DoubleSkill.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(Ally.Job.Demon);
+        }
+        else
+        {
+            DoubleSkill.gameObject.transform.parent.gameObject.SetActive(false);
+        }
         textStatsDesc.text = "최대 체력(+레벨로 인한 추가스탯)\n"+ "스탯은 소모 아이템, 던전 내 버프/디버프, 장비 및 레벨업을 통해 변동될 수 있습니다.";
         portrait.sprite = _desc.img_Portrait;
         job.sprite = _desc.img_Job;
@@ -88,8 +98,8 @@ public class PartyDetails : MonoBehaviour
 
         txtHp.text = "HP: " + GameMgr.playerData[_index].max_Player_Hp + "\n(+" + hp + ")"; //_desc.str_Hp;
         txtMp.text = "MP: " + GameMgr.playerData[_index].max_Player_Mp + "\n(-"+ mp +")";
-        textDef.text = "Def " + GameMgr.playerData[_index].defensePoint + "\n(+" + def + ")";
-        textSpeed.text = (_desc.tempDefaultStats[6] / 2).ToString("F1");
+        textDef.text = "Def: " + GameMgr.playerData[_index].defensePoint + "\n(+" + def + ")";
+        textSpeed.text = "Spd: "+(_desc.tempDefaultStats[6] / 2).ToString("F1");
 
         txtAtk.text = "Atk: " + GameMgr.playerData[_index].base_atk_Dmg + "\n(+" + atk + ")";//_desc.str_Atk ;
         txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_index].atk_Speed + "\n(+" + atkspd + ")";//_desc.str_AtkSpd;
@@ -101,7 +111,7 @@ public class PartyDetails : MonoBehaviour
         }
 
         BtnResize(_index);
-        SetTooltipIndex(PartyDetailDescs[_index].GetPartyData());
+        SetTooltipIndex(PartyDetailDescs[_index]);
     }
 
     void TextSetting(ref string hp, ref string atk, ref string atkspd)

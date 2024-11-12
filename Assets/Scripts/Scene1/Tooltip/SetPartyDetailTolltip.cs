@@ -4,20 +4,40 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
+public enum StatIconState
+{
+    None,
+    HP,
+    MP,
+    Def,
+    Spd,
+    Atk,
+    AtkSpd,
+    AtkRng,
+}
 public class SetPartyDetailTolltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [Header("Data")]
+    [SerializeField] PartyDesc partyDesc;
+
+    [Header("State")]
+    public StatIconState statIconState;
     public PartyIconState partyIconState;
-    [SerializeField] PartyData partyData;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (SceneManager.GetActiveScene().name == "Town")
         {
-            if (partyData != null)
+            GameUiMgr.single.partyDetailTooltip.gameObject.SetActive(true);
+            if (partyDesc != null)
             {
-                GameUiMgr.single.partyDetailTooltip.gameObject.SetActive(true);
-                GameUiMgr.single.partyDetailTooltip.SetupTooltip(partyIconState, partyData);
+                GameUiMgr.single.partyDetailTooltip.SetUpToolTip(partyIconState, partyDesc);
             }
+            else
+            {
+                GameUiMgr.single.partyDetailTooltip.SetUpToolTip(statIconState);
+            }
+            
         }
         else//Battle or Tutorial
         {
@@ -38,8 +58,8 @@ public class SetPartyDetailTolltip : MonoBehaviour, IPointerEnterHandler, IPoint
         }
     }
 
-    public void SetPartyData(PartyData _partyData)
+    public void SetPartyDesc(PartyDesc _partyDesc)
     {
-        partyData = _partyData;
+        partyDesc = _partyDesc;
     }
 }
