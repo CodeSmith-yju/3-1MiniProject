@@ -20,7 +20,8 @@ public class PopUp : MonoBehaviour
 {
     [Header("Text")]
     public TextMeshProUGUI text_PopUp;
-    
+    public TextMeshProUGUI warningPartyCommit;
+
     [Header("Buttons")]
     public Button btn_Yes;
     public Button btn_No;
@@ -113,6 +114,8 @@ public class PopUp : MonoBehaviour
                 break;
             case PopUpState.PartyCommit:
                 GameUiMgr.single.EmploymentCompleted();
+                GameUiMgr.single.popUp.gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 300);
+                warningPartyCommit.gameObject.SetActive(false);
                 break;
             default:
                 break;
@@ -142,6 +145,10 @@ public class PopUp : MonoBehaviour
         else
         {
             Debug.LogWarning("팝업이 이미 활성화되어 있습니다.");
+        }
+        if (_state == PopUpState.PartyCommit)
+        {
+            GameUiMgr.single.popUp.warningPartyCommit.gameObject.SetActive(true);
         }
 
         Canvas.ForceUpdateCanvases();  // 강제로 UI 갱신

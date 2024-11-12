@@ -2299,7 +2299,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     public void PartyCommitBtn()
     {
-        popUp.SetPopUp("파티 모집을 \n완료하시겠습니까? \n※ 모집이 완료되면 던전에서 복귀할때까지 편성이 제한됩니다.", PopUpState.PartyCommit);
+        popUp.gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(600,300);
+        popUp.SetPopUp("파티 모집을 \n완료하시겠습니까?", PopUpState.PartyCommit);
     }
     public void EmploymentCompleted()
     {
