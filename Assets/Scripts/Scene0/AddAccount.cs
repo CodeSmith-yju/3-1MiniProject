@@ -28,6 +28,23 @@ public class AddAccount : MonoBehaviour
         input_PW2.onValueChanged.AddListener(InputPW2);
     }*/
 
+    public TMP_InputField GetInputFields(int _index)
+    {
+        if (_index == 0)
+        {
+            return input_ID;
+        }
+        else if (_index == 1)
+        {
+            return input_PW;
+        }
+        else if (_index == 2)
+        {
+            return input_PW2;
+        }
+        return null;
+    }
+
     private void InputFieldChanged(string input, ref string field, BtnAddUserNameSoundEvent soundEvent)
     {
         field = input;

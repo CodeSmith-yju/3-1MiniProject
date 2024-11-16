@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -49,6 +50,7 @@ public class MainMenuMgr : MonoBehaviour
     void RefreshiTitle()
     {
         login.gameObject.SetActive(true);
+        login.OpenLoginOrAddAccount(true);
         mainMenu.SetActive(false);
         OptionMenu.SetActive(false);
         addUserName.gameObject.SetActive(false);

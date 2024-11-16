@@ -118,6 +118,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 5614160232590510561}
+        m_TargetAssemblyTypeName: Login, Assembly-CSharp
+        m_MethodName: OpenLoginOrAddAccount
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &8326026196835146683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3342,6 +3354,12 @@ MonoBehaviour:
   hoverbtnLoginSoundEv: {fileID: 583065737360261464}
   hoverNewAccountSoundEv: {fileID: 8052566624988317962}
   ac: {fileID: 9131289912464661679}
+  logins: []
+  addaccounts: []
+  focus_Login: 0
+  focus_AddAccount: 0
+  focus_MaxIndex: 0
+  focus_nowIndex: 0
 --- !u!1 &5124533680233582244
 GameObject:
   m_ObjectHideFlags: 0
