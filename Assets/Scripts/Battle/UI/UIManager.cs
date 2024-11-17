@@ -67,13 +67,40 @@ public class UIManager : MonoBehaviour
 
     [Header("Tooltip")]
     public Tooltip tooltip;
+    public PartyDetailTooltip partyDetailTooltip;
     public Canvas cv;
 
+    [Header("PartyDetail")]
+    public PartyDetails partyDetails;
+    public void ActiveBattlePartyDetail()
+    {
+        if (partyDetails.gameObject.activeSelf == false)
+        {
+            partyDetails.gameObject.SetActive(true);
+            partyDetails.OpenPartyDetail(0);
+        }
+        else
+        {
+            UnActiveBattlePartyDetail();
+        }
+    }
+    public void UnActiveBattlePartyDetail()
+    {
+        if (partyDetails.gameObject.activeSelf == true)
+        {
+            partyDetails.gameObject.SetActive(false);
+            partyDetailTooltip.gameObject.SetActive(false);
+            //파티디테일툴팁.gameObject.Setactive(false);
+        }
+    }
     private void Start()
     {
         player_Statbar.SetActive(true);
         item_Bar.SetActive(true);
         tooltip.TooltipSetting(cv.GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f, tooltip.GetComponent<RectTransform>());
+        partyDetailTooltip.TooltipSetting(cv.GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f, partyDetailTooltip.GetComponent<RectTransform>());
+        partyDetails.Init(GameUiMgr.single.lastDeparture);
+
 
         if (BattleManager.Instance.dialogue != null && BattleManager.Instance.dialogue.isTutorial) // 분수대 클릭 방지용
             isOpenUI = true;
@@ -127,8 +154,13 @@ public class UIManager : MonoBehaviour
                 CancelOption();    
             }
         }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            ActiveBattlePartyDetail();
+        }
 
         tooltip.MoveTooltip();
+        partyDetailTooltip.MoveTooltip();
     }
 
     private void FixedUpdate()

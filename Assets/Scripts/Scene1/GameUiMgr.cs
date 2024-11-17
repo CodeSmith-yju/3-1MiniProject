@@ -2437,6 +2437,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         }
 
     }
+    public PartyDetails GetPartyDetails()
+    {
+        return partyDetails;
+    }
 }
 public enum PlaceState
 {

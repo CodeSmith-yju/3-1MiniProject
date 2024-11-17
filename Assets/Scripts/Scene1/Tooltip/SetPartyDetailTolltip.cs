@@ -41,7 +41,17 @@ public class SetPartyDetailTolltip : MonoBehaviour, IPointerEnterHandler, IPoint
         }
         else//Battle or Tutorial
         {
-
+            BattleManager.Instance.ui.partyDetailTooltip.gameObject.SetActive(true);
+            if (partyDesc != null)
+            {
+                //Debug.Log("Not Null");
+                BattleManager.Instance.ui.partyDetailTooltip.SetUpToolTip(partyIconState, partyDesc);
+            }
+            else
+            {
+                //Debug.Log("Null");
+                BattleManager.Instance.ui.partyDetailTooltip.SetUpToolTip(statIconState);
+            }
         }
         
     }
@@ -54,7 +64,7 @@ public class SetPartyDetailTolltip : MonoBehaviour, IPointerEnterHandler, IPoint
         }
         else
         {
-
+            BattleManager.Instance.ui.partyDetailTooltip.gameObject.SetActive(false);
         }
     }
 

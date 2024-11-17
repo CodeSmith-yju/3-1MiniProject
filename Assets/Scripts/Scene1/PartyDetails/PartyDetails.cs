@@ -184,6 +184,7 @@ public class PartyDetails : MonoBehaviour
     {
         //gameObject.SetActive(false);
         GameUiMgr.single.partyDetails.gameObject.SetActive(false);
+        //GameUiMgr.partyDetails.gameObject.SetActive(false);
         Debug.Log("외부영역 클릭");
     }
 
