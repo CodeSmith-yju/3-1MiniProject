@@ -115,6 +115,7 @@ public class Ally : BaseEntity
         level = stat.level;
         max_Hp = stat.max_Hp;
         cur_Hp = stat.cur_hp;
+        def_Point = stat.def_Point;
         max_Mp = stat.max_Mp;
         cur_Mp = 0f;
         atkDmg = stat.atkDmg;
