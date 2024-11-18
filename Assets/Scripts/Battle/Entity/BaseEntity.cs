@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using TMPro;
@@ -21,6 +22,7 @@ public class BaseEntity : MonoBehaviour
     public float atkRange;
     public bool able_Skill = false;
     public bool isMelee = false;
+    public bool isArea_Atk = false;
 
     [Header("Entity_Action")]
     public State _curstate;
@@ -278,7 +280,7 @@ public class BaseEntity : MonoBehaviour
         while (true)
         {
             var target = FindTarget();
-            if (target == null || target.GetComponent<BaseEntity>()._curstate == State.Death)
+            if (target == null || target.GetComponent<BaseEntity>()._curstate == State.Death || !target.GetComponent<BaseEntity>().agent.isActiveAndEnabled)
             {
                 Debug.Log("타겟이 없으므로 멈춤");
                 StopMove();
@@ -303,18 +305,23 @@ public class BaseEntity : MonoBehaviour
     public void MoveToTarget()
     {
         Collider2D target = FindTarget().GetComponent<Collider2D>();
-        if (target != null && _curstate != State.Death) 
+        if (target != null && _curstate != State.Death && target.GetComponent<BaseEntity>().agent.isActiveAndEnabled) 
         {
             Vector3 targetPosition = target.transform.TransformPoint(target.offset);
-
-            agent.isStopped = false;
-            agent.SetDestination(targetPosition);
-            SetMovementPriority(true);
+            if (agent.isActiveAndEnabled)
+            {
+                agent.isStopped = false;
+                agent.SetDestination(targetPosition);
+                SetMovementPriority(true);
+            }
         }
-        else if (target == null & _curstate != State.Death)
+        else if (target == null & _curstate != State.Death && !target.GetComponent<BaseEntity>().agent.isActiveAndEnabled)
         {
-            agent.ResetPath();
-            StopMove();
+            if (agent.isActiveAndEnabled)
+            {
+                agent.ResetPath();
+                StopMove();
+            }
             return;
         }
         else
@@ -329,8 +336,11 @@ public class BaseEntity : MonoBehaviour
     {
         if (_curstate != State.Move)
         {
-            agent.isStopped = true;
-            SetMovementPriority(false);
+            if (agent.isActiveAndEnabled)
+            {
+                agent.isStopped = true;
+                SetMovementPriority(false);
+            }
         }
     }
 
@@ -446,65 +456,32 @@ public class BaseEntity : MonoBehaviour
         }
     }
 
-    protected void MeleeAttack(BaseEntity target)
+    protected virtual void MeleeAttack(BaseEntity target)
     {
         ani.SetTrigger("isAtk");
         Debug.Log("공격함 ( " + name + " -> " + target.name + " )");
         float getDmgHp;
         float dmg = DamageCalc(target, atkDmg);
+        float totalDmg = AttributeDamageCalc(target, dmg);
 
-        switch (attribute)
+        getDmgHp = target.cur_Hp - totalDmg;
+
+        if (isArea_Atk)
         {
-            case Attribute.Fire:
-                if (target.attribute == Attribute.Water)
-                    getDmgHp = target.cur_Hp - (dmg * 0.75f);
-                else if (target.attribute == Attribute.Wind)
-                    getDmgHp = target.cur_Hp - (dmg * 1.5f);
-                else
-                     getDmgHp = target.cur_Hp - (dmg * 1f);
-                break;
-            case Attribute.Water:   
-                if (target.attribute == Attribute.Wind)
-                    getDmgHp = target.cur_Hp - (dmg * 0.75f);
-                else if (target.attribute == Attribute.Fire)
-                    getDmgHp = target.cur_Hp - (dmg * 1.5f);
-                else
-                    getDmgHp = target.cur_Hp - (dmg * 1f);
-                break;
-            case Attribute.Wind:
-                if (target.attribute == Attribute.Fire)
-                    getDmgHp = target.cur_Hp - (dmg * 0.75f);
-                else if (target.attribute == Attribute.Water)
-                    getDmgHp = target.cur_Hp - (dmg * 1.5f);
-                else
-                    getDmgHp = target.cur_Hp - (dmg * 1f);
-                break;
-            case Attribute.Light:
-                if (target.attribute == Attribute.Dark)
-                    getDmgHp = target.cur_Hp - (dmg * 1.25f);
-                else
-                    getDmgHp = target.cur_Hp - (dmg * 1f);
-                break;
-            case Attribute.Dark:
-                if (target.attribute == Attribute.Light)
-                    getDmgHp = target.cur_Hp - (dmg * 1.25f);
-                else
-                    getDmgHp = target.cur_Hp - (dmg * 1f);
-                break;
-            default: // 주인공일 경우 (속성이 없을 경우)
-                getDmgHp = target.cur_Hp - (dmg * 1f);
-                break;
+            AreaAttack(target, totalDmg);
         }
 
         if (target.isMadness)
         {
-            getDmgHp = getDmgHp + (dmg * 0.15f); // 15% 추가 데미지
+            getDmgHp = getDmgHp - (dmg * 0.15f); // 15% 추가 데미지
         }
 
         if (!target.isInvulnerable) // 골렘 특수 상태 버프가 아닐 때
             target.cur_Hp = getDmgHp;
         else
             target.cur_Hp -= 0f;
+
+
         Debug.Log(target.cur_Hp + " " + target.name);
     }
 
@@ -524,61 +501,125 @@ public class BaseEntity : MonoBehaviour
     {
         float getDmgHp;
         float calcDmg = DamageCalc(target, dmg);
+        float totalDmg = AttributeDamageCalc(target, calcDmg);
+
+        getDmgHp = target.cur_Hp - totalDmg;
+
+        if (target.isMadness)
+        {
+            getDmgHp = getDmgHp - (calcDmg * 0.15f); // 15% 추가 데미지
+        }
+
+        if (!target.isInvulnerable) // 골렘 특수 상태 버프가 아닐 때
+            target.cur_Hp = getDmgHp;
+        else
+            target.cur_Hp -= 0f;
+
+
+
+        Debug.Log($"Hit to {target.name}! {target.cur_Hp}");
+    }
+
+    private float AttributeDamageCalc(BaseEntity target, float dmg)
+    {
+        float calcDmg;
 
         switch (attribute)
         {
             case Attribute.Fire:
                 if (target.attribute == Attribute.Water)
-                    getDmgHp = target.cur_Hp - (calcDmg * 0.75f);
+                    calcDmg = dmg * 0.75f;
                 else if (target.attribute == Attribute.Wind)
-                    getDmgHp = target.cur_Hp - (calcDmg * 1.5f);
+                    calcDmg = dmg * 1.5f;
                 else
-                    getDmgHp = target.cur_Hp - (calcDmg * 1f);
-                break;
+                    calcDmg = dmg;
+                return calcDmg;
             case Attribute.Water:
                 if (target.attribute == Attribute.Wind)
-                    getDmgHp = target.cur_Hp - (calcDmg * 0.75f);
+                    calcDmg = dmg * 0.75f;
                 else if (target.attribute == Attribute.Fire)
-                    getDmgHp = target.cur_Hp - (calcDmg * 1.5f);
+                    calcDmg = dmg * 1.5f;
                 else
-                    getDmgHp = target.cur_Hp - (calcDmg * 1f);
-                break;
+                    calcDmg = dmg;
+                return calcDmg;
             case Attribute.Wind:
                 if (target.attribute == Attribute.Fire)
-                    getDmgHp = target.cur_Hp - (calcDmg * 0.75f);
+                    calcDmg = dmg * 0.75f;
                 else if (target.attribute == Attribute.Water)
-                    getDmgHp = target.cur_Hp - (calcDmg * 1.5f);
+                    calcDmg = dmg * 1.5f;
                 else
-                    getDmgHp = target.cur_Hp - (calcDmg * 1f);
-                break;
+                    calcDmg = dmg;
+                return calcDmg;
             case Attribute.Light:
                 if (target.attribute == Attribute.Dark)
-                    getDmgHp = target.cur_Hp - (calcDmg * 1.25f);
+                    calcDmg = dmg * 1.25f;
                 else
-                    getDmgHp = target.cur_Hp - (calcDmg * 1f);
-                break;
+                    calcDmg = dmg;
+                return calcDmg;
             case Attribute.Dark:
                 if (target.attribute == Attribute.Light)
-                    getDmgHp = target.cur_Hp - (calcDmg * 1.25f);
+                    calcDmg = dmg * 1.25f;
                 else
-                    getDmgHp = target.cur_Hp - (calcDmg * 1f);
-                break;
-            default: // 주인공일 경우 (속성이 없을 경우)
-                getDmgHp = target.cur_Hp - (calcDmg * 1f);
-                break;
+                    calcDmg = dmg;
+                return calcDmg;
+            default:
+                calcDmg = dmg;
+                return calcDmg;
         }
+    }
 
-        if (target.isMadness)
+    private void AreaAttack(BaseEntity target, float dmg) // 근거리 공격 유닛 중 특별한 유닛만 사용하는 광역 공격 메서드
+    {
+        if (target != null)
         {
-            getDmgHp = getDmgHp + (calcDmg * 0.15f); // 15% 추가 데미지
+            float range = target.transform.localScale.x * 1.2f;
+
+            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(target.transform.position, range);
+
+            foreach (var hitCollider in hitColliders)
+            {
+                if (target.CompareTag("Player"))
+                {
+                    Ally enemy = hitCollider.GetComponent<Ally>();
+                    if (enemy == null) continue;
+
+                    float adjustedDmg = dmg;
+
+                    if (enemy.isMadness)
+                    {
+                        adjustedDmg += DamageCalc(enemy, atkDmg) * 0.15f;
+                    }
+
+                    if (enemy.isInvulnerable)
+                    {
+                        adjustedDmg = 0f;
+                    }
+
+                    enemy.cur_Hp -= adjustedDmg * 0.3f;
+                }
+                else
+                {
+                    Enemy enemy = hitCollider.GetComponent<Enemy>();
+                    if (enemy == null) continue;
+                    float adjustedDmg = dmg;
+
+
+                    if (enemy.isMadness)
+                    {
+                        adjustedDmg += DamageCalc(enemy, atkDmg) * 0.15f;
+                    }
+
+
+                    if (enemy.isInvulnerable)
+                    {
+                        adjustedDmg = 0f;
+                    }
+
+                    enemy.cur_Hp -= adjustedDmg * 0.3f;
+                }
+
+            }
         }
-
-        if (!target.isInvulnerable) // 골렘 특수 상태가 아닐 때
-            target.cur_Hp = getDmgHp;
-        else
-            target.cur_Hp -= 0f;
-
-        Debug.Log($"Hit to {target.name}! {target.cur_Hp}");
     }
 
     // 스킬 작성

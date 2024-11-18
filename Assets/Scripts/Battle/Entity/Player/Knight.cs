@@ -24,7 +24,7 @@ public class Knight : Ally
             if (isAttack)
             {
                 // 방어력 올리는 버프 스킬로 하는 건 어떨까?
-                BattleManager.Instance.ui.GenerateLog(class_Portrait, "돌진 찌르기");
+                BattleManager.Instance.ui.GenerateLog(GameUiMgr.single.entityIconRS.GetPortraitIcon(job), "돌진 찌르기");
 
                 ani.SetBool("isSkill", true);
                 BaseEntity target = FindTarget().GetComponent<BaseEntity>();

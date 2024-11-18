@@ -28,10 +28,10 @@ public class StatManager : MonoBehaviour
 
     public bool isDead;
 
-    public void InitStat(PlayerData player, Sprite portrait, int level, string name)
+    public void InitStat(PlayerData player, int level, string name)
     {
         this.player = player;
-        player_Icon.sprite = portrait; // 상태창의 초상화
+        player_Icon.sprite = GameUiMgr.single.entityIconRS.GetPortraitIcon(player.job); // 상태창의 초상화
         attribute_Icon.sprite = GameUiMgr.single.entityIconRS.GetElementIcon(player.playerAttribute); // 속성 아이콘
 
         this.level_Text.text = level.ToString();

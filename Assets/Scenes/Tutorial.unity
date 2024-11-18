@@ -9002,7 +9002,6 @@ MonoBehaviour:
   - {fileID: 3677501205606815270, guid: 972d4fdcdb0a24748bc02f9ffd9ee0da, type: 3}
   - {fileID: 8660605460297287560, guid: 6fa493f34d751de41883deb5b0cd6b84, type: 3}
   - {fileID: 7020431350253575563, guid: 36f12facc80a14d43b4a7d2f86adfd58, type: 3}
-  - {fileID: 1278618286180875652, guid: db87fbdd623020a4a9b66a18b24d36f7, type: 3}
   enemy_Prefabs:
   - {fileID: 6563447237369511619, guid: 1ca675373ed0eb0469ccb67f2e5477cb, type: 3}
   - {fileID: 407595489988684709, guid: 457d1d8d096abd541b7087e08285d05b, type: 3}

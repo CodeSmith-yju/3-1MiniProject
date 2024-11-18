@@ -34,7 +34,7 @@ public class Ranger : Ally
             if (isAttack)
             {
 
-                BattleManager.Instance.ui.GenerateLog(class_Portrait, "가시 화살");
+                BattleManager.Instance.ui.GenerateLog(GameUiMgr.single.entityIconRS.GetPortraitIcon(job), "가시 화살");
 
 
                 ani.SetBool("isSkill", true);

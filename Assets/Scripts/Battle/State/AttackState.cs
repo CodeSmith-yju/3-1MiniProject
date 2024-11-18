@@ -8,13 +8,15 @@ public class AttackState : BaseState
 
     public override void OnStateEnter()
     {
-        if (entity != null && entity.FindTarget() != null)
+        if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Battle)
         {
-            entity.StopMove();
+            if (entity != null && entity.FindTarget() != null)
+            {
+                entity.StopMove();
 
-            entity.StartCoroutine(entity.SetAttack());
+                entity.StartCoroutine(entity.SetAttack());
+            }
         }
-        
     }
 
     public override void OnStateUpdate()
@@ -23,10 +25,13 @@ public class AttackState : BaseState
 
     public override void OnStateExit()
     {
-        if (entity != null && entity.FindTarget() != null)
+        if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Battle)
         {
-            entity.StopCoroutine(entity.SetAttack());
-            entity.ani.ResetTrigger("isAtk");
-        }
+            if (entity != null && entity.FindTarget() != null)
+            {
+                entity.StopCoroutine(entity.SetAttack());
+                entity.ani.ResetTrigger("isAtk");
+            }
+        }  
     }
 }

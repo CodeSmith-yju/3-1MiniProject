@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 8126696727815886533}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.83, y: -1.03, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -157,10 +157,12 @@ MonoBehaviour:
   max_Mp: 0
   cur_Mp: 0
   atkDmg: 0
+  def_Point: 0
   atkSpd: 0
   atkRange: 0
   able_Skill: 0
   isMelee: 1
+  isArea_Atk: 0
   _curstate: 0
   attribute: 0
   isAttack: 0
@@ -169,8 +171,9 @@ MonoBehaviour:
   ani: {fileID: 0}
   player_Name: asdas
   level: 1
-  class_Portrait: {fileID: 21300000, guid: 71cad7314a39890459f670b5596a8bb3, type: 3}
+  statManager: {fileID: 0}
   job: 0
+  type: 1
 --- !u!114 &7290721332234880372
 MonoBehaviour:
   m_ObjectHideFlags: 0

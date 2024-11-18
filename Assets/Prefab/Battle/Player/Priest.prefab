@@ -231,6 +231,7 @@ MonoBehaviour:
   atkRange: 0
   able_Skill: 0
   isMelee: 0
+  isArea_Atk: 0
   _curstate: 0
   attribute: 0
   isAttack: 0
@@ -242,4 +243,5 @@ MonoBehaviour:
   class_Portrait: {fileID: 21300000, guid: 7c6971e18b4c2d14f8dad3d580136d86, type: 3}
   job: 4
   type: 3
-  SkillEff: {fileID: 1168880039898195818, guid: 22b904a9d8326984b8aebe37dbe60317, type: 3}
+  skillEff: {fileID: 1168880039898195818, guid: 22b904a9d8326984b8aebe37dbe60317, type: 3}
+  attackEff: {fileID: 1278618286180875652, guid: db87fbdd623020a4a9b66a18b24d36f7, type: 3}

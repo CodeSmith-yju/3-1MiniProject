@@ -24,7 +24,7 @@ public class Enemy : BaseEntity
 
 
     // 최대 체력, 최대 마나, 공격력, 공격속도, 사거리, 근접유무, 스킬유무, 경험치, 골드, 드랍아이템
-    public void InitStat(float max_Hp, float max_Mp, int def_Point, float atkDmg, float atkSpd, float atkRange, bool isMelee, bool able_Skill, float exp, int gold, Item item)
+    public void InitStat(float max_Hp, float max_Mp, int def_Point, float atkDmg, float atkSpd, float atkRange, bool isMelee, bool able_Skill, float exp, int gold, Item item, bool isArea_Atk)
     {
         stat = new(
             max_Hp,
@@ -37,7 +37,8 @@ public class Enemy : BaseEntity
             able_Skill,
             exp,
             gold,
-            item
+            item,
+            isArea_Atk
             );
 
         this.max_Hp = stat.max_Hp * BattleManager.Instance.dungeon_Level_Scale;
@@ -53,6 +54,7 @@ public class Enemy : BaseEntity
         exp_Cnt = stat.exp;
         gold_Cnt = stat.gold;
         drop_Item = stat.item;
+        this.isArea_Atk = stat.isArea_Atk;
     }
 
     public Item GetItemDropTable()

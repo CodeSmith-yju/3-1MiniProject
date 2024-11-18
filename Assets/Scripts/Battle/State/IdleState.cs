@@ -8,12 +8,15 @@ public class IdleState : BaseState
 
     public override void OnStateEnter()
     {
-        if (entity != null && entity.FindTarget() != null && entity.FindTarget().GetComponent<BaseEntity>()._curstate != BaseEntity.State.Death)
+        if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Battle)
         {
-            entity.StopMove();
-            entity.ani.ResetTrigger("isAtk");
-            entity.ani.SetBool("isMove", false);
-            entity.StartCoroutine(entity.UpdateTarget());
+            if (entity != null && entity.FindTarget() != null && entity.FindTarget().GetComponent<BaseEntity>()._curstate != BaseEntity.State.Death)
+            {
+                entity.StopMove();
+                entity.ani.ResetTrigger("isAtk");
+                entity.ani.SetBool("isMove", false);
+                entity.StartCoroutine(entity.UpdateTarget());
+            }
         }
     }
 
@@ -24,10 +27,12 @@ public class IdleState : BaseState
 
     public override void OnStateExit()
     {
-        if (entity.isAttack)
+        if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Battle)
         {
-            entity.StopCoroutine(entity.UpdateTarget());
-            //entity.target = entity.FindTarget().transform;
+            if (entity.isAttack)
+            {
+                entity.StopCoroutine(entity.UpdateTarget());
+            }
         }
     }
 }
