@@ -21,6 +21,7 @@ public class PartyIconRS : MonoBehaviour
     [SerializeField] Sprite[] spJobIcon;
     [SerializeField] Sprite[] spPortraitIcon;
     [SerializeField] Sprite[] spDoublePortraitIcon;
+    public Sprite[] spStandingIcon;
     [Header("Enemy, Attack, Skill Icons")]
     [SerializeField] Sprite[] spEnemyIcon;
     [SerializeField] Sprite[] spAttackIcon;
@@ -161,5 +162,10 @@ public class PartyIconRS : MonoBehaviour
     public Sprite GetDoubleSkill(Ally.Job _job)
     {
         return dictn_double_skillIcon[_job];
+    }
+
+    public Sprite GetStandingIcon(int _index)//0 = Knight, 1 = Mage
+    {
+        return spStandingIcon[_index];
     }
 }

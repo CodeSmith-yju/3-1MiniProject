@@ -17214,7 +17214,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.8291328
+      m_AnimationSpeed: 1.4882164
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -17225,7 +17225,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.9565632
+      m_AnimationSpeed: 1.4373229
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -17236,7 +17236,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.6831841
+      m_AnimationSpeed: 1.8779781
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -17247,7 +17247,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.4927199
+      m_AnimationSpeed: 1.5900508
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -17258,7 +17258,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.0231397
+      m_AnimationSpeed: 2.1575873
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -30529,6 +30529,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 75acadef2a8f1c74191f484790becd9d, type: 3}
   spDoublePortraitIcon:
   - {fileID: 21300000, guid: 971de9ca7593efb44bedfee5064ce582, type: 3}
+  spStandingIcon:
+  - {fileID: -1097291749, guid: 2f52ae664f9cead4685cf695def0e411, type: 3}
+  - {fileID: -384833619, guid: 986ea523ba2469646b8ecf36617b8b27, type: 3}
   spEnemyIcon:
   - {fileID: 705122203, guid: c8703c9ec278acc4d9afcf2dcc1e4aba, type: 3}
   - {fileID: -9088734, guid: c05b63ad85d9bd74dbd0cdc8b5809e16, type: 3}
@@ -30549,7 +30552,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8c0a8c63283fef24992a4a6dd9b4de9f, type: 3}
   - {fileID: 21300000, guid: dee557dc77f92e5489647db6e56e6c7e, type: 3}
   - {fileID: 21300000, guid: a2e219b08d034bd41be59b058c130196, type: 3}
-  - {fileID: 705122203, guid: c8703c9ec278acc4d9afcf2dcc1e4aba, type: 3}
+  - {fileID: 21300000, guid: 971de9ca7593efb44bedfee5064ce582, type: 3}
   spDoubleSkillIcon:
   - {fileID: 705122203, guid: c8703c9ec278acc4d9afcf2dcc1e4aba, type: 3}
   spStatIcon:
@@ -41256,7 +41259,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.6413032
+      m_AnimationSpeed: 2.902587
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -41267,7 +41270,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.5213944
+      m_AnimationSpeed: 1.6263069
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -41278,7 +41281,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.3479266
+      m_AnimationSpeed: 2.9822536
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -41289,7 +41292,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.9118226
+      m_AnimationSpeed: 1.1707306
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -41300,7 +41303,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.6686237
+      m_AnimationSpeed: 1.5484787
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -53388,7 +53391,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.8426766
+      m_AnimationSpeed: 1.2231066
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -53399,7 +53402,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.4878716
+      m_AnimationSpeed: 2.655012
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -53410,7 +53413,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.8422651
+      m_AnimationSpeed: 2.1473887
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -53421,7 +53424,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.5824438
+      m_AnimationSpeed: 2.8772821
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -53432,7 +53435,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.9984875
+      m_AnimationSpeed: 2.1537793
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
