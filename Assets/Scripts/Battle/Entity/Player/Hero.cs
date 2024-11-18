@@ -14,7 +14,6 @@ public class Hero : Ally
         Debug.Log("Hero 생성");
         type = Class.Melee;
         job = Job.Hero;
-        isArea_Atk = true;
     }
 
 
@@ -28,7 +27,7 @@ public class Hero : Ally
             if (isAttack)
             {
 
-                BattleManager.Instance.ui.GenerateLog(class_Portrait, "섬광 베기");
+                BattleManager.Instance.ui.GenerateLog(GameUiMgr.single.entityIconRS.GetPortraitIcon(job), "섬광 베기");
 
                 BaseEntity target = FindTarget().GetComponent<BaseEntity>();
                 Debug.Log("타겟의 적에게 2배의 데미지로 공격" + " " + (DamageCalc(target, atkDmg) * 2) + "데미지");

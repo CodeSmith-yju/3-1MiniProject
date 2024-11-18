@@ -32,7 +32,7 @@ public class Wizard : Ally
             StopCoroutine(SetAttack());
             if (isAttack)
             {
-                BattleManager.Instance.ui.GenerateLog(class_Portrait, "파이어 볼트");
+                BattleManager.Instance.ui.GenerateLog(GameUiMgr.single.entityIconRS.GetPortraitIcon(job), "파이어 볼트");
 
                 ani.SetBool("isSkill", true);
                 BaseEntity target = FindTarget().GetComponent<BaseEntity>();

@@ -6,7 +6,7 @@ public class PartyStatInit : MonoBehaviour
 {
     public GameObject party_Stat_Prefab;
 
-    private void Start()
+    private void Awake()
     {
         for (int i = 0; i < BattleManager.Instance.party_List.Count; i++)
         {
@@ -17,7 +17,7 @@ public class PartyStatInit : MonoBehaviour
 
             Ally ally = BattleManager.Instance.party_List[i].GetComponent<Ally>();
 
-            stat_Obj.InitStat(data, ally.class_Portrait, data.player_level, data.GetPlayerName());
+            stat_Obj.InitStat(data, data.player_level, data.GetPlayerName());
         }
     }
 }

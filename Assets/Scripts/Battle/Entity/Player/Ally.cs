@@ -6,7 +6,8 @@ public class Ally : BaseEntity
 {
     public string player_Name;
     public int level;
-    public Sprite class_Portrait;
+    [SerializeField] protected StatManager statManager;
+    //public Sprite class_Portrait;
 
     public enum Class
     {
@@ -34,6 +35,16 @@ public class Ally : BaseEntity
     {
         base.Start();
         isPlayer = true;
+
+        StatManager[] statManagers = FindObjectsOfType<StatManager>();
+
+        foreach (StatManager stat in statManagers)
+        {
+            if (stat.player.playerIndex == entity_index)
+            {
+                statManager = stat;
+            }
+        }
     }
 
 

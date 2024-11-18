@@ -456,7 +456,7 @@ public class BaseEntity : MonoBehaviour
         }
     }
 
-    protected void MeleeAttack(BaseEntity target)
+    protected virtual void MeleeAttack(BaseEntity target)
     {
         ani.SetTrigger("isAtk");
         Debug.Log("공격함 ( " + name + " -> " + target.name + " )");
@@ -468,7 +468,7 @@ public class BaseEntity : MonoBehaviour
 
         if (isArea_Atk)
         {
-            AreaAttack(target, totalDmg, isMelee);
+            AreaAttack(target, totalDmg);
         }
 
         if (target.isMadness)
@@ -504,12 +504,6 @@ public class BaseEntity : MonoBehaviour
         float totalDmg = AttributeDamageCalc(target, calcDmg);
 
         getDmgHp = target.cur_Hp - totalDmg;
-
-        if (isArea_Atk)
-        {
-            AreaAttack(target, totalDmg, isMelee);
-        }
-
 
         if (target.isMadness)
         {
@@ -574,11 +568,11 @@ public class BaseEntity : MonoBehaviour
         }
     }
 
-    private void AreaAttack(BaseEntity target, float dmg, bool isMelee)
+    private void AreaAttack(BaseEntity target, float dmg) // 근거리 공격 유닛 중 특별한 유닛만 사용하는 광역 공격 메서드
     {
         if (target != null)
         {
-            float range = isMelee ? target.transform.localScale.x * 1.2f : 2f;
+            float range = target.transform.localScale.x * 1.2f;
 
             Collider2D[] hitColliders = Physics2D.OverlapCircleAll(target.transform.position, range);
 
@@ -601,7 +595,7 @@ public class BaseEntity : MonoBehaviour
                         adjustedDmg = 0f;
                     }
 
-                    enemy.cur_Hp -= adjustedDmg;
+                    enemy.cur_Hp -= adjustedDmg * 0.3f;
                 }
                 else
                 {
@@ -621,7 +615,7 @@ public class BaseEntity : MonoBehaviour
                         adjustedDmg = 0f;
                     }
 
-                    enemy.cur_Hp -= adjustedDmg;
+                    enemy.cur_Hp -= adjustedDmg * 0.3f;
                 }
 
             }

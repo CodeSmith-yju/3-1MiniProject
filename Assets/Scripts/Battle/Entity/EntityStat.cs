@@ -19,6 +19,7 @@ public class EntityStat : MonoBehaviour
     public float exp;
     public int gold;
     public Item item;
+    public bool isArea_Atk;
 
     public EntityStat(int index, string entity_name, int level, float max_Hp, float cur_hp, int def_Point, float max_Mp, float atkDmg, float atkSpd, float atkRange, bool isMelee, bool able_Skill)
     {
@@ -37,7 +38,7 @@ public class EntityStat : MonoBehaviour
     }
 
 
-    public EntityStat(float max_Hp, float max_Mp, int def_Point, float atkDmg, float atkSpd, float atkRange, bool isMelee, bool able_Skill, float exp, int gold, Item item)
+    public EntityStat(float max_Hp, float max_Mp, int def_Point, float atkDmg, float atkSpd, float atkRange, bool isMelee, bool able_Skill, float exp, int gold, Item item, bool isArea_Atk)
     {
         this.max_Hp = max_Hp;
         this.max_Mp = max_Mp;
@@ -50,6 +51,7 @@ public class EntityStat : MonoBehaviour
         this.exp = exp;
         this.gold = gold;
         this.item = item;
+        this.isArea_Atk = isArea_Atk;
     }
 
 }

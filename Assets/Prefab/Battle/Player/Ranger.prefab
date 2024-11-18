@@ -63,7 +63,7 @@ Transform:
   m_GameObject: {fileID: 8985926566086981382}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.01939, y: 1.12, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.85, y: 0.85, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -216,7 +216,7 @@ MonoBehaviour:
   ani: {fileID: 1876938298027869184}
   player_Name: Ranger
   level: 5
-  class_Portrait: {fileID: 21300000, guid: af25818ea151a16429ceef809d355f55, type: 3}
+  statManager: {fileID: 0}
   job: 2
   type: 2
 --- !u!70 &1185456871789358827

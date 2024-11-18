@@ -36,7 +36,7 @@ public class Priest : Ally
             StopCoroutine(SetAttack());
             if (isAttack)
             {
-                BattleManager.Instance.ui.GenerateLog(class_Portrait, "치유의 빛");
+                BattleManager.Instance.ui.GenerateLog(GameUiMgr.single.entityIconRS.GetPortraitIcon(job), "치유의 빛");
 
                 ani.SetBool("isSkill", true);
                 Ally ally = FindMinCurHpPlayer(); // 현재 체력이 가장 낮은 플레이어 가져옴
