@@ -15,10 +15,11 @@ public class Demon : Ally
     {
         base.Start();
         Debug.Log("Demon 생성");
-        isMeta = false;
-        isMetaCheck = false;
-        isDrain = false;
+        isMeta = false; // 변신 효과 초기화
+        isMetaCheck = false; // 변신 시 초상화를 바꾸도록 하는 플래그
+        isDrain = false; // 흡혈 효과 초기화
         able_Skill = true;
+        ani.SetLayerWeight(1, 0); // 변신 레이어가 활성화 되어 있는 것을 방지
         type = Class.Melee;
         job = Job.Demon;
     }
@@ -48,7 +49,17 @@ public class Demon : Ally
 
         if (isDrain)
         {
-            cur_Hp += atkDmg * 0.3f; // 공격력의 30프로 만큼 체력 회복
+            float drain_Hp = cur_Hp + atkDmg * 0.3f;
+
+            if (drain_Hp > max_Hp)
+            {
+                cur_Hp = max_Hp;
+            }
+            else
+            {
+                cur_Hp = drain_Hp;
+            }
+            ; // 공격력의 30프로 만큼 체력 회복
         }
     }
 
@@ -77,7 +88,7 @@ public class Demon : Ally
     {
         isMadness = true; // 받는 피해 15% 증가 디버프
         isArea_Atk = true; // 광역 공격을 하도록 추가
-        isDrain = true; // 광역 공격을 포함
+        isDrain = true; // 흡혈 효과
         atkDmg *= 1.3f; // 현재 공격력의 30프로 만큼 상승
         atkSpd *= 1.1f; // 현재 공격속도에서 10프로 만큼 상승
         atkRange += 0.5f; // 공격 사거리 증가
@@ -88,7 +99,7 @@ public class Demon : Ally
     public void Metamorphosis()
     {
         ani.SetBool("isSkill", false);
-        ani.runtimeAnimatorController = metamorphosis_Ani;
+        ani.SetLayerWeight(1, 1f); // 변신 레이어를 활성화하여 애니메이션 교체
         isMeta = true;
         MetaAfterStat();
         ChangeState(State.Idle);
@@ -99,15 +110,13 @@ public class Demon : Ally
     {
         if (isMeta)
         {
-            //return statManager.player_Icon = GameUiMgr.single.entityIconRS.GetDoublePortraitIcon(Ally.Job.Demon); // 변신 초상화
+            return statManager.player_Icon.sprite = GameUiMgr.single.entityIconRS.GetDoublePortraitIcon(Ally.Job.Demon); // 변신 초상화
         }
         else
         {
             return statManager.player_Icon.sprite = GameUiMgr.single.entityIconRS.GetPortraitIcon(Ally.Job.Demon); // 평소 초상화
 
         }
-
-        return null;
     }
 
 }

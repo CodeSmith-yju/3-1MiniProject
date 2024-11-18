@@ -61,7 +61,7 @@ public class PartyDetails : MonoBehaviour
     }
     public void OpenPartyDetail()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < GameMgr.playerData.Count; i++)
         {
             if (GameMgr.playerData[i].cur_Player_Hp < 0 && !PartyDetailDescs[i].unActive.gameObject.activeSelf)
             {
@@ -69,7 +69,7 @@ public class PartyDetails : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < GameMgr.playerData.Count; i++)
         {
             if (!PartyDetailDescs[i].unActive.gameObject.activeSelf)
             {

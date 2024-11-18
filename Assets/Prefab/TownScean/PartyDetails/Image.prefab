@@ -278,8 +278,8 @@ MonoBehaviour:
   btnMy: {fileID: 0}
   descIndex: 0
   myPortrait: {fileID: 8350036399636975364}
-  myPortrait_Die: {fileID: 3544563724770365365}
   myAttribute: {fileID: 7057937922018350671}
+  unActive: {fileID: 3544563724770365365}
   str_Name: 
   str_max_Sn: 
   str_cur_Sn: 
