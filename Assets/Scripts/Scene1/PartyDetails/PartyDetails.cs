@@ -148,7 +148,7 @@ public class PartyDetails : MonoBehaviour
         {
             hp = (GameMgr.playerData[_index].max_Player_Hp - _desc.tempDefaultStats[0]).ToString("F3");
             mp = (GameMgr.playerData[_index].max_Player_Mp - _desc.tempDefaultStats[1]).ToString("F0");
-            def = (GameMgr.playerData[_index].defensePoint - _desc.tempDefaultStats[5]).ToString("F0");
+            def = (GameMgr.playerData[_index].defensePoint - _desc.tempDefaultStats[5]).ToString();
             speed = "0";
 
             atk = (GameMgr.playerData[_index].base_atk_Dmg - _desc.tempDefaultStats[2]).ToString("F3");

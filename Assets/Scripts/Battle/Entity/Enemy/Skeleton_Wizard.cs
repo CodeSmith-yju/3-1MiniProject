@@ -11,7 +11,7 @@ public class Skeleton_Wizard : Enemy
     {
         base.Start();
         // 최대 체력, 최대 마나, 방어력, 공격력, 공격속도, 사거리, 근접유무, 스킬유무, 경험치, 골드, 아이템 드랍
-        InitStat(250, 6, 30, 7, 0.85f, 99f, false, true, GetExp(20), SetRandomGold(400), new Item().GenerateRandomItem(15), false);
+        InitStat(250, 3, 35, 7, 0.85f, 99f, false, true, GetExp(20), SetRandomGold(400), new Item().GenerateRandomItem(15), false);
         // 아이템 바꿔야됨
 
         if (BattleManager.Instance.dialogue != null && BattleManager.Instance.dialogue.isTutorial)
@@ -54,7 +54,7 @@ public class Skeleton_Wizard : Enemy
                     {
                         GameObject skill = Instantiate(skill_Eff, enemy.transform);
                         skill.transform.localPosition = new Vector3(0, 1.4f, 0);
-                        enemy.cur_Hp -= 10f;
+                        enemy.cur_Hp -= 5f;
                     }
                 }
                 cur_Mp = 0;
