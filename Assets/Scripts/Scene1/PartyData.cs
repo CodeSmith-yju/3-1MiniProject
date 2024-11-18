@@ -141,21 +141,19 @@ public class PartyData
             case Ally.Job.Demon:
                 jobClass = Ally.Class.Melee;
                 //½ºÅÝ¼³Á¤ÇØ¾ßµÊ
-                /*partyHp = 50f + (_Lvel * 5f);
-                partyMp = 5f;
-                partyAtk = 2f + (_Lvel * 0.3f);
-                partyAtkSpd = 1.0f + (_Lvel * 0.025f);
-                //partyAtkRange = 1.2f;
-                //partyAtkSpd = Mathf.Clamp( (1.0f+(_Lvel * 0.025f)),1.0f, 2f);
-                partyAtkRange = 1.2f;
-                //strPartyName = "Knight";
-                strPartyName = GameUiMgr.single.partyNameSetting.GetRandomName(GameUiMgr.single.partyNameSetting.knightNames);
+                partyHp = 30f + (_Lvel * 2f);
+                partyMp = 6f;
+                partyAtk = 3 + (_Lvel * 0.5f);
+                partyAtkSpd = 0.8f + (_Lvel * 0.05f);
+
+                partyAtkRange = 1.5f;
+                strPartyName = GameUiMgr.single.partyNameSetting.GetRandomName(GameUiMgr.single.partyNameSetting.demonNames);
                 isMelee = true;
                 able_Skill = true;
-                Elemental = GetRandomElement(knightAttributes);
-                partyDefense = 20 + (_Lvel * 4);
-                SetDefaultStats(50f, 5f, 2f, 1.0f, 1.2f, 20, 1.8f);
-                SetWeightPerLevelStats(5f, 0f, 0.3f, 0.025f, 0f);*/
+                Elemental = BaseEntity.Attribute.Dark;
+                partyDefense = 5 + (_Lvel * 2);
+                SetDefaultStats(30f, 6f, 3f, 0.8f, 1.5f, 5, 2.0f);
+                SetWeightPerLevelStats(2f, 0f, 0.5f, 0.05f, 0f);
                 break;
 /*            case 0://Player
                 break;*/

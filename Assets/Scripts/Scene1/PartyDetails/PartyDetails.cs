@@ -59,9 +59,25 @@ public class PartyDetails : MonoBehaviour
             }
         }
     }
-    public void OpenPartyDetail(int _index)
+    public void OpenPartyDetail()
     {
-        ShowDetals(PartyDetailDescs[_index]);
+        for (int i = 0; i < 4; i++)
+        {
+            if (GameMgr.playerData[i].cur_Player_Hp < 0 && !PartyDetailDescs[i].unActive.gameObject.activeSelf)
+            {
+                PartyDetailDescs[i].UnActiveBtn(true);
+            }
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (!PartyDetailDescs[i].unActive.gameObject.activeSelf)
+            {
+                ShowDetals(PartyDetailDescs[i]);
+                break;
+            }
+        }
+
     }
     public void SetTooltipIndex(PartyDesc _partyDesc)
     {
@@ -75,12 +91,14 @@ public class PartyDetails : MonoBehaviour
         int _index = _desc.GetIndex();
         string hp;
         string mp;
+        string def;
+        string speed;
+
         string atk;
         string atkspd;
-        string def;
-        //if (SceneManager.GetActiveScene().name == "Town")
+        string atkrange;
 
-        if (_desc.GetPartyData().jobType == Ally.Job.Demon)
+        /*if (_desc.GetPartyData().jobType == Ally.Job.Demon)
         {
             DoubleSkill.gameObject.transform.parent.gameObject.SetActive(true);
             DoubleSkill.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(Ally.Job.Demon);
@@ -88,7 +106,9 @@ public class PartyDetails : MonoBehaviour
         else
         {
             DoubleSkill.gameObject.transform.parent.gameObject.SetActive(false);
-        }
+        }*/
+        DoubleSkill.gameObject.transform.parent.gameObject.SetActive(false);
+
         textStatsDesc.text = "최대 체력(+레벨로 인한 추가스탯)\n" + "스탯은 소모 아이템, 던전 내 버프/디버프, 장비 및 레벨업을 통해 변동될 수 있습니다.";
         portrait.sprite = _desc.img_Portrait;
         job.sprite = _desc.img_Job;
@@ -96,25 +116,56 @@ public class PartyDetails : MonoBehaviour
 
         skill.sprite = _desc.img_Skill;
 
-        hp = (GameMgr.playerData[_index].max_Player_Hp - _desc.tempDefaultStats[0]).ToString("F3");
-        mp = (GameMgr.playerData[_index].max_Player_Mp - _desc.tempDefaultStats[1]).ToString("F0");
-        atk = (GameMgr.playerData[_index].base_atk_Dmg - _desc.tempDefaultStats[2]).ToString("F3");
-        atkspd = (GameMgr.playerData[_index].atk_Speed - _desc.tempDefaultStats[3]).ToString("F3");
-        def = (GameMgr.playerData[_index].defensePoint - _desc.tempDefaultStats[5]).ToString("F0");
-        TextSetting(ref hp, ref atk, ref atkspd);
-
-        txtHp.text = "HP: " + GameMgr.playerData[_index].max_Player_Hp + "\n(+" + hp + ")"; //_desc.str_Hp;
-        txtMp.text = "MP: " + GameMgr.playerData[_index].max_Player_Mp + "\n(-" + mp + ")";
-        textDef.text = "Def: " + GameMgr.playerData[_index].defensePoint + "\n(+" + def + ")";
-        textSpeed.text = "Spd: " + (_desc.tempDefaultStats[6] / 2).ToString("F1") + "\n(+0)";
-
-        txtAtk.text = "Atk: " + GameMgr.playerData[_index].base_atk_Dmg + "\n(+" + atk + ")";//_desc.str_Atk ;
-        txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_index].atk_Speed + "\n(+" + atkspd + ")";//_desc.str_AtkSpd;
-        txtAtkRange.text = "AtkRng: " + GameMgr.playerData[_index].atk_Range + "\n(+0)";
-
         if (_index == 0)
         {
             textStatsDesc.text = "최대 체력(+레벨과 장비로 인한 추가스탯\n" + "스탯은 소모 아이템, 던전 내 버프/디버프, 장비 및 레벨업을 통해 변동될 수 있습니다.";
+        }
+
+        if (SceneManager.GetActiveScene().name == "Town")
+        {
+            hp = (GameMgr.playerData[_index].max_Player_Hp - _desc.tempDefaultStats[0]).ToString("F3");
+            mp = (GameMgr.playerData[_index].max_Player_Mp - _desc.tempDefaultStats[1]).ToString("F0");
+            def = (GameMgr.playerData[_index].defensePoint - _desc.tempDefaultStats[5]).ToString("F0");
+            speed = "0";
+
+            atk = (GameMgr.playerData[_index].base_atk_Dmg - _desc.tempDefaultStats[2]).ToString("F3");
+            atkspd = (GameMgr.playerData[_index].atk_Speed - _desc.tempDefaultStats[3]).ToString("F3");
+            atkrange = "0";
+            TextSetting(ref hp, ref atk, ref atkspd);
+
+            _desc.SetHpAtk(GameMgr.playerData[_index].max_Player_Hp, GameMgr.playerData[_index].base_atk_Dmg);
+
+            txtHp.text = "HP: " + GameMgr.playerData[_index].max_Player_Hp + "\n(+" + hp + ")"; //_desc.str_Hp;
+            txtMp.text = "MP: " + GameMgr.playerData[_index].max_Player_Mp + "\n(-" + mp + ")";
+            textDef.text = "Def: " + GameMgr.playerData[_index].defensePoint + "\n(+" + def + ")";
+            textSpeed.text = "Spd: " + (_desc.tempDefaultStats[6] / 2).ToString("F1") + "\n(+" + speed + ")";
+
+            txtAtk.text = "Atk: " + GameMgr.playerData[_index].base_atk_Dmg + "\n(+" + atk + ")";//_desc.str_Atk ;
+            txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_index].atk_Speed + "\n(+" + atkspd + ")";//_desc.str_AtkSpd;
+            txtAtkRange.text = "AtkRng: " + GameMgr.playerData[_index].atk_Range + "\n(+" + atkrange + ")";
+        }
+        else //Battle, Tutorial Scean에서 여기만 수정해주면 될듯?
+        {
+            hp = (GameMgr.playerData[_index].max_Player_Hp - _desc.tempDefaultStats[0]).ToString("F3");
+            mp = (GameMgr.playerData[_index].max_Player_Mp - _desc.tempDefaultStats[1]).ToString("F0");
+            def = (GameMgr.playerData[_index].defensePoint - _desc.tempDefaultStats[5]).ToString("F0");
+            speed = "0";
+
+            atk = (GameMgr.playerData[_index].base_atk_Dmg - _desc.tempDefaultStats[2]).ToString("F3");
+            atkspd = (GameMgr.playerData[_index].atk_Speed - _desc.tempDefaultStats[3]).ToString("F3");
+            atkrange = "0";
+            TextSetting(ref hp, ref atk, ref atkspd);
+
+            //_desc.SetHpAtk(GameMgr.playerData[_index].max_Player_Hp, GameMgr.playerData[_index].base_atk_Dmg);
+
+            txtHp.text = "HP: " + GameMgr.playerData[_index].max_Player_Hp + "\n(+" + hp + ")"; //_desc.str_Hp;
+            txtMp.text = "MP: " + GameMgr.playerData[_index].max_Player_Mp + "\n(-" + mp + ")";
+            textDef.text = "Def: " + GameMgr.playerData[_index].defensePoint + "\n(+" + def + ")";
+            textSpeed.text = "Spd: " + (_desc.tempDefaultStats[6] / 2).ToString("F1") + "\n(+" + speed + ")";
+
+            txtAtk.text = "Atk: " + GameMgr.playerData[_index].base_atk_Dmg + "\n(+" + atk + ")";//_desc.str_Atk ;
+            txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_index].atk_Speed + "\n(+" + atkspd + ")";//_desc.str_AtkSpd;
+            txtAtkRange.text = "AtkRng: " + GameMgr.playerData[_index].atk_Range + "\n(+" + atkrange + ")";
         }
 
         BtnResize(_index);

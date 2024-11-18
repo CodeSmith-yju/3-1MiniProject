@@ -13,6 +13,7 @@ public class PartyDesc : MonoBehaviour
     [Header("My Icon")]
     public Image myPortrait;
     public Image myAttribute;
+    public Image unActive;
 
     [Header("PlayerOnly")]
     [HideInInspector]
@@ -39,6 +40,9 @@ public class PartyDesc : MonoBehaviour
     public List<float> tempDefaultStats;
     public List<float> tempWeightStats;
 
+    [Header("ToolTip_Stats")]
+    public float hp;
+    public float atk;
     public void Init(PartyData _partyData, PartyDetails _partyDetails)
     {
         btnMy = GetComponent<Button>();
@@ -52,6 +56,7 @@ public class PartyDesc : MonoBehaviour
 
         tempDefaultStats.AddRange(partyData.defaultStats);
         tempWeightStats.AddRange(partyData.weightPerLevelStats);
+        UnActiveBtn(false);
     }
 
     public void OK()
@@ -95,7 +100,17 @@ public class PartyDesc : MonoBehaviour
         descIndex = _index;
         //Debug.Log("@@@@@@@@@@@@@@@@@@@@@ Run SetIndex Index: " + descIndex);
     }
+    public void SetHpAtk(float hp, float atk)
+    {
+        this.hp = hp;
+        this.atk = atk;
+    }
     public int GetIndex() { return  descIndex; }
     public PartyData GetPartyData() { return partyData; }
 
+    public void UnActiveBtn(bool _isActive)
+    {
+        unActive.gameObject.SetActive(_isActive);
+        btnMy.interactable = !_isActive;
+    }
 }

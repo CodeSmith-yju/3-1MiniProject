@@ -20,6 +20,7 @@ public class PartyIconRS : MonoBehaviour
     [SerializeField] Sprite[] spElementIcon;
     [SerializeField] Sprite[] spJobIcon;
     [SerializeField] Sprite[] spPortraitIcon;
+    [SerializeField] Sprite[] spDoublePortraitIcon;
     [Header("Enemy, Attack, Skill Icons")]
     [SerializeField] Sprite[] spEnemyIcon;
     [SerializeField] Sprite[] spAttackIcon;
@@ -30,7 +31,8 @@ public class PartyIconRS : MonoBehaviour
     [Header("Dictionarys")]
     [SerializeField] Dictionary<BaseEntity.Attribute, Sprite> dictn_ElementIcon = new();
     [SerializeField] Dictionary<Ally.Class, Sprite> dictn_jobIcon = new();
-    [SerializeField] Dictionary<Ally.Job, Sprite> dictn_portratiIcon = new();
+    [SerializeField] Dictionary<Ally.Job, Sprite> dictn_portratIcon = new();
+    [SerializeField] Dictionary<Ally.Job, Sprite> dictn_doubleportratIcon = new();
 
     [SerializeField] Dictionary<IconEnemy, Sprite> dictn_enemyIcon = new();
     [SerializeField] Dictionary<Ally.Job, Sprite> dictn_attackIcon = new();
@@ -42,6 +44,7 @@ public class PartyIconRS : MonoBehaviour
         SetElement();
         SetJob();
         SetPortrait();
+        SetDoublePortrait();
 
         SetEnemyIcon();
         SetAttack();
@@ -69,12 +72,23 @@ public class PartyIconRS : MonoBehaviour
     }
     void SetPortrait()
     {
-        dictn_portratiIcon ??= new();
-        dictn_portratiIcon.Add(Ally.Job.Hero, spPortraitIcon[0]);
-        dictn_portratiIcon.Add(Ally.Job.Knight, spPortraitIcon[1]);
-        dictn_portratiIcon.Add(Ally.Job.Ranger, spPortraitIcon[2]);
-        dictn_portratiIcon.Add(Ally.Job.Wizard, spPortraitIcon[3]);
-        dictn_portratiIcon.Add(Ally.Job.Priest, spPortraitIcon[4]);
+        dictn_portratIcon ??= new();
+        dictn_portratIcon.Add(Ally.Job.Hero, spPortraitIcon[0]);
+        dictn_portratIcon.Add(Ally.Job.Knight, spPortraitIcon[1]);
+        dictn_portratIcon.Add(Ally.Job.Ranger, spPortraitIcon[2]);
+        dictn_portratIcon.Add(Ally.Job.Wizard, spPortraitIcon[3]);
+        dictn_portratIcon.Add(Ally.Job.Priest, spPortraitIcon[4]);
+        dictn_portratIcon.Add(Ally.Job.Demon, spPortraitIcon[5]);
+    }
+    void SetDoublePortrait()
+    {
+        dictn_doubleportratIcon ??= new();
+        //dictn_doubleportratIcon.Add(Ally.Job.Hero, spDoublePortraitIcon[0]);
+        //dictn_doubleportratIcon.Add(Ally.Job.Knight, spDoublePortraitIcon[1]);
+        //dictn_doubleportratIcon.Add(Ally.Job.Ranger, spDoublePortraitIcon[2]);
+        //dictn_doubleportratIcon.Add(Ally.Job.Wizard, spDoublePortraitIcon[3]);
+        //dictn_doubleportratIcon.Add(Ally.Job.Priest, spDoublePortraitIcon[4]);
+        dictn_doubleportratIcon.Add(Ally.Job.Demon, spDoublePortraitIcon[0]);
     }
     void SetEnemyIcon()
     {
@@ -125,7 +139,11 @@ public class PartyIconRS : MonoBehaviour
     }
     public Sprite GetPortraitIcon(Ally.Job _job)
     {
-        return dictn_portratiIcon[_job];
+        return dictn_portratIcon[_job];
+    }
+    public Sprite GetDoublePortraitIcon(Ally.Job _job)
+    {
+        return dictn_doubleportratIcon[_job];
     }
 
     public Sprite GetEnemyIcon(IconEnemy _enemyIcon)

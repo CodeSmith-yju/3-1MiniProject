@@ -2,6 +2,7 @@ using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class PartyDetailTooltip : MonoBehaviour
@@ -88,7 +89,8 @@ public class PartyDetailTooltip : MonoBehaviour
         else if (_iconState == PartyIconState.Skill || _iconState == PartyIconState.Skill2)//스킬 아이콘
         {
             VeiwToolTip(0);
-            ViewSkillTip(_data, _iconState);
+            
+            ViewSkillTip(_data, _iconState, _desc);
             Debug.Log("Skill Icon 툴팁 활성");
         }
     }
@@ -197,42 +199,79 @@ public class PartyDetailTooltip : MonoBehaviour
                 break;
         }
     }
-    void ViewSkillTip(PartyData _partyData, PartyIconState _partyIconState)
+    void ViewSkillTip(PartyData _partyData, PartyIconState _partyIconState, PartyDesc _partyDesc)
     {
         class_icon.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(_partyData.jobType);
+        if (_partyDesc == null)
+        {
+            return;
+        }
+
+        string LastDmg = "";
+        string oriDmg = "";
         switch (_partyData.jobType)
         {
             case Ally.Job.Hero:
                 class_icon.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(Ally.Job.Hero);
                 class_name_text.text = "섬광 베기";
-                class_Icon_text.text = "단일 대상에게 공격력의 2배 대미지(실제숫자)";
+                LastDmg = (_partyDesc.atk * 2).ToString("F3");
+                oriDmg = (_partyDesc.atk).ToString();
+                TextSetting(ref LastDmg);
+
+                //class_Icon_text.text = "단일 대상에게 공격력의 2배 대미지("+ _partyDesc.atk * 2+")";
+                class_Icon_text.text = "단일 대상에게 " + LastDmg + "(" + oriDmg + " * 2)피해";
                 break;
             case Ally.Job.Knight:
                 class_icon.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(Ally.Job.Knight);
                 class_name_text.text = "돌진 찌르기";
-                class_Icon_text.text = "단일 대상에게 공격력의 1.3배 대미지(실제숫자)";
+
+                LastDmg = (_partyDesc.atk * 2).ToString("F3");
+                oriDmg = (_partyDesc.atk).ToString();
+                TextSetting(ref LastDmg);
+                //class_Icon_text.text = "단일 대상에게 공격력의 1.3배 대미지("+ _partyDesc.atk * 1.3+ ")";
+                class_Icon_text.text = "단일 대상에게 " + LastDmg + "(" + oriDmg + " * 1.3)피해";
                 break;
             case Ally.Job.Ranger:
                 class_icon.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(Ally.Job.Ranger);
                 class_name_text.text = "가시 화살";
-                class_Icon_text.text = "단일 대상에게 공격력의 1.2배 대미지(실제숫자)";
+
+                LastDmg = (_partyDesc.atk * 2).ToString("F3");
+                oriDmg = (_partyDesc.atk).ToString();
+                TextSetting(ref LastDmg);
+                //class_Icon_text.text = "단일 대상에게 공격력의 1.2배 대미지("+ _partyDesc.atk * 1.2 + ")";
+                class_Icon_text.text = "단일 대상에게 " + LastDmg + "(" + oriDmg + " * 1.2)피해";
                 break;
             case Ally.Job.Wizard:
                 class_icon.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(Ally.Job.Wizard);
                 class_name_text.text = "파이어 볼트";
-                class_Icon_text.text = "단일 대상에게 공격력의 39(13 * 3)피해";
+
+                LastDmg = (_partyDesc.atk * 2).ToString("F3");
+                oriDmg = (_partyDesc.atk).ToString();
+                TextSetting(ref LastDmg);
+                class_Icon_text.text = "단일 대상에게 "+ LastDmg + "("+ oriDmg + " * 3)피해";
                 break;
             case Ally.Job.Priest:
                 class_icon.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(Ally.Job.Priest);
                 class_name_text.text = "치유의 빛";
-                class_Icon_text.text = "현재 체력이 가장 낮은 아군에게 15(5 + 10 //자신의 최대 체력의 10%만큼 회복 = 숫자)";
+                //class_Icon_text.text = "현재 체력이 가장 낮은 아군에게 15(5 + 10 //자신의 최대 체력의 10%만큼 회복 = 숫자)";
+
+                LastDmg = (_partyDesc.hp * 0.1).ToString("F3");
+                oriDmg = (_partyDesc.atk).ToString();
+                TextSetting(ref LastDmg);
+                class_Icon_text.text = "현재 체력이 가장 낮은 아군에게 "+ LastDmg + "(5 + "+ oriDmg + ")회복";
                 break;
             case Ally.Job.Demon:
                 if (_partyIconState == PartyIconState.Skill)
                 {
                     class_icon.sprite = GameUiMgr.single.entityIconRS.GetSkillIcon(Ally.Job.Demon);
-                    class_name_text.text = "메타포모시스";
-                    class_Icon_text.text = "변신하여 공격력, 공격속도, 사거리가 증가하고, 받는 피해 15% 증가한다.";
+                    class_name_text.text = "메타모포시스";
+
+                    LastDmg = (_partyDesc.atk * 0.3).ToString("F3");
+                    oriDmg = (_partyDesc.atk).ToString();
+                    TextSetting(ref LastDmg);
+                    //class_Icon_text.text = "변신하여 기본 공격이 변화, 타격범위에 추가적인 피해를 입히고\n공격력,공격속도,공격범위가 증가 받는 피해 15% 증가한다.";
+                    class_Icon_text.text = "변신하여 기본 공격이 강화되고 흡혈 효과가 추가되며 타겟과 인접한 적에게 " + LastDmg + "(" + oriDmg + "*0.3)피해" +
+                        "\n공격력, 공격 속도, 공격 범위가 증가하지만, 받는 피해가 15% 상승합니다.";
                 }
                 else if(_partyIconState == PartyIconState.Skill2)
                 {
@@ -244,6 +283,17 @@ public class PartyDetailTooltip : MonoBehaviour
             default:
                 break;
         }
+    }
+    void TextSetting(ref string _stat)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (_stat.EndsWith("0"))
+                _stat = _stat.Substring(0, _stat.Length - 1);
+        }
+        if (_stat.EndsWith("."))
+            _stat = _stat.Substring(0, _stat.Length - 1);
+        _stat = "<color=green>" + _stat + "</color>";
     }
 
     public void TooltipSetting(float _canvasWidth, RectTransform _tooltipRect)

@@ -77,7 +77,7 @@ public class UIManager : MonoBehaviour
         if (partyDetails.gameObject.activeSelf == false)
         {
             partyDetails.gameObject.SetActive(true);
-            partyDetails.OpenPartyDetail(0);
+            partyDetails.OpenPartyDetail();
         }
         else
         {
