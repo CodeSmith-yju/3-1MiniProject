@@ -59,6 +59,14 @@ public class PartyData
         cost = (150 + (_Lvel * 20)) + Random.Range(0, _Lvel * 10);
         //Debug.Log("cost: "+cost);
         spPartyIcon = player.GetComponent<SpriteRenderer>().sprite;
+        if (player.job == Ally.Job.Knight)
+        {
+            spPartyIcon = GameUiMgr.single.entityIconRS.GetStandingIcon(0);
+        }
+        else if (player.job == Ally.Job.Wizard)
+        {
+            spPartyIcon = GameUiMgr.single.entityIconRS.GetStandingIcon(1);
+        }
         SetIcons();
     }
 

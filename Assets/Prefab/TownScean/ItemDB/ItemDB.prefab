@@ -68,7 +68,7 @@ MonoBehaviour:
     itemDesc: "\uCCB4\uB825 \uD68C\uBCF5 +15"
     itemIndex: 0
     itemCode: 1
-    itemPower: 10
+    itemPower: 15
     itemPrice: 200
     PrimaryCode: 
   - itemType: 0
