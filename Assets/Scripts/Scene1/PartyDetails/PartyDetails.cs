@@ -263,4 +263,16 @@ public class PartyDetails : MonoBehaviour
             }
         }
     }
+
+    public void OnClickedClosePartyDetails()
+    {
+        if (SceneManager.GetActiveScene().name == "Town")
+        {
+            GameUiMgr.single.UnActivePartyDetail();
+        }
+        else
+        {
+            BattleManager.Instance.ui.UnActiveBattlePartyDetail();
+        }
+    }
 }

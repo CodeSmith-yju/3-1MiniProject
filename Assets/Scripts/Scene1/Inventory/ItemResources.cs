@@ -21,6 +21,7 @@ public class ItemResources : MonoBehaviour
             DBItems.Add(DBConnector.LoadItemFromDB(i));
         }
         setTypeIcons();
+        //여기밑으로 주석치면 InsertDB 정상동작함
         itemRS.Clear();
         itemRS.AddRange(DBItems);
 
@@ -43,7 +44,7 @@ public class ItemResources : MonoBehaviour
     {
         switch (_item.itemType)
         {
-            case Item.ItemType.Equipment_Arrmor://Range
+            case Item.ItemType.Equipment_Arrmor://Range -> Defens
                 _item.typeIcon = Inventory.Single.typeIconRS[0];
                 break;
             case Item.ItemType.Equipment_Boots://Atk spd

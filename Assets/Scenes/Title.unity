@@ -279,7 +279,7 @@ MonoBehaviour:
   items: []
   equips: []
   typeIconRS:
-  - {fileID: 21300000, guid: 75775466038dda847a172af7d20c2a46, type: 3}
+  - {fileID: -1177825804, guid: 06644b23a2612c94a82d605863fc1bf7, type: 3}
   - {fileID: 21300000, guid: 4e160a9b9390d9c4e9f56f4ffc06197b, type: 3}
   - {fileID: 21300000, guid: 2a9a2894d31d53744a805c45fb91f3fc, type: 3}
   - {fileID: 21300000, guid: 328f639a3bb376c4aacd1066c7d11707, type: 3}
@@ -3318,6 +3318,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1638594989}
     m_Modifications:
+    - target: {fileID: 18275174376384875, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2800392594045272480, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3397,6 +3401,10 @@ PrefabInstance:
     - target: {fileID: 2800392594045272480, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4184537790908633581, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4998368859008861731, guid: 937c70b04ea5bcb428b4b9941dd04ec8, type: 3}
       propertyPath: m_Name

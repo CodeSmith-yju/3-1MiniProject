@@ -1593,10 +1593,12 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                     Debug.Log("장착후 HP: " + GameMgr.playerData[0].max_Player_Hp);
                     break;
                 case Item.ItemType.Equipment_Arrmor:
-                    Debug.Log("장착전 Range: " + GameMgr.playerData[0].atk_Range);
-                    GameMgr.playerData[0].atk_Range += equipPower;
+                    //Debug.Log("장착전 Range: " + GameMgr.playerData[0].atk_Range);
+                    Debug.Log("장착전 Def: " + GameMgr.playerData[0].defensePoint);
+                    GameMgr.playerData[0].defensePoint += (int)equipPower;
 
-                    Debug.Log("장착후 Range: " + GameMgr.playerData[0].atk_Range);
+                    //Debug.Log("장착후 Range: " + GameMgr.playerData[0].atk_Range);
+                    Debug.Log("장착후 Def: " + GameMgr.playerData[0].defensePoint);
                     break;
                 case Item.ItemType.Equipment_Weapon:
                     Debug.Log("장착전 Dmg: " + GameMgr.playerData[0].base_atk_Dmg);

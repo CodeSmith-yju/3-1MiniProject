@@ -24,8 +24,8 @@ public class Preview : MonoBehaviour
         string str = SetUpStatText(myItem);
         if (_item.itemType == Item.ItemType.Equipment_Arrmor || _item.itemType == Item.ItemType.Equipment_Boots)
         {
-            float _f = (myItem.GetPreViewPower(myItem) * 100);
-            text_pre_stat.text = str + (myItem.itemPower * 100).ToString() + " -> " + _f + "(<color=red> +" + (_f - myItem.itemPower * 100).ToString("F0") + "</color>)";
+            float _f = (myItem.GetPreViewPower(myItem));
+            text_pre_stat.text = str + (myItem.itemPower).ToString() + " -> " + _f + "(<color=red> +" + (_f - myItem.itemPower).ToString("F0") + "</color>)";
         }
         else
         {
@@ -39,7 +39,7 @@ public class Preview : MonoBehaviour
         switch (_item.itemType)
         {
             case Item.ItemType.Equipment_Arrmor:
-                _text = "공격사거리 +";
+                _text = "방어도 +";
                 break;
             case Item.ItemType.Equipment_Boots:
                 _text = "공격속도 +";
