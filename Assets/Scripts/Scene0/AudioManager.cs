@@ -31,6 +31,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] ranger_sfxClip;// ranger
     public AudioClip[] wizard_sfxClip;// wizard
     public AudioClip[] knight_sfxClip;// knight
+    public AudioClip[] priest_sfxClip;// Priest 
+    public AudioClip[] demon_sfxClip;// Demon
 
 
     [Header("#Enemy SFX")]
@@ -41,6 +43,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] skeletonWizard_sfxClip;// Boss
     public AudioClip[] puppetHuman_sfxClip;// hero
     public AudioClip[] Golem_sfxClip;// Gollem
+    public AudioClip[] Luminarch_sfxClip;
 
     #endregion
     public enum Sfx

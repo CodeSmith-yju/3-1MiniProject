@@ -3988,6 +3988,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e23ddeb621381bc428b343c663f98e85, type: 3}
   - {fileID: 8300000, guid: 81630cad2d0854f4a9778ece7bbe6f9c, type: 3}
   - {fileID: 8300000, guid: 62853107ea4432e408900c55ea082982, type: 3}
+  - {fileID: 8300000, guid: baa3f4ac2fb437243b78884014aa46a5, type: 3}
+  - {fileID: 8300000, guid: c1df060e925138942808519d1349b8c3, type: 3}
   bgmPlayer: {fileID: 0}
   bgmVolume: 0.5
   sfxClips:
@@ -4023,6 +4025,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ffe1c74f24fed26458290c2985178832, type: 3}
   - {fileID: 8300000, guid: 8dc100f7d5f93074ebd848ec82a42df7, type: 3}
   - {fileID: 8300000, guid: 3f061a78320dfab4d94949e4cd8615ea, type: 3}
+  priest_sfxClip:
+  - {fileID: 8300000, guid: 966913ef6c32e894c92edb06f506234e, type: 3}
+  - {fileID: 8300000, guid: 76df7de24d2a75d48bd0e793063b01b5, type: 3}
+  demon_sfxClip:
+  - {fileID: 8300000, guid: 1e227bb5552be3f4faef2f13a77ed66d, type: 3}
+  - {fileID: 8300000, guid: f5fcb5ff4c2894e41851f249ffb16e98, type: 3}
   slime_sfxClip:
   - {fileID: 8300000, guid: e5dd7fae7a9011445baf0196fbfcf489, type: 3}
   - {fileID: 8300000, guid: b6dc1bde3092be94281b0ea4b2b2b3ed, type: 3}
@@ -4047,6 +4055,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f24365f781fc18d489ef054017301574, type: 3}
   - {fileID: 8300000, guid: 8515f49ec12aca54797ac5956cc9bd6c, type: 3}
   - {fileID: 8300000, guid: f716820cbc59d1d45aeea2a6f0baed53, type: 3}
+  Luminarch_sfxClip:
+  - {fileID: 8300000, guid: b6eb1cb3e54f6dc4f807d8bd2f7453e2, type: 3}
+  - {fileID: 8300000, guid: 7bdb823975bbccb4098af5be425bb509, type: 3}
 --- !u!4 &1750171242
 Transform:
   m_ObjectHideFlags: 0
