@@ -8589,12 +8589,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4598016792847378024, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598016792847378024, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4598016792847378024, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598016792847378024, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4598016792847378024, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -8605,6 +8613,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 379160249}
     - target: {fileID: 4598016792847378024, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 379160249}
+    - target: {fileID: 4598016792847378024, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598016792847378024, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: DestroyRewardPopup
       objectReference: {fileID: 0}
@@ -8613,11 +8629,19 @@ PrefabInstance:
       value: CancelPopup
       objectReference: {fileID: 0}
     - target: {fileID: 4598016792847378024, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: WinSfxStop
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598016792847378024, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: BattleManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4598016792847378024, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598016792847378024, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
       value: UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4598016792847378024, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
@@ -8635,6 +8659,10 @@ PrefabInstance:
     - target: {fileID: 4598016792847378024, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598016792847378024, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6115706018246200998, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
       propertyPath: m_Name
@@ -9005,6 +9033,7 @@ MonoBehaviour:
   enemy_Prefabs:
   - {fileID: 6563447237369511619, guid: 1ca675373ed0eb0469ccb67f2e5477cb, type: 3}
   - {fileID: 407595489988684709, guid: 457d1d8d096abd541b7087e08285d05b, type: 3}
+  - {fileID: 407595489988684709, guid: b22e5b0a52b2fd34f859b655f4c7506d, type: 3}
   obj_Parent: {fileID: 1406815874}
 --- !u!1 &1600814200
 GameObject:

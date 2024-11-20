@@ -660,6 +660,7 @@ public class BaseEntity : MonoBehaviour
                 BattleManager.Instance.deploy_Enemy_List.Remove(gameObject);
             }
         }
+
         yield return new WaitForSeconds(1.5f);
         Destroy(gameObject);
         isDieInProgress = false;

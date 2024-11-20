@@ -320,4 +320,9 @@ public class UIManager : MonoBehaviour
         log_Init.Init(player_portrait, skill_Name);
     }
 
+    public void WinSfxStop()
+    {
+        AudioManager.single.GetSfxPlayer(0).Stop();
+    }
+
 }

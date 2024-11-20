@@ -35,7 +35,7 @@ public class BattleManager : MonoBehaviour
     //public bool isMapDone = false;
 
     [Header("BuffTile")]
-    private Dictionary<PlayerData, PlayerStats> base_Stats = new Dictionary<PlayerData, PlayerStats>();
+    public Dictionary<PlayerData, PlayerStats> base_Stats = new Dictionary<PlayerData, PlayerStats>();
     public Dictionary<PlayerData, PlayerStats> temp_Stats = new Dictionary<PlayerData, PlayerStats>();
     public bool buff_On = false;
 
@@ -461,11 +461,12 @@ public class BattleManager : MonoBehaviour
             {
                 // 게임 중 버프 타일로 증가되기 전 스텟으로 리셋
                 PlayingResetStats();   
-                AudioManager.single.PlaySfxClipChange(9);
                 ui.OpenPopup(ui.vic_Banner);
+                AudioManager.single.PlaySfxClipChange(9);
                 yield return StartCoroutine(ui.StartBanner(ui.vic_Banner));
                 yield return new WaitForSeconds(0.15f);
 
+                
                 if (!ui.out_Portal.activeSelf)
                 {
                     ui.out_Portal.SetActive(true);
@@ -473,6 +474,7 @@ public class BattleManager : MonoBehaviour
                 }
 
                 ui.OpenPopup(ui.reward_Popup);
+                
 
                 Debug.Log("얻은 경험치 : " + exp_Cnt);
                 RewardPopupInit popup = ui.reward_Popup.GetComponent<RewardPopupInit>();
@@ -511,14 +513,14 @@ public class BattleManager : MonoBehaviour
 
             if (deploy_Enemy_List.Count == 0 && room.FindRoom(room.cur_Room.gameObject).isBoss)
             {
+                if (AudioManager.single.GetBgmPlayer().isPlaying)
+                    AudioManager.single.GetBgmPlayer().Stop();
+
                 if (!ui.out_Portal.activeSelf)
                 {
                     ui.out_Portal.SetActive(true);
                     ui.out_Portal.GetComponent<FadeEffect>().fadeout = true;
                 }
-
-                if (AudioManager.single.GetBgmPlayer().isPlaying)
-                    AudioManager.single.GetBgmPlayer().Stop();
 
                 Debug.Log("버튼 생성");
                 DestroyImmediate(ui.out_Portal.GetComponent<Button>());
@@ -963,5 +965,7 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+
+
 
 }
