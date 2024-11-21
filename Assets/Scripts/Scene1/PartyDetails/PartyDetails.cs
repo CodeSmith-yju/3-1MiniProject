@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PartyDetails : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class PartyDetails : MonoBehaviour
     public TextMeshProUGUI txtAtk; 
     public TextMeshProUGUI txtAtkSpd;
     public TextMeshProUGUI txtAtkRange;
+
+    public List<Ally> players;
 
     public void Init(List<PartySlot> _partySlots)//GuiMgr의 List<PartySlot>인 lastDefartual의 partyData를통해 목록을만들것.
     {
@@ -135,17 +138,19 @@ public class PartyDetails : MonoBehaviour
 
             _desc.SetHpAtk(GameMgr.playerData[_index].max_Player_Hp, GameMgr.playerData[_index].base_atk_Dmg);
 
-            txtHp.text = "HP: " + GameMgr.playerData[_index].max_Player_Hp + "\n(" + hp + ")"; //_desc.str_Hp;
-            txtMp.text = "MP: " + GameMgr.playerData[_index].max_Player_Mp + "\n(" + mp + ")";
+            txtHp.text = "HP: " + GameMgr.playerData[_index].max_Player_Hp + "\n(+" + hp + ")"; //_desc.str_Hp;
+            txtMp.text = "MP: " + GameMgr.playerData[_index].max_Player_Mp + "\n(+" + mp + ")";
             textDef.text = "Def: " + GameMgr.playerData[_index].defensePoint + "\n(+" + def + ")";
             textSpeed.text = "Spd: " + (_desc.tempDefaultStats[6] / 2).ToString("F1") + "\n(+" + speed + ")";
 
-            txtAtk.text = "Atk: " + GameMgr.playerData[_index].base_atk_Dmg + "\n(" + atk + ")";//_desc.str_Atk ;
-            txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_index].atk_Speed + "\n(" + atkspd + ")";//_desc.str_AtkSpd;
+            txtAtk.text = "Atk: " + GameMgr.playerData[_index].base_atk_Dmg + "\n(+" + atk + ")";//_desc.str_Atk ;
+            txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_index].atk_Speed + "\n(+" + atkspd + ")";//_desc.str_AtkSpd;
             txtAtkRange.text = "AtkRng: " + GameMgr.playerData[_index].atk_Range + "\n(+" + atkrange + ")";
         }
         else //Battle, Tutorial Scean에서 여기만 수정해주면 될듯?
         {
+            players ??= new();
+            players.Clear();
             foreach (GameObject players in BattleManager.Instance.deploy_Player_List)
             {
                 Ally ally = players.GetComponent<Ally>();
@@ -162,9 +167,15 @@ public class PartyDetails : MonoBehaviour
                         atk = (ally.atkDmg - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_Dmg).ToString("F3");
                         atkspd = (ally.atkSpd - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_AtkSpd).ToString("F3");
                         atkrange = "0";
-                        TextSetting(ref hp, ref atk, ref atkspd, ref mp);
 
-                        //_desc.SetHpAtk(GameMgr.playerData[_index].max_Player_Hp, GameMgr.playerData[_index].base_atk_Dmg);
+                        hp = ApplySign(hp);
+                        atk = ApplySign(atk);
+                        atkspd = ApplySign(atkspd);
+                        mp = ApplySign(mp);
+
+                        TextSetting(ref hp, ref atk, ref atkspd, ref mp);
+                        
+                        _desc.SetHpAtk(GameMgr.playerData[_index].max_Player_Hp, GameMgr.playerData[_index].base_atk_Dmg);
 
                         txtHp.text = "HP: " + ally.max_Hp + "\n(" + hp + ")"; //_desc.str_Hp;
                         txtMp.text = "MP: " + ally.max_Mp + "\n(" + mp + ")";
@@ -185,11 +196,6 @@ public class PartyDetails : MonoBehaviour
 
     void TextSetting(ref string hp, ref string atk, ref string atkspd, ref string mp)
     {
-        hp = ApplySign(hp);
-        atk = ApplySign(atk);
-        atkspd = ApplySign(atkspd);
-        mp = ApplySign(mp);
-
         for (int i = 0; i < 3; i++)
         {
             if (hp.EndsWith("0"))

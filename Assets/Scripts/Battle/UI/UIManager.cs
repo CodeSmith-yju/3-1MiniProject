@@ -156,7 +156,10 @@ public class UIManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            ActiveBattlePartyDetail();
+            if (BattleManager.Instance.dialogue != null && dialogue_Bg.activeSelf)
+                return;
+            else
+                ActiveBattlePartyDetail();
         }
 
         tooltip.MoveTooltip();
