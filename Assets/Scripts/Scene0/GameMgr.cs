@@ -9,10 +9,29 @@ public enum SaveState
     DungeonSave,
     TownSave,
 }
+public enum PlayerDifficulty
+{
+    None = 0,          // 선택되지 않음
+    Tutorial_Before = 1, // 튜토리얼 진행 전
+    Tutorial_After = 2,  // 튜토리얼 클리어 후
+
+    Easy_Before = 10,     // 쉬움 난이도 진행 전
+    Easy_After,      // 쉬움 난이도 클리어 후
+
+    Normal_Before = 20,   // 보통 난이도 진행 전
+    Normal_After,    // 보통 난이도 클리어 후
+
+    Hard_Before = 30,     // 어려움 난이도 진행 전
+    Hard_After,      // 어려움 난이도 클리어 후
+
+    FinalBoss = 40        // 최종 던전
+}
 public class GameMgr : MonoBehaviour
 {
     public static GameMgr single { get; private set; }
     public static List<PlayerData> playerData { get; private set; }//여기 수정함 06-02
+    public PlayerDifficulty playerDifficulty { get; private set; }
+
     public bool shopCleaner;
     public bool tutorial = false;
     private bool loadChecker = false;
