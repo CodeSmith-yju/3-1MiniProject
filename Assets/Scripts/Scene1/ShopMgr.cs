@@ -494,6 +494,13 @@ public class ShopMgr : MonoBehaviour
             baskets[i].GetBasketShopSlot().UseImgSet(false);
             calcPrice.text = basketsPrice.ToString();
         }
+        for (int i = 0; i < shopSlots.Count; i++)
+        {
+            if (shopSlots[i].GetItem().itemStack == 0)
+            {
+                shopSlots[i].SoldOut(true);
+            }
+        }
     }
     void GoldSet()
     {

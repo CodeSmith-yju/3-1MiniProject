@@ -1632,10 +1632,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                     Debug.Log("장비 해제 후 HP: " + GameMgr.playerData[0].max_Player_Hp);
                     break;
                 case Item.ItemType.Equipment_Arrmor:
-                    Debug.Log("장비 해제 전 Range: " + GameMgr.playerData[0].atk_Range);
-                    GameMgr.playerData[0].atk_Range += equipPower;
-
-                    Debug.Log("장비 해제 후 Range: " + GameMgr.playerData[0].atk_Range);
+                    Debug.Log("장착전 Def: " + GameMgr.playerData[0].defensePoint);
+                    GameMgr.playerData[0].defensePoint += (int)equipPower;
+                    Debug.Log("장착후 Def: " + GameMgr.playerData[0].defensePoint);
                     break;
                 case Item.ItemType.Equipment_Weapon:
                     Debug.Log("장비 해제 전 Dmg: " + GameMgr.playerData[0].base_atk_Dmg);
@@ -1676,6 +1675,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             if (questMgr.questId < 30)
             {
                 Receptionist_1();
+                //SetQuestBoardText("장비 장착을 완료했으니\n 접수원에게 보고하자.", true);
                 Debug.Log("장비 장착 퀘스트 조건 충족");
             }
             //tutorial Quest - wearEquipment

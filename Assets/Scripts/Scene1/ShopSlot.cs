@@ -145,13 +145,16 @@ public class ShopSlot : MonoBehaviour
 
     public void UseImgSet(bool active)
     {
+        Debug.Log("Run UseImgSet: "+active);
         if (active)
         {
+            Debug.Log("UnActiveNow");
             slotMy.interactable = false;
             imgUse.gameObject.SetActive(true);
         }
         else
         {
+            Debug.Log("Else");
             slotMy.interactable = true;
             imgUse.gameObject.SetActive(false);
         }
