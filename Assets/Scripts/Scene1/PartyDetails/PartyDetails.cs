@@ -11,6 +11,7 @@ public class PartyDetails : MonoBehaviour
     public List<PartyDesc> PartyDetailDescs = new();
     List<RectTransform> PartyDetailRects = new();
     public List<SetPartyDetailTolltip> setPartyTooltips = new();
+    int activeStack;
 
     [Header("ToolTip")]
     [SerializeField] PartyDetailTooltip detailTooltip;
@@ -61,18 +62,30 @@ public class PartyDetails : MonoBehaviour
                 PartyDetailDescs[i].gameObject.SetActive(false);
             }
         }
+
+        activeStack = 0;
+
     }
     public void OpenPartyDetail()
     {
-        for (int i = 0; i < GameMgr.playerData.Count; i++)
+        int cnt = GameMgr.playerData.Count;
+
+        for (int i = 0; i < cnt; i++)
         {
             if (GameMgr.playerData[i].cur_Player_Hp < 0 && !PartyDetailDescs[i].unActive.gameObject.activeSelf)
             {
                 PartyDetailDescs[i].UnActiveBtn(true);
+                activeStack++;
             }
         }
 
-        for (int i = 0; i < GameMgr.playerData.Count; i++)
+        if (activeStack >= cnt) 
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        for (int i = 0; i < cnt; i++)
         {
             if (!PartyDetailDescs[i].unActive.gameObject.activeSelf)
             {
@@ -149,52 +162,39 @@ public class PartyDetails : MonoBehaviour
         }
         else //Battle, Tutorial Scean에서 여기만 수정해주면 될듯?
         {
-            players ??= new();
-            players.Clear();
-            foreach (GameObject players in BattleManager.Instance.deploy_Player_List)
-            {
-                Ally ally = players.GetComponent<Ally>();
+            hp = (GameMgr.playerData[_index].max_Player_Hp - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_MaxHp).ToString("F3");
+            mp = (GameMgr.playerData[_index].max_Player_Mp - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_MaxMp).ToString("F0");
+            def = (GameMgr.playerData[_index].defensePoint - GameMgr.playerData[_index].defensePoint).ToString(); // 방어력 버프를 만들까말까 고민중
+            speed = "0";
 
-                if (ally != null)
-                {
-                    if (ally.entity_index == _index)
-                    {
-                        hp = (ally.max_Hp - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_MaxHp).ToString("F3");
-                        mp = (ally.max_Mp - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_MaxMp).ToString("F0");
-                        def = (ally.def_Point - GameMgr.playerData[_index].defensePoint).ToString(); // 방어력 버프를 만들까말까 고민중
-                        speed = "0";
+            atk = (GameMgr.playerData[_index].base_atk_Dmg - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_Dmg).ToString("F3");
+            atkspd = (GameMgr.playerData[_index].atk_Speed - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_AtkSpd).ToString("F3");
+            atkrange = "0";
 
-                        atk = (ally.atkDmg - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_Dmg).ToString("F3");
-                        atkspd = (ally.atkSpd - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_AtkSpd).ToString("F3");
-                        atkrange = "0";
+            hp = ApplySign(hp);
+            atk = ApplySign(atk);
+            atkspd = ApplySign(atkspd);
+            mp = ApplySign(mp);
 
-                        hp = ApplySign(hp);
-                        atk = ApplySign(atk);
-                        atkspd = ApplySign(atkspd);
-                        mp = ApplySign(mp);
+            TextSetting(ref hp, ref atk, ref atkspd, ref mp);
 
-                        TextSetting(ref hp, ref atk, ref atkspd, ref mp);
-                        
-                        _desc.SetHpAtk(GameMgr.playerData[_index].max_Player_Hp, GameMgr.playerData[_index].base_atk_Dmg);
+            _desc.SetHpAtk(GameMgr.playerData[_index].max_Player_Hp, GameMgr.playerData[_index].base_atk_Dmg);
 
-                        txtHp.text = "HP: " + ally.max_Hp + "\n(" + hp + ")"; //_desc.str_Hp;
-                        txtMp.text = "MP: " + ally.max_Mp + "\n(" + mp + ")";
-                        textDef.text = "Def: " + ally.def_Point + "\n(+" + def + ")";
-                        textSpeed.text = "Spd: " + (_desc.tempDefaultStats[6] / 2).ToString("F1") + "\n(+" + speed + ")";
+            txtHp.text = "HP: " + GameMgr.playerData[_index].max_Player_Hp + "\n(" + hp + ")"; //_desc.str_Hp;
+            txtMp.text = "MP: " + GameMgr.playerData[_index].max_Player_Mp + "\n(" + mp + ")";
+            textDef.text = "Def: " + GameMgr.playerData[_index].defensePoint + "\n(+" + def + ")";
+            textSpeed.text = "Spd: " + (_desc.tempDefaultStats[6] / 2).ToString("F1") + "\n(+" + speed + ")";
 
-                        txtAtk.text = "Atk: " + ally.atkDmg + "\n(" + atk + ")";//_desc.str_Atk ;
-                        txtAtkSpd.text = "AtkSpd: " + ally.atkSpd + "\n(" + atkspd + ")";//_desc.str_AtkSpd;
-                        txtAtkRange.text = "AtkRng: " + ally.atkRange + "\n(+" + atkrange + ")";
-                    }
-                }
-            }
+            txtAtk.text = "Atk: " + GameMgr.playerData[_index].base_atk_Dmg + "\n(" + atk + ")";//_desc.str_Atk ;
+            txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_index].atk_Speed + "\n(" + atkspd + ")";//_desc.str_AtkSpd;
+            txtAtkRange.text = "AtkRng: " + GameMgr.playerData[_index].atk_Range + "\n(+" + atkrange + ")";
         }
 
         BtnResize(_index);
         SetTooltipIndex(PartyDetailDescs[_index]);
     }
 
-    void TextSetting(ref string hp, ref string atk, ref string atkspd, ref string mp)
+    void TextSetting(ref string hp, ref string atk, ref string atkspd)
     {
         for (int i = 0; i < 3; i++)
         {
@@ -275,8 +275,8 @@ public class PartyDetails : MonoBehaviour
 
     public void Test()
     {
-        //gameObject.SetActive(false);
-        GameUiMgr.single.partyDetails.gameObject.SetActive(false);
+        gameObject.SetActive(false);
+        //GameUiMgr.single.partyDetails.gameObject.SetActive(false);
         //GameUiMgr.partyDetails.gameObject.SetActive(false);
         Debug.Log("외부영역 클릭");
     }

@@ -513,6 +513,8 @@ public class BattleManager : MonoBehaviour
 
             if (deploy_Enemy_List.Count == 0 && room.FindRoom(room.cur_Room.gameObject).isBoss)
             {
+                EndResetStats(); // 보스 처치 시 스텟을 리셋
+
                 if (AudioManager.single.GetBgmPlayer().isPlaying)
                     AudioManager.single.GetBgmPlayer().Stop();
 
@@ -564,7 +566,7 @@ public class BattleManager : MonoBehaviour
             if (deploy_Enemy_List.Count == 0 && room.FindRoom(room.cur_Room.gameObject).isBoss)
             {
                 // 던전 종료 시 원래 스텟으로 리셋
-                EndResetStats();
+                
 
                 if (!ui.out_Portal.activeSelf)
                 {
