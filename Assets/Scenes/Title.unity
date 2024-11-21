@@ -4026,9 +4026,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8dc100f7d5f93074ebd848ec82a42df7, type: 3}
   - {fileID: 8300000, guid: 3f061a78320dfab4d94949e4cd8615ea, type: 3}
   priest_sfxClip:
+  - {fileID: 8300000, guid: f69cfebae647fee4ab62d37daafb6ccf, type: 3}
   - {fileID: 8300000, guid: 966913ef6c32e894c92edb06f506234e, type: 3}
   - {fileID: 8300000, guid: 76df7de24d2a75d48bd0e793063b01b5, type: 3}
   demon_sfxClip:
+  - {fileID: 8300000, guid: 695603879c33d534991588a4fbeb5fb9, type: 3}
   - {fileID: 8300000, guid: 1e227bb5552be3f4faef2f13a77ed66d, type: 3}
   - {fileID: 8300000, guid: f5fcb5ff4c2894e41851f249ffb16e98, type: 3}
   slime_sfxClip:
@@ -4056,6 +4058,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8515f49ec12aca54797ac5956cc9bd6c, type: 3}
   - {fileID: 8300000, guid: f716820cbc59d1d45aeea2a6f0baed53, type: 3}
   Luminarch_sfxClip:
+  - {fileID: 8300000, guid: a504dfe7fc474704398a74f4d340807a, type: 3}
   - {fileID: 8300000, guid: b6eb1cb3e54f6dc4f807d8bd2f7453e2, type: 3}
   - {fileID: 8300000, guid: 7bdb823975bbccb4098af5be425bb509, type: 3}
 --- !u!4 &1750171242
