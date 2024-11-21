@@ -78,10 +78,12 @@ public class UIManager : MonoBehaviour
         {
             partyDetails.gameObject.SetActive(true);
             partyDetails.OpenPartyDetail();
+            isOpenUI = true;
         }
         else
         {
             UnActiveBattlePartyDetail();
+            isOpenUI = false;
         }
     }
     public void UnActiveBattlePartyDetail()
