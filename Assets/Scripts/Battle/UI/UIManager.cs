@@ -78,10 +78,12 @@ public class UIManager : MonoBehaviour
         {
             partyDetails.gameObject.SetActive(true);
             partyDetails.OpenPartyDetail();
+            isOpenUI = true;
         }
         else
         {
             UnActiveBattlePartyDetail();
+            isOpenUI = false;
         }
     }
     public void UnActiveBattlePartyDetail()
@@ -154,6 +156,7 @@ public class UIManager : MonoBehaviour
                 CancelOption();    
             }
         }
+
         if (Input.GetKeyDown(KeyCode.P))
         {
             if (BattleManager.Instance.dialogue != null && dialogue_Bg.activeSelf)
