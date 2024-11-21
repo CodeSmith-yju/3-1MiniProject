@@ -942,7 +942,7 @@ MonoBehaviour:
   gold_Cnt: 0
   item_Drop_Check: 0
   sfx_Index: 0
-  attack_Eff: {fileID: 0}
+  attack_Eff: {fileID: 407595489988684709, guid: e5f73173be143e940ad811f5c090f93a, type: 3}
 --- !u!1 &8089259560416906593
 GameObject:
   m_ObjectHideFlags: 0

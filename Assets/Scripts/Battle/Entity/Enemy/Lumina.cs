@@ -27,8 +27,8 @@ public class Lumina : Enemy
     protected override void RangeAttack(BaseEntity target)
     {
         base.RangeAttack(target);
-        GameObject obj_Arrow = Instantiate(attack_Eff);
-        obj_Arrow.transform.position = transform.GetChild(0).position;
+        GameObject obj_Arrow = Instantiate(attack_Eff, transform.GetChild(0));
+        obj_Arrow.transform.localPosition = new Vector3(-7.5f, 0);
 
         List<GameObject> players = BattleManager.Instance.deploy_Player_List;
 
