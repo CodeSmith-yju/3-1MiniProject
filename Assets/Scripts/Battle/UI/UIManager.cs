@@ -156,7 +156,10 @@ public class UIManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            ActiveBattlePartyDetail();
+            if (BattleManager.Instance.dialogue != null && dialogue_Bg.activeSelf)
+                return;
+            else
+                ActiveBattlePartyDetail();
         }
 
         tooltip.MoveTooltip();
@@ -318,6 +321,11 @@ public class UIManager : MonoBehaviour
         GameObject log = Instantiate(log_Prefabs, log_Pos);
         SkillLogInit log_Init = log.GetComponent<SkillLogInit>();
         log_Init.Init(player_portrait, skill_Name);
+    }
+
+    public void WinSfxStop()
+    {
+        AudioManager.single.GetSfxPlayer(0).Stop();
     }
 
 }

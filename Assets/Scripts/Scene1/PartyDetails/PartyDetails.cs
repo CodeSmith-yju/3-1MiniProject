@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PartyDetails : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class PartyDetails : MonoBehaviour
     public TextMeshProUGUI txtAtk; 
     public TextMeshProUGUI txtAtkSpd;
     public TextMeshProUGUI txtAtkRange;
+
+    public List<Ally> players;
 
     public void Init(List<PartySlot> _partySlots)//GuiMgr의 List<PartySlot>인 lastDefartual의 partyData를통해 목록을만들것.
     {
@@ -131,12 +134,12 @@ public class PartyDetails : MonoBehaviour
             atk = (GameMgr.playerData[_index].base_atk_Dmg - _desc.tempDefaultStats[2]).ToString("F3");
             atkspd = (GameMgr.playerData[_index].atk_Speed - _desc.tempDefaultStats[3]).ToString("F3");
             atkrange = "0";
-            TextSetting(ref hp, ref atk, ref atkspd);
+            TextSetting(ref hp, ref atk, ref atkspd, ref mp);
 
             _desc.SetHpAtk(GameMgr.playerData[_index].max_Player_Hp, GameMgr.playerData[_index].base_atk_Dmg);
 
             txtHp.text = "HP: " + GameMgr.playerData[_index].max_Player_Hp + "\n(+" + hp + ")"; //_desc.str_Hp;
-            txtMp.text = "MP: " + GameMgr.playerData[_index].max_Player_Mp + "\n(-" + mp + ")";
+            txtMp.text = "MP: " + GameMgr.playerData[_index].max_Player_Mp + "\n(+" + mp + ")";
             textDef.text = "Def: " + GameMgr.playerData[_index].defensePoint + "\n(+" + def + ")";
             textSpeed.text = "Spd: " + (_desc.tempDefaultStats[6] / 2).ToString("F1") + "\n(+" + speed + ")";
 
@@ -146,33 +149,52 @@ public class PartyDetails : MonoBehaviour
         }
         else //Battle, Tutorial Scean에서 여기만 수정해주면 될듯?
         {
-            hp = (GameMgr.playerData[_index].max_Player_Hp - _desc.tempDefaultStats[0]).ToString("F3");
-            mp = (GameMgr.playerData[_index].max_Player_Mp - _desc.tempDefaultStats[1]).ToString("F0");
-            def = (GameMgr.playerData[_index].defensePoint - _desc.tempDefaultStats[5]).ToString();
-            speed = "0";
+            players ??= new();
+            players.Clear();
+            foreach (GameObject players in BattleManager.Instance.deploy_Player_List)
+            {
+                Ally ally = players.GetComponent<Ally>();
 
-            atk = (GameMgr.playerData[_index].base_atk_Dmg - _desc.tempDefaultStats[2]).ToString("F3");
-            atkspd = (GameMgr.playerData[_index].atk_Speed - _desc.tempDefaultStats[3]).ToString("F3");
-            atkrange = "0";
-            TextSetting(ref hp, ref atk, ref atkspd);
+                if (ally != null)
+                {
+                    if (ally.entity_index == _index)
+                    {
+                        hp = (ally.max_Hp - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_MaxHp).ToString("F3");
+                        mp = (ally.max_Mp - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_MaxMp).ToString("F0");
+                        def = (ally.def_Point - GameMgr.playerData[_index].defensePoint).ToString(); // 방어력 버프를 만들까말까 고민중
+                        speed = "0";
 
-            //_desc.SetHpAtk(GameMgr.playerData[_index].max_Player_Hp, GameMgr.playerData[_index].base_atk_Dmg);
+                        atk = (ally.atkDmg - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_Dmg).ToString("F3");
+                        atkspd = (ally.atkSpd - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_AtkSpd).ToString("F3");
+                        atkrange = "0";
 
-            txtHp.text = "HP: " + GameMgr.playerData[_index].max_Player_Hp + "\n(+" + hp + ")"; //_desc.str_Hp;
-            txtMp.text = "MP: " + GameMgr.playerData[_index].max_Player_Mp + "\n(-" + mp + ")";
-            textDef.text = "Def: " + GameMgr.playerData[_index].defensePoint + "\n(+" + def + ")";
-            textSpeed.text = "Spd: " + (_desc.tempDefaultStats[6] / 2).ToString("F1") + "\n(+" + speed + ")";
+                        hp = ApplySign(hp);
+                        atk = ApplySign(atk);
+                        atkspd = ApplySign(atkspd);
+                        mp = ApplySign(mp);
 
-            txtAtk.text = "Atk: " + GameMgr.playerData[_index].base_atk_Dmg + "\n(+" + atk + ")";//_desc.str_Atk ;
-            txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_index].atk_Speed + "\n(+" + atkspd + ")";//_desc.str_AtkSpd;
-            txtAtkRange.text = "AtkRng: " + GameMgr.playerData[_index].atk_Range + "\n(+" + atkrange + ")";
+                        TextSetting(ref hp, ref atk, ref atkspd, ref mp);
+                        
+                        _desc.SetHpAtk(GameMgr.playerData[_index].max_Player_Hp, GameMgr.playerData[_index].base_atk_Dmg);
+
+                        txtHp.text = "HP: " + ally.max_Hp + "\n(" + hp + ")"; //_desc.str_Hp;
+                        txtMp.text = "MP: " + ally.max_Mp + "\n(" + mp + ")";
+                        textDef.text = "Def: " + ally.def_Point + "\n(+" + def + ")";
+                        textSpeed.text = "Spd: " + (_desc.tempDefaultStats[6] / 2).ToString("F1") + "\n(+" + speed + ")";
+
+                        txtAtk.text = "Atk: " + ally.atkDmg + "\n(" + atk + ")";//_desc.str_Atk ;
+                        txtAtkSpd.text = "AtkSpd: " + ally.atkSpd + "\n(" + atkspd + ")";//_desc.str_AtkSpd;
+                        txtAtkRange.text = "AtkRng: " + ally.atkRange + "\n(+" + atkrange + ")";
+                    }
+                }
+            }
         }
 
         BtnResize(_index);
         SetTooltipIndex(PartyDetailDescs[_index]);
     }
 
-    void TextSetting(ref string hp, ref string atk, ref string atkspd)
+    void TextSetting(ref string hp, ref string atk, ref string atkspd, ref string mp)
     {
         for (int i = 0; i < 3; i++)
         {
@@ -194,6 +216,19 @@ public class PartyDetails : MonoBehaviour
         if (atkspd.EndsWith("."))
             atkspd = atkspd.Substring(0, atkspd.Length - 1);
     }
+
+    private string ApplySign(string value) // 숫자에 따라 부호 표시
+    {
+        if (float.TryParse(value, out float numericValue))
+        {
+            if (numericValue > 0)
+                return "+" + numericValue.ToString(); // 양수일 때 + 추가
+            else if (numericValue < 0)
+                return numericValue.ToString(); // 음수는 그대로 반환
+        }
+        return "+" + value; // 숫자로 변환되지 않으면 원래 값 반환
+    }
+
 
     /*void SetDetail(PartyData _pd)
     {
