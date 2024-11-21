@@ -154,12 +154,16 @@ public class UIManager : MonoBehaviour
                 CancelOption();    
             }
         }
+
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if (BattleManager.Instance.dialogue != null && dialogue_Bg.activeSelf)
-                return;
-            else
-                ActiveBattlePartyDetail();
+            if (BattleManager.Instance.deploy_Player_List.Count > 0)
+            {
+                if (BattleManager.Instance.dialogue != null && dialogue_Bg.activeSelf)
+                    return;
+                else
+                    ActiveBattlePartyDetail();
+            }
         }
 
         tooltip.MoveTooltip();
