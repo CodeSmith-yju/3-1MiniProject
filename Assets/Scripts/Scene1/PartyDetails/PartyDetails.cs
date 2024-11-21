@@ -147,7 +147,7 @@ public class PartyDetails : MonoBehaviour
             atk = (GameMgr.playerData[_index].base_atk_Dmg - _desc.tempDefaultStats[2]).ToString("F3");
             atkspd = (GameMgr.playerData[_index].atk_Speed - _desc.tempDefaultStats[3]).ToString("F3");
             atkrange = "0";
-            TextSetting(ref hp, ref atk, ref atkspd, ref mp);
+            TextSetting(ref hp, ref atk, ref atkspd);
 
             _desc.SetHpAtk(GameMgr.playerData[_index].max_Player_Hp, GameMgr.playerData[_index].base_atk_Dmg);
 
@@ -176,7 +176,7 @@ public class PartyDetails : MonoBehaviour
             atkspd = ApplySign(atkspd);
             mp = ApplySign(mp);
 
-            TextSetting(ref hp, ref atk, ref atkspd, ref mp);
+            TextSetting(ref hp, ref atk, ref atkspd);
 
             _desc.SetHpAtk(GameMgr.playerData[_index].max_Player_Hp, GameMgr.playerData[_index].base_atk_Dmg);
 
