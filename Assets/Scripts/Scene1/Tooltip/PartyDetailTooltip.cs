@@ -271,8 +271,9 @@ public class PartyDetailTooltip : MonoBehaviour
                     oriDmg = (_partyDesc.atk).ToString();
                     TextSetting(ref LastDmg);
                     //class_Icon_text.text = "변신하여 기본 공격이 변화, 타격범위에 추가적인 피해를 입히고\n공격력,공격속도,공격범위가 증가 받는 피해 15% 증가한다.";
-                    class_Icon_text.text = "변신하여 기본 공격이 강화되고 흡혈 효과가 추가되며 타겟과 인접한 적에게 " + LastDmg + "(" + oriDmg + "*0.3)피해" +
-                        "\n공격력, 공격 속도, 공격 범위가 증가하지만, 받는 피해가 15% 상승합니다.";
+                    /*class_Icon_text.text = "변신하여 기본 공격이 강화되고 흡혈 효과가 추가되며 타겟과 인접한 적에게 " + LastDmg + "(" + oriDmg + "*0.3)피해" +
+                        "\n공격력, 공격 속도, 공격 범위가 증가하지만, 받는 피해가 15% 상승합니다.";*/
+                    class_Icon_text.text = "변신: 흡혈 효과와 스플래시 피해(" + LastDmg + ")(" + oriDmg + " * 0.3) 부여" +"\n공격력, 공격 속도, 공격 범위 증가, 받는 피해 15% 상승";
                 }
                 else if(_partyIconState == PartyIconState.Skill2)
                 {

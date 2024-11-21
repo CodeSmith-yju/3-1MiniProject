@@ -77,8 +77,15 @@ public class PlayerAction : MonoBehaviour
                 {
                     //튜토리얼던전깨고나와서 던전팝업 open한뒤에 닫고 말걸어서 50넘기고와서 던전팝업열면 튜토리얼던전다시깨야됨
                     //if actionIndex 분기해야할듯 테스트 고다고 
-                    GameUiMgr.single.isDungeon = true;
-                    GameUiMgr.single.OpenDungeonUi();
+                    if (GameMgr.single.GetPlayerDifficulty() != 2)
+                    {
+                        GameUiMgr.single.isDungeon = true;
+                        GameUiMgr.single.OpenDungeonUi();
+                    }
+                    else
+                    {
+                        GameUiMgr.single.popUp.SetPopUp("접수원에게 보고를 완료해 주세요.", PopUpState.None);
+                    }
                     //GameUiMgr.single.textEquipPanel.text = "던전에 입장하시겠습니까?";//OK버튼 클릭했을때 다른효과가 나와야하는데 생각조금 더 해봐야함
                     //GameUiMgr.single.addEquipPanel.gameObject.SetActive(true);
                     return;

@@ -13,7 +13,8 @@ public enum PlayerDifficulty
 {
     None = 0,          // 선택되지 않음
     Tutorial_Before = 1, // 튜토리얼 진행 전
-    Tutorial_After = 2,  // 튜토리얼 클리어 후
+    Tutorial_DungeonClearAndNotTalk = 2,
+    Tutorial_After = 3,  // 튜토리얼 클리어 후
 
     Easy_Before = 10,     // 쉬움 난이도 진행 전
     Easy_After,      // 쉬움 난이도 클리어 후
@@ -30,7 +31,6 @@ public class GameMgr : MonoBehaviour
 {
     public static GameMgr single { get; private set; }
     public static List<PlayerData> playerData { get; private set; }//여기 수정함 06-02
-    public PlayerDifficulty playerDifficulty { get; private set; }
 
     public bool shopCleaner;
     public bool tutorial = false;
@@ -100,6 +100,15 @@ public class GameMgr : MonoBehaviour
     {
         return shopCleaner;
     }
-
+    public void SetPlayerDifficulty(int _index)
+    {
+        playerData[0].playerDifficulty = (PlayerDifficulty)_index;
+        Debug.Log("SetDifficulty: "+ (PlayerDifficulty)_index);
+    }
+    public int GetPlayerDifficulty()
+    {
+        Debug.Log("GetDifficulty: " + playerData[0].playerDifficulty);
+        return (int)playerData[0].playerDifficulty;
+    }
 }
 

@@ -830,7 +830,9 @@ public class BattleManager : MonoBehaviour
         GameMgr.playerData[0].cur_Player_Hp = GameMgr.playerData[0].max_Player_Hp;
 
         if (SceneManager.GetActiveScene().name == "Tutorial")
+        {
             GameMgr.single.tutorial = true;
+        }
 
         if (!GameMgr.single.GetShopClean())
         {
@@ -847,6 +849,11 @@ public class BattleManager : MonoBehaviour
     // 보상 팝업 내용물 초기화
     public void DestroyRewardPopup()
     {
+        if (GameMgr.single.GetPlayerDifficulty() < 2)
+        {
+            GameMgr.single.SetPlayerDifficulty(2);
+        }
+
         RewardPopupInit popup = ui.reward_Popup.GetComponent<RewardPopupInit>();
 
         foreach (Transform child in popup.inner_Gold_Exp.transform)

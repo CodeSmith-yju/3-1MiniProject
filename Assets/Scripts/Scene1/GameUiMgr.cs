@@ -1068,7 +1068,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 GameMgr.playerData[0].atk_Speed, GameMgr.playerData[0].atk_Range, GameMgr.playerData[0].base_atk_Dmg,
                 GameMgr.playerData[0].player_max_Exp, GameMgr.playerData[0].player_cur_Exp, GameMgr.single.tutorial, GameMgr.playerData[0].defensePoint,
                 saveInventoryItem, saveWearItem, saveShopItems,
-                GameMgr.playerData[0].listPartyDatas, GameMgr.playerData[0].listPartyDeparture
+                GameMgr.playerData[0].listPartyDatas, GameMgr.playerData[0].listPartyDeparture, GameMgr.playerData[0].playerDifficulty
                 );
 
         // SaveData를 DB에 저장
@@ -1181,7 +1181,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
         // 상점 아이템 로드
         GameUiMgr.single.shopMgr.ReLoadShopItems(loadData.shops);
-
+        GameMgr.single.SetPlayerDifficulty((int)loadData.p_playerDifficulty);
         Debug.Log("Load Success: Data loaded from DB.");
     }
 
@@ -2442,6 +2442,21 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     public PartyDetails GetPartyDetails()
     {
         return partyDetails;
+    }
+
+    public void SetAdventurerRateText(string _text)
+    {
+        tmp_PlayerRating.text = _text;
+    }
+    public void SetQuestBoardText(string _text, bool _onoff)
+    {
+        questDesc.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(_onoff);
+        questDesc.text = _text;
+    }
+
+    public void UpdatePlayerRankAndQuestText()
+    {
+
     }
 }
 public enum PlaceState

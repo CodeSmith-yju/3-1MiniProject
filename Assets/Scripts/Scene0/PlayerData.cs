@@ -43,6 +43,7 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
     public int playerQuestIndex;
 
     public PlaceState PlaceState;
+    public PlayerDifficulty playerDifficulty;
     //public PartyData partySlotData = null;// Hero.cs ... 에서 동일개체인지 확인하려고 추가한 변수..의미가없는거같기도하고
     public PlayerData(string name)
     {
@@ -76,6 +77,7 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
         listPartyDeparture = new List<PartyData>();
 
         playerAttribute = BaseEntity.Attribute.Normal;
+        playerDifficulty = PlayerDifficulty.Tutorial_Before;
     }
     public PlayerData(int index, float hp, float mp, float atk_spd, float atk_range, float atkDmg, int lv, string name, bool skil_able, bool melee, int defense, Ally.Job job, BaseEntity.Attribute attribute)
     {
@@ -193,13 +195,14 @@ public class SaveData
 
     public List<PartyData> listPartyData;
     public List<PartyData> listPartyDeparture;
+    public PlayerDifficulty p_playerDifficulty;
 
     public SaveData(string name, int level, int gold, int qID, int qActID, 
         float max_hp, float cur_hp, float max_sn, float cur_sn, float max_mp, float cur_mp, 
         float a_spd, float a_range, float a_dmg, 
         float max_exp, float cur_exp, bool _tutorialClear, int _defensePoint,
         List<Item> _invenItem, List<Item> _invenEquip, List<Item> _shopSlots,
-        List<PartyData> _party, List<PartyData> _departure
+        List<PartyData> _party, List<PartyData> _departure, PlayerDifficulty _playerDifficulty
         )
     {
         //this.pd = pd;
@@ -235,6 +238,7 @@ public class SaveData
 
         this.listPartyData = _party;
         this.listPartyDeparture = _departure;
+        this.p_playerDifficulty = _playerDifficulty;
     }
 
 }
@@ -262,7 +266,7 @@ public static class SaveSystem
         if (!File.Exists(saveFilePath))
         {
             Debug.LogWarning("No such saveFile exists. Creating a new one...");
-            SaveData noneSave = new SaveData("", 0,0,0,0, 0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f, false, 0, null, null, null, null, null);
+            SaveData noneSave = new SaveData("", 0,0,0,0, 0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f, false, 0, null, null, null, null, null, PlayerDifficulty.None);
             Save(noneSave, saveFileName);  // Create a new save file
             return noneSave;
         }

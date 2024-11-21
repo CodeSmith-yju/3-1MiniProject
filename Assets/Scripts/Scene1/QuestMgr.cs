@@ -177,7 +177,7 @@ public class QuestMgr : MonoBehaviour
                 else if (questActionIndex == 2)
                 {
                     Debug.Log("Case 42");
-                    GameUiMgr.single.tmp_PlayerRating.text = "9급 모험가";
+                    GameUiMgr.single.SetAdventurerRateText("초급 모험가");
                     /*GameMgr.single.IsGameLoad(true);
                     GameUiMgr.single.GameSave();
                     SceneManager.LoadScene("Title");*/
@@ -205,7 +205,7 @@ public class QuestMgr : MonoBehaviour
                 break;
         }
 
-        if (questId >= 50)
+        /*if (questId >= 50)
         {
             for (int i = 0; i < questIcons.Length; i++)
             {
@@ -213,7 +213,7 @@ public class QuestMgr : MonoBehaviour
                 GameUiMgr.single.questDesc.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(false);
                 GameUiMgr.single.tmp_PlayerRating.text = "9급 모험가";
             }
-        }
+        }*/
     }
     /*    Item questItem2;
     if (questActionIndex == 0){Debug.Log("Case 40");}
