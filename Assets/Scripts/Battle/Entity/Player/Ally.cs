@@ -132,17 +132,17 @@ public class Ally : BaseEntity
     // 사운드 수정 예정
     public void AttackSound(int index)
     {
-        AudioManager.single.PlayerSound(index, index, 1);
+        AudioManager.single.PlayerSound(entity_index + 1, index, 1);
     }
 
     public void DieSound(int index)
     {
-       AudioManager.single.PlayerSound(index, index, 0);
+       AudioManager.single.PlayerSound(entity_index + 1, index, 0);
     }
 
     public void SkillSound(int index)
     {
-        AudioManager.single.PlayerSound(index, index, 2);
+        AudioManager.single.PlayerSound(entity_index + 1, index, 2);
     }
 
 }

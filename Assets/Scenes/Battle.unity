@@ -6515,6 +6515,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Buff_Tile_Tooltip
       objectReference: {fileID: 0}
+    - target: {fileID: 7749502184640465793, guid: 3bfa305eeeffcb34eb68805de562be85, type: 3}
+      propertyPath: m_fontSize
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 7749502184640465793, guid: 3bfa305eeeffcb34eb68805de562be85, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 22
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8196,6 +8204,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 379160250}
+    - target: {fileID: 4598016792847378024, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 379160249}
     - target: {fileID: 6115706018246200998, guid: ed4630a53b4dc2c458fe29143231ff5e, type: 3}
       propertyPath: m_Name
       value: Reward_Popup

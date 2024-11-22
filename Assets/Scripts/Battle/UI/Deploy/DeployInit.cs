@@ -13,7 +13,7 @@ public class DeployInit : MonoBehaviour
     public GameObject buff_Prefab;
     public Transform buff_Deploy_Tf;
 
-    private int butt_Count = 3;
+    private int butt_Count = 4;
 
     public List<GameObject> highlight = new List<GameObject>();
     List<GameObject> buff = new List<GameObject>();
@@ -83,7 +83,7 @@ public class DeployInit : MonoBehaviour
     {
         List<GameObject> availableTiles = new List<GameObject>(highlight); // 선택 가능한 타일 복사본
 
-        for (int i = 0; i < butt_Count; i++)
+        for (int i = 0; i < Random.Range(0, butt_Count); i++)
         {
             if (availableTiles.Count == 0)
             {
@@ -99,8 +99,10 @@ public class DeployInit : MonoBehaviour
             buff.Add(selectedTile);
             availableTiles.RemoveAt(randomIndex);
 
+            int randomBuff = Random.Range(0, butt_Count);
+
             // 버프 생성
-            CreateBuff(selectedTile, i);
+            CreateBuff(selectedTile, randomBuff);
         }
     }
 

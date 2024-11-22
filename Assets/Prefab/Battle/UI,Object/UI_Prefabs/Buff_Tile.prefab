@@ -134,6 +134,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 328f639a3bb376c4aacd1066c7d11707, type: 3}
   - {fileID: 21300000, guid: 2a9a2894d31d53744a805c45fb91f3fc, type: 3}
   - {fileID: 21300000, guid: 2f00d8e672ce08f478f6a8612ac0f3ee, type: 3}
+  - {fileID: -1177825804, guid: 06644b23a2612c94a82d605863fc1bf7, type: 3}
   players: []
   buffTooltip: {fileID: 0}
 --- !u!61 &8793911764649681470

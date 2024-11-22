@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler
 {
     StatManager[] party_stat;
     public TMP_Text item_Cnt_Text;
@@ -144,6 +144,7 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             
             item_Cnt -= 1;
             myItem.itemStack = item_Cnt;
+            AudioManager.single.PlaySfxClipChange(14);
 
             // 아이템 사용 후 아이템 스택이 0이 될 때 아이템을 삭제하도록 함.
             if (myItem.itemStack <= 0)
@@ -186,6 +187,11 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)//Move InnerItem
     {
+        if (myItem.itemStack > 0 && myItem != null)
+        {
+            AudioManager.single.PlaySfxClipChange(1);
+        }
+
         if (myItem.itemName != string.Empty)
         {
             Debug.Log("ToolTip Active");
@@ -197,10 +203,22 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             BattleManager.Instance.ui.tooltip.gameObject.SetActive(false);
         }
     }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (myItem.itemStack > 0 && myItem != null)
+        {
+            AudioManager.single.PlaySfxClipChange(0);
+        }
+    }
+
+
     public void OnPointerExit(PointerEventData eventData)
     {
         BattleManager.Instance.ui.tooltip.gameObject.SetActive(false);
     }
+
+
     public Item UseItem()
     {
         if (myItem != null)
@@ -210,5 +228,5 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         return null;
     }
 
-    
+
 }

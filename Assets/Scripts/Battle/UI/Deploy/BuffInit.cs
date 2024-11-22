@@ -114,6 +114,10 @@ public class BuffInit : MonoBehaviour
                 player_Data.max_Player_Mp = player.max_Mp;
                 Debug.Log($"{player.name}의 마나 버프 적용: {player.max_Mp}");
                 break;
+            case 3: // 방어력 버프 +25 (10% 피해 감소)
+                player.def_Point += 25;
+                player_Data.defensePoint = player.def_Point;
+                break;
         }
     }
 
@@ -126,6 +130,7 @@ public class BuffInit : MonoBehaviour
             player.atkDmg = stats.temp_Dmg;
             player.max_Hp = stats.temp_MaxHp;
             player.max_Mp = stats.temp_MaxMp;
+            player.def_Point = stats.temp_Dp;
 
             // 체력 비율에 따라 현재 체력 조정 및 클램핑
             player.cur_Hp = Mathf.Clamp(healthRatio * stats.temp_MaxHp, 0, stats.temp_MaxHp);
@@ -134,6 +139,7 @@ public class BuffInit : MonoBehaviour
             player_Data.max_Player_Mp = stats.temp_MaxMp;
             player_Data.max_Player_Hp = stats.temp_MaxHp;
             player_Data.cur_Player_Hp = player.cur_Hp;
+            player_Data.defensePoint = stats.temp_Dp;
 
 
             //temp_Stats.Remove(player);
@@ -219,6 +225,7 @@ public class BuffInit : MonoBehaviour
             case 0: return "공격력 +10%";
             case 1: return "최대 체력 +20%";
             case 2: return "최대 마나 -1";
+            case 3: return "방어력 +25 (받는 피해 -10%)";
             default: return "알 수 없는 버프입니다.";
         }
     }
