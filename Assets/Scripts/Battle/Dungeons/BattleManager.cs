@@ -749,6 +749,29 @@ public class BattleManager : MonoBehaviour
                     }
                 }
                 break;
+            case 4:
+                // 방어력 감소
+                titleInit.Init("'약화' 디버프가 걸립니다.\n(방어력 -15 [받는 피해 +6%])");
+
+                foreach (GameObject player in deploy_Player_List)
+                {
+                    Ally player_Ally = player.GetComponent<Ally>();
+
+                    if (player_Ally != null && player_Ally.cur_Hp > 0)
+                    {
+                        PlayerData playerData = GameMgr.playerData[player_Ally.entity_index];
+
+                        if (temp_Stats.TryGetValue(playerData, out PlayerStats stats))
+                        {
+                            player_Ally.def_Point -= 15;
+                            playerData.defensePoint = player_Ally.def_Point;
+
+                            stats.temp_Dp = playerData.defensePoint;
+                        }
+
+                    }
+                }
+                break;
         }
     }
 
