@@ -72,6 +72,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
     [Header("Quest Manager")]
     public QuestMgr questMgr;//퀘스트 번호를 가져올 퀘스트 매니저 변수 생성
+    public TextMeshProUGUI questTitle;
     public TextMeshProUGUI questDesc;
     //06-18 퀘스트 Id, Index가 정상저장이되지않는상태이기때문에 이를 해결하기위한 추가변수 도입
     public static int quest_Id = 0;
@@ -863,7 +864,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
             talkIndex = 0;
             questDesc.text = questMgr.CheckQuest(scanObj_ID);
-
+            if (GameMgr.single.GetPlayerDifficulty() == 4)
+            {
+                UpdatePlayerRankAndQuestText((PlayerDifficulty)GameMgr.single.GetPlayerDifficulty());
+            }
             return;
         }
 
@@ -2450,8 +2454,13 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     }
     public void SetQuestBoardText(string _text, bool _onoff)
     {
+        Debug.Log("Run: ChangeQuestBoardText: "+_text);
         questDesc.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(_onoff);
         questDesc.text = _text;
+    }
+    public void SetQuestTitleText(string _text)
+    {
+        questTitle.text = _text;
     }
 
     public void UpdatePlayerRankAndQuestText(PlayerDifficulty _playerDifficulty)
@@ -2472,9 +2481,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 SetQuestBoardText("장비를 모두 장착했다 접수원에게 보고하자", true);
                 //접수원 !를 ?로 변경, 화살표 띄워주기.SetPlayerDifficulty(5);
                 break;
+
             case PlayerDifficulty.Tutorial_PartyBefor:
                 questMgr.SetQuestICon(0, 1);// ...
-                SetQuestBoardText("파티원을 모집하자.", true);
+                SetQuestBoardText("게시판에서 파티원을 모집하자", true);
+                Debug.LogWarning("이거실행되고있는거아니였냐");
                 break;
             case PlayerDifficulty.Tutorial_PartyAfter:
                 questMgr.SetQuestICon(0, 2);// ?
@@ -2493,6 +2504,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 break;
 
             case PlayerDifficulty.Easy_Before:
+                SetQuestBoardText("쉬움 난이도 던전 클리어 0/1", true);
                 break;
             case PlayerDifficulty.Easy_After:
                 break;

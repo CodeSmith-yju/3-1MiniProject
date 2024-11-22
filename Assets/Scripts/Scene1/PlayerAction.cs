@@ -77,12 +77,12 @@ public class PlayerAction : MonoBehaviour
                 {
                     //튜토리얼던전깨고나와서 던전팝업 open한뒤에 닫고 말걸어서 50넘기고와서 던전팝업열면 튜토리얼던전다시깨야됨
                     //if actionIndex 분기해야할듯 테스트 고다고 
-                    if (GameMgr.single.GetPlayerDifficulty() != 6)// || easy, nomal, hard, final
+                    if (GameMgr.single.GetPlayerDifficulty() == 6)// || easy, nomal, hard, final
                     {
                         GameUiMgr.single.isDungeon = true;
                         GameUiMgr.single.OpenDungeonUi();
                     }
-                    else
+                    else if(GameMgr.single.GetPlayerDifficulty() == 7)
                     {
                         GameUiMgr.single.popUp.SetPopUp("접수원에게 보고를 완료해 주세요.", PopUpState.None);
                     }
