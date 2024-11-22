@@ -435,6 +435,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             Debug.Log("---------------------------상점 새로고침이 안되는 ㄷ ㅔ스 *----------");
         }
+
+        UpdatePlayerRankAndQuestText((PlayerDifficulty)GameMgr.single.GetPlayerDifficulty());
     }
 
     //03-31 Method Inventory - try.4
@@ -583,7 +585,14 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             /*if (questMgr.questId > 30 || questMgr.questId == 30 && questMgr.questActionIndex >= 1 )
                  ActiveParty();*/
-            ActivePartyDetail();
+            if (GameMgr.single.GetPlayerDifficulty() > 4)
+            {
+                ActivePartyDetail();
+            }
+            else
+            {
+                Debug.LogWarning("파티 상태창 개방 조건 미 충족");
+            }
         }
 
         //Ui Event Action
@@ -1674,8 +1683,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             if (questMgr.questId < 30)
             {
-                Receptionist_1();
-                //SetQuestBoardText("장비 장착을 완료했으니\n 접수원에게 보고하자.", true);
+                questMgr.SetReceptionist(1);
+                GameMgr.single.SetPlayerDifficulty(3);
+                UpdatePlayerRankAndQuestText((PlayerDifficulty)GameMgr.single.GetPlayerDifficulty());
                 Debug.Log("장비 장착 퀘스트 조건 충족");
             }
             //tutorial Quest - wearEquipment
@@ -1690,7 +1700,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             if (questMgr.questId < 30)
             {
-                Receptionist_0();
+                questMgr.SetReceptionist(0);
+                GameMgr.single.SetPlayerDifficulty(2);
+                UpdatePlayerRankAndQuestText((PlayerDifficulty)GameMgr.single.GetPlayerDifficulty());
                 Debug.Log("장비 장착 퀘스트 조건 미충족");
             }
         }
@@ -1700,22 +1712,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     {
         if (GameMgr.single.tutorial)
         {
-            Receptionist_1();
+            questMgr.SetReceptionist(1);
             Debug.Log("튜토리얼 던전 클리어 GameMgr.single.tutorial: " + GameMgr.single.tutorial);
         }
         
-    }
-    public void Receptionist_1()
-    {
-        questMgr.receptionist[0].SetActive(false);
-        questMgr.receptionist[1].SetActive(true);
-        Debug.Log("======================================\nRun Method: Recep_1");
-    }
-    public void Receptionist_0()
-    {
-        questMgr.receptionist[0].SetActive(true);
-        questMgr.receptionist[1].SetActive(false);
-        Debug.Log("======================================\nRun Method: Recep_0");
     }
     #region DBConnect_Load_Method
 
@@ -2095,7 +2095,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 {
                     PartyListInPlayer(GetPlayerPrefab());
                     if (questMgr.questId == 30 && questMgr.questActionIndex == 1)
-                        Receptionist_1();
+                        questMgr.SetReceptionist(1);
                     blockedPartyBord.SetActive(true);
                     btn_PartyCommit.interactable = false;
                     int battleIndex = 1;
@@ -2320,7 +2320,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         //06-16
         if (questMgr.questId == 30 && questMgr.questActionIndex == 1)
         {
-            Receptionist_1();
+            questMgr.SetReceptionist(1);
         }
 
         blockedPartyBord.SetActive(true);
@@ -2454,9 +2454,61 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         questDesc.text = _text;
     }
 
-    public void UpdatePlayerRankAndQuestText()
+    public void UpdatePlayerRankAndQuestText(PlayerDifficulty _playerDifficulty)
     {
+        switch (_playerDifficulty)
+        {
+            case PlayerDifficulty.None:
+                break;
+            case PlayerDifficulty.Tutorial_Before:
+                Debug.Log("GameStart");
+                break;
+            case PlayerDifficulty.Tutorial_WearEquipBefore:
+                questMgr.SetQuestICon(0, 1);// ...
+                SetQuestBoardText("장비를 착용하고 다시 말을 걸어보자", true);
+                break;
+            case PlayerDifficulty.Tutorial_WearEquipAfter:
+                questMgr.SetQuestICon(0, 2);// ?
+                SetQuestBoardText("장비를 모두 장착했다 접수원에게 보고하자", true);
+                //접수원 !를 ?로 변경, 화살표 띄워주기.SetPlayerDifficulty(5);
+                break;
+            case PlayerDifficulty.Tutorial_PartyBefor:
+                questMgr.SetQuestICon(0, 1);// ...
+                SetQuestBoardText("파티원을 모집하자.", true);
+                break;
+            case PlayerDifficulty.Tutorial_PartyAfter:
+                questMgr.SetQuestICon(0, 2);// ?
+                SetQuestBoardText("파티원을 모집했다 접수원에게 보고하자", true);
+                break;
 
+            case PlayerDifficulty.Tutorial_DungeonBefor:
+                questMgr.SetQuestICon(0, 1);
+                SetQuestBoardText("모의 전투에서 승리하자", true);
+                break;
+            case PlayerDifficulty.Tutorial_DungeonClearAndNotTalk:
+                questMgr.SetQuestICon(0, 2);// ?
+                SetQuestBoardText("모의전투를 클리어했다 접수원에게 보고하자", true);
+                break;
+            case PlayerDifficulty.Tutorial_After:
+                break;
+
+            case PlayerDifficulty.Easy_Before:
+                break;
+            case PlayerDifficulty.Easy_After:
+                break;
+            case PlayerDifficulty.Normal_Before:
+                break;
+            case PlayerDifficulty.Normal_After:
+                break;
+            case PlayerDifficulty.Hard_Before:
+                break;
+            case PlayerDifficulty.Hard_After:
+                break;
+            case PlayerDifficulty.FinalBoss:
+                break;
+            default:
+                break;
+        }
     }
 }
 public enum PlaceState

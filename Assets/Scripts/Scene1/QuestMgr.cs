@@ -5,6 +5,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+public enum QuestState
+{
+    //None,
+    Wait,
+    Ing,
+    Done
+}
 public class QuestMgr : MonoBehaviour
 {
     public int questId;
@@ -40,12 +47,17 @@ public class QuestMgr : MonoBehaviour
         dict_questList.Add(0, new QuestData("모험의 시작", new int[] { 1000 }));
         // Add메서드로 questID, questData를 데이터사전(= dict_questList)에 저장. 구조체 매개변수 생성자의 int배열에는 첫 마을 방문 퀘스트에 연관된 npcID를 입력
         dict_questList.Add(10, new QuestData("모험가 길드 직원에게 말을 걸어보자", new int[] { 1000, 2000 }));
-        dict_questList.Add(20, new QuestData("장비를 착용하고 다시 말을 걸어보자", new int[] { 1000, 2000 }));
+        dict_questList.Add(20, new QuestData("장비를 착용하고\n다시 말을 걸어보자", new int[] { 1000, 2000 }));
 
         dict_questList.Add(30, new QuestData("파티원을 모집하자", new int[] { 1000, 2000 }));
         //dict_questList.Add(40, new QuestData("체력이 줄었다. 받은 물약을 먹자.", new int[] { 1000, 2000 }));
         dict_questList.Add(40, new QuestData("모의 전투에서 승리하자", new int[] { 1000, 2000 }));
         dict_questList.Add(50, new QuestData("모험가 등록 완료", new int[] { 1000, 2000 }));
+        /*dict_questList.Add(60, new QuestData("모험가 등록 완료", new int[] { 1000, 2000 }));
+        dict_questList.Add(70, new QuestData("모험가 등록 완료", new int[] { 1000, 2000 }));
+        dict_questList.Add(80, new QuestData("모험가 등록 완료", new int[] { 1000, 2000 }));
+        dict_questList.Add(90, new QuestData("모험가 등록 완료", new int[] { 1000, 2000 }));
+        dict_questList.Add(100, new QuestData("모험가 등록 완료", new int[] { 1000, 2000 }));*/
         dict_questList.Add(60, new QuestData("이게없어서 버그가나는거였네", new int[] { 1000, 2000 }));
 
         //dict_questList.Add(30, new QuestData("마을의 전설 듣기 퀘스트 클리어!", new int[] { 10000, 4000 }));
@@ -53,7 +65,6 @@ public class QuestMgr : MonoBehaviour
 
     public int GetQuestTalkIndex(int id_Npc) // Npc의 Id를 매개변수로 받아서 퀘스트번호를 반환하는 메서드
     {
-
         return questId + questActionIndex;
     }
 
@@ -105,18 +116,14 @@ public class QuestMgr : MonoBehaviour
                 if (questActionIndex == 1)
                 {
                     GameUiMgr.single.tmp_PlayerRating.text = "견습 모험가";
-                    questIcons[0].GetComponent<SpriteRenderer>().sprite = spQuestIcons[1];
+                    SetQuestICon(0, 0);
 
-                    receptionist[0].SetActive(false);
-                    receptionist[1].SetActive(true);
+                    SetReceptionist(1);
                 }
                 if (questActionIndex == 2)
                 {
-                    questIcons[0].GetComponent<SpriteRenderer>().sprite = spQuestIcons[0];
-
-                    receptionist[0].SetActive(true);
-                    receptionist[1].SetActive(false);
-
+                    SetQuestICon(0, 1);
+                    SetReceptionist(0);
                     TutorialEquip();
                 }
                 break;
@@ -126,31 +133,33 @@ public class QuestMgr : MonoBehaviour
                 if (questActionIndex == 0)
                 {
                     Debug.Log("Case 20");
-                    //questIcons[0].GetComponent<SpriteRenderer>().sprite = spQuestIcons[1];
+                    SetQuestICon(0, 1);
                 }
 
                 if (questActionIndex == 1)
                 {
                     Debug.Log("Case 21");
                     GameUiMgr.single.AllEquipChek();
-                    questIcons[0].GetComponent<SpriteRenderer>().sprite = spQuestIcons[0];
-
+                    SetQuestICon(0, 1);
                 }
                 else if (questActionIndex == 2)
                 {
                     Debug.Log("Case 22");
-                    receptionist[0].SetActive(true);
-                    receptionist[1].SetActive(false);
+                    SetReceptionist(0);
+                    GameMgr.single.SetPlayerDifficulty(4);
+                    SetQuestICon(0, 0);
                 }
                 break;
-            case 30:// Dungeon Event
+            case 30:// Party Event
                 if (questActionIndex == 0)
                 {
                     Debug.Log("Case 30");
+                    SetQuestICon(0, 0);
                 }
                 if (questActionIndex == 1)
                 {
                     Debug.Log("Case31");
+                    SetQuestICon(0, 1);
                 }
                 else if (questActionIndex == 2)
                 {
@@ -160,11 +169,11 @@ public class QuestMgr : MonoBehaviour
                         Debug.Log("Make Tutorial Potion");
                         Inventory.Single.AddItem(ItemResources.instance.itemRS[6]);
                     }
-                    receptionist[0].SetActive(true);
-                    receptionist[1].SetActive(false);
+                    SetReceptionist(0);
+                    SetQuestICon(0, 0);
                 }
                 break;
-            case 40:// Using Potion Event
+            case 40:// Dungeon Event
                 if (questActionIndex == 0)
                 {
                     Debug.Log("Case 40");
@@ -191,7 +200,7 @@ public class QuestMgr : MonoBehaviour
                 if (questActionIndex == 0)
                 {
                     Debug.Log("Case 50");
-                    GameUiMgr.single.questDesc.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(false);
+                    GameUiMgr.single.SetQuestBoardText("Test",true);
                     SetQuestICon(0, 0);
                 }
 
@@ -238,6 +247,21 @@ public class QuestMgr : MonoBehaviour
 
     }
     break;*/
+    public void SetReceptionist(int _index)
+    {
+        for (int i = 0; i < receptionist.Length; i++)
+        {
+            if (i == _index)
+            {
+                receptionist[i].SetActive(true);
+            }
+            else
+            {
+                receptionist[i].SetActive(false);
+            }
+        }
+        Debug.Log("======================================Run Method: Recep_" + _index);
+    }
 
     public void TutorialEquip()
     {
@@ -252,8 +276,8 @@ public class QuestMgr : MonoBehaviour
     }
     public void SetQuestICon(int _index, int _spIndex)
     {
-        // 0 = !, 1 = ... 
+        // 0 = ! /  1 = ... /  2 = ?
         questIcons[_index].GetComponent<SpriteRenderer>().sprite = spQuestIcons[_spIndex];
     }
-
+    //public void SetQuestSupportIcon() { }
 }

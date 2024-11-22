@@ -4007,6 +4007,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6eb44c41a6ac2ca459917ab6dd740676, type: 3}
   - {fileID: 8300000, guid: 6e36424f4d1ac8c4fa2116baf5842c55, type: 3}
   - {fileID: 8300000, guid: 78f91413ec670004897efc49c79953d1, type: 3}
+  - {fileID: 8300000, guid: 72f681b88cf6e744b89b65521f03871a, type: 3}
   sfxVolume: 0.5
   channels: 20
   hero_sfxClip:

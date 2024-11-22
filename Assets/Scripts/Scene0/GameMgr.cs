@@ -13,19 +13,27 @@ public enum PlayerDifficulty
 {
     None = 0,          // 선택되지 않음
     Tutorial_Before = 1, // 튜토리얼 진행 전
-    Tutorial_DungeonClearAndNotTalk = 2,
-    Tutorial_After = 3,  // 튜토리얼 클리어 후
+    
+    Tutorial_WearEquipBefore = 2, //장비장착 전,후
+    Tutorial_WearEquipAfter = 3,
 
-    Easy_Before = 10,     // 쉬움 난이도 진행 전
+    Tutorial_PartyBefor = 4, // 파티원 모집 전,후-> 후 이상으로 갔을때 P키로 상태창열리게함.
+    Tutorial_PartyAfter = 5,
+
+    Tutorial_DungeonBefor = 6,
+    Tutorial_DungeonClearAndNotTalk = 7, // 튜토리얼 클리어 후
+    Tutorial_After = 8, //튜토클 이후 접수원 상담 
+
+    Easy_Before = 20,     // 쉬움 난이도 진행 전
     Easy_After,      // 쉬움 난이도 클리어 후
 
-    Normal_Before = 20,   // 보통 난이도 진행 전
+    Normal_Before = 30,   // 보통 난이도 진행 전
     Normal_After,    // 보통 난이도 클리어 후
 
-    Hard_Before = 30,     // 어려움 난이도 진행 전
+    Hard_Before = 40,     // 어려움 난이도 진행 전
     Hard_After,      // 어려움 난이도 클리어 후
 
-    FinalBoss = 40        // 최종 던전
+    FinalBoss = 50        // 최종 던전
 }
 public class GameMgr : MonoBehaviour
 {
@@ -109,6 +117,17 @@ public class GameMgr : MonoBehaviour
     {
         Debug.Log("GetDifficulty: " + playerData[0].playerDifficulty);
         return (int)playerData[0].playerDifficulty;
+    }
+
+    public bool GetPartyCommit()
+    {
+        if ((PlayerDifficulty)GetPlayerDifficulty() == PlayerDifficulty.Tutorial_PartyBefor)
+        {
+            SetPlayerDifficulty(5);
+            return true;
+        }
+
+        return false;
     }
 }
 

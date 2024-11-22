@@ -849,9 +849,9 @@ public class BattleManager : MonoBehaviour
     // 보상 팝업 내용물 초기화
     public void DestroyRewardPopup()
     {
-        if (GameMgr.single.GetPlayerDifficulty() < 2)
+        if (GameMgr.single.GetPlayerDifficulty() < 6)
         {
-            GameMgr.single.SetPlayerDifficulty(2);
+            GameMgr.single.SetPlayerDifficulty(6);
         }
 
         RewardPopupInit popup = ui.reward_Popup.GetComponent<RewardPopupInit>();
