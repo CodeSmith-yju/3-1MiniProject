@@ -28,6 +28,7 @@ public class QuestMgr : MonoBehaviour
     [Header("NPC list")]
     public GameObject[] receptionist;// 모험가길드에서 튜토리얼을진행할 접수원을 분할하여 퀘스트기능을 구현하는데 용이하도록함
 
+    [SerializeField] PlayerDifficulty now_playerDifficulty;
     //04-26 Quest Potion Ev
     //private static bool oneTimeEv = false;
 
@@ -52,7 +53,7 @@ public class QuestMgr : MonoBehaviour
         dict_questList.Add(30, new QuestData("파티원 모집", new int[] { 1000, 2000 }));
         //dict_questList.Add(40, new QuestData("체력이 줄었다. 받은 물약을 먹자.", new int[] { 1000, 2000 }));
         dict_questList.Add(40, new QuestData("모의 전투에서 승리하자", new int[] { 1000, 2000 }));
-        dict_questList.Add(50, new QuestData("중급 모험가로 승급하자", new int[] { 1000, 2000 }));
+        dict_questList.Add(50, new QuestData("새로운 퀘스트 수주 가능", new int[] { 1000, 2000 }));
         /*dict_questList.Add(60, new QuestData("모험가 등록 완료", new int[] { 1000, 2000 }));
         dict_questList.Add(70, new QuestData("모험가 등록 완료", new int[] { 1000, 2000 }));
         dict_questList.Add(80, new QuestData("모험가 등록 완료", new int[] { 1000, 2000 }));
@@ -183,18 +184,18 @@ public class QuestMgr : MonoBehaviour
                 if (questActionIndex == 1)
                 {
                     Debug.Log("Case 41");
-                    GameMgr.single.SetPlayerDifficulty(6);
                     SetQuestICon(0, 1);
                 }
                 else if (questActionIndex == 2)
                 {
                     Debug.Log("Case 42");
-                    GameUiMgr.single.SetAdventurerRateText("초급 모험가");
-                    /*GameMgr.single.IsGameLoad(true);
-                    GameUiMgr.single.GameSave();
-                    SceneManager.LoadScene("Title");*/
+                    /*GameUiMgr.single.SetAdventurerRateText("초급 모험가");
+                    GameUiMgr.single.SetQuestTitleText("승급 퀘스트");
+                    GameUiMgr.single.SetQuestBoardText("쉬움 난이도 던전 클리어 0/1", true);*/
 
-                    SetQuestICon(0, 1);
+                    SetQuestICon(0, 0);
+                    SetReceptionist(0);
+
                     GameMgr.single.SetPlayerDifficulty(20);
                     GameUiMgr.single.UpdatePlayerRankAndQuestText((PlayerDifficulty)20);
                 }
@@ -203,14 +204,21 @@ public class QuestMgr : MonoBehaviour
                 if (questActionIndex == 0)
                 {
                     Debug.Log("Case 50");
-                    GameUiMgr.single.SetAdventurerRateText("초급 모험가");
-                    SetQuestICon(0, 1);
-                    GameUiMgr.single.SetQuestBoardText("쉬움 난이도 던전 클리어 0/1", true);
-                }
+                    /*GameUiMgr.single.SetAdventurerRateText("초급 모험가");
+                    GameUiMgr.single.SetQuestTitleText("승급 퀘스트");
+                    GameUiMgr.single.SetQuestBoardText("쉬움 난이도 던전 클리어 0/1", true);*/
+                    SetQuestICon(0, 0);
 
-                if (questActionIndex == 1)
+                    if ((int)now_playerDifficulty != 20)
+                    {
+                        GameMgr.single.SetPlayerDifficulty(20);
+                    }
+                }
+                else if (questActionIndex == 1)
                 {
                     Debug.Log("Case 51");
+                    GameMgr.single.SetPlayerDifficulty(21);
+                    SetQuestICon(0, 1);
                 }
                 break;
             default:
@@ -288,4 +296,13 @@ public class QuestMgr : MonoBehaviour
         questIcons[_index].GetComponent<SpriteRenderer>().sprite = spQuestIcons[_spIndex];
     }
     //public void SetQuestSupportIcon() { }
+
+    public PlayerDifficulty GetNowQuestDiffi()
+    {
+        return now_playerDifficulty;
+    }
+    public void SetNowQuestDiffi(PlayerDifficulty _diffi)
+    {
+        now_playerDifficulty = _diffi;
+    }
 }

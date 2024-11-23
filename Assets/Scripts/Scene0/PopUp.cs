@@ -115,7 +115,7 @@ public class PopUp : MonoBehaviour
             case PopUpState.PartyCommit:
                 GameUiMgr.single.EmploymentCompleted();
                 GameUiMgr.single.popUp.gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 300);
-                Debug.Log("----------------------------------------: "+ (PlayerDifficulty)GameMgr.single.GetPlayerDifficulty());
+                
                 if (GameMgr.single.GetPartyCommit())
                 {
                     Debug.Log("----------------------------------------: " + (PlayerDifficulty)GameMgr.single.GetPlayerDifficulty());

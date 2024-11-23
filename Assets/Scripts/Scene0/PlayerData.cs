@@ -43,7 +43,7 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
     public int playerQuestIndex;
 
     public PlaceState PlaceState;
-    public PlayerDifficulty playerDifficulty;
+    PlayerDifficulty playerDifficulty;
     //public PartyData partySlotData = null;// Hero.cs ... 에서 동일개체인지 확인하려고 추가한 변수..의미가없는거같기도하고
     public PlayerData(string name)
     {
@@ -99,6 +99,16 @@ public class PlayerData //플레이어 데이터만을 저장하는 데이터 �
         isMelee = melee;
         this.job = job;
         playerAttribute = attribute;
+    }
+
+    public void SetPlayerDataDifficulty(int _index)
+    {
+        playerDifficulty = (PlayerDifficulty)_index;
+    }
+    public PlayerDifficulty GetPlayerDataDifficulty()
+    {
+        Debug.Log("Get PlayerData[0].playerDifficulty: "+playerDifficulty.ToString());
+        return playerDifficulty;
     }
 
     public string GetPlayerName()

@@ -25,6 +25,8 @@ public enum PlayerDifficulty
     Tutorial_After = 8, //튜토클 이후 접수원 상담 
 
     Easy_Before = 20,     // 쉬움 난이도 진행 전
+    Easy_Start = 21,
+    Easy_DungeonClearAndNotTalk = 22,
     Easy_After,      // 쉬움 난이도 클리어 후
 
     Normal_Before = 30,   // 보통 난이도 진행 전
@@ -110,13 +112,14 @@ public class GameMgr : MonoBehaviour
     }
     public void SetPlayerDifficulty(int _index)
     {
-        playerData[0].playerDifficulty = (PlayerDifficulty)_index;
+        playerData[0].SetPlayerDataDifficulty(_index);
+        GameUiMgr.single.questMgr.SetNowQuestDiffi((PlayerDifficulty)_index);
         Debug.Log("SetDifficulty: "+ (PlayerDifficulty)_index);
+        Debug.Log("Now SetDiffi Get: "+(PlayerDifficulty)GetPlayerDifficulty());
     }
     public int GetPlayerDifficulty()
     {
-        Debug.Log("GetDifficulty: " + playerData[0].playerDifficulty);
-        return (int)playerData[0].playerDifficulty;
+        return (int)playerData[0].GetPlayerDataDifficulty();
     }
 
     public bool GetPartyCommit()

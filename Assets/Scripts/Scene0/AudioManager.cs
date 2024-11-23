@@ -251,8 +251,26 @@ public class AudioManager : MonoBehaviour
     
     public void PlaySfxClipChange(int _index)
     {
+        if (_index == 17)
+        {
+            if (sfxPlayers[0].clip.name == sfxClips[_index].name && sfxPlayers[0].isPlaying)
+            {
+                return;
+            }
+            StartCoroutine(ForceStopSfxAfterDelay(sfxPlayers[0], 0.275f));
+        }
         sfxPlayers[0].clip = sfxClips[_index];
         sfxPlayers[0].Play();
+    }
+    private IEnumerator ForceStopSfxAfterDelay(AudioSource audioSource, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // 소리가 재생되고 있을 때 강제로 정지
+        if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
     }
 
     public void PlaySfxVolumeChange(int _sfxIndex, float _val)

@@ -555,6 +555,21 @@ public class BattleManager : MonoBehaviour
         gold_Cnt = 0;
         drop_Item.Clear();
         battleEnded = true;
+
+
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+        {
+            if (GameMgr.single.GetPlayerDifficulty() < 7)
+            {
+                GameMgr.single.SetPlayerDifficulty(7);
+                GameMgr.single.tutorial = true;
+            }
+        }
+        else// easy, nomal, hard, lastBoss
+        {
+
+        }
+        
     }
 
 
@@ -829,11 +844,6 @@ public class BattleManager : MonoBehaviour
         GameMgr.playerData[0].cur_Player_Sn -= 15;
         GameMgr.playerData[0].cur_Player_Hp = GameMgr.playerData[0].max_Player_Hp;
 
-        if (SceneManager.GetActiveScene().name == "Tutorial")
-        {
-            GameMgr.single.tutorial = true;
-        }
-
         if (!GameMgr.single.GetShopClean())
         {
             GameMgr.single.SetShopClean(true);
@@ -849,11 +859,6 @@ public class BattleManager : MonoBehaviour
     // 보상 팝업 내용물 초기화
     public void DestroyRewardPopup()
     {
-        if (GameMgr.single.GetPlayerDifficulty() < 7)
-        {
-            GameMgr.single.SetPlayerDifficulty(7);
-        }
-
         RewardPopupInit popup = ui.reward_Popup.GetComponent<RewardPopupInit>();
 
         foreach (Transform child in popup.inner_Gold_Exp.transform)

@@ -195,6 +195,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             case 2:
                 dungeon_Level_Scale = 1.25f;
                 break;
+            case 3:
+                dungeon_Level_Scale = 2f;
+                break;
         }
     }
     private void TutoDungeonQuestCheck()
@@ -225,10 +228,23 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                     level_Buttons[i].interactable = false;
                     level_Buttons[i].GetComponent<CanvasGroup>().alpha = 0.5f;
                 }
-                else
+                else if (i == 4)
                 {
-                    level_Buttons[i].interactable = true;
-                    level_Buttons[i].GetComponent<CanvasGroup>().alpha = 1.0f;
+                    //if (GameMgr.single.GetPlayerDifficulty() > 60){} 이런거 조건줘서 활성, 비활성 및 표시될 텍스트 수정
+                    Debug.Log("LasgDungeon흠,,,");
+                }
+                else if(GameMgr.single.GetPlayerDifficulty() >= 20)
+                {
+                    if (i < GameMgr.single.GetPlayerDifficulty()/10)
+                    {
+                        level_Buttons[i].interactable = true;
+                        level_Buttons[i].GetComponent<CanvasGroup>().alpha = 1.0f;
+                    }
+                    else
+                    {
+                        level_Buttons[i].interactable = false;
+                        level_Buttons[i].GetComponent<CanvasGroup>().alpha = 0.5f;
+                    }
                 }
             }
         }
@@ -422,7 +438,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         SetPlayerDatas();//PlayerData[0]의 데이터를가져와서 데이터 저장하고 Dsce/각종 게이지 슬라이더/골드 변동사항 반영
 
         //튜토리얼던전 클리어 여부 확인하여 접수원 배치 변경하는 코드
-        TutorialDungeonClear();
+        TutorialDungeonClear();//이거이제 필요없어질거임
         //Tooltip
         SetTooltip();
         TargetSlotsRefresh();
@@ -838,9 +854,17 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             {
                 Debug.Log("ID : " + scanObj_ID);
             }
-            if (scanObj_ID == 1000 && questMgr.questId == 10)//대화 끝났으면 가이드제거
+            if (scanObj_ID == 1000)//대화 끝났으면 가이드제거
             {
-                talkMgr.guideUi.ChangeGuideImg(GuideState.None);
+                if (questMgr.questId == 10)
+                {
+                    talkMgr.guideUi.ChangeGuideImg(GuideState.None);
+                }
+                else if (questMgr.questId == 50 && questMgr.questActionIndex == 1)
+                {
+                    UpdatePlayerRankAndQuestText((PlayerDifficulty)GameMgr.single.GetPlayerDifficulty());
+                }
+                
             }
             if (scanObj_ID == 4000)
             {
@@ -865,6 +889,17 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             talkIndex = 0;
             questDesc.text = questMgr.CheckQuest(scanObj_ID);
             if (GameMgr.single.GetPlayerDifficulty() == 4)
+            {
+                UpdatePlayerRankAndQuestText((PlayerDifficulty)GameMgr.single.GetPlayerDifficulty());
+            }
+            else if (questMgr.questId == 40 && questMgr.questActionIndex == 1)
+            {
+                if (GameMgr.single.GetPlayerDifficulty() == 5)
+                {
+                    GameMgr.single.SetPlayerDifficulty(6);
+                }
+            }
+            else if (GameMgr.single.GetPlayerDifficulty() >= 20 && GameMgr.single.GetPlayerDifficulty() < 30)
             {
                 UpdatePlayerRankAndQuestText((PlayerDifficulty)GameMgr.single.GetPlayerDifficulty());
             }
@@ -1081,7 +1116,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 GameMgr.playerData[0].atk_Speed, GameMgr.playerData[0].atk_Range, GameMgr.playerData[0].base_atk_Dmg,
                 GameMgr.playerData[0].player_max_Exp, GameMgr.playerData[0].player_cur_Exp, GameMgr.single.tutorial, GameMgr.playerData[0].defensePoint,
                 saveInventoryItem, saveWearItem, saveShopItems,
-                GameMgr.playerData[0].listPartyDatas, GameMgr.playerData[0].listPartyDeparture, GameMgr.playerData[0].playerDifficulty
+                GameMgr.playerData[0].listPartyDatas, GameMgr.playerData[0].listPartyDeparture, GameMgr.playerData[0].GetPlayerDataDifficulty()
                 );
 
         // SaveData를 DB에 저장
@@ -2504,14 +2539,35 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 break;
 
             case PlayerDifficulty.Easy_Before:
+                SetQuestTitleText("새로운 퀘스트");
+                SetQuestBoardText("접수원과 이야기하자", true);
+                break;
+            case PlayerDifficulty.Easy_Start:
+                SetQuestTitleText("승급 퀘스트");
                 SetQuestBoardText("쉬움 난이도 던전 클리어 0/1", true);
                 break;
-            case PlayerDifficulty.Easy_After:
+            case PlayerDifficulty.Easy_DungeonClearAndNotTalk:
+                SetQuestTitleText("승급 퀘스트");
+                SetQuestBoardText("쉬움 난이도 던전 클리어 1/1", true);
                 break;
+
+            case PlayerDifficulty.Easy_After:
+                SetAdventurerRateText("중급 모험가");
+                break;
+
             case PlayerDifficulty.Normal_Before:
+                SetQuestTitleText("새로운 퀘스트");
+                SetQuestBoardText("접수원과 이야기하자", true);
+
+                //SetQuestTitleText("승급 퀘스트");
+                //SetQuestBoardText("보통 난이도 던전 클리어 0/1", true);
                 break;
             case PlayerDifficulty.Normal_After:
+                SetAdventurerRateText("중급 모험가");
+                SetQuestTitleText("승급 퀘스트");
+                SetQuestBoardText("보통 난이도 던전 클리어 1/1", true);
                 break;
+
             case PlayerDifficulty.Hard_Before:
                 break;
             case PlayerDifficulty.Hard_After:
@@ -2520,6 +2576,15 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 break;
             default:
                 break;
+        }
+
+        if ((int)_playerDifficulty > 20 && (int)_playerDifficulty < 23)
+        {
+            SetAdventurerRateText("초급 모험가");
+        }
+        else
+        {
+
         }
     }
 }

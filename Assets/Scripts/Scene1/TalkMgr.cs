@@ -119,20 +119,19 @@ public class TalkMgr : MonoBehaviour // 대화 데이터를 관리할 매니저 
         dictTalkData.Add(40 + 2000, new string[] {
         "축하합니다, "+GameMgr.playerData[0].GetPlayerName()+" 모험가님! \n모의전투를 성공적으로 마치셨군요. :0",
         "이제부터 "+GameMgr.playerData[0].GetPlayerName()+"님은 \n'견습 모험가'에서 '초급 모험가'로 승급됩니다. :0",
-        //"다음 목표는 쉬움 난이도를 클리어하여 '중급 모험가'로 \n승급할 수 있는 자격을 얻는 것입니다. :0",
         "초급 모험가는 쉬움 난이도를 클리어하여 \n'중급 모험가'로 승급할 수 있습니다. :0",
-        "준비를 갖추고 다시 모험을 시작해보세요! \n쉬움 난이도 던전에서의 활약을 기대하겠습니다. :0"
+        "준비를 갖추고 다시 모험을 시작해보세요! \n모험가님의 멋진 활약을 기대하겠습니다. :0"
         });
 
         dictTalkData.Add(50 + 1000, new string[] {
-            "앞으로도"+ GameMgr.playerData[0].GetPlayerName()+"님의 멋진 활약 기대하겠습니다. :0"
+            GameMgr.playerData[0].GetPlayerName()+"/50, 1000 :0"
         });
         dictTalkData.Add(51 + 1000, new string[] {
-            "앞으로도"+ GameMgr.playerData[0].GetPlayerName()+"님의 멋진 활약 기대하겠습니다. :0"
+            "앞으로도"+ GameMgr.playerData[0].GetPlayerName()+"/51, 1000여기는이제 쉬움던전에대한설명핵심 다시알려주는거, 상점이용추천하는거 :0"
         });
 
         dictTalkData.Add(50 + 2000, new string[] {
-            "앞으로도"+ GameMgr.playerData[0].GetPlayerName()+"님의 멋진 활약 기대하겠습니다. :0"
+            "앞으로도"+ GameMgr.playerData[0].GetPlayerName()+"/ 50, 2000, 여기서 60으로 jump :0"
         });
 
 

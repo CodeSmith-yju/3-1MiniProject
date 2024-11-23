@@ -4010,7 +4010,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 72f681b88cf6e744b89b65521f03871a, type: 3}
   - {fileID: 8300000, guid: 0947205a022f34d44987534fc80c3b8c, type: 3}
   - {fileID: 8300000, guid: d4fca1d4bc332dc49b809800dc62c375, type: 3}
-  - {fileID: 8300000, guid: 801da490337d97d48b3afcbade48ae32, type: 3}
+  - {fileID: 8300000, guid: 74397e007ce6fe046b4d56b83d9be6a3, type: 3}
   sfxVolume: 0.5
   channels: 20
   hero_sfxClip:
