@@ -30,9 +30,13 @@ public enum PlayerDifficulty
     Easy_After,      // 쉬움 난이도 클리어 후
 
     Normal_Before = 30,   // 보통 난이도 진행 전
+    Normal_Start = 31,
+    Normal_DungeonClearAndNotTalk = 32,
     Normal_After,    // 보통 난이도 클리어 후
 
     Hard_Before = 40,     // 어려움 난이도 진행 전
+    Hard_Start = 41,
+    Hard_DungeonClearAndNotTalk = 42,
     Hard_After,      // 어려움 난이도 클리어 후
 
     FinalBoss = 50        // 최종 던전

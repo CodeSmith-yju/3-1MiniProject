@@ -888,20 +888,40 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
             talkIndex = 0;
             questDesc.text = questMgr.CheckQuest(scanObj_ID);
-            if (GameMgr.single.GetPlayerDifficulty() == 4)
+            int questDifficultyChser = GameMgr.single.GetPlayerDifficulty();
+
+            if (questMgr.questId == 40 && questMgr.questActionIndex == 1)
             {
-                UpdatePlayerRankAndQuestText((PlayerDifficulty)GameMgr.single.GetPlayerDifficulty());
-            }
-            else if (questMgr.questId == 40 && questMgr.questActionIndex == 1)
-            {
-                if (GameMgr.single.GetPlayerDifficulty() == 5)
+                if (questDifficultyChser == 5)
                 {
                     GameMgr.single.SetPlayerDifficulty(6);
                 }
             }
-            else if (GameMgr.single.GetPlayerDifficulty() >= 20 && GameMgr.single.GetPlayerDifficulty() < 30)
+            else if (questMgr.questId == 50)
             {
-                UpdatePlayerRankAndQuestText((PlayerDifficulty)GameMgr.single.GetPlayerDifficulty());
+                if (questMgr.questActionIndex == 0)
+                {
+                    if (questDifficultyChser == 8)
+                    {
+                        GameMgr.single.SetPlayerDifficulty(20);
+                    }
+                }
+                else if(questMgr.questActionIndex == 1)
+                {
+                    if (questDifficultyChser == 20)
+                    {
+                        GameMgr.single.SetPlayerDifficulty(21);
+                    }
+                }
+            }
+
+            if (questDifficultyChser == 4)
+            {
+                UpdatePlayerRankAndQuestText((PlayerDifficulty)questDifficultyChser);
+            }
+            else if (questDifficultyChser == 20 && questDifficultyChser < 30)
+            {
+                UpdatePlayerRankAndQuestText((PlayerDifficulty)questDifficultyChser);
             }
             return;
         }
@@ -2539,14 +2559,20 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 break;
 
             case PlayerDifficulty.Easy_Before:
+                questMgr.SetReceptionist(0);
+                questMgr.SetQuestICon(0, 0);
                 SetQuestTitleText("새로운 퀘스트");
                 SetQuestBoardText("접수원과 이야기하자", true);
                 break;
             case PlayerDifficulty.Easy_Start:
+                questMgr.SetReceptionist(0);
+                questMgr.SetQuestICon(0, 1);
                 SetQuestTitleText("승급 퀘스트");
                 SetQuestBoardText("쉬움 난이도 던전 클리어 0/1", true);
                 break;
             case PlayerDifficulty.Easy_DungeonClearAndNotTalk:
+                questMgr.SetReceptionist(1);
+                questMgr.SetQuestICon(0, 2);
                 SetQuestTitleText("승급 퀘스트");
                 SetQuestBoardText("쉬움 난이도 던전 클리어 1/1", true);
                 break;
@@ -2582,7 +2608,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             SetAdventurerRateText("초급 모험가");
         }
-        else
+        //else if ()
         {
 
         }

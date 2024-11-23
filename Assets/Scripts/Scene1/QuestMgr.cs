@@ -54,12 +54,9 @@ public class QuestMgr : MonoBehaviour
         //dict_questList.Add(40, new QuestData("체력이 줄었다. 받은 물약을 먹자.", new int[] { 1000, 2000 }));
         dict_questList.Add(40, new QuestData("모의 전투에서 승리하자", new int[] { 1000, 2000 }));
         dict_questList.Add(50, new QuestData("새로운 퀘스트 수주 가능", new int[] { 1000, 2000 }));
-        /*dict_questList.Add(60, new QuestData("모험가 등록 완료", new int[] { 1000, 2000 }));
-        dict_questList.Add(70, new QuestData("모험가 등록 완료", new int[] { 1000, 2000 }));
-        dict_questList.Add(80, new QuestData("모험가 등록 완료", new int[] { 1000, 2000 }));
-        dict_questList.Add(90, new QuestData("모험가 등록 완료", new int[] { 1000, 2000 }));
-        dict_questList.Add(100, new QuestData("모험가 등록 완료", new int[] { 1000, 2000 }));*/
-        dict_questList.Add(60, new QuestData("이게없어서 버그가나는거였네", new int[] { 1000, 2000 }));
+        dict_questList.Add(60, new QuestData("새로운 퀘스트 수주 가능", new int[] { 1000, 2000 }));
+        dict_questList.Add(70, new QuestData("새로운 퀘스트 수주 가능", new int[] { 1000, 2000 }));
+        dict_questList.Add(80, new QuestData("이게없어서 버그", new int[] { 1000, 2000 }));
 
         //dict_questList.Add(30, new QuestData("마을의 전설 듣기 퀘스트 클리어!", new int[] { 10000, 4000 }));
     }
@@ -176,7 +173,7 @@ public class QuestMgr : MonoBehaviour
                     SetQuestICon(0, 0);
                 }
                 break;
-            case 40:// Dungeon Event
+            case 40:// Tutorial Dungeon Event
                 if (questActionIndex == 0)
                 {
                     Debug.Log("Case 40");
@@ -196,7 +193,7 @@ public class QuestMgr : MonoBehaviour
                     SetQuestICon(0, 0);
                     SetReceptionist(0);
 
-                    GameMgr.single.SetPlayerDifficulty(20);
+                    GameMgr.single.SetPlayerDifficulty(8);
                     GameUiMgr.single.UpdatePlayerRankAndQuestText((PlayerDifficulty)20);
                 }
                 break;
@@ -208,18 +205,45 @@ public class QuestMgr : MonoBehaviour
                     GameUiMgr.single.SetQuestTitleText("승급 퀘스트");
                     GameUiMgr.single.SetQuestBoardText("쉬움 난이도 던전 클리어 0/1", true);*/
                     SetQuestICon(0, 0);
-
-                    if ((int)now_playerDifficulty != 20)
+                    SetReceptionist(0);
+                    if ((int)now_playerDifficulty != 8)
                     {
-                        GameMgr.single.SetPlayerDifficulty(20);
+                        GameMgr.single.SetPlayerDifficulty(8);
                     }
                 }
                 else if (questActionIndex == 1)
                 {
                     Debug.Log("Case 51");
                     GameMgr.single.SetPlayerDifficulty(21);
+                    SetReceptionist(0);
                     SetQuestICon(0, 1);
                 }
+                else
+                {
+                    Debug.Log("Case 52");
+                    GameMgr.single.SetPlayerDifficulty(23);
+                    SetReceptionist(0);
+                    SetQuestICon(0, 0);
+                }
+                break;
+            case 60:
+                if (questActionIndex == 0)
+                {
+                    Debug.Log("Case 60");
+                }
+                else if (questActionIndex == 1)
+                {
+                    Debug.Log("Case 61");
+                }
+                else if (questActionIndex == 2)
+                {
+                    Debug.Log("Case 62");
+                }
+                
+                break;
+            case 70:
+                break;
+            case 80:
                 break;
             default:
                 Debug.Log("After Quest ID:"+questId);

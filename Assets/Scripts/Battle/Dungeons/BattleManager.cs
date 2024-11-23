@@ -567,7 +567,22 @@ public class BattleManager : MonoBehaviour
         }
         else// easy, nomal, hard, lastBoss
         {
+            if (dungeon_Level_Scale == 0.75f)
+            {
+                GameMgr.single.SetPlayerDifficulty(22);
+            }
+            else if(dungeon_Level_Scale == 1f)
+            {
 
+            }
+            else if (dungeon_Level_Scale == 1.25f)
+            {
+
+            }
+            else
+            {
+                //lastBoss
+            }
         }
         
     }

@@ -134,6 +134,17 @@ public class TalkMgr : MonoBehaviour // 대화 데이터를 관리할 매니저 
             "앞으로도"+ GameMgr.playerData[0].GetPlayerName()+"/ 50, 2000, 여기서 60으로 jump :0"
         });
 
+        dictTalkData.Add(60 + 1000, new string[] {
+            "60, 1000 :0"
+        });
+        dictTalkData.Add(61 + 1000, new string[] {
+            "61, 1000여기는이제 쉬움던전에대한설명핵심 다시알려주는거, 상점이용추천하는거 :0"
+        });
+
+        dictTalkData.Add(60 + 2000, new string[] {
+            "60, 2000, 여기서 70으로 jump :0"
+        });
+
 
         /*dictTalkData.Add(40 + 1000, new string[] {
             " 체력 회복을 위한 물약을 지급해 드렸으니 사용하고 다시 와주세요 :0",
