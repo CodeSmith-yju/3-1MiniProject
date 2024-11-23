@@ -222,4 +222,10 @@ public class PlayerAction : MonoBehaviour
         }
         
     }
+
+    public void PlayerWalkingSound(int index)
+    {
+        AudioManager.single.PlaySfxClipChange(index);
+        //AudioManager.single.PlayerSound(index, index, 2);
+    }
 }
