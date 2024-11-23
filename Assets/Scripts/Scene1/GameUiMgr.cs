@@ -908,9 +908,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 }
                 else if(questMgr.questActionIndex == 1)
                 {
-                    if (questDifficultyChser == 20)
+                    if (questDifficultyChser == 21)
                     {
-                        GameMgr.single.SetPlayerDifficulty(21);
+                        UpdatePlayerRankAndQuestText((PlayerDifficulty)questDifficultyChser);
                     }
                 }
             }
