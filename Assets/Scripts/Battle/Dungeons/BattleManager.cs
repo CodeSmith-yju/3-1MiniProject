@@ -556,10 +556,10 @@ public class BattleManager : MonoBehaviour
         drop_Item.Clear();
         battleEnded = true;
 
-
+        int battleDifficultyChaser = GameMgr.single.GetPlayerDifficulty();
         if (SceneManager.GetActiveScene().name == "Tutorial")
         {
-            if (GameMgr.single.GetPlayerDifficulty() < 7)
+            if (battleDifficultyChaser < 7)
             {
                 GameMgr.single.SetPlayerDifficulty(7);
                 GameMgr.single.tutorial = true;
@@ -569,7 +569,10 @@ public class BattleManager : MonoBehaviour
         {
             if (dungeon_Level_Scale == 0.75f)
             {
-                GameMgr.single.SetPlayerDifficulty(22);
+                if (battleDifficultyChaser == 21)
+                {
+                    GameMgr.single.SetPlayerDifficulty(22);
+                }
             }
             else if(dungeon_Level_Scale == 1f)
             {

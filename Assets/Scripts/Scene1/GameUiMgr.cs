@@ -202,6 +202,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     }
     private void TutoDungeonQuestCheck()
     {
+        int dungeonCheckCheser = GameMgr.single.GetPlayerDifficulty();
         if (isDungeon)
         {
             // level_Buttons[0]은 튜토리얼 버튼이므로 나머지 버튼을 비활성화
@@ -233,9 +234,14 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                     //if (GameMgr.single.GetPlayerDifficulty() > 60){} 이런거 조건줘서 활성, 비활성 및 표시될 텍스트 수정
                     Debug.Log("LasgDungeon흠,,,");
                 }
-                else if(GameMgr.single.GetPlayerDifficulty() >= 20)
+                else if(dungeonCheckCheser >= 20)
                 {
-                    if (i < GameMgr.single.GetPlayerDifficulty()/10)
+                    if (dungeonCheckCheser == 23) //|| dungeonCheckCheser == 33 || dungeonCheckCheser == 43)
+                    {
+                        dungeonCheckCheser = 30;
+                    }
+
+                    if (i < dungeonCheckCheser/10)
                     {
                         level_Buttons[i].interactable = true;
                         level_Buttons[i].GetComponent<CanvasGroup>().alpha = 1.0f;
@@ -914,12 +920,33 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                     }
                 }
             }
+            else if (questMgr.questId == 60)
+            {
+                /*if (questMgr.questActionIndex == 0)
+                {
+                    if (questDifficultyChser == 23)
+                    {
+                        GameMgr.single.SetPlayerDifficulty(30);
+                    }
+                }
+                else if (questMgr.questActionIndex == 1)
+                {
+                    if (questDifficultyChser == 30)
+                    {
+                        UpdatePlayerRankAndQuestText((PlayerDifficulty)questDifficultyChser);
+                    }
+                }*/
+            }
 
             if (questDifficultyChser == 4)
             {
                 UpdatePlayerRankAndQuestText((PlayerDifficulty)questDifficultyChser);
             }
             else if (questDifficultyChser == 20 && questDifficultyChser < 30)
+            {
+                UpdatePlayerRankAndQuestText((PlayerDifficulty)questDifficultyChser);
+            }
+            else if (questDifficultyChser > 30)
             {
                 UpdatePlayerRankAndQuestText((PlayerDifficulty)questDifficultyChser);
             }
@@ -2578,15 +2605,16 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 break;
 
             case PlayerDifficulty.Easy_After:
+                questMgr.SetReceptionist(0);
+                questMgr.SetQuestICon(0, 1);
                 SetAdventurerRateText("중급 모험가");
                 break;
-
             case PlayerDifficulty.Normal_Before:
-                SetQuestTitleText("새로운 퀘스트");
-                SetQuestBoardText("접수원과 이야기하자", true);
+                questMgr.SetReceptionist(0);
+                questMgr.SetQuestICon(0, 1);
 
-                //SetQuestTitleText("승급 퀘스트");
-                //SetQuestBoardText("보통 난이도 던전 클리어 0/1", true);
+                SetQuestTitleText("승급 퀘스트");
+                SetQuestBoardText("보통 난이도 던전 클리어 0/1", true);
                 break;
             case PlayerDifficulty.Normal_After:
                 SetAdventurerRateText("중급 모험가");
@@ -2608,9 +2636,9 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             SetAdventurerRateText("초급 모험가");
         }
-        //else if ()
+        else if ((int)_playerDifficulty >= 23)
         {
-
+            SetAdventurerRateText("중급 모험가");
         }
     }
 }

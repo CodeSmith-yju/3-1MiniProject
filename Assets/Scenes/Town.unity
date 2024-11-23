@@ -17387,7 +17387,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.0223343
+      m_AnimationSpeed: 2.1693785
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -17398,7 +17398,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.404365
+      m_AnimationSpeed: 1.0686154
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -17409,7 +17409,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.7741303
+      m_AnimationSpeed: 1.9228575
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -17420,7 +17420,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.4621265
+      m_AnimationSpeed: 2.7506397
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -17431,7 +17431,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.140003
+      m_AnimationSpeed: 1.7727635
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -41439,7 +41439,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.8007786
+      m_AnimationSpeed: 1.0811048
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -41450,7 +41450,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.1211317
+      m_AnimationSpeed: 1.7634804
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -41461,7 +41461,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.1221392
+      m_AnimationSpeed: 2.236541
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -41472,7 +41472,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.870006
+      m_AnimationSpeed: 1.9602535
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -41483,7 +41483,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.396721
+      m_AnimationSpeed: 2.6459146
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -44731,6 +44731,10 @@ PrefabInstance:
     - target: {fileID: 4239666014971278092, guid: 3bdee3e41c059184b851edd80317865b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -187.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972175233999071202, guid: 3bdee3e41c059184b851edd80317865b, type: 3}
+      propertyPath: m_text
+      value: "\uBAA8\uC758 \uC804\uD22C"
       objectReference: {fileID: 0}
     - target: {fileID: 5623141393795704398, guid: 3bdee3e41c059184b851edd80317865b, type: 3}
       propertyPath: m_Name
@@ -53710,7 +53714,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.0055361
+      m_AnimationSpeed: 2.1513507
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -3, z: 0}
@@ -53721,7 +53725,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.2815425
+      m_AnimationSpeed: 2.1355693
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -3, z: 0}
@@ -53732,7 +53736,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.4578984
+      m_AnimationSpeed: 2.7581375
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -3, z: 0}
@@ -53743,7 +53747,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 2.1177533
+      m_AnimationSpeed: 2.90406
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 3, z: 0}
@@ -53754,7 +53758,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 1.449132
+      m_AnimationSpeed: 2.6488347
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:

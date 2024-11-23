@@ -99,11 +99,6 @@ public class QuestMgr : MonoBehaviour
 
     public void ControlQuestObejct()
     {
-        if (questId > 50 )
-        {
-            return;
-        }
-        //Item questItem;
         switch (questId)
         {
             case 10:// Start Tutorial
