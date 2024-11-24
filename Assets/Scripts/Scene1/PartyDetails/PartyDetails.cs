@@ -181,14 +181,14 @@ public class PartyDetails : MonoBehaviour
 
             _desc.SetHpAtk(GameMgr.playerData[_index].max_Player_Hp, GameMgr.playerData[_index].base_atk_Dmg);
 
-            txtHp.text = "HP: " + GameMgr.playerData[_index].max_Player_Hp + "\n(" + hp + ")"; //_desc.str_Hp;
-            txtMp.text = "MP: " + GameMgr.playerData[_index].max_Player_Mp + "\n(" + mp + ")";
-            textDef.text = "Def: " + GameMgr.playerData[_index].defensePoint + "\n(" + def + ")";
+            txtHp.text = "HP: " + GameMgr.playerData[_index].max_Player_Hp.ToString("F3") + "\n(" + hp + ")"; //_desc.str_Hp;
+            txtMp.text = "MP: " + GameMgr.playerData[_index].max_Player_Mp.ToString("F0") + "\n(" + mp + ")";
+            textDef.text = "Def: " + GameMgr.playerData[_index].defensePoint.ToString() + "\n(" + def + ")";
             textSpeed.text = "Spd: " + (_desc.tempDefaultStats[6] / 2).ToString("F1") + "\n(+" + speed + ")";
 
-            txtAtk.text = "Atk: " + GameMgr.playerData[_index].base_atk_Dmg + "\n(" + atk + ")";//_desc.str_Atk ;
-            txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_index].atk_Speed + "\n(" + atkspd + ")";//_desc.str_AtkSpd;
-            txtAtkRange.text = "AtkRng: " + GameMgr.playerData[_index].atk_Range + "\n(+" + atkrange + ")";
+            txtAtk.text = "Atk: " + GameMgr.playerData[_index].base_atk_Dmg.ToString("F3") + "\n(" + atk + ")";//_desc.str_Atk ;
+            txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_index].atk_Speed.ToString("F3") + "\n(" + atkspd + ")";//_desc.str_AtkSpd;
+            txtAtkRange.text = "AtkRng: " + GameMgr.playerData[_index].atk_Range.ToString("F3") + "\n(+" + atkrange + ")";
         }
 
         BtnResize(_index);
