@@ -22,22 +22,6 @@ public class DungeonTooltip : MonoBehaviour
 
     public void SetupTooltip(int _DungeonLvel, bool _onoff)
     {
-        if (_DungeonLvel == 3)
-        {
-            if (_onoff)
-            {
-                icon_element3.gameObject.SetActive(false);
-            }
-            else
-            {
-                icon_element3.gameObject.SetActive(true);
-            }
-        }
-        else
-        {
-            icon_element3.gameObject.SetActive(true);
-        }
-
         switch (_DungeonLvel)
         {
             /*case -1:
@@ -127,6 +111,34 @@ public class DungeonTooltip : MonoBehaviour
                 //icon_enemy1.sprite = GameUiMgr.single.entityIconRS;
                 break;
         }
+
+        if (_DungeonLvel == 3)
+        {
+            if (_onoff)
+            {
+                icon_element3.gameObject.SetActive(false);
+            }
+            else
+            {
+                icon_element3.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            icon_element3.gameObject.SetActive(true);
+        }
+
     }
 
+    public void Offthe3(bool _bool)
+    {
+        if (_bool == true)
+        {
+            icon_element3.gameObject.SetActive(!_bool);
+        }
+        else
+        {
+            icon_element3.gameObject.SetActive(!_bool);
+        }
+    }
 }

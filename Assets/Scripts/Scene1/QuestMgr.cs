@@ -362,9 +362,8 @@ public class QuestMgr : MonoBehaviour
         else
         {
             sr.color = Color.white;
-            rt.sizeDelta = new Vector2(400, 450);
-            rt.anchoredPosition = new Vector2(0, 0);
+            rt.sizeDelta = new Vector2(400, 500);
+            rt.anchoredPosition = new Vector2(0, 24);
         }
-        
     }
 }

@@ -94,6 +94,13 @@ public class LoadingSceneController : MonoBehaviour
             GameMgr.single.saveState = SaveState.DungeonSave;
             //Debug.Log("Dungeon으로 가는중");
         }
+        else if (nextScene.Equals("Title"))
+        {
+            if (GameMgr.single.GetPlayerDifficulty() > 52)
+            {
+                AudioManager.single.PlayBgmClipChange(0);
+            }
+        }
         SceneManager.LoadScene("LoadingScene"); // 로딩 씬으로 이동
     }
 
