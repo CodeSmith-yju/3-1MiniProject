@@ -244,6 +244,10 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                     {
                         dungeonCheckCheser = 30;
                     }
+                    if (dungeonCheckCheser == 33)
+                    {
+                        dungeonCheckCheser = 40;
+                    }
 
                     if (0 < i &&i < dungeonCheckCheser/10)
                     {
@@ -910,20 +914,44 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                     }
                     else// aindex == 1
                     {
-                        Debug.Log("-------------------60, 0, 8, Talk End");
+                        Debug.Log("-------------------60, 1, Talk End");
+                    }
+                }
+                else if (questMgr.questId == 70)
+                {
+                    if (questMgr.questActionIndex == 0)
+                    {
+                        Debug.Log("-------------------70, 0, Talk End");
+                        if (questDifficultyChser == 33)//Last MainQuest Start
+                        {
+                            GameMgr.single.SetPlayerDifficulty(51);
+                            UpdatePlayerRankAndQuestText((PlayerDifficulty)51);
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("-------------------70, 1, Talk End");
                     }
                 }
             }
             else if (scanObj_ID == 2000)
             {
-                if (questMgr.questId == 50 && questMgr.questActionIndex == 1)
+                if (questMgr.questId == 50)
                 {
-                    if (questDifficultyChser == 22)
+                    if (questMgr.questActionIndex == 1 && questDifficultyChser == 22)
                     {
                         Debug.Log("-------------------50, 1, 2000, easy after Talk End");
 
                         GameMgr.single.SetPlayerDifficulty(23);
                         UpdatePlayerRankAndQuestText((PlayerDifficulty)23);
+                    }
+                }
+                if (questMgr.questId == 60)
+                {
+                    if (questMgr.questActionIndex == 1 && questDifficultyChser == 32)
+                    {
+                        GameMgr.single.SetPlayerDifficulty(33);
+                        UpdatePlayerRankAndQuestText((PlayerDifficulty)33);
                     }
                 }
             }
@@ -986,7 +1014,6 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                     }
                 }
             }
-
             if (questMgr.questId == 60)
             {
                 /*if (questMgr.questActionIndex == 0)
@@ -1013,9 +1040,12 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             {
                 UpdatePlayerRankAndQuestText((PlayerDifficulty)questDifficultyChser);
             }
-            else if (questDifficultyChser > 30)
+            else if (questDifficultyChser > 30 && questDifficultyChser < 33)
             {
                 UpdatePlayerRankAndQuestText((PlayerDifficulty)questDifficultyChser);
+            }else if (questDifficultyChser == 51 )
+            {
+                UpdatePlayerRankAndQuestText((PlayerDifficulty)51);
             }
             return;
         }
@@ -2672,36 +2702,32 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 SetQuestBoardText("하급 던전 클리어 1/1", true);
                 break;
 
-            case PlayerDifficulty.Easy_After:
+            case PlayerDifficulty.Easy_After://중급 모험가
                 questMgr.SetReceptionist(0);
                 questMgr.SetQuestICon(0, 0);
+
                 SetQuestTitleText("새로운 퀘스트");
                 SetQuestBoardText("접수원과 이야기하자", true);
-                SetAdventurerRateText("중급 모험가");
                 break;
-            case PlayerDifficulty.Normal_Before://패싱
-                break;
-            case PlayerDifficulty.Normal_Start:
+            case PlayerDifficulty.Normal_Start://중급 모험가
                 questMgr.SetReceptionist(0);
                 questMgr.SetQuestICon(0, 1);
+
                 SetQuestTitleText("승급 퀘스트");
                 SetQuestBoardText("중급 던전 클리어 0/1", true);
                 break;
-            case PlayerDifficulty.Normal_DungeonClearAndNotTalk:
-
+            case PlayerDifficulty.Normal_DungeonClearAndNotTalk://중급 모험가
                 questMgr.SetQuestICon(0, 2);
-                SetAdventurerRateText("중급 모험가");
+
                 SetQuestTitleText("승급 퀘스트");
                 SetQuestBoardText("중급 던전 클리어 1/1", true);
                 break;
-            case PlayerDifficulty.Normal_After:
+            case PlayerDifficulty.Normal_After://상급 모험가
                 questMgr.SetReceptionist(0);
                 questMgr.SetQuestICon(0, 0);
+
                 SetQuestTitleText("새로운 퀘스트");
                 SetQuestBoardText("접수원과 이야기하자", true);
-                SetAdventurerRateText("상급 모험가");
-                break;
-            case PlayerDifficulty.Hard_Before://패싱
                 break;
             case PlayerDifficulty.Hard_Start:
                 break;
@@ -2709,7 +2735,25 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 break;
             case PlayerDifficulty.Hard_After:
                 break;
-            case PlayerDifficulty.FinalBoss:
+            case PlayerDifficulty.Final_Befor:
+                break;
+            case PlayerDifficulty.Final_Start://상급 모험가
+                questMgr.SetReceptionist(0);
+                questMgr.SetQuestICon(0, 1);
+
+                SetQuestTitleText("탐험 퀘스트");
+                SetQuestBoardText("??? 던전 클리어 0/1", true);
+                break;
+            case PlayerDifficulty.Final_DungeonClearAndNotTalk:
+                questMgr.SetReceptionist(1);
+                questMgr.SetQuestICon(0, 2);
+
+                SetQuestTitleText("탐험 퀘스트");
+                SetQuestBoardText("악마의 미궁 클리어 1/1", true);
+                break;
+            case PlayerDifficulty.Final_After:
+                break;
+            case PlayerDifficulty.GameEnd:
                 break;
             default:
                 break;
@@ -2721,7 +2765,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             Debug.Log("초급따리");
             SetAdventurerRateText("초급 모험가");
         }
-        else if ((int)_playerDifficulty > 22)
+        else if ((int)_playerDifficulty > 22 && (int)_playerDifficulty < 33)
         {
             Debug.Log("중급따리");
             SetAdventurerRateText("중급 모험가");

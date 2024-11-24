@@ -234,9 +234,20 @@ public class QuestMgr : MonoBehaviour
                 {
                     Debug.Log("Case 62");
                 }
-                
                 break;
             case 70:
+                if (questActionIndex == 0)
+                {
+                    Debug.Log("Case 70");
+                }
+                else if (questActionIndex == 1)
+                {
+                    Debug.Log("Case 71");
+                }
+                else if (questActionIndex == 2)
+                {
+                    Debug.Log("Case 72");
+                }
                 break;
             case 80:
                 break;

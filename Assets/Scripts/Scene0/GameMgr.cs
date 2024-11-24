@@ -39,7 +39,12 @@ public enum PlayerDifficulty
     Hard_DungeonClearAndNotTalk = 42,
     Hard_After,      // 어려움 난이도 클리어 후
 
-    FinalBoss = 50        // 최종 던전
+    Final_Befor = 50,        // 최종 던전
+    Final_Start = 51,
+    Final_DungeonClearAndNotTalk = 52,
+    Final_Clear,
+    Final_After,
+    GameEnd,
 }
 public class GameMgr : MonoBehaviour
 {
