@@ -16,6 +16,11 @@ public class SetDungeonTooltip : MonoBehaviour, IPointerEnterHandler, IPointerEx
         {
             GameUiMgr.single.dungeonTooltip.gameObject.SetActive(true);
             GameUiMgr.single.dungeonTooltip.SetupTooltip(DungeonLevelScale, _onoff);
+
+            if (_onoff)
+            {
+                GameUiMgr.single.dungeonTooltip.Offthe3(true);
+            }
         }
         else
         {
@@ -27,5 +32,11 @@ public class SetDungeonTooltip : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public void OnPointerExit(PointerEventData eventData)
     {
         GameUiMgr.single.dungeonTooltip.gameObject.SetActive(false);
+    }
+
+    public void Change_ScaleAndBoolean(int _scale, bool _bool)
+    {
+        DungeonLevelScale = _scale;
+        _onoff = _bool;
     }
 }

@@ -233,8 +233,25 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 }
                 else if (i == 4)
                 {
-                    //if (GameMgr.single.GetPlayerDifficulty() > 60){} 이런거 조건줘서 활성, 비활성 및 표시될 텍스트 수정
-                    Debug.Log("LasgDungeon흠,,,");
+                    Debug.Log("??? btn");
+                    SetDungeonTooltip sd = level_Buttons[4].GetComponent<SetDungeonTooltip>();
+
+                    if (GameMgr.single.GetPlayerDifficulty() > 51)
+                    {
+                        Debug.Log("LasgDungeon 클리어 이후");
+
+                        level_Buttons[i].gameObject.SetActive(true);
+                        level_Buttons[i].gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "악마의 미궁";
+                        RectTransform rt = dungeon_Level_Ui.GetComponent<RectTransform>();
+                        rt.sizeDelta = new Vector2(400, 500);
+                        rt.anchoredPosition = new Vector2(0, 24);
+
+                        sd.Change_ScaleAndBoolean(3, true);
+                    }
+                    else
+                    {
+                        sd.Change_ScaleAndBoolean(3, false);
+                    }
                 }
                 if(dungeonCheckCheser >= 8)
                 {
@@ -966,6 +983,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                         uiEventCk = false;
                         talkIndex++;
                         UpdatePlayerRankAndQuestText((PlayerDifficulty)53);
+                        questMgr.questId = 80;
+                        questMgr.questActionIndex = 0;
                         GameSave();
                         LoadingSceneController.LoadScene("Title");
                     }
@@ -2765,14 +2784,12 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             case PlayerDifficulty.Final_DungeonClearAndNotTalk:
                 questMgr.SetReceptionist(1);
                 questMgr.SetQuestICon(0, 2);
-
                 SetQuestTitleText("탐험 퀘스트");
                 SetQuestBoardText("악마의 미궁 \n클리어 1/1", true);
                 break;
             case PlayerDifficulty.Final_After:
                 questMgr.SetReceptionist(1);
                 questMgr.SetQuestICon(-1, 0);
-
                 SetQuestTitleText("탐험 전문가");
                 SetQuestBoardText("탐험 전문가", false);
                 break;
