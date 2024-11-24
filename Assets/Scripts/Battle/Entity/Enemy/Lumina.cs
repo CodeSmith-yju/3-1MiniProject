@@ -53,12 +53,12 @@ public class Lumina : Enemy
             if (isAttack)
             {
                 ani.SetBool("isSkill", true);
-                BaseEntity target = FindMaxCurHpPlayer();
+                BaseEntity target = FindMinCurHpPlayer();
 
                 GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(2, isPlayer);
                 obj_Arrow.transform.position = transform.GetChild(0).position;
                 Arrow arrow = obj_Arrow.GetComponent<Arrow>();
-                arrow.Shoot(this, target, DamageCalc(target, atkDmg) * 3f); // 현재 체력이 가장 많은 적에게 공격력의 3배 데미지의 투사체를 발사
+                arrow.Shoot(this, target, DamageCalc(target, atkDmg) * 3f); // 현재 체력이 가장 적은 적에게 3배 데미지
                 cur_Mp = 0;
             }
             else
@@ -72,10 +72,10 @@ public class Lumina : Enemy
         }
     }
 
-    private BaseEntity FindMaxCurHpPlayer()
+    private BaseEntity FindMinCurHpPlayer()
     {
         Ally temp_Player = null;
-        float upperHp = float.MinValue;
+        float lowerHp = float.MaxValue;
 
 
         foreach (GameObject player in BattleManager.Instance.deploy_Player_List)
@@ -89,9 +89,9 @@ public class Lumina : Enemy
 
                     float hpRatio = ally.cur_Hp / ally.max_Hp;
 
-                    if (hpRatio > upperHp)
+                    if (hpRatio < lowerHp)
                     {
-                        upperHp = hpRatio;
+                        lowerHp = hpRatio;
                         temp_Player = ally;
                     }
                 }

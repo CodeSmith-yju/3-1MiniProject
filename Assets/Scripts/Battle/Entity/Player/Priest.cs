@@ -34,29 +34,22 @@ public class Priest : Ally
         if (_curstate == State.Skill)
         {
             StopCoroutine(SetAttack());
-            if (isAttack)
-            {
-                BattleManager.Instance.ui.GenerateLog(GameUiMgr.single.entityIconRS.GetPortraitIcon(job), "치유의 빛");
 
-                ani.SetBool("isSkill", true);
-                Ally ally = FindMinCurHpPlayer(); // 최대 체력 대비 가장 낮은 현재 체력을 가진 플레이어 찾기
-                Instantiate(skillEff, ally.transform);
+            BattleManager.Instance.ui.GenerateLog(GameUiMgr.single.entityIconRS.GetPortraitIcon(job), "치유의 빛");
 
-                float heal = 5f + max_Hp * 0.15f;
+            ani.SetBool("isSkill", true);
+            Ally ally = FindMinCurHpPlayer(); // 최대 체력 대비 가장 낮은 현재 체력을 가진 플레이어 찾기
+            Instantiate(skillEff, ally.transform);
 
-                if (ally.cur_Hp + heal < ally.max_Hp)
-                    ally.cur_Hp += heal;
-                else if (ally.cur_Hp + heal >= ally.max_Hp)
-                    ally.cur_Hp = ally.max_Hp;
+            float heal = 5f + max_Hp * 0.15f;
 
-                cur_Mp = 0;
-                Debug.Log("현재 체력이 가장 낮은 플레이어에게 기본 회복력 5 + 최대 체력의 15%만큼 회복합니다.");
+            if (ally.cur_Hp + heal < ally.max_Hp)
+                ally.cur_Hp += heal;
+            else if (ally.cur_Hp + heal >= ally.max_Hp)
+                ally.cur_Hp = ally.max_Hp;
 
-            }
-            else
-            {
-                return;
-            }
+            cur_Mp = 0;
+            Debug.Log("현재 체력이 가장 낮은 플레이어에게 기본 회복력 5 + 최대 체력의 15%만큼 회복합니다.");
         }
         else
         {
