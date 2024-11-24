@@ -70,8 +70,13 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler,
 
         if (item_Cnt != 0)
         {
-            Canvas statbar = BattleManager.Instance.ui.player_Statbar.AddComponent<Canvas>();
-            BattleManager.Instance.ui.player_Statbar.AddComponent<GraphicRaycaster>();
+            Canvas statbar = BattleManager.Instance.ui.player_Statbar.GetComponent<Canvas>();
+            if (statbar == null)
+                statbar = BattleManager.Instance.ui.player_Statbar.AddComponent<Canvas>();
+
+            GraphicRaycaster graphicRaycaster = BattleManager.Instance.ui.player_Statbar.GetComponent<GraphicRaycaster>();
+            if (graphicRaycaster == null)
+                graphicRaycaster = BattleManager.Instance.ui.player_Statbar.AddComponent<GraphicRaycaster>();
             statbar.overrideSorting = true;
             statbar.sortingOrder = 1;
             statbar.additionalShaderChannels = AdditionalCanvasShaderChannels.TexCoord1;
@@ -89,12 +94,17 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler,
                     }
                 }
             }
+
+
+
             BattleManager.Instance.ui.item_Use_UI.SetActive(true);
 
             
             foreach (StatManager stat in party_stat)
             {
-                Button membnt = stat.gameObject.AddComponent<Button>();
+                Button membnt = stat.gameObject.GetComponent<Button>();
+                if (membnt == null)
+                    membnt = stat.gameObject.AddComponent<Button>();
                 Debug.Log(membnt.gameObject.name);
                 membnt.onClick.AddListener(() => Postion(stat));
             }
@@ -204,12 +214,12 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler,
 
     private void HidePostionUI()
     {
-        Destroy(BattleManager.Instance.ui.player_Statbar.GetComponent<GraphicRaycaster>());
-        Destroy(BattleManager.Instance.ui.player_Statbar.GetComponent<Canvas>());
+        DestroyImmediate(BattleManager.Instance.ui.player_Statbar.GetComponent<GraphicRaycaster>());
+        DestroyImmediate(BattleManager.Instance.ui.player_Statbar.GetComponent<Canvas>());
         foreach (StatManager stat in party_stat)
         {
             Button membnt = stat.gameObject.GetComponent<Button>();
-            Destroy(membnt);
+            DestroyImmediate(membnt);
         }
         BattleManager.Instance.ui.item_Use_UI.SetActive(false);
     }

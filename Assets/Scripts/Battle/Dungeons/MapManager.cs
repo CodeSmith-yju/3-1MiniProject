@@ -560,8 +560,38 @@ public class MapManager : MonoBehaviour
         }
         centerPosition /= iconPositions.Count;
 
+        // 가장 먼 거리 계산
+        // 2. 가로 및 세로 최대 거리 계산
+        float maxHorizontalDistance = 0f;
+        float maxVerticalDistance = 0f;
+
+        foreach (Vector3 pos in iconPositions)
+        {
+            float horizontalDistance = Mathf.Abs(pos.x - centerPosition.x);
+            float verticalDistance = Mathf.Abs(pos.y - centerPosition.y);
+
+            if (horizontalDistance > maxHorizontalDistance)
+                maxHorizontalDistance = horizontalDistance;
+
+            if (verticalDistance > maxVerticalDistance)
+                maxVerticalDistance = verticalDistance;
+        }
+
+        // 3. 카메라 사이즈 조정
+        Camera camera = map_Camera_Big; // 미니맵 카메라
+        float aspectRatio = camera.aspect; // 카메라의 가로 세로 비율
+        float padding = 1.4f; // 약간의 여유 공간 추가
+
+        // 가로와 세로 거리 중 더 큰 값을 기준으로 설정
+        float orthographicSize = Mathf.Max(
+            maxVerticalDistance * padding, // 세로 기준 거리
+            (maxHorizontalDistance / aspectRatio) * padding // 가로 기준 거리
+        );
+
+        camera.orthographicSize = orthographicSize;
+
         // 중심점에 미니맵 카메라 위치를 설정
-        map_Camera_Big.transform.position = new Vector3(centerPosition.x, centerPosition.y, map_Camera_Big.transform.position.z);
+        camera.transform.position = new Vector3(centerPosition.x, centerPosition.y, map_Camera_Big.transform.position.z);
     }
 
     private void OpenMapUpdate(bool updateMap)
