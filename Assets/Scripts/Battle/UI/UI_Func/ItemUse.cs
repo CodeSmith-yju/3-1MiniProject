@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler
 {
     StatManager[] party_stat;
     public TMP_Text item_Cnt_Text;
@@ -29,7 +29,7 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         else
         {
             myItem = _item;
-            gameObject.GetComponent<Button>().onClick.AddListener(() => ShowPostionUI());
+            gameObject.GetComponent<Button>().onClick.AddListener(() => CheckPostionUsePopup());
         }
 
         item_Cnt_Text.gameObject.SetActive(true);
@@ -37,6 +37,29 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         itemImg.sprite = myItem.itemImage;
         item_Cnt = myItem.itemStack;
         item_Cnt_Text.text = item_Cnt.ToString();
+    }
+
+    public void CheckPostionUsePopup()
+    {
+        if (myItem != null) 
+        {
+            if (!BattleManager.Instance.ui.item_Check_Popup.activeSelf)
+            {
+                BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.item_Check_Popup);
+
+                BattleManager.Instance.ui.item_Check_Popup.GetComponent<ItemUseUIDescInit>().Init(myItem.itemName);
+                Button use_UI_Bnt = BattleManager.Instance.ui.item_Check_Popup.GetComponent<ItemUseUIDescInit>().use_Bnt;
+                use_UI_Bnt.GetComponent<Button>().onClick.AddListener(() => ShowPostionUI());
+                //use_UI_Bnt.GetComponent<Button>().onClick.AddListener(() => BattleManager.Instance.ui.CancelPopup(BattleManager.Instance.ui.item_Check_Popup));
+
+
+                if (BattleManager.Instance.dialogue != null && BattleManager.Instance.ui.dialogue_Bg.activeSelf)
+                {
+                    BattleManager.Instance.ui.dialogue_Bg.SetActive(false);
+                }
+
+            }
+        }
     }
 
    
@@ -58,6 +81,12 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 if (BattleManager.Instance.dialogue.isTutorial && BattleManager.Instance.tutorial.isItem_Tutorial)
                 {
                     BattleManager.Instance.ui.item_Tutorial.SetActive(false);
+
+                    if (BattleManager.Instance.ui.item_Bar.GetComponent<Canvas>() != null && BattleManager.Instance.ui.item_Bar.GetComponent<GraphicRaycaster>() != null)
+                    {
+                        Destroy(BattleManager.Instance.ui.item_Bar.GetComponent<GraphicRaycaster>());
+                        Destroy(BattleManager.Instance.ui.item_Bar.GetComponent<Canvas>());
+                    }
                 }
             }
             BattleManager.Instance.ui.item_Use_UI.SetActive(true);
@@ -144,6 +173,7 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             
             item_Cnt -= 1;
             myItem.itemStack = item_Cnt;
+            AudioManager.single.PlaySfxClipChange(14);
 
             // 아이템 사용 후 아이템 스택이 0이 될 때 아이템을 삭제하도록 함.
             if (myItem.itemStack <= 0)
@@ -186,6 +216,11 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)//Move InnerItem
     {
+        if (myItem.itemStack > 0 && myItem != null)
+        {
+            AudioManager.single.PlaySfxClipChange(1);
+        }
+
         if (myItem.itemName != string.Empty)
         {
             Debug.Log("ToolTip Active");
@@ -197,10 +232,22 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             BattleManager.Instance.ui.tooltip.gameObject.SetActive(false);
         }
     }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (myItem.itemStack > 0 && myItem != null)
+        {
+            AudioManager.single.PlaySfxClipChange(0);
+        }
+    }
+
+
     public void OnPointerExit(PointerEventData eventData)
     {
         BattleManager.Instance.ui.tooltip.gameObject.SetActive(false);
     }
+
+
     public Item UseItem()
     {
         if (myItem != null)
@@ -210,5 +257,5 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         return null;
     }
 
-    
+
 }

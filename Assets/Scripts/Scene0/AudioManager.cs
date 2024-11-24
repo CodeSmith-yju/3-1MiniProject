@@ -43,7 +43,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] skeletonWizard_sfxClip;// Boss
     public AudioClip[] puppetHuman_sfxClip;// hero
     public AudioClip[] Golem_sfxClip;// Gollem
-    public AudioClip[] Luminarch_sfxClip;
+    public AudioClip[] Luminarch_sfxClip; // Lumina
 
     #endregion
     public enum Sfx
@@ -137,6 +137,11 @@ public class AudioManager : MonoBehaviour
                 sfxPlayers[partyIndex].clip = Golem_sfxClip[sfx_Index];
                 sfxPlayers[partyIndex].Play();
                 break;
+            // ·ç¹Ì³ª 7
+            case 7:
+                sfxPlayers[partyIndex].clip = Luminarch_sfxClip[sfx_Index];
+                sfxPlayers[partyIndex].Play();
+                break;
             default:
                 break;
         }
@@ -171,6 +176,14 @@ public class AudioManager : MonoBehaviour
                 break;
             case 3:
                 sfxPlayers[partyIndex].clip = knight_sfxClip[sfx_Index];
+                sfxPlayers[partyIndex].Play();
+                break;
+            case 4:
+                sfxPlayers[partyIndex].clip = priest_sfxClip[sfx_Index];
+                sfxPlayers[partyIndex].Play();
+                break;
+            case 5:
+                sfxPlayers[partyIndex].clip = demon_sfxClip[sfx_Index];
                 sfxPlayers[partyIndex].Play();
                 break;
             default:

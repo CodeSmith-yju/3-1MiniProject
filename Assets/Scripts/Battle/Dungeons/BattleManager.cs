@@ -72,22 +72,25 @@ public class BattleManager : MonoBehaviour
         public float temp_MaxHp;
         public float temp_MaxMp;
         public float temp_AtkSpd;
+        public int temp_Dp;
 
         // 버프 타일용
-        public PlayerStats(float atkDmg, float maxHp, float maxMp)
+        public PlayerStats(float atkDmg, float maxHp, float maxMp, int dp)
         {
             temp_Dmg = atkDmg;
             temp_MaxHp = maxHp;
             temp_MaxMp = maxMp;
+            temp_Dp = dp;
         }
 
         // 샘물 이벤트용
-        public PlayerStats(float atkDmg, float maxHp, float maxMp, float atkSpd)
+        public PlayerStats(float atkDmg, float maxHp, float maxMp, float atkSpd, int dp)
         {
             temp_Dmg = atkDmg;
             temp_MaxHp = maxHp;
             temp_MaxMp = maxMp;
             temp_AtkSpd = atkSpd;
+            temp_Dp = dp;
         }
     }
 
@@ -124,14 +127,17 @@ public class BattleManager : MonoBehaviour
             base_Stats[GameMgr.playerData[i]] = new PlayerStats(GameMgr.playerData[i].base_atk_Dmg, 
                 GameMgr.playerData[i].max_Player_Hp, 
                 GameMgr.playerData[i].max_Player_Mp, 
-                GameMgr.playerData[i].atk_Speed);
+                GameMgr.playerData[i].atk_Speed,
+                GameMgr.playerData[i].defensePoint
+                );
 
             // 디버프, 버프로 유동적으로 이용하는 플레이어 스텟 데이터
             temp_Stats.Add(GameMgr.playerData[i], new PlayerStats(
             base_Stats[GameMgr.playerData[i]].temp_Dmg,
             base_Stats[GameMgr.playerData[i]].temp_MaxHp,
             base_Stats[GameMgr.playerData[i]].temp_MaxMp,
-            base_Stats[GameMgr.playerData[i]].temp_AtkSpd
+            base_Stats[GameMgr.playerData[i]].temp_AtkSpd,
+            base_Stats[GameMgr.playerData[i]].temp_Dp
             ));
         }
 
@@ -181,7 +187,7 @@ public class BattleManager : MonoBehaviour
             drag.enabled = true;
         }
 
-        int sfx_StartIndex = party_List.Count;
+        int sfx_StartIndex = party_List.Count + 1;
 
         foreach (Enemy obj in entity)
         {
@@ -389,6 +395,7 @@ public class BattleManager : MonoBehaviour
                 player.cur_Mp = 0;
                 playerData.cur_Player_Mp = player.cur_Mp;
                 playerData.atk_Speed = stats.temp_AtkSpd;
+                playerData.defensePoint = stats.temp_Dp;
 
                 player.cur_Hp = Mathf.Clamp(healthRatio * stats.temp_MaxHp, 0, stats.temp_MaxHp);
                 playerData.cur_Player_Hp = player.cur_Hp;
@@ -420,6 +427,7 @@ public class BattleManager : MonoBehaviour
                 player.cur_Mp = 0;
                 playerData.cur_Player_Mp = player.cur_Mp;
                 playerData.atk_Speed = stats.temp_AtkSpd;
+                playerData.defensePoint = stats.temp_Dp;
             }
         }
     }
@@ -772,6 +780,29 @@ public class BattleManager : MonoBehaviour
                             playerData.max_Player_Mp = player_Ally.max_Mp;
 
                             stats.temp_MaxMp = playerData.max_Player_Mp;
+                        }
+
+                    }
+                }
+                break;
+            case 4:
+                // 방어력 감소
+                titleInit.Init("'약화' 디버프가 걸립니다.\n(방어력 -15 [받는 피해 +6%])");
+
+                foreach (GameObject player in deploy_Player_List)
+                {
+                    Ally player_Ally = player.GetComponent<Ally>();
+
+                    if (player_Ally != null && player_Ally.cur_Hp > 0)
+                    {
+                        PlayerData playerData = GameMgr.playerData[player_Ally.entity_index];
+
+                        if (temp_Stats.TryGetValue(playerData, out PlayerStats stats))
+                        {
+                            player_Ally.def_Point -= 15;
+                            playerData.defensePoint = player_Ally.def_Point;
+
+                            stats.temp_Dp = playerData.defensePoint;
                         }
 
                     }

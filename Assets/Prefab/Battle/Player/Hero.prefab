@@ -168,7 +168,7 @@ MonoBehaviour:
   isAttack: 0
   isAtkDone: 0
   isDie: 0
-  ani: {fileID: 0}
+  ani: {fileID: -7213554166292842373}
   player_Name: asdas
   level: 1
   statManager: {fileID: 0}

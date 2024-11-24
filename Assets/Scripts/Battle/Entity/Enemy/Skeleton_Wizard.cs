@@ -10,9 +10,8 @@ public class Skeleton_Wizard : Enemy
     protected override void Start()
     {
         base.Start();
-        // 최대 체력, 최대 마나, 방어력, 공격력, 공격속도, 사거리, 근접유무, 스킬유무, 경험치, 골드, 아이템 드랍
-        InitStat(250, 3, 35, 7, 0.85f, 99f, false, true, GetExp(20), SetRandomGold(400), new Item().GenerateRandomItem(15), false);
-        // 아이템 바꿔야됨
+        // 최대 체력, 최대 마나, 방어력, 공격력, 공격속도, 사거리, 근접유무, 스킬유무, 경험치, 골드, 아이템 드랍, 광역공격
+        InitStat(70, 4, 20, 3.5f, 0.7f, 7.5f, false, true, GetExp(10), SetRandomGold(250), new Item().GenerateRandomItem(19), false);
 
         if (BattleManager.Instance.dialogue != null && BattleManager.Instance.dialogue.isTutorial)
             item_Drop_Check = false;
@@ -46,17 +45,14 @@ public class Skeleton_Wizard : Enemy
                 List<GameObject> players = BattleManager.Instance.deploy_Player_List;
 
                 ani.SetBool("isSkill", true); // 스킬 애니메이션
-                foreach (GameObject enemys in players)
-                {
-                    Ally enemy = enemys.GetComponent<Ally>();
 
-                    if (enemy._curstate != State.Death)
-                    {
-                        GameObject skill = Instantiate(skill_Eff, enemy.transform);
-                        skill.transform.localPosition = new Vector3(0, 1.4f, 0);
-                        enemy.cur_Hp -= 5f;
-                    }
-                }
+                BaseEntity target = FindTarget().GetComponent<BaseEntity>();
+
+                GameObject skill = Instantiate(skill_Eff, target.transform);
+                skill.transform.localPosition = new Vector3(0, 1.4f, 0);
+                target.cur_Hp -= AttributeDamageCalc(target, DamageCalc(target, atkDmg) * 2f);
+
+
                 cur_Mp = 0;
             }
             else

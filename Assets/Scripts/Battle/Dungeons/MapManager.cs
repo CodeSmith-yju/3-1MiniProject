@@ -45,12 +45,13 @@ public class MapManager : MonoBehaviour
     public NavMeshSurface nav_Surface;
 
     [Header("Map_Prefabs")]
-    public GameObject startPrefab;
+    public GameObject[] startPrefab;
     public GameObject[] battleRoomPrefabs;    // 전투방 프리팹
-    public GameObject chestRoomPrefab;        // 상자방 프리팹
-    public GameObject restRoomPrefab;         // 휴식방 프리팹
+    public GameObject[] finalBattleRoomPrefabs;    // 최종 던전 전투방 프리팹
+    public GameObject[] chestRoomPrefab;        // 상자방 프리팹
+    public GameObject[] restRoomPrefab;         // 휴식방 프리팹
     public GameObject blockedRoomPrefab;      // 막힌 방 프리팹
-    public GameObject bossRoomPrefab;         // 보스 방 프리팹
+    public GameObject[] bossRoomPrefab;         // 보스 방 프리팹
 
 
     Vector2Int player_Pos;             // 플레이어 시작 위치
@@ -155,6 +156,9 @@ public class MapManager : MonoBehaviour
             case 2:
                 set_Level = 1;
                 return set_Level;
+            case 3:
+                set_Level = 2;
+                return set_Level;
             default:
                 return 0;
         }
@@ -232,7 +236,7 @@ public class MapManager : MonoBehaviour
         }
         
         player_Pos = startPos;
-        SetRoomValue(player_Pos, startPrefab, Cell.RoomType.StartRoom);
+        SetRoomValue(player_Pos, difficultyGenerateRoom(GameUiMgr.single.dungeon_Level, startPrefab), Cell.RoomType.StartRoom);
 
         // 이후 필요한 방들 배치 (필수 방 및 나머지 방들)
         PlaceMandatoryRooms();
@@ -254,14 +258,14 @@ public class MapManager : MonoBehaviour
         for (int i = 0; i < minChestRooms; i++)
         {
             Vector2Int randomPos = GetRandomPosition(availablePositions);
-            SetRoomValue(randomPos, chestRoomPrefab, Cell.RoomType.ChestRoom);
+            SetRoomValue(randomPos, difficultyGenerateRoom(GameUiMgr.single.dungeon_Level, chestRoomPrefab), Cell.RoomType.ChestRoom);
         }
 
         // 휴식 방 1개 배치
         for (int i = 0; i < minRestRooms; i++)
         {
             Vector2Int randomPos = GetRandomPosition(availablePositions);
-            SetRoomValue(randomPos, restRoomPrefab, Cell.RoomType.RestRoom);
+            SetRoomValue(randomPos, difficultyGenerateRoom(GameUiMgr.single.dungeon_Level, restRoomPrefab), Cell.RoomType.RestRoom);
         }
 
         // 전투 방 3개 배치
@@ -295,20 +299,20 @@ public class MapManager : MonoBehaviour
         if (bossRoomCell.cellObject != null)
         {
             // 상자방이나 휴식방을 남은 빈 방으로 재배치
-            if (bossRoomCell.cellObject.name.Contains(chestRoomPrefab.name))
+            if (bossRoomCell.cellObject.name.Contains(difficultyGenerateRoom(GameUiMgr.single.dungeon_Level, chestRoomPrefab).name))
             {
                 if (availablePositions.Count > 0)
                 {
                     Vector2Int randomPos = GetRandomPosition(availablePositions);
-                    SetRoomValue(randomPos, chestRoomPrefab, Cell.RoomType.ChestRoom);
+                    SetRoomValue(randomPos, difficultyGenerateRoom(GameUiMgr.single.dungeon_Level, chestRoomPrefab), Cell.RoomType.ChestRoom);
                 }
             }
-            else if (bossRoomCell.cellObject.name.Contains(restRoomPrefab.name))
+            else if (bossRoomCell.cellObject.name.Contains(difficultyGenerateRoom(GameUiMgr.single.dungeon_Level, restRoomPrefab).name))
             {
                 if (availablePositions.Count > 0)
                 {
                     Vector2Int randomPos = GetRandomPosition(availablePositions);
-                    SetRoomValue(randomPos, restRoomPrefab, Cell.RoomType.RestRoom);
+                    SetRoomValue(randomPos, difficultyGenerateRoom(GameUiMgr.single.dungeon_Level, restRoomPrefab), Cell.RoomType.RestRoom);
                 }
             }
             else
@@ -323,8 +327,17 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        // 보스방 배치
-        SetRoomValue(bossRoomPos, bossRoomPrefab, Cell.RoomType.BossRoom, isBoss: true);
+        // 보스방 배치 (쉬움 ~ 어려움 까지는 스켈레톤 메이지 보스방 생성, 최종 던전에서는 루미나 보스방 생성)
+        if (GameUiMgr.single.dungeon_Level == 3)
+        {
+            SetRoomValue(bossRoomPos, bossRoomPrefab[1], Cell.RoomType.BossRoom, isBoss: true);
+        }
+        else
+        {
+            SetRoomValue(bossRoomPos, bossRoomPrefab[0], Cell.RoomType.BossRoom, isBoss: true);
+        }
+        
+        
     }
 
 
@@ -388,11 +401,11 @@ public class MapManager : MonoBehaviour
         }
         else if (randomValue < 80)  // 10% 확률로 상자 방
         {
-            return new RoomInfo(chestRoomPrefab, Cell.RoomType.ChestRoom);
+            return new RoomInfo(difficultyGenerateRoom(GameUiMgr.single.dungeon_Level, chestRoomPrefab), Cell.RoomType.ChestRoom);
         }
         else  // 20% 확률로 휴식 방
         {
-            return new RoomInfo(restRoomPrefab, Cell.RoomType.RestRoom);
+            return new RoomInfo(difficultyGenerateRoom(GameUiMgr.single.dungeon_Level, restRoomPrefab), Cell.RoomType.RestRoom);
         }
     }
 
@@ -436,8 +449,21 @@ public class MapManager : MonoBehaviour
                 {
                     return battleRoomPrefabs[Random.Range(6, battleRoomPrefabs.Length)];
                 }
+            case 3: // 최종 던전
+                return finalBattleRoomPrefabs[Random.Range(0, finalBattleRoomPrefabs.Length)];
             default:
-                return battleRoomPrefabs[Random.Range(0, battleRoomPrefabs.Length)];
+                return null;
+        }
+    }
+
+    private GameObject difficultyGenerateRoom(int level, GameObject[] roomPrefabs)
+    {
+        switch (level) 
+        {
+            case 3: // 최종 던전 룸 프리팹
+                return roomPrefabs[1];
+            default: // 나머지 던전 룸 프리팹
+                return roomPrefabs[0];
         }
     }
 
@@ -872,16 +898,15 @@ public class MapManager : MonoBehaviour
                 {
                     if (cell.isBlocked)
                     {
-                        PlaceRoom(pos, blockedRoomPrefab, cell.roomType, isBlocked: true);
+                        PlaceRoom(pos, cell.cellObject, cell.roomType, isBlocked: true);
                     }
                     else if (cell.isBoss)
                     {
-                        PlaceRoom(pos, bossRoomPrefab, cell.roomType, isBoss: true);
+                        PlaceRoom(pos, cell.cellObject, cell.roomType, isBoss: true);
                     }
                     else
                     {
-                        GameObject roomPrefab = cell.cellObject;  // 미리 저장된 방 프리팹 사용
-                        PlaceRoom(pos, roomPrefab, cell.roomType);
+                        PlaceRoom(pos, cell.cellObject, cell.roomType);
                     }
                 }
             }
@@ -1041,6 +1066,9 @@ public class MapManager : MonoBehaviour
 
         if (BattleManager.Instance.dialogue != null)
         {
+            if (!BattleManager.Instance.dialogue.isTutorial)
+                BattleManager.Instance.dialogue.isTutorial = true;
+
             if (BattleManager.Instance.dialogue.isTutorial)
             {
                 if (FindRoom(cur_Room.gameObject).isClear == false)

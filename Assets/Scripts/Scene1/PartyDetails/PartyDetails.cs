@@ -164,7 +164,7 @@ public class PartyDetails : MonoBehaviour
         {
             hp = (GameMgr.playerData[_index].max_Player_Hp - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_MaxHp).ToString("F3");
             mp = (GameMgr.playerData[_index].max_Player_Mp - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_MaxMp).ToString("F0");
-            def = (GameMgr.playerData[_index].defensePoint - GameMgr.playerData[_index].defensePoint).ToString(); // 방어력 버프를 만들까말까 고민중
+            def = (GameMgr.playerData[_index].defensePoint - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_Dp).ToString(); // 방어력 버프를 만들까말까 고민중
             speed = "0";
 
             atk = (GameMgr.playerData[_index].base_atk_Dmg - BattleManager.Instance.base_Stats[GameMgr.playerData[_index]].temp_Dmg).ToString("F3");
@@ -175,6 +175,7 @@ public class PartyDetails : MonoBehaviour
             atk = ApplySign(atk);
             atkspd = ApplySign(atkspd);
             mp = ApplySign(mp);
+            def = ApplySign(def);
 
             TextSetting(ref hp, ref atk, ref atkspd);
 
@@ -182,7 +183,7 @@ public class PartyDetails : MonoBehaviour
 
             txtHp.text = "HP: " + GameMgr.playerData[_index].max_Player_Hp + "\n(" + hp + ")"; //_desc.str_Hp;
             txtMp.text = "MP: " + GameMgr.playerData[_index].max_Player_Mp + "\n(" + mp + ")";
-            textDef.text = "Def: " + GameMgr.playerData[_index].defensePoint + "\n(+" + def + ")";
+            textDef.text = "Def: " + GameMgr.playerData[_index].defensePoint + "\n(" + def + ")";
             textSpeed.text = "Spd: " + (_desc.tempDefaultStats[6] / 2).ToString("F1") + "\n(+" + speed + ")";
 
             txtAtk.text = "Atk: " + GameMgr.playerData[_index].base_atk_Dmg + "\n(" + atk + ")";//_desc.str_Atk ;
