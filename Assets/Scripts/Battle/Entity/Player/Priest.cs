@@ -39,10 +39,10 @@ public class Priest : Ally
                 BattleManager.Instance.ui.GenerateLog(GameUiMgr.single.entityIconRS.GetPortraitIcon(job), "치유의 빛");
 
                 ani.SetBool("isSkill", true);
-                Ally ally = FindMinCurHpPlayer(); // 현재 체력이 가장 낮은 플레이어 가져옴
+                Ally ally = FindMinCurHpPlayer(); // 최대 체력 대비 가장 낮은 현재 체력을 가진 플레이어 찾기
                 Instantiate(skillEff, ally.transform);
 
-                float heal = 5f + max_Hp * 0.1f;
+                float heal = 5f + max_Hp * 0.15f;
 
                 if (ally.cur_Hp + heal < ally.max_Hp)
                     ally.cur_Hp += heal;
@@ -50,7 +50,7 @@ public class Priest : Ally
                     ally.cur_Hp = ally.max_Hp;
 
                 cur_Mp = 0;
-                Debug.Log("현재 체력이 가장 낮은 플레이어에게 기본 회복력 5 + 최대 체력의 10%만큼 회복합니다.");
+                Debug.Log("현재 체력이 가장 낮은 플레이어에게 기본 회복력 5 + 최대 체력의 15%만큼 회복합니다.");
 
             }
             else
@@ -77,11 +77,14 @@ public class Priest : Ally
             {
                 Ally ally = player.GetComponent<Ally>();
 
-                if (ally != null && ally.cur_Hp > 0 && ally.cur_Hp < ally.max_Hp)
+                if (ally != null && ally.cur_Hp > 0 && ally.cur_Hp < ally.max_Hp && ally.max_Hp > 0)
                 {
-                    if (ally.cur_Hp < lowerHp) 
+
+                    float hpRatio = ally.cur_Hp / ally.max_Hp;
+
+                    if (hpRatio < lowerHp) 
                     {
-                        lowerHp = ally.cur_Hp;
+                        lowerHp = hpRatio;
                         temp_Player = ally;
                     }
                 }

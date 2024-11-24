@@ -94,6 +94,14 @@ public class MapManager : MonoBehaviour
         new Vector2Int(4, 4),   // 우하단
     };
 
+    private List<Vector2Int> random_Start_Pos_Final = new List<Vector2Int>
+    {
+        new Vector2Int(0, 0),   // 좌상단
+        new Vector2Int(0, 5),   // 좌하단
+        new Vector2Int(5, 0),   // 우상단
+        new Vector2Int(5, 5),   // 우하단
+    };
+
     Vector2Int[] directions = new Vector2Int[] // 방향 배열
     {
             new Vector2Int(0, -1),  // 위
@@ -230,9 +238,13 @@ public class MapManager : MonoBehaviour
         {
             startPos = random_Start_Pos[Random.Range(0, random_Start_Pos.Count)];
         }
-        else
+        else if (SetLevel(GameUiMgr.single.dungeon_Level) == 1)
         {
             startPos = random_Start_Pos_Hard[Random.Range(0, random_Start_Pos.Count)];
+        }
+        else
+        {
+            startPos = random_Start_Pos_Final[Random.Range(0, random_Start_Pos.Count)];
         }
         
         player_Pos = startPos;
