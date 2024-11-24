@@ -30,8 +30,8 @@ public class Hero : Ally
                 BattleManager.Instance.ui.GenerateLog(GameUiMgr.single.entityIconRS.GetPortraitIcon(job), "섬광 베기");
 
                 BaseEntity target = FindTarget().GetComponent<BaseEntity>();
-                Debug.Log("타겟의 적에게 2배의 데미지로 공격" + " " + (DamageCalc(target, atkDmg) * 2) + "데미지");
-                target.cur_Hp -= DamageCalc(target, atkDmg) * 2;
+                Debug.Log("타겟의 적에게 2배의 데미지로 공격" + " " + (AttributeDamageCalc(target, DamageCalc(target, atkDmg) * 2f)) + "데미지");
+                target.cur_Hp -= AttributeDamageCalc(target, DamageCalc(target, atkDmg) * 2f);
                 cur_Mp = 0;
                 Debug.Log("스킬 사용 ( " + name + " -> " + target.name + " )");
 

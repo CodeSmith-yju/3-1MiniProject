@@ -74,7 +74,8 @@ public class BaseEntity : MonoBehaviour
     private void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
-        ani = GetComponent<Animator>();
+        if (ani == null)
+            ani = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -520,7 +521,7 @@ public class BaseEntity : MonoBehaviour
         Debug.Log($"Hit to {target.name}! {target.cur_Hp}");
     }
 
-    private float AttributeDamageCalc(BaseEntity target, float dmg)
+    protected float AttributeDamageCalc(BaseEntity target, float dmg)
     {
         float calcDmg;
 

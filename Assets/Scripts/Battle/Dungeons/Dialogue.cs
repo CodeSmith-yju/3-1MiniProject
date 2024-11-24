@@ -58,7 +58,7 @@ public class Dialogue : MonoBehaviour
             BattleManager.Instance.ui.dialogue_Bg.SetActive(false);
         }
         
-        if(isDialogue && _flag)
+        if(isDialogue)
         {
             BattleManager.Instance.ui.dialogue_Bg.SetActive(_flag);
         }
@@ -146,27 +146,30 @@ public class Dialogue : MonoBehaviour
         // Update is called once per frame
     private void Update()
     {
-        //spacebar 누를 때마다 대사가 진행되도록. 
-        if (isDialogue) //활성화가 되었을 때만 대사가 진행되도록
+        // 옵션 팝업이 열리지 않았을 때만 적용
+        if (Time.timeScale == 1)
         {
-            if (Time.time - temp_InputTime >= input_Cooldown) // 대화 상호작용을 0.2초 쿨타임 주도록 하여 튜토리얼이 꼬이지 않게 함.
+            if (isDialogue) //활성화가 되었을 때만 대사가 진행되도록
             {
-                if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+                if (Time.time - temp_InputTime >= input_Cooldown) // 대화 상호작용을 0.2초 쿨타임 주도록 하여 튜토리얼이 꼬이지 않게 함.
                 {
-                    temp_InputTime = Time.time;
-                    if (isQuest && text_Done)
+                    if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
                     {
-                        Debug.Log("튜토리얼 시작");
-                        BattleManager.Instance.tutorial.Tutorial(dialogues[cnt - 1].quest_cnt); // 튜토리얼 시작
-                    }
-                    else
-                    {
-                        NextDialogue();
-                    }
+                        temp_InputTime = Time.time;
+                        if (isQuest && text_Done)
+                        {
+                            Debug.Log("튜토리얼 시작");
+                            BattleManager.Instance.tutorial.Tutorial(dialogues[cnt - 1].quest_cnt); // 튜토리얼 시작
+                        }
+                        else
+                        {
+                            NextDialogue();
+                        }
 
+                    }
                 }
+
             }
-            
         }
     }
 }

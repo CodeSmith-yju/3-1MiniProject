@@ -29,7 +29,7 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler,
         else
         {
             myItem = _item;
-            gameObject.GetComponent<Button>().onClick.AddListener(() => ShowPostionUI());
+            gameObject.GetComponent<Button>().onClick.AddListener(() => CheckPostionUsePopup());
         }
 
         item_Cnt_Text.gameObject.SetActive(true);
@@ -37,6 +37,29 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler,
         itemImg.sprite = myItem.itemImage;
         item_Cnt = myItem.itemStack;
         item_Cnt_Text.text = item_Cnt.ToString();
+    }
+
+    public void CheckPostionUsePopup()
+    {
+        if (myItem != null) 
+        {
+            if (!BattleManager.Instance.ui.item_Check_Popup.activeSelf)
+            {
+                BattleManager.Instance.ui.OpenPopup(BattleManager.Instance.ui.item_Check_Popup);
+
+                BattleManager.Instance.ui.item_Check_Popup.GetComponent<ItemUseUIDescInit>().Init(myItem.itemName);
+                Button use_UI_Bnt = BattleManager.Instance.ui.item_Check_Popup.GetComponent<ItemUseUIDescInit>().use_Bnt;
+                use_UI_Bnt.GetComponent<Button>().onClick.AddListener(() => ShowPostionUI());
+                //use_UI_Bnt.GetComponent<Button>().onClick.AddListener(() => BattleManager.Instance.ui.CancelPopup(BattleManager.Instance.ui.item_Check_Popup));
+
+
+                if (BattleManager.Instance.dialogue != null && BattleManager.Instance.ui.dialogue_Bg.activeSelf)
+                {
+                    BattleManager.Instance.ui.dialogue_Bg.SetActive(false);
+                }
+
+            }
+        }
     }
 
    
@@ -58,6 +81,12 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler,
                 if (BattleManager.Instance.dialogue.isTutorial && BattleManager.Instance.tutorial.isItem_Tutorial)
                 {
                     BattleManager.Instance.ui.item_Tutorial.SetActive(false);
+
+                    if (BattleManager.Instance.ui.item_Bar.GetComponent<Canvas>() != null && BattleManager.Instance.ui.item_Bar.GetComponent<GraphicRaycaster>() != null)
+                    {
+                        Destroy(BattleManager.Instance.ui.item_Bar.GetComponent<GraphicRaycaster>());
+                        Destroy(BattleManager.Instance.ui.item_Bar.GetComponent<Canvas>());
+                    }
                 }
             }
             BattleManager.Instance.ui.item_Use_UI.SetActive(true);

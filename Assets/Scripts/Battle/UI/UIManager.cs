@@ -45,6 +45,7 @@ public class UIManager : MonoBehaviour
     public GameObject check_Popup;
     public GameObject option_Popup;
     public GameObject attribute_Popup;
+    public GameObject item_Check_Popup;
 
 
     [Header("Tutorial")]
@@ -114,13 +115,20 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if (!mini_Map_Big.activeSelf)
+            if (BattleManager.Instance.dialogue != null && dialogue_Bg.activeSelf || popup_Bg.activeSelf)
             {
-                BattleManager.Instance.room.OpenMap(true);
+                return;
             }
             else
             {
-                BattleManager.Instance.room.OpenMap(false);
+                if (!mini_Map_Big.activeSelf)
+                {
+                    BattleManager.Instance.room.OpenMap(true);
+                }
+                else
+                {
+                    BattleManager.Instance.room.OpenMap(false);
+                }
             }
         }
 
@@ -128,9 +136,9 @@ public class UIManager : MonoBehaviour
         {
             if (!option_UI.activeSelf) 
             {
-                if (BattleManager.Instance.dialogue != null && dialogue_Box.activeSelf)
-                    return;
-                else if (attribute_Popup.activeSelf)
+/*                if (BattleManager.Instance.dialogue != null && dialogue_Box.activeSelf)
+                    return;*/
+                if (attribute_Popup.activeSelf)
                     CancelPopup(attribute_Popup);
                 else if (alert_Popup.activeSelf)
                     CancelPopup(alert_Popup);
@@ -159,7 +167,7 @@ public class UIManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if (BattleManager.Instance.dialogue != null && dialogue_Bg.activeSelf)
+            if (BattleManager.Instance.dialogue != null && dialogue_Bg.activeSelf || popup_Bg.activeSelf)
                 return;
             else
                 ActiveBattlePartyDetail();
@@ -210,6 +218,20 @@ public class UIManager : MonoBehaviour
     {
         popup_Bg.SetActive(true);
         option_UI.SetActive(true);
+
+        Canvas party_List_Deploy = option_UI.AddComponent<Canvas>();
+        option_UI.AddComponent<GraphicRaycaster>();
+        party_List_Deploy.additionalShaderChannels = AdditionalCanvasShaderChannels.TexCoord1;
+        party_List_Deploy.overrideSorting = true;
+        party_List_Deploy.sortingOrder = 2;
+
+        if (BattleManager.Instance.dialogue != null && BattleManager.Instance.dialogue.isTutorial)
+        {
+            dialogue_Bg.SetActive(false);
+            BattleManager.Instance.dialogue.ONOFF(false);
+        }
+
+
         Time.timeScale = 0;
         isOpenUI = true;
     }
@@ -218,6 +240,19 @@ public class UIManager : MonoBehaviour
     {
         popup_Bg.SetActive(false);
         option_UI.SetActive(false);
+
+        if (option_UI.GetComponent<GraphicRaycaster>() != null && option_UI.GetComponent<Canvas>() != null)
+        {
+            DestroyImmediate(option_UI.GetComponent<GraphicRaycaster>());
+            DestroyImmediate(option_UI.GetComponent<Canvas>());
+        }
+
+        if (BattleManager.Instance.dialogue != null && BattleManager.Instance.dialogue.isTutorial)
+        {
+            dialogue_Bg.SetActive(true);
+            BattleManager.Instance.dialogue.ONOFF(true);
+        }
+
         Time.timeScale = 1;
         isOpenUI = false;
     }

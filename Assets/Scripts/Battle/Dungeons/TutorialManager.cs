@@ -204,7 +204,8 @@ public class TutorialManager : MonoBehaviour
                 EndTutorial(quest_cnt);
                 break;
             case 17:
-                if(BattleManager.Instance.ui.out_Portal.activeSelf)
+                BattleManager.Instance.dialogue.isTutorial = true;
+                if (BattleManager.Instance.ui.out_Portal.activeSelf)
                 {
                     BattleManager.Instance.ui.out_Portal.GetComponent<FadeEffect>().fadein = true;
                 }
@@ -274,6 +275,10 @@ public class TutorialManager : MonoBehaviour
             case 23: // 끝
                 EndTutorial(quest_cnt);
                 break;
+            case 24: // 끝
+                BattleManager.Instance.dialogue.isTutorial = false;
+                EndTutorial(quest_cnt);
+                break;
             default:
                 Debug.Log("아직 구현안함");
                 break;
@@ -321,11 +326,11 @@ public class TutorialManager : MonoBehaviour
             case 6:
                 Debug.Log("아이템 튜토리얼 끝");
                 isItem_Tutorial = false;
-                if (BattleManager.Instance.ui.item_Bar.GetComponent<GraphicRaycaster>() != null && BattleManager.Instance.ui.item_Bar.GetComponent<Canvas>() != null)
+/*                if (BattleManager.Instance.ui.item_Bar.GetComponent<Canvas>() != null && BattleManager.Instance.ui.item_Bar.GetComponent<GraphicRaycaster>() != null)
                 {
                     Destroy(BattleManager.Instance.ui.item_Bar.GetComponent<GraphicRaycaster>());
                     Destroy(BattleManager.Instance.ui.item_Bar.GetComponent<Canvas>());
-                }
+                }*/
                 
                 BattleManager.Instance.ui.item_Tutorial.SetActive(false);
 
@@ -342,6 +347,8 @@ public class TutorialManager : MonoBehaviour
                     BattleManager.Instance.ui.out_Portal.SetActive(true);
                     BattleManager.Instance.ui.out_Portal.GetComponent<FadeEffect>().fadeout = true;
                 }
+
+                BattleManager.Instance.dialogue.isTutorial = false;
               
                 break;
             case 9:
@@ -388,6 +395,7 @@ public class TutorialManager : MonoBehaviour
                 Debug.Log("전투 방 종료");
                 BattleManager.Instance.dialogue.ONOFF(false);
                 BattleManager.Instance.ui.dialogue_Bg.SetActive(false);
+                BattleManager.Instance.dialogue.isTutorial = false;
                 break;
             case 17:
                 Debug.Log("일반 상자 튜토리얼 끝");
@@ -434,6 +442,10 @@ public class TutorialManager : MonoBehaviour
 
                 BattleManager.Instance.dialogue.ONOFF(true);
                 BattleManager.Instance.dialogue.NextDialogue();
+                break;
+            case 24:
+                BattleManager.Instance.ui.dialogue_Bg.SetActive(false);
+                BattleManager.Instance.dialogue.ONOFF(false);
                 break;
             default:
                 Debug.Log("아직 구현안함");
