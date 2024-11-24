@@ -20,6 +20,7 @@ public class TypeEffect : MonoBehaviour
 
     public void SetMsg(string msg)
     {
+        AudioManager.single.PlaySfxClipChange(15);
         if (isAnim)
         {
             msgText.text = targetMsg;
@@ -31,11 +32,11 @@ public class TypeEffect : MonoBehaviour
             targetMsg = msg;
             EffectStart();
         }
-
     }
 
     private void EffectStart()
     {
+        AudioManager.single.PlaySfxClipChange(15);
         msgText.text = "";
         charIndex = 0;
         endCursor.SetActive(false);
@@ -51,6 +52,7 @@ public class TypeEffect : MonoBehaviour
 
     private void EffectNow()
     {
+        AudioManager.single.PlaySfxClipChange(15);
         if (msgText.text == targetMsg)
         {
             EffectEnd();
@@ -66,5 +68,7 @@ public class TypeEffect : MonoBehaviour
     {
         isAnim = false;
         endCursor.SetActive(true);
+
+        AudioManager.single.PlaySfxClipChange(15);
     }
 }
