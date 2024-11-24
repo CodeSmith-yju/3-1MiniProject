@@ -2688,6 +2688,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 SetQuestBoardText("중급 던전 클리어 0/1", true);
                 break;
             case PlayerDifficulty.Normal_DungeonClearAndNotTalk:
+
+                questMgr.SetQuestICon(0, 2);
                 SetAdventurerRateText("중급 모험가");
                 SetQuestTitleText("승급 퀘스트");
                 SetQuestBoardText("중급 던전 클리어 1/1", true);
@@ -2723,6 +2725,11 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         {
             Debug.Log("중급따리");
             SetAdventurerRateText("중급 모험가");
+        }
+        else if ((int)_playerDifficulty > 32)
+        {
+            Debug.Log("상급땃쥐");
+            SetAdventurerRateText("상급 모험가");
         }
         Debug.Log("현재 호출당시의 숫자 상황" + (int)_playerDifficulty + _playerDifficulty);
     }
