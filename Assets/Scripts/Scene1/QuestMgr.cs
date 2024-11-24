@@ -58,6 +58,7 @@ public class QuestMgr : MonoBehaviour
         dict_questList.Add(60, new QuestData("새로운 퀘스트 수주 가능", new int[] { 1000, 2000 }));
         dict_questList.Add(70, new QuestData("새로운 퀘스트 수주 가능", new int[] { 1000, 2000 }));
         dict_questList.Add(80, new QuestData("이게없어서 버그", new int[] { 1000, 2000 }));
+        dict_questList.Add(90, new QuestData("이게없어서 버그", new int[] { 1000, 2000 }));
 
         //dict_questList.Add(30, new QuestData("마을의 전설 듣기 퀘스트 클리어!", new int[] { 10000, 4000 }));
     }
@@ -324,7 +325,18 @@ public class QuestMgr : MonoBehaviour
     {
         // index 0 = recep, 
         // spIndex 0 = ! /  1 = ... /  2 = ?
+        if (_index == -1)
+        {
+            questIcons[0].gameObject.SetActive(false);
+            return;
+        }
+        else if (!questIcons[0].gameObject.activeSelf)
+        {
+            questIcons[0].gameObject.SetActive(true);
+        }
+
         questIcons[_index].GetComponent<SpriteRenderer>().sprite = spQuestIcons[_spIndex];
+
     }
     //public void SetQuestSupportIcon() { }
 
@@ -335,5 +347,24 @@ public class QuestMgr : MonoBehaviour
     public void SetNowQuestDiffi(PlayerDifficulty _diffi)
     {
         now_playerDifficulty = _diffi;
+    }
+
+    public void LastDungeonPotalFirstActive(bool _onoff)//Defalut = y:0, h450 || Pos Y: -24, Height: 500
+    {
+        RectTransform rt = GameUiMgr.single.dungeon_Level_Ui.GetComponent<RectTransform>();
+        SpriteRenderer sr = final_QuestPotal.GetComponent<SpriteRenderer>();
+        if (_onoff)
+        {
+            sr.color = Color.red;
+            rt.sizeDelta = new Vector2(400, 500);
+            rt.anchoredPosition = new Vector2(0, 24);
+        }
+        else
+        {
+            sr.color = Color.white;
+            rt.sizeDelta = new Vector2(400, 450);
+            rt.anchoredPosition = new Vector2(0, 0);
+        }
+        
     }
 }

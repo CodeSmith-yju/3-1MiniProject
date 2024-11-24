@@ -180,6 +180,8 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
     public int dungeon_Level;
     public Button[] level_Buttons;
 
+    public Sprite question;
+
     public void SetLevel(int level)
     {
         dungeon_Level = level;
@@ -196,7 +198,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 dungeon_Level_Scale = 1.25f;
                 break;
             case 3:
-                dungeon_Level_Scale = 2f;
+                dungeon_Level_Scale = 1.5f;
                 break;
         }
     }
@@ -946,12 +948,26 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                         UpdatePlayerRankAndQuestText((PlayerDifficulty)23);
                     }
                 }
-                if (questMgr.questId == 60)
+                else if (questMgr.questId == 60)
                 {
                     if (questMgr.questActionIndex == 1 && questDifficultyChser == 32)
                     {
                         GameMgr.single.SetPlayerDifficulty(33);
                         UpdatePlayerRankAndQuestText((PlayerDifficulty)33);
+                    }
+                }
+                else if( questMgr.questId == 70)
+                {
+                    if (questDifficultyChser == 52)
+                    {
+                        GameMgr.single.SetPlayerDifficulty(53);
+
+                        isActionTalk = true;
+                        uiEventCk = false;
+                        talkIndex++;
+                        UpdatePlayerRankAndQuestText((PlayerDifficulty)53);
+                        GameSave();
+                        LoadingSceneController.LoadScene("Title");
                     }
                 }
             }
@@ -2743,15 +2759,22 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
                 SetQuestTitleText("탐험 퀘스트");
                 SetQuestBoardText("??? 던전 클리어 0/1", true);
+                questMgr.LastDungeonPotalFirstActive(true);
+                level_Buttons[4].gameObject.SetActive(true);
                 break;
             case PlayerDifficulty.Final_DungeonClearAndNotTalk:
                 questMgr.SetReceptionist(1);
                 questMgr.SetQuestICon(0, 2);
 
                 SetQuestTitleText("탐험 퀘스트");
-                SetQuestBoardText("악마의 미궁 클리어 1/1", true);
+                SetQuestBoardText("악마의 미궁 \n클리어 1/1", true);
                 break;
             case PlayerDifficulty.Final_After:
+                questMgr.SetReceptionist(1);
+                questMgr.SetQuestICon(-1, 0);
+
+                SetQuestTitleText("탐험 전문가");
+                SetQuestBoardText("탐험 전문가", false);
                 break;
             case PlayerDifficulty.GameEnd:
                 break;
@@ -2770,10 +2793,15 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             Debug.Log("중급따리");
             SetAdventurerRateText("중급 모험가");
         }
-        else if ((int)_playerDifficulty > 32)
+        else if ((int)_playerDifficulty > 32 && (int)_playerDifficulty < 52)
         {
             Debug.Log("상급땃쥐");
             SetAdventurerRateText("상급 모험가");
+        }
+        else if((int)_playerDifficulty > 51)
+        {
+            level_Buttons[4].gameObject.GetComponent<SetDungeonTooltip>()._onoff = true;
+            SetAdventurerRateText("특급 모험가");
         }
         Debug.Log("현재 호출당시의 숫자 상황" + (int)_playerDifficulty + _playerDifficulty);
     }

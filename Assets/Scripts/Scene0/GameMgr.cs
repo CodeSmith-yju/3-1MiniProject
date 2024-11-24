@@ -42,7 +42,6 @@ public enum PlayerDifficulty
     Final_Befor = 50,        // 최종 던전
     Final_Start = 51,
     Final_DungeonClearAndNotTalk = 52,
-    Final_Clear,
     Final_After,
     GameEnd,
 }
@@ -113,10 +112,12 @@ public class GameMgr : MonoBehaviour
     public bool SetShopClean(bool _bool)
     {
         shopCleaner = _bool;
+        Debug.Log("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡnow ShopClean Set: "+ shopCleaner);
         return shopCleaner;
     }
     public bool GetShopClean()
     {
+        Debug.Log("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡnow ShopClean Get: " + shopCleaner);
         return shopCleaner;
     }
     public void SetPlayerDifficulty(int _index)
