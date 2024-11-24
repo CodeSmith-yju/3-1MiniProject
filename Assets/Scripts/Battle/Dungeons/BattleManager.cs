@@ -532,6 +532,45 @@ public class BattleManager : MonoBehaviour
                     ui.out_Portal.GetComponent<FadeEffect>().fadeout = true;
                 }
 
+                int battleDifficultyChaser = GameMgr.single.GetPlayerDifficulty();
+                if (SceneManager.GetActiveScene().name == "Tutorial")
+                {
+                    if (battleDifficultyChaser < 7)
+                    {
+                        GameMgr.single.SetPlayerDifficulty(7);
+                        GameMgr.single.tutorial = true;
+                    }
+                }
+                else// easy, nomal, hard, lastBoss
+                {
+                    if (GameUiMgr.single.dungeon_Level == 0)
+                    {
+                        if (battleDifficultyChaser == 21)
+                        {
+                            GameMgr.single.SetPlayerDifficulty(22);
+                        }
+                    }
+                    else if (GameUiMgr.single.dungeon_Level == 1)
+                    {
+                        if (battleDifficultyChaser == 31)
+                        {
+                            GameMgr.single.SetPlayerDifficulty(32);
+                        }
+                    }
+                    else if (GameUiMgr.single.dungeon_Level == 2)
+                    {
+
+                    }
+                    else if (GameUiMgr.single.dungeon_Level == 3) //lastBoss
+                    {
+                        if (battleDifficultyChaser == 51)
+                        {
+                            GameMgr.single.SetPlayerDifficulty(52);
+                        }
+                    }
+                }
+                GameMgr.single.SetShopClean(true);
+
                 Debug.Log("버튼 생성");
                 DestroyImmediate(ui.out_Portal.GetComponent<Button>());
                 ui.out_Portal.AddComponent<Button>().onClick.AddListener(() => TotalReward());
@@ -563,42 +602,6 @@ public class BattleManager : MonoBehaviour
         gold_Cnt = 0;
         drop_Item.Clear();
         battleEnded = true;
-
-        int battleDifficultyChaser = GameMgr.single.GetPlayerDifficulty();
-        if (SceneManager.GetActiveScene().name == "Tutorial")
-        {
-            if (battleDifficultyChaser < 7)
-            {
-                GameMgr.single.SetPlayerDifficulty(7);
-                GameMgr.single.tutorial = true;
-            }
-        }
-        else// easy, nomal, hard, lastBoss
-        {
-            if (dungeon_Level_Scale == 0.75f)
-            {
-                if (battleDifficultyChaser == 21)
-                {
-                    GameMgr.single.SetPlayerDifficulty(22);
-                }
-            }
-            else if(dungeon_Level_Scale == 1f)
-            {
-                if (battleDifficultyChaser == 31)
-                {
-                    GameMgr.single.SetPlayerDifficulty(32);
-                }
-            }
-            else if (dungeon_Level_Scale == 1.25f)
-            {
-
-            }
-            else
-            {
-                //lastBoss
-            }
-        }
-        
     }
 
 

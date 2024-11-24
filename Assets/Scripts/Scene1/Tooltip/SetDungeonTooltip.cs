@@ -8,13 +8,14 @@ public class SetDungeonTooltip : MonoBehaviour, IPointerEnterHandler, IPointerEx
 {
     public Button btnMy;
     public int DungeonLevelScale;
+    public bool _onoff;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (btnMy.interactable == true)
         {
             GameUiMgr.single.dungeonTooltip.gameObject.SetActive(true);
-            GameUiMgr.single.dungeonTooltip.SetupTooltip(DungeonLevelScale);
+            GameUiMgr.single.dungeonTooltip.SetupTooltip(DungeonLevelScale, _onoff);
         }
         else
         {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,8 +20,24 @@ public class DungeonTooltip : MonoBehaviour
     [SerializeField] TextMeshProUGUI title;
     [SerializeField] TextMeshProUGUI desc;
 
-    public void SetupTooltip(int _DungeonLvel)
+    public void SetupTooltip(int _DungeonLvel, bool _onoff)
     {
+        if (_DungeonLvel == 3)
+        {
+            if (_onoff)
+            {
+                icon_element3.gameObject.SetActive(false);
+            }
+            else
+            {
+                icon_element3.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            icon_element3.gameObject.SetActive(true);
+        }
+
         switch (_DungeonLvel)
         {
             /*case -1:
@@ -63,6 +80,37 @@ public class DungeonTooltip : MonoBehaviour
                 icon_enemy3.sprite = GameUiMgr.single.entityIconRS.GetEnemyIcon(IconEnemy.FireGolem);
 
                 desc.text = "이 난이도에서는 \n적이 25%강화되지만 \n대신 보상도 강화됩니다.";
+                break;
+            case 3:
+                if (_onoff)
+                {
+                    title.text = "악마의 미궁";
+
+                    icon_element1.sprite = GameUiMgr.single.entityIconRS.GetElementIcon(BaseEntity.Attribute.Light);
+                    icon_element2.sprite = GameUiMgr.single.entityIconRS.GetElementIcon(BaseEntity.Attribute.Dark);
+                    icon_element3.sprite = GameUiMgr.single.entityIconRS.GetElementIcon(BaseEntity.Attribute.Normal);
+
+                    icon_enemy1.sprite = GameUiMgr.single.entityIconRS.GetEnemyIcon(IconEnemy.Puppet_Human);
+                    icon_enemy2.sprite = GameUiMgr.single.entityIconRS.GetEnemyIcon(IconEnemy.Skeleton);
+                    icon_enemy3.sprite = GameUiMgr.single.entityIconRS.GetEnemyIcon(IconEnemy.SkeletonWizard);
+
+                    desc.text = "악마의 미궁입니다. \n적이 50%강화됩니다.";
+                }
+                else
+                {
+                    title.text = "???";
+
+                    icon_element1.sprite = GameUiMgr.single.question;
+                    icon_element2.sprite = GameUiMgr.single.question;
+                    icon_element3.sprite = GameUiMgr.single.question;
+
+                    icon_enemy1.sprite = GameUiMgr.single.question;
+                    icon_enemy2.sprite = GameUiMgr.single.question;
+                    icon_enemy3.sprite = GameUiMgr.single.question;
+
+                    desc.text = "미지의 던전입니다. \n어떤 적이 있을지 모르니 조심해야합니다.";
+                }
+
                 break;
             default://-1, 튜토리얼: 고블린, 슬라임(바람,물) 
                 title.text = "튜토리얼";

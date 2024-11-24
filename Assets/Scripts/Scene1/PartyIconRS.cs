@@ -11,7 +11,8 @@ public enum IconEnemy
     Skeleton,
     Puppet_Human,
     FireGolem,
-    IceGolem
+    IceGolem,
+    SkeletonWizard
 }
 public class PartyIconRS : MonoBehaviour
 {
@@ -103,6 +104,8 @@ public class PartyIconRS : MonoBehaviour
         dictn_enemyIcon.Add(IconEnemy.Puppet_Human, spEnemyIcon[5]);
         dictn_enemyIcon.Add(IconEnemy.FireGolem, spEnemyIcon[6]);
         dictn_enemyIcon.Add(IconEnemy.IceGolem, spEnemyIcon[7]);
+        dictn_enemyIcon.Add(IconEnemy.SkeletonWizard, spEnemyIcon[8]);
+
     }
     void SetAttack()
     {
