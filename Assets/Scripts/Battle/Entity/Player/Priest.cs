@@ -70,9 +70,8 @@ public class Priest : Ally
             {
                 Ally ally = player.GetComponent<Ally>();
 
-                if (ally != null && ally.cur_Hp > 0 && ally.cur_Hp < ally.max_Hp && ally.max_Hp > 0)
+                if (ally != null && ally.cur_Hp > 0 && ally.max_Hp > 0)
                 {
-
                     float hpRatio = ally.cur_Hp / ally.max_Hp;
 
                     if (hpRatio < lowerHp) 

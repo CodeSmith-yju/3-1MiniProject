@@ -83,7 +83,7 @@ public class DeployInit : MonoBehaviour
     {
         List<GameObject> availableTiles = new List<GameObject>(highlight); // 선택 가능한 타일 복사본
 
-        for (int i = 0; i < Random.Range(0, butt_Count); i++)
+        for (int i = 0; i < Random.Range(1, butt_Count); i++)
         {
             if (availableTiles.Count == 0)
             {
