@@ -29,6 +29,7 @@ public class QuestMgr : MonoBehaviour
     public GameObject[] receptionist;// 모험가길드에서 튜토리얼을진행할 접수원을 분할하여 퀘스트기능을 구현하는데 용이하도록함
 
     [SerializeField] PlayerDifficulty now_playerDifficulty;
+    [SerializeField] GameObject final_QuestPotal;
     //04-26 Quest Potion Ev
     //private static bool oneTimeEv = false;
 

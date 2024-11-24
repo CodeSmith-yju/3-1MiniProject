@@ -286,7 +286,24 @@ public class AudioManager : MonoBehaviour
         }
         else if (_index == 15)
         {
-            Debug.Log("Run Sfx: 15");
+            if (sfxPlayers[0].clip.name == sfxClips[_index].name && sfxPlayers[0].isPlaying)
+            {
+                return;
+            }
+            // 현재 볼륨 저장
+            float originalVolume = sfxPlayers[0].volume;
+
+            // 볼륨을 25%로 줄임
+            sfxPlayers[0].volume = originalVolume * 0.5f;
+
+            // 클립 설정 및 재생
+            sfxPlayers[0].clip = sfxClips[_index];
+            sfxPlayers[0].time = 0.1f;
+            sfxPlayers[0].Play();
+
+            StartCoroutine(ForceStopSfxAfterDelay(sfxPlayers[0], 0.125f, originalVolume));
+
+            return;
         }
         sfxPlayers[0].clip = sfxClips[_index];
         sfxPlayers[0].Play();
