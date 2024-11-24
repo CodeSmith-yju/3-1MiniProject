@@ -22,6 +22,21 @@ public class DungeonTooltip : MonoBehaviour
 
     public void SetupTooltip(int _DungeonLvel, bool _onoff)
     {
+        if (_DungeonLvel == 3)
+        {
+            if (_onoff)
+            {
+                icon_element3.gameObject.transform.parent.gameObject.SetActive(false);
+            }
+            else
+            {
+                icon_element3.gameObject.transform.parent.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            icon_element3.gameObject.transform.parent.gameObject.SetActive(true);
+        }
         switch (_DungeonLvel)
         {
             /*case -1:
@@ -68,7 +83,7 @@ public class DungeonTooltip : MonoBehaviour
             case 3:
                 if (_onoff)
                 {
-                    title.text = "악마의 미궁";
+                    title.text = "매우 어려움";
 
                     icon_element1.sprite = GameUiMgr.single.entityIconRS.GetElementIcon(BaseEntity.Attribute.Light);
                     icon_element2.sprite = GameUiMgr.single.entityIconRS.GetElementIcon(BaseEntity.Attribute.Dark);
@@ -110,35 +125,6 @@ public class DungeonTooltip : MonoBehaviour
                 //desc_elemnet.text = "이 난이도에서는 바람, 물 속성의 고블린, 슬라임이 등장하며, 근거리/원거리 공격을 합니다. 기본적인 전투를 경험할 수 있습니다.";
                 //icon_enemy1.sprite = GameUiMgr.single.entityIconRS;
                 break;
-        }
-
-        if (_DungeonLvel == 3)
-        {
-            if (_onoff)
-            {
-                icon_element3.gameObject.SetActive(false);
-            }
-            else
-            {
-                icon_element3.gameObject.SetActive(true);
-            }
-        }
-        else
-        {
-            icon_element3.gameObject.SetActive(true);
-        }
-
-    }
-
-    public void Offthe3(bool _bool)
-    {
-        if (_bool == true)
-        {
-            icon_element3.gameObject.SetActive(!_bool);
-        }
-        else
-        {
-            icon_element3.gameObject.SetActive(!_bool);
         }
     }
 }

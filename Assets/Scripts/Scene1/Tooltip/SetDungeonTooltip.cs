@@ -16,11 +16,6 @@ public class SetDungeonTooltip : MonoBehaviour, IPointerEnterHandler, IPointerEx
         {
             GameUiMgr.single.dungeonTooltip.gameObject.SetActive(true);
             GameUiMgr.single.dungeonTooltip.SetupTooltip(DungeonLevelScale, _onoff);
-
-            if (_onoff)
-            {
-                GameUiMgr.single.dungeonTooltip.Offthe3(true);
-            }
         }
         else
         {
