@@ -113,6 +113,7 @@ public class PopUp : MonoBehaviour
                 {
                     if (GameUiMgr.single.nowSlot.item.PrimaryCode == Inventory.Single.items[i].PrimaryCode)
                     {
+                        AudioManager.single.PlaySfxClipChange(14);
                         Inventory.Single.RemoveItem(Inventory.Single.items[i]);
                         GameUiMgr.single.RedrawSlotUI();
                     }
