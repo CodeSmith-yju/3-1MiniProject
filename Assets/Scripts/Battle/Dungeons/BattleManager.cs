@@ -576,7 +576,10 @@ public class BattleManager : MonoBehaviour
             }
             else if(dungeon_Level_Scale == 1f)
             {
-
+                if (battleDifficultyChaser == 31)
+                {
+                    GameMgr.single.SetPlayerDifficulty(32);
+                }
             }
             else if (dungeon_Level_Scale == 1.25f)
             {

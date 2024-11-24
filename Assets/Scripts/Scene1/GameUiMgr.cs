@@ -234,14 +234,18 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                     //if (GameMgr.single.GetPlayerDifficulty() > 60){} 이런거 조건줘서 활성, 비활성 및 표시될 텍스트 수정
                     Debug.Log("LasgDungeon흠,,,");
                 }
-                else if(dungeonCheckCheser >= 20)
+                if(dungeonCheckCheser >= 8)
                 {
+                    if (dungeonCheckCheser == 8)
+                    {
+                        dungeonCheckCheser = 20;
+                    }
                     if (dungeonCheckCheser == 23) //|| dungeonCheckCheser == 33 || dungeonCheckCheser == 43)
                     {
                         dungeonCheckCheser = 30;
                     }
 
-                    if (i < dungeonCheckCheser/10)
+                    if (0 < i &&i < dungeonCheckCheser/10)
                     {
                         level_Buttons[i].interactable = true;
                         level_Buttons[i].GetComponent<CanvasGroup>().alpha = 1.0f;
@@ -834,6 +838,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
         int questTalkIndex = 0;
         string talkData = "";
 
+        int questDifficultyChser = GameMgr.single.GetPlayerDifficulty();
         // isAnim
         if (typeTextEffect.isAnim)
         {
@@ -866,12 +871,63 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 {
                     talkMgr.guideUi.ChangeGuideImg(GuideState.None);
                 }
-                else if (questMgr.questId == 50 && questMgr.questActionIndex == 1)
+                else if (questMgr.questId == 40)
                 {
-                    UpdatePlayerRankAndQuestText((PlayerDifficulty)GameMgr.single.GetPlayerDifficulty());
+                    if (questMgr.questActionIndex == 1)
+                    {
+                        Debug.Log("-------------------40, 1, 8, easybefor Talk End");
+                        if (questDifficultyChser == 8)
+                        {
+                            UpdatePlayerRankAndQuestText((PlayerDifficulty)questDifficultyChser);
+                        }
+                    }
                 }
-                
+                else if (questMgr.questId == 50)
+                {
+                    if (questMgr.questActionIndex == 0)
+                    {
+                        Debug.Log("-------------------50, 0, 8, easybefor Talk End");
+                        if (questDifficultyChser == 20)
+                        {
+                            GameMgr.single.SetPlayerDifficulty(20);
+                        }
+                    }
+
+                    if (questMgr.questActionIndex == 1)
+                    {
+                        UpdatePlayerRankAndQuestText((PlayerDifficulty)questDifficultyChser);
+                    }
+                }
+                else if (questMgr.questId == 60)
+                {
+                    if (questMgr.questActionIndex == 0)
+                    {
+                        Debug.Log("-------------------60, 0, , Talk End");
+                        if (questDifficultyChser == 23)
+                        {
+                            GameMgr.single.SetPlayerDifficulty(31);//nomal Start
+                        }
+                    }
+                    else// aindex == 1
+                    {
+                        Debug.Log("-------------------60, 0, 8, Talk End");
+                    }
+                }
             }
+            else if (scanObj_ID == 2000)
+            {
+                if (questMgr.questId == 50 && questMgr.questActionIndex == 1)
+                {
+                    if (questDifficultyChser == 22)
+                    {
+                        Debug.Log("-------------------50, 1, 2000, easy after Talk End");
+
+                        GameMgr.single.SetPlayerDifficulty(23);
+                        UpdatePlayerRankAndQuestText((PlayerDifficulty)23);
+                    }
+                }
+            }
+            
             if (scanObj_ID == 4000)
             {
                 Debug.Log("상점 npc와 대화종료되면 상점/대장간 ui오픈");
@@ -894,33 +950,44 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
 
             talkIndex = 0;
             questDesc.text = questMgr.CheckQuest(scanObj_ID);
-            int questDifficultyChser = GameMgr.single.GetPlayerDifficulty();
 
-            if (questMgr.questId == 40 && questMgr.questActionIndex == 1)
+            questDifficultyChser = GameMgr.single.GetPlayerDifficulty();
+
+            if (questMgr.questId == 40)
             {
-                if (questDifficultyChser == 5)
+                if (questMgr.questActionIndex == 1)
                 {
-                    GameMgr.single.SetPlayerDifficulty(6);
+                    if (questDifficultyChser == 5)
+                    {
+                        GameMgr.single.SetPlayerDifficulty(6);
+                    }
                 }
             }
             else if (questMgr.questId == 50)
             {
+                Debug.Log("---------- is 50 QC end");
                 if (questMgr.questActionIndex == 0)
                 {
-                    if (questDifficultyChser == 8)
+                    Debug.Log("---------- is 0 QC end");
+                    /*if (questDifficultyChser == 20)
                     {
-                        GameMgr.single.SetPlayerDifficulty(20);
-                    }
+                        Debug.Log("---------- is 8 is 20 end");
+                        GameMgr.single.SetPlayerDifficulty(questDifficultyChser);
+                    }*/
                 }
-                else if(questMgr.questActionIndex == 1)
+                else if (questMgr.questActionIndex == 1)
                 {
+                    GameMgr.single.GetPlayerDifficulty();
+                    Debug.Log(""+ questDifficultyChser);
                     if (questDifficultyChser == 21)
                     {
+                        Debug.Log("Easy Dungeon Quest Start & Easy Dungeon is not Clear");
                         UpdatePlayerRankAndQuestText((PlayerDifficulty)questDifficultyChser);
                     }
                 }
             }
-            else if (questMgr.questId == 60)
+
+            if (questMgr.questId == 60)
             {
                 /*if (questMgr.questActionIndex == 0)
                 {
@@ -2583,6 +2650,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 SetQuestBoardText("모의전투를 클리어했다 접수원에게 보고하자", true);
                 break;
             case PlayerDifficulty.Tutorial_After:
+                SetQuestTitleText("새로운 퀘스트");
                 break;
 
             case PlayerDifficulty.Easy_Before:
@@ -2595,34 +2663,47 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 questMgr.SetReceptionist(0);
                 questMgr.SetQuestICon(0, 1);
                 SetQuestTitleText("승급 퀘스트");
-                SetQuestBoardText("쉬움 난이도 던전 클리어 0/1", true);
+                SetQuestBoardText("하급 던전 클리어 0/1", true);
                 break;
             case PlayerDifficulty.Easy_DungeonClearAndNotTalk:
                 questMgr.SetReceptionist(1);
                 questMgr.SetQuestICon(0, 2);
                 SetQuestTitleText("승급 퀘스트");
-                SetQuestBoardText("쉬움 난이도 던전 클리어 1/1", true);
+                SetQuestBoardText("하급 던전 클리어 1/1", true);
                 break;
 
             case PlayerDifficulty.Easy_After:
                 questMgr.SetReceptionist(0);
-                questMgr.SetQuestICon(0, 1);
+                questMgr.SetQuestICon(0, 0);
+                SetQuestTitleText("새로운 퀘스트");
+                SetQuestBoardText("접수원과 이야기하자", true);
                 SetAdventurerRateText("중급 모험가");
                 break;
-            case PlayerDifficulty.Normal_Before:
+            case PlayerDifficulty.Normal_Before://패싱
+                break;
+            case PlayerDifficulty.Normal_Start:
                 questMgr.SetReceptionist(0);
                 questMgr.SetQuestICon(0, 1);
-
                 SetQuestTitleText("승급 퀘스트");
-                SetQuestBoardText("보통 난이도 던전 클리어 0/1", true);
+                SetQuestBoardText("중급 던전 클리어 0/1", true);
                 break;
-            case PlayerDifficulty.Normal_After:
+            case PlayerDifficulty.Normal_DungeonClearAndNotTalk:
                 SetAdventurerRateText("중급 모험가");
                 SetQuestTitleText("승급 퀘스트");
-                SetQuestBoardText("보통 난이도 던전 클리어 1/1", true);
+                SetQuestBoardText("중급 던전 클리어 1/1", true);
                 break;
-
-            case PlayerDifficulty.Hard_Before:
+            case PlayerDifficulty.Normal_After:
+                questMgr.SetReceptionist(0);
+                questMgr.SetQuestICon(0, 0);
+                SetQuestTitleText("새로운 퀘스트");
+                SetQuestBoardText("접수원과 이야기하자", true);
+                SetAdventurerRateText("상급 모험가");
+                break;
+            case PlayerDifficulty.Hard_Before://패싱
+                break;
+            case PlayerDifficulty.Hard_Start:
+                break;
+            case PlayerDifficulty.Hard_DungeonClearAndNotTalk:
                 break;
             case PlayerDifficulty.Hard_After:
                 break;
@@ -2632,14 +2713,18 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
                 break;
         }
 
-        if ((int)_playerDifficulty > 20 && (int)_playerDifficulty < 23)
+        if ((int)_playerDifficulty > 7 && (int)_playerDifficulty < 23)
         {
+            Debug.Log("23인데 왜 안바뀌는거냐고 씨ㅣ발아" + (int)_playerDifficulty + _playerDifficulty);
+            Debug.Log("초급따리");
             SetAdventurerRateText("초급 모험가");
         }
-        else if ((int)_playerDifficulty >= 23)
+        else if ((int)_playerDifficulty > 22)
         {
+            Debug.Log("중급따리");
             SetAdventurerRateText("중급 모험가");
         }
+        Debug.Log("현재 호출당시의 숫자 상황" + (int)_playerDifficulty + _playerDifficulty);
     }
 }
 public enum PlaceState

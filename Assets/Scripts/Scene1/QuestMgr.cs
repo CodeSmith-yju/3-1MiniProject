@@ -189,7 +189,7 @@ public class QuestMgr : MonoBehaviour
                     SetReceptionist(0);
 
                     GameMgr.single.SetPlayerDifficulty(8);
-                    GameUiMgr.single.UpdatePlayerRankAndQuestText((PlayerDifficulty)20);
+                    GameUiMgr.single.UpdatePlayerRankAndQuestText((PlayerDifficulty)8);
                 }
                 break;
             case 50:
@@ -216,7 +216,7 @@ public class QuestMgr : MonoBehaviour
                 else
                 {
                     Debug.Log("Case 52");
-                    GameMgr.single.SetPlayerDifficulty(23);
+                    //GameMgr.single.SetPlayerDifficulty(23);
                     SetReceptionist(0);
                     SetQuestICon(0, 0);
                 }
@@ -245,7 +245,7 @@ public class QuestMgr : MonoBehaviour
                 break;
         }
 
-        if (questId < 50)
+        /*if (questId < 50)
         {
             GameUiMgr.single.SetQuestTitleText("튜토리얼 퀘스트");
         }
@@ -256,7 +256,7 @@ public class QuestMgr : MonoBehaviour
         else
         {
 
-        }
+        }*/
     }
     /*    Item questItem2;
     if (questActionIndex == 0){Debug.Log("Case 40");}
