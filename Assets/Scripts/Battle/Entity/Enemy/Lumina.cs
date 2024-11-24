@@ -53,7 +53,6 @@ public class Lumina : Enemy
             if (isAttack)
             {
                 ani.SetBool("isSkill", true);
-
                 BaseEntity target = FindMaxCurHpPlayer();
 
                 GameObject obj_Arrow = BattleManager.Instance.pool.GetObject(2, isPlayer);
@@ -85,11 +84,14 @@ public class Lumina : Enemy
             {
                 Ally ally = player.GetComponent<Ally>();
 
-                if (ally != null && ally.cur_Hp > 0)
+                if (ally != null && ally.cur_Hp > 0 && ally.max_Hp > 0)
                 {
-                    if (ally.cur_Hp > upperHp)
+
+                    float hpRatio = ally.cur_Hp / ally.max_Hp;
+
+                    if (hpRatio > upperHp)
                     {
-                        upperHp = ally.cur_Hp;
+                        upperHp = hpRatio;
                         temp_Player = ally;
                     }
                 }

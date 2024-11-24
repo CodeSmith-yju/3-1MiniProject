@@ -934,13 +934,13 @@ public class BattleManager : MonoBehaviour
             {
                 if (player.cur_Player_Hp > 0)
                 {
-                    if (player.cur_Player_Hp + 20 >= player.max_Player_Hp)
+                    if (player.cur_Player_Hp * 1.2f >= player.max_Player_Hp)
                     {
                         player.cur_Player_Hp = player.max_Player_Hp;
                     }
                     else
                     {
-                        player.cur_Player_Hp += 20;
+                        player.cur_Player_Hp *= 1.2f;
                     }
                 }
             }
