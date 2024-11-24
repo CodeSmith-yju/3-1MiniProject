@@ -48,6 +48,10 @@ public class PlayerAction : MonoBehaviour
             }
             else if (obj.id == 9000)
             {
+                if (GameMgr.single.GetPlayerDifficulty() < 4)
+                {
+                    return;
+                }
                 if (GameUiMgr.single.questMgr.questId >= 30)
                 {
                     if (GameUiMgr.single.questMgr.questId > 30 || GameUiMgr.single.questMgr.questId == 30 && GameUiMgr.single.questMgr.questActionIndex >= 1)
