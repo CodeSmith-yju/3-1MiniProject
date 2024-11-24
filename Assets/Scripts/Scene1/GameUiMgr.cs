@@ -351,7 +351,7 @@ public class GameUiMgr : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndD
             }
             Inventory.Single.AddItem(_item);
         }
-
+        GameMgr.playerData[0].player_Gold += 4000;
         RedrawSlotUI();
     }
     public void ValueUpdate()
