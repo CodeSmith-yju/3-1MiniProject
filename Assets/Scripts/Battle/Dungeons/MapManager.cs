@@ -50,7 +50,7 @@ public class MapManager : MonoBehaviour
     public GameObject chestRoomPrefab;        // 상자방 프리팹
     public GameObject restRoomPrefab;         // 휴식방 프리팹
     public GameObject blockedRoomPrefab;      // 막힌 방 프리팹
-    public GameObject bossRoomPrefab;         // 보스 방 프리팹
+    public GameObject[] bossRoomPrefab;         // 보스 방 프리팹
 
 
     Vector2Int player_Pos;             // 플레이어 시작 위치
@@ -154,6 +154,9 @@ public class MapManager : MonoBehaviour
         {
             case 2:
                 set_Level = 1;
+                return set_Level;
+            case 3:
+                set_Level = 2;
                 return set_Level;
             default:
                 return 0;
@@ -323,8 +326,17 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        // 보스방 배치
-        SetRoomValue(bossRoomPos, bossRoomPrefab, Cell.RoomType.BossRoom, isBoss: true);
+        // 보스방 배치 (쉬움 ~ 어려움 까지는 스켈레톤 메이지 보스방 생성, 최종 난이도에서는 루미나 보스방 생성)
+        if (GameUiMgr.single.dungeon_Level == 3)
+        {
+            SetRoomValue(bossRoomPos, bossRoomPrefab[1], Cell.RoomType.BossRoom, isBoss: true);
+        }
+        else
+        {
+            SetRoomValue(bossRoomPos, bossRoomPrefab[0], Cell.RoomType.BossRoom, isBoss: true);
+        }
+        
+        
     }
 
 
@@ -872,16 +884,15 @@ public class MapManager : MonoBehaviour
                 {
                     if (cell.isBlocked)
                     {
-                        PlaceRoom(pos, blockedRoomPrefab, cell.roomType, isBlocked: true);
+                        PlaceRoom(pos, cell.cellObject, cell.roomType, isBlocked: true);
                     }
                     else if (cell.isBoss)
                     {
-                        PlaceRoom(pos, bossRoomPrefab, cell.roomType, isBoss: true);
+                        PlaceRoom(pos, cell.cellObject, cell.roomType, isBoss: true);
                     }
                     else
                     {
-                        GameObject roomPrefab = cell.cellObject;  // 미리 저장된 방 프리팹 사용
-                        PlaceRoom(pos, roomPrefab, cell.roomType);
+                        PlaceRoom(pos, cell.cellObject, cell.roomType);
                     }
                 }
             }

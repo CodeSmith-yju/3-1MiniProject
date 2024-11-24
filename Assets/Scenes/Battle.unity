@@ -4238,7 +4238,9 @@ MonoBehaviour:
   chestRoomPrefab: {fileID: 5549726582459244979, guid: 88ddc6f93a85dd046b84b10280554256, type: 3}
   restRoomPrefab: {fileID: 6622256538106074226, guid: 3d8d6d7c650c50e46a7aab8c76666599, type: 3}
   blockedRoomPrefab: {fileID: 5217568088966437922, guid: 7253ef389431d90419b35dd60245f636, type: 3}
-  bossRoomPrefab: {fileID: 3867297895921809171, guid: 860f2032ccaf2314d8f5076d2b76bb67, type: 3}
+  bossRoomPrefab:
+  - {fileID: 3867297895921809171, guid: 860f2032ccaf2314d8f5076d2b76bb67, type: 3}
+  - {fileID: 3867297895921809171, guid: 6184886e85c7bd34caf0491eac55b7ba, type: 3}
   cur_Room: {fileID: 0}
   map_Camera: {fileID: 1403373301}
   map_Camera_Big: {fileID: 900251648}
