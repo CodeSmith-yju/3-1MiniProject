@@ -270,12 +270,28 @@ public class AudioManager : MonoBehaviour
             {
                 return;
             }
-            StartCoroutine(ForceStopSfxAfterDelay(sfxPlayers[0], 0.275f));
+            // 현재 볼륨 저장
+            float originalVolume = sfxPlayers[0].volume;
+
+            // 볼륨을 25%로 줄임
+            sfxPlayers[0].volume = originalVolume * 0.5f;
+
+            // 클립 설정 및 재생
+            sfxPlayers[0].clip = sfxClips[_index];
+            sfxPlayers[0].Play();
+
+            StartCoroutine(ForceStopSfxAfterDelay(sfxPlayers[0], 0.275f, originalVolume));
+            
+            return;
+        }
+        else if (_index == 15)
+        {
+            Debug.Log("Run Sfx: 15");
         }
         sfxPlayers[0].clip = sfxClips[_index];
         sfxPlayers[0].Play();
     }
-    private IEnumerator ForceStopSfxAfterDelay(AudioSource audioSource, float delay)
+    private IEnumerator ForceStopSfxAfterDelay(AudioSource audioSource, float delay, float originalVolume)
     {
         yield return new WaitForSeconds(delay);
 
@@ -283,6 +299,8 @@ public class AudioManager : MonoBehaviour
         if (audioSource.isPlaying)
         {
             audioSource.Stop();
+            audioSource.volume = originalVolume;
+            yield break;
         }
     }
 
