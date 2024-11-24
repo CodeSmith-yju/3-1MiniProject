@@ -180,9 +180,10 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler,
                     }
                 }
             }
-            
-            item_Cnt -= 1;
-            myItem.itemStack = item_Cnt;
+
+
+            myItem.itemStack--;
+            item_Cnt = myItem.itemStack;
             AudioManager.single.PlaySfxClipChange(14);
 
             // 아이템 사용 후 아이템 스택이 0이 될 때 아이템을 삭제하도록 함.

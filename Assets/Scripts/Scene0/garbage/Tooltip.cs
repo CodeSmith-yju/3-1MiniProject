@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Tooltip : MonoBehaviour
 {
@@ -45,11 +46,22 @@ public class Tooltip : MonoBehaviour
         transform.position = Input.mousePosition;
         // 04-15 ToolTip
         tooltipRect = GetComponent<RectTransform>();
-
-        if (tooltipRect.anchoredPosition.x + tooltipRect.sizeDelta.x > canvaseWidth)
-            tooltipRect.pivot = new Vector2(1, 0);
+        
+        if (SceneManager.GetActiveScene().name == "Town")
+        {
+            if (tooltipRect.anchoredPosition.x + tooltipRect.sizeDelta.x > canvaseWidth)
+                tooltipRect.pivot = new Vector2(1, 0);
+            else
+                tooltipRect.pivot = new Vector2(0, 0);
+        }
         else
-            tooltipRect.pivot = new Vector2(0, 0);
+        {
+            if (tooltipRect.anchoredPosition.x + tooltipRect.sizeDelta.x > canvaseWidth)
+                tooltipRect.pivot = new Vector2(1, 1);
+            else
+                tooltipRect.pivot = new Vector2(0, 1);
+        }
+        
     }
 
     string SetUpStatText(Item _item)

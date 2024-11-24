@@ -136,8 +136,8 @@ public class UIManager : MonoBehaviour
         {
             if (!option_UI.activeSelf) 
             {
-/*                if (BattleManager.Instance.dialogue != null && dialogue_Box.activeSelf)
-                    return;*/
+                /*                if (BattleManager.Instance.dialogue != null && dialogue_Box.activeSelf)
+                                    return;*/
                 if (attribute_Popup.activeSelf)
                     CancelPopup(attribute_Popup);
                 else if (alert_Popup.activeSelf)
@@ -146,6 +146,14 @@ public class UIManager : MonoBehaviour
                     CancelPopup(event_Alert_Popup);
                 else if (event_Popup.activeSelf)
                     CancelPopup(event_Popup);
+                else if (next_Room_Popup.activeSelf)
+                    CancelPopup(next_Room_Popup);
+                else if (item_Check_Popup.activeSelf)
+                    CancelPopup(item_Check_Popup);
+                else if (reward_Popup.activeSelf)
+                    CancelPopup(reward_Popup);
+                else if (room_UI.activeSelf)
+                    CancelPopup(room_UI);
                 else
                 {
                     OpenOption();
@@ -183,6 +191,9 @@ public class UIManager : MonoBehaviour
         {
             item_Bar.SetActive(false);
             log_View.SetActive(true);
+
+            //SetPositionStatbar(new Vector2(0, 0), new Vector2(1, 0), new Vector2(0.5f, 0), 228, 10, player_Statbar.GetComponent<RectTransform>());
+
             if (!item_Bar.gameObject.activeSelf)
             {
                 if (BattleManager.Instance.ui.tooltip.gameObject.activeSelf)
@@ -195,6 +206,8 @@ public class UIManager : MonoBehaviour
         {
             item_Bar.SetActive(true);
             log_View.SetActive(false);
+
+            //SetPositionStatbar(new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 1), 228, -3, player_Statbar.GetComponent<RectTransform>());
         }
 
         if (BattleManager.Instance._curphase == BattleManager.BattlePhase.Deploy)
@@ -206,6 +219,27 @@ public class UIManager : MonoBehaviour
             battleStart.SetActive(false);
         }
     }
+
+    /*private void SetPositionStatbar(Vector2 anchorMin, Vector2 anchorMax, Vector2 pivot, float offset, float posY, RectTransform obj)
+    {
+        obj.anchorMin = anchorMin;
+        obj.anchorMax = anchorMax;
+        obj.pivot = pivot;
+
+        Vector2 offsetMin = obj.offsetMin;
+        Vector2 offsetMax = obj.offsetMax;
+
+        offsetMin.x = offset;  // Left 설정
+        offsetMax.x = -offset; // Right 설정 (음수 값으로 설정)
+
+        obj.offsetMin = offsetMin;
+        obj.offsetMax = offsetMax;
+
+        Vector2 anchoredPosition = obj.anchoredPosition;
+        anchoredPosition.y = posY;
+        obj.anchoredPosition = anchoredPosition;
+
+    }*/
 
     public void OpenPopup(GameObject popup)
     {
