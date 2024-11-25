@@ -104,9 +104,13 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler,
             {
                 Button membnt = stat.gameObject.GetComponent<Button>();
                 if (membnt == null)
+                {
                     membnt = stat.gameObject.AddComponent<Button>();
+                    membnt.onClick.AddListener(() => Postion(stat));
+                }
+                    
                 Debug.Log(membnt.gameObject.name);
-                membnt.onClick.AddListener(() => Postion(stat));
+                
             }
         }
         else
