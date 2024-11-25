@@ -935,16 +935,13 @@ public class BattleManager : MonoBehaviour
             // 전체 체력 증가 및 이벤트 스택 증가
             foreach(PlayerData player in GameMgr.playerData)
             {
-                if (player.cur_Player_Hp > 0)
+                if (player.cur_Player_Hp > 0) // 체력이 0 이상인 플레이어만 처리
                 {
-                    if (player.cur_Player_Hp * 1.2f >= player.max_Player_Hp)
-                    {
-                        player.cur_Player_Hp = player.max_Player_Hp;
-                    }
-                    else
-                    {
-                        player.cur_Player_Hp *= 1.2f;
-                    }
+                    // 최대 체력의 20% 계산
+                    float healAmount = player.max_Player_Hp * 0.2f;
+
+                    // 현재 체력 증가 (최대 체력을 초과하지 않도록 클램프)
+                    player.cur_Player_Hp = Mathf.Min(player.cur_Player_Hp + healAmount, player.max_Player_Hp);
                 }
             }
 
