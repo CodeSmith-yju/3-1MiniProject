@@ -151,14 +151,14 @@ public class PartyDetails : MonoBehaviour
 
             _desc.SetHpAtk(GameMgr.playerData[_index].max_Player_Hp, GameMgr.playerData[_index].base_atk_Dmg);
 
-            txtHp.text = "HP: " + GameMgr.playerData[_index].max_Player_Hp + "\n(+" + hp + ")"; //_desc.str_Hp;
-            txtMp.text = "MP: " + GameMgr.playerData[_index].max_Player_Mp + "\n(+" + mp + ")";
+            txtHp.text = "HP: " + FormatNumber(GameMgr.playerData[_index].max_Player_Hp) + "\n(+" + hp + ")"; //_desc.str_Hp;
+            txtMp.text = "MP: " + FormatNumber(GameMgr.playerData[_index].max_Player_Mp) + "\n(+" + mp + ")";
             textDef.text = "Def: " + GameMgr.playerData[_index].defensePoint + "\n(+" + def + ")";
             textSpeed.text = "Spd: " + (_desc.tempDefaultStats[6] / 2).ToString("F1") + "\n(+" + speed + ")";
 
-            txtAtk.text = "Atk: " + GameMgr.playerData[_index].base_atk_Dmg + "\n(+" + atk + ")";//_desc.str_Atk ;
-            txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_index].atk_Speed + "\n(+" + atkspd + ")";//_desc.str_AtkSpd;
-            txtAtkRange.text = "AtkRng: " + GameMgr.playerData[_index].atk_Range + "\n(+" + atkrange + ")";
+            txtAtk.text = "Atk: " + FormatNumber(GameMgr.playerData[_index].base_atk_Dmg) + "\n(+" + atk + ")";//_desc.str_Atk ;
+            txtAtkSpd.text = "AtkSpd: " + FormatNumber(GameMgr.playerData[_index].atk_Speed) + "\n(+" + atkspd + ")";//_desc.str_AtkSpd;
+            txtAtkRange.text = "AtkRng: " + FormatNumber(GameMgr.playerData[_index].atk_Range) + "\n(+" + atkrange + ")";
         }
         else //Battle, Tutorial Scean에서 여기만 수정해주면 될듯?
         {
@@ -181,14 +181,14 @@ public class PartyDetails : MonoBehaviour
 
             _desc.SetHpAtk(GameMgr.playerData[_index].max_Player_Hp, GameMgr.playerData[_index].base_atk_Dmg);
 
-            txtHp.text = "HP: " + GameMgr.playerData[_index].max_Player_Hp.ToString("F3") + "\n(" + hp + ")"; //_desc.str_Hp;
-            txtMp.text = "MP: " + GameMgr.playerData[_index].max_Player_Mp.ToString("F0") + "\n(" + mp + ")";
+            txtHp.text = "HP: " + FormatNumber(GameMgr.playerData[_index].max_Player_Hp) + "\n(" + hp + ")"; //_desc.str_Hp;
+            txtMp.text = "MP: " + FormatNumber(GameMgr.playerData[_index].max_Player_Mp) + "\n(" + mp + ")";
             textDef.text = "Def: " + GameMgr.playerData[_index].defensePoint.ToString() + "\n(" + def + ")";
             textSpeed.text = "Spd: " + (_desc.tempDefaultStats[6] / 2).ToString("F1") + "\n(+" + speed + ")";
 
-            txtAtk.text = "Atk: " + GameMgr.playerData[_index].base_atk_Dmg.ToString("F3") + "\n(" + atk + ")";//_desc.str_Atk ;
-            txtAtkSpd.text = "AtkSpd: " + GameMgr.playerData[_index].atk_Speed.ToString("F3") + "\n(" + atkspd + ")";//_desc.str_AtkSpd;
-            txtAtkRange.text = "AtkRng: " + GameMgr.playerData[_index].atk_Range.ToString("F3") + "\n(+" + atkrange + ")";
+            txtAtk.text = "Atk: " + FormatNumber(GameMgr.playerData[_index].base_atk_Dmg) + "\n(" + atk + ")";//_desc.str_Atk ;
+            txtAtkSpd.text = "AtkSpd: " + FormatNumber(GameMgr.playerData[_index].atk_Speed) + "\n(" + atkspd + ")";//_desc.str_AtkSpd;
+            txtAtkRange.text = "AtkRng: " + FormatNumber(GameMgr.playerData[_index].atk_Range) + "\n(+" + atkrange + ")";
         }
 
         BtnResize(_index);
@@ -217,6 +217,19 @@ public class PartyDetails : MonoBehaviour
         if (atkspd.EndsWith("."))
             atkspd = atkspd.Substring(0, atkspd.Length - 1);
     }
+
+    private string FormatNumber(float value, int decimalPlaces = 3)
+    {
+        // 소숫점 값이 없으면 정수로 반환
+        if (Mathf.Approximately(value % 1f, 0f))
+        {
+            return ((int)value).ToString(); // 정수로 변환
+        }
+
+        // 소숫점 값이 있으면 지정된 소숫점 자릿수로 반환
+        return value.ToString($"F{decimalPlaces}").TrimEnd('0').TrimEnd('.');
+    }
+
 
     private string ApplySign(string value) // 숫자에 따라 부호 표시
     {
