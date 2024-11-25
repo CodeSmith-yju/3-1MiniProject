@@ -50,8 +50,6 @@ public class ItemUse : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler,
                 BattleManager.Instance.ui.item_Check_Popup.GetComponent<ItemUseUIDescInit>().Init(myItem.itemName);
                 Button use_UI_Bnt = BattleManager.Instance.ui.item_Check_Popup.GetComponent<ItemUseUIDescInit>().use_Bnt;
                 use_UI_Bnt.GetComponent<Button>().onClick.AddListener(() => ShowPostionUI());
-                //use_UI_Bnt.GetComponent<Button>().onClick.AddListener(() => BattleManager.Instance.ui.CancelPopup(BattleManager.Instance.ui.item_Check_Popup));
-
 
                 if (BattleManager.Instance.dialogue != null && BattleManager.Instance.ui.dialogue_Bg.activeSelf)
                 {
