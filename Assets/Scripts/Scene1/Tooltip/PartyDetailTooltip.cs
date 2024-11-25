@@ -31,12 +31,14 @@ public class PartyDetailTooltip : MonoBehaviour
     public void SetUpToolTip(PartyIconState _iconState, PartyDesc _desc)//(string _name, string _title, string _desc,Sprite _img)
     {
         _data = _desc.GetPartyData();
-
+        RectTransform rt0 = tooltips[0].gameObject.GetComponent<RectTransform>();
         if (_iconState == PartyIconState.Class)
         {
             Debug.Log("파티 아이콘 툴팁 활성화");
             VeiwToolTip(0);
             ViewClassTip(_data);
+            rt0.sizeDelta = new Vector2(350, 100);
+            rt0.transform.localPosition = new Vector2(175, 50);
         }
         else if (_iconState == PartyIconState.Attribute)
         {
@@ -92,6 +94,9 @@ public class PartyDetailTooltip : MonoBehaviour
             VeiwToolTip(0);
             
             ViewSkillTip(_data, _iconState, _desc);
+
+            tooltips[0].gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(490, 140);
+            rt0.transform.localPosition = new Vector2(245, 70);
             Debug.Log("Skill Icon 툴팁 활성");
         }
     }
